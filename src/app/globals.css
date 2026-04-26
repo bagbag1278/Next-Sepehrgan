@@ -3,14 +3,6 @@
 :root {
   --background: #F5F5F5;
   --foreground: #121212;
-  /*  */
-  --my-blue: #10088F;/* رنگ آبی تیره */
-  --my-m-blue:#005EA4;/* رنگ ابی متوسط */
-  --my-light-blue:#0887CA;/* رنگ ابی روشن*/
-  --my-green:#15977D;/* رنگ سبز*/
-  --my-dark-blue:#060425;/* رنگ سرمه ای*/
-  /*  */
-  
 }
 
 @theme inline {
@@ -18,13 +10,12 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  /* رنگ های دیزاین */
-   --color-blue: var(--my-blue); /* رنگ آبی تیره */
-   --color-m-blue: var(--my-m-blue); /* رنگ ابی متوسط */
-    --color-light-blue: var(--my-light-blue); /* رنگ ابی روشن*/
-    --color-green: var(--my-green); /* رنگ سبز*/
-    --color-dark-blue: var(--my-dark-blue); /* رنگ سرمه ای*/
-    /* liner */
+  /*color code*/
+   --color-blue-100 : #10088F; /*dark blue*/
+   --color-blue-200: #005EA4; /*mid blue*/
+    --color-blue-300: #0887CA; /*light blue*/
+    --color-green-100: #15977D; /*green*/
+    --color-blue-400: #060425; /*dark blue*/
 }
 
 @media (prefers-color-scheme: dark) {

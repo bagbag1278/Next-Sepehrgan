@@ -8,14 +8,13 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-const iran = LocalFont ({
-  src:"../assets/font/IRANSans-web.woff"
-})
+const iran = LocalFont({
+  src: "../assets/font/IRANSans-web.woff",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,11 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`h-full antialiased `}
-    >
-      <body className={`min-h-full flex flex-col ${iran.className} `}>{children}</body>
+    <html lang="en" className={`h-full antialiased flex justify-center`}>
+      <body className={`flex flex-col ${iran.className}`}>
+        <main className="w-360">{children}</main>
+      </body>
     </html>
   );
 }
