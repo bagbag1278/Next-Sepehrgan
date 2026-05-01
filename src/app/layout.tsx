@@ -28,8 +28,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`h-full antialiased flex justify-center`}>
-      <body className={`flex flex-col ${iran.className}`}>
-        <main className="w-360">{children}</main>
+      <body className={`flex w-360 flex-col ${iran.className}`}>
+        <main className="">{children}</main>
       </body>
     </html>
   );
