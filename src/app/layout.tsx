@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
+import Footer from "@/components/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,10 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`h-full antialiased flex justify-center`}>
-      <body className={`flex flex-col grow ${iran.className}`}>
+    <html lang="en">
+      <body
+        className={`bg-[#121212] ${iran.className}`}
+      >
         {children}
+        <Footer />
       </body>
     </html>
   );
 }
+
