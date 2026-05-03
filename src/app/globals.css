@@ -23,13 +23,12 @@
   --color-blue-400: #060425;
 }
 
-<<<<<<< HEAD
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #ededed;
     --foreground:  #0a0a0a;
   }
-=======
+  }
 .mySwiper .swiper-pagination-bullet {
   background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
   width: 12px;
@@ -39,7 +38,6 @@
 .mySwiper .swiper-pagination-bullet-active {
   background-color: #F5F5F5; 
   opacity: 1;
->>>>>>> e7c1f23d90dc8265aa13f3b023e04b299362d0cc
 }
 
 body {
