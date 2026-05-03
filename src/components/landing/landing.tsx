@@ -6,10 +6,15 @@ import Duplex from './Icon/TopCategories/DuplexIcon';
 import Mansion from './Icon/TopCategories/MansionIcon';
 import Flood from './Icon/TopCategories/FloodIcon';
 import Vector from './Icon/FirstContainer/Vector';
+import BlueHouse from './Icon/secoundContainer/BlueHouse';
+import BlueImage from './Icon/secoundContainer/BlueImage';
+import Photograph from './Icon/secoundContainer/Photograph';
+import Photograph2 from './Icon/secoundContainer/Photograph2';
 
 const Landing = () => {
   return (
     <div className=' w-full flex flex-col gap-18 ' dir='rtl'>
+      
       {/* ** Top categories ** */}
       <div className='flex justify-center '>
         <div className='w-full flex justify-center '>
@@ -139,7 +144,7 @@ const Landing = () => {
         </div>
       </div>
       {/* **** buy and sell sliedr **** */}
-      <div className='flex justify-center '>
+      <div className='flex justify-center'>
         <div className='w-340 h-125.25 border flex flex-wrap justify-center  '>
           <div className='w-full h-20 flex flex-wrap border '>
 
@@ -156,12 +161,12 @@ const Landing = () => {
                   {/* add $$$$$ */}
                 </div>
                 <div className='text-[15px] dark:text-[#adadad] '>پیشنهادات ویژه</div>
-                <div className='text-[15px] dark:text-[]'>پایین ترین قیمت ها</div>
+                <div className='text-[15px] dark:text-[#adadad]'>پایین ترین قیمت ها</div>
               </div>
 
               {/* *** view more button  *** */}
               <div className='w-60'>
-                <button className='w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer ' >
+                <button className='w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer '>
                   <p className='text-green-100 text-[14px] '>مشاهده همه</p>
                 </button>
               </div>
@@ -212,8 +217,8 @@ const Landing = () => {
               <div className="flex flex-col gap-4">
                 <div className="w-171.25 h-53.75 rounded-2xl overflow-hidden bg-slate-700"> بالا بزرگ</div>
                 <div className="flex gap-4">
-                  <div className="w-84 h-55.75 rounded-2xl overflow-hidden bg-slate-700"> پایین چپ </div>
-                  <div className="w-84 h-55.75 rounded-2xl overflow-hidden bg-slate-700"> پایین وسط </div>
+                  <div className="w-83 h-55.75 rounded-2xl overflow-hidden bg-slate-700"> پایین چپ </div>
+                  <div className="w-83 h-55.75 rounded-2xl overflow-hidden bg-slate-700"> پایین وسط </div>
                 </div>
               </div>
               <div className="w-64.25 h-113.5 rounded-2xl overflow-hidden bg-slate-700 z-50"> راست بلند </div>
@@ -230,21 +235,72 @@ const Landing = () => {
       </div>
 
       {/* **** secound container **** */}
-      <div className='w-full flex justify-center'>
-        <div className='w-312 h-125 border border-white '
-          style={{
-            background: "linear-gradient(180deg, #121212 0%, rgba(4, 38, 55, 0.5) 49.65%, #121212 100%)",
-          }}
-        >
-          <div className='w-295 h-full border border-white flex flex-wrap items-center justify-between gap-0.5 '>
+      <div className='w-full flex justify-center'
+        style={{
+          background: "linear-gradient(180deg, #121212 0%, rgba(4, 38, 55, 0.5) 49.65%, #121212 100%)",
+        }}
+      >
+        <div className='w-312 h-125  '>
+          <div className='w-295 h-full flex flex-wrap items-center justify-between gap-0.5 '>
 
-            <div className='w-123.75 h-57 border border-white flex flex-wrap '>
-              <div className='w-46.75 h-15 border border-white '>
-                <div className='w-46 h-5.25 text-[13px] text-blue-300 '>سفر به طبیعت، با عشق و اعتماد !  </div>
-                <div className='w-31.5 h-7.75 text-[13px] text-blue-300 '>معرفی رهن کده</div>
+            <div className='w-123.75 h-65 flex items-center flex-wrap gap-1  '>
+              <div className='w-70.75 h-17  '>
+                <div className='w-60 h-7 text-[14px]  text-blue-300 '>سفر به طبیعت، با عشق و اعتماد !  </div>
+                <div className='w-41.5 h-7.75 text-[20px] text-[#F5F5F5]  '>معرفی رهن کده</div>
+              </div>
+              <div className='w-101.25  text-[#F5F5F5D9] flex items-center '>
+                <div>
+                  در رهن کده ، ما به شما این امکان را می‌دهیم که به سادگی و با
+                  اطمینان، به دنیای گسترده‌ای از املاک دسترسی پیدا کنید و بتوانید ...
+                </div>
+              </div>
+              <button className='w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer '>
+                <p className='text-green-100 text-[14px] '>بیشتر</p>
+              </button>
+            </div>
+            <div className='flex justify-center '>
+              <div className="relative w-[462px] h-[460px]">
+                {/* بالا چپ: 126x175 */}
+                <div className="absolute left-[60px] top-[20px] w-[126px] h-[175px] flex flex-col items-center justify-center text-white">
+                  <div>
+                    <BlueHouse />
+                  </div>
+
+                  <div className="text-xl font-bold mt-5">۲۰۰ واحد</div>
+                  <div className="text-[13px] text-white/80 mt-4 text-center">از هزاران خانه، خانه رویایی را بیابید</div>
+                </div>
+
+                {/* بالا راست: 240x240 */}
+                <div className="absolute left-[245px] top-0 w-[240px] h-[240px] bg-center flex items-center justify-center overflow-hidden bg-center">
+
+                  <Photograph />
+
+                </div>
+
+                {/* پایین چپ: 240x240 */}
+                <div className="absolute left-[40px] top-[196px] w-[240px] h-[240px] bg-center flex items-center justify-center rounded-4xl overflow-hidden">
+                  <Photograph2 />
+                </div>
+
+                {/* پایین راست: 135x176 */}
+                <div className="absolute left-[235px] top-[250px] w-[240px] h-[240px] flex flex-col items-center justify-center  text-white">
+                  <div className='mb-5 ' >
+                    <BlueImage />
+                  </div>
+                  <div className="font-bold mt-2   ">پشتبانی 24 ساعته</div>
+                  <div className="w-33.75 h-12.5 text-center text-sm font-semibold mt-4.5  text-white/80"> پشتیبانی بی‌وقفه، تضمین رضایت</div>
+                </div>
+
+                {/* وسط: 130x120 */}
+                <div className="absolute left-[185px] top-[166px] w-[120px] h-[110px] bg-white/96 rounded-tr-[40px] rounded-bl-[40px] flex items-center justify-center text-sky-700 font-bold">
+                  <div className="text-center leading-tight">
+                    <div className="text-sm"> ۳۷۳۰۴۸ +</div>
+                    <div className="text-[14px] mt-3">نظارت زیبای شما</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className='w-115.25 h-115 border border-white '></div>
+
           </div>
         </div>
       </div>

@@ -28,9 +28,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-amber-50 ">
       <body
-        className={`bg-[#121212] ${iran.className}`}
+        className={`bg-[#121212] ${iran.className} p-0 m-0`}
       >
         {children}
         <Footer />
