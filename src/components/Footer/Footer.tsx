@@ -15,7 +15,7 @@ import VectorUp from './Icon/VectorUp';
 const Footer = () => {
   return (
     <div className=' w-full flex justify-center border '>
-      <div className='relative w-360 border border-white '>
+      <div className='relative w-full border border-white '>
 
       <div className='flex items-end w-full h-125 border border-white '>
 
@@ -114,7 +114,7 @@ const Footer = () => {
 
         </div>
 
-        <div className='absolute right-[-6] w-30 h-104.75 bg-green-100 rounded-tl-[500px]'>
+        <div className='absolute right-0 w-30 h-104.75 bg-green-100 rounded-tl-[500px]'>
           <div className='h-full w-full flex  items-center justify-center'>
             <div className='w-6 h-55 flex items-end flex-wrap  '>
               <div className='w-6 h-6  cursor-pointer'>

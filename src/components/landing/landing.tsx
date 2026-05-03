@@ -10,11 +10,12 @@ import BlueHouse from './Icon/secoundContainer/BlueHouse';
 import BlueImage from './Icon/secoundContainer/BlueImage';
 import Photograph from './Icon/secoundContainer/Photograph';
 import Photograph2 from './Icon/secoundContainer/Photograph2';
+import HeroSction from './components/HeroSction/HeroSction';
 
 const Landing = () => {
   return (
     <div className=' w-full flex flex-col gap-18 ' dir='rtl'>
-      
+        <HeroSction/>
       {/* ** Top categories ** */}
       <div className='flex justify-center '>
         <div className='w-full flex justify-center '>
