@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased flex justify-center">
+    <html lang="en" className=" h-full antialiased flex justify-center">
       <body className={`flex flex-col w-360 ${iran.className}`}>
         <ThemeProvider
           attribute="class"

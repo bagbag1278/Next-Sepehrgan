@@ -28,7 +28,7 @@ const LoginPage = () => {
           <LoginForm/>
         </div>
       </div>
-      <div className=" w-[48%] h-175.25 ml-2 mt-2 rounded-br-[50px] rounded-tr-[50px]">
+      <div className="w-[48%] h-175.25 ml-2 mt-2 rounded-br-[50px] rounded-tr-[50px]">
         <Image src={"/auth/left.png"} alt="left" width={688} height={700} />
       </div>
     </div>
