@@ -1,11 +1,12 @@
 import React from 'react'
 
-const LandingPage = () => {
+function icon() {
   return (
     <div>
-      
+
+
     </div>
   )
 }
 
-export default LandingPage;
+export default icon
