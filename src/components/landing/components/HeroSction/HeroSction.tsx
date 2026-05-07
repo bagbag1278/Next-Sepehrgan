@@ -20,13 +20,13 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-      <div className="flex justify-center xl:w-full xl:max-w-[1273px] lg:w-full lg:max-w-[1273px]  lg: sm:w-[393px] border xl:h-[752px] h-[1052px]  lg:m-auto  relative border ">
+      <div className="flex justify-center xl:w-full xl:max-w-[1273px] lg:w-full lg:max-w-[1273px] sm:w-[393px] sm:flex sm:justify-start   xl:h-[752px] h-[1052px]  lg:m-auto  relative border ">
         <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-[#005EA4] shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
         </div>
         <div className="absolute top-[472px] left-1/2 -translate-x-1/2 flex justify-center z-10">
           {" "}
-          <div className="w-[1020px] h-[140px] bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] rounded-xl relative gap-[22px] flex  z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)]">
+          <div className="w-[1020px] h-[140px] bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] rounded-xl relative gap-[22px] flex  z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] hidden lg:block xl:block">
             <div className="flex justify-center w-full   items-start  ">
               <HeroSctionFilter />
             </div>
@@ -44,7 +44,7 @@ const HeroSction = () => {
                   <button className="w-62.5 text-[16px] h-12 rounded-2xl border-2 cursor-pointer bg-blue-100 dark:bg-[#F5F5F5] dark:text-black text-white">
                     با یه کلیک شروع کن !
                   </button>
-                  <button className="w-45 h-12 text-[16px] rounded-2xl  cursor-pointer border border-b-blue-100 dark:border-white dark:text-white text-blue-100">
+                  <button className="w-45 h-12 text-[16px] rounded-2xl  cursor-pointer border border-b-blue-100 dark:border-white dark:text-white text-blue-100 hidden lg:block xl:block">
                     درباره رهن کده
                   </button>
                 </div>
@@ -70,7 +70,7 @@ const HeroSction = () => {
              whitespace-nowrap"
             
             >
-              <span className="text-[12px] font-medium text-[#15977D80]">
+              <span className="text-[12px] font-medium text-[#15977D80] hidden lg:block xl:block">
                 اسکرول کن بعدش خوش گلدی
               </span>
               <div className="relative left-1 bottom-2">
@@ -130,7 +130,7 @@ const HeroSction = () => {
               <SwiperComponent />
             </div>
 
-            <div className="relative     left-[15px] top-[162px] ">
+            <div className="relative     left-[15px] top-[162px] hidden lg:block xl:block ">
               <div className="absolute left-15  bottom-70 dark:hidden">
                 <Profile1 />
               </div>

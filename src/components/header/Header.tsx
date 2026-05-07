@@ -18,12 +18,12 @@ const Header = () => {
 // max-w-[1300px] m-auto
   return (
     
-    <div className="   w-full items-center flex justify-center ">
+    <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center lg:block xl:block">
       <div
         dir="rtl"
         className="flex justify-between  w-350  mt-[24px] dark:text-white"
       >
-        <div className="flex items-center  whitespace-nowrap gap-5">
+        <div className="lg:flex xl:flex items-center  whitespace-nowrap gap-5 hidden sm:hidden ">
           {nav.map((item) => {
             const isActive = pathname === item.href;
 
@@ -52,13 +52,13 @@ const Header = () => {
             );
           })}
         </div>
-        <div className=" dark:hidden   justify-center flex">
+        <div className=" dark:hidden justify-center  ">
           <HeroSction />
         </div>
         <div className="hidden dark:block">
           <HeroSction2 />
         </div>
-        <div className="w-[278px] h-[48px] flex justify-end items-center gap-8  ">
+        <div className="w-[278px] h-[48px] xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden  hidden ">
           <Link href="/login">
             <div className="text-blue-100 font-bold  cursor-pointer text-[18px] dark:text-[#28A5E6] ">
               ورود
