@@ -1,14 +1,12 @@
 "use client";
 
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import LocalFont from "next/font/local";
 import "./globals.css";
-
 import Footer from "@/components/Footer/Footer";
-
+import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
 
+import { Geist, Geist_Mono } from "next/font/google";
+import LocalFont from "next/font/local";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,24 +24,24 @@ const iran = LocalFont({
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="bg-amber-50  h-full antialiased flex justify-center">
-
-
-      <body className={`flex flex-col w-360 ${iran.className}`}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+      >
+        {" "}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <main>{children}</main>
+          <Header />
+          {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
   );
 }
-

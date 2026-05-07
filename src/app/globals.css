@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import 'swiper/css/pagination';
 @import 'swiper/css';
+@plugin "daisyui";
 :root {
   --background: #F5F5F5;
   --foreground: #000000;

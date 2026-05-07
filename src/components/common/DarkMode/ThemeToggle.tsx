@@ -22,9 +22,9 @@ export default function ThemeToggle() {
       className=""
     >
       {resolvedTheme === "dark" ? (
-        <Image src={"/auth/light.png"} width={20} height={20} alt="light" />
+        <Image className="" src={"/auth/light.png"} width={20} height={20} alt="light  " />
       ) : (
-        <Image src={"/auth/DarkMode.png"} width={20} height={20} alt="dark" />
+        <Image className=" "  src={"/auth/DarkMode.png"} width={20} height={20} alt="dark" />
       )}
     </button>
   );
