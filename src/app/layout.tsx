@@ -1,5 +1,3 @@
-"use client";
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
@@ -17,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 const iran = LocalFont({
-  src: "../assets/font/IRANSans-web.woff",
+  src: "../assets/font/IRANSans.ttf",
 });
 
 export default function RootLayout({
@@ -26,8 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className=" h-full antialiased flex justify-center">
+    <html lang="en" className="h-full antialiased flex justify-center"suppressHydrationWarning>
       <body className={`flex flex-col w-360 ${iran.className}`}>
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

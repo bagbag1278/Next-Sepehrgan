@@ -6,6 +6,7 @@
   --foreground: #000000;
 }
 @custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-scheme: dark;
 
@@ -21,13 +22,14 @@
   --color-blue-300: #0887CA;
   --color-green-100: #15977D;
   --color-blue-400: #060425;
+  --color-green-200: #05ED6A;
 }
 
 .mySwiper .swiper-pagination-bullet {
-  background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
+  background-color: rgba(255, 255, 255, 0.7);
   width: 12px;
   height: 12px;
-  margin: 0 1px; /* Add some spacing */
+  margin: 0 1px;
 }
 .mySwiper .swiper-pagination-bullet-active {
   background-color: #F5F5F5; 

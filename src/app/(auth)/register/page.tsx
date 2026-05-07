@@ -1,12 +1,13 @@
-import StepOneForm from '@/components/Auth/register/StepOneForm';
-import GoogleLogin from '@/components/common/GooleLogin/GoogleLogin';
+import MultiStepForm from '@/components/Auth/register/MultiStepForm';
+import StepThirdForm from '@/components/Auth/register/StepThirdForm';
+
 import React from 'react'
 
 const RegisterPage = () => {
   return (
     <div dir='rtl'>
-      <GoogleLogin/>
-      <StepOneForm/>
+      <MultiStepForm/>
+      
     </div>
   )
 }
