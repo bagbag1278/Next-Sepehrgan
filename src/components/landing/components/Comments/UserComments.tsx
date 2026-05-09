@@ -106,10 +106,9 @@ const FocusCarousel = () => {
                         ].join(" ")}
                       >
 
-                        {/* ✅ حالت فوکوس → طرح کامل مشابه عکس */}
                         {focused ? (
                           <div className="flex flex-col items-center justify-between text-center w-full h-full p-5">
-                            {/* تصویر پروفایل */}
+                            {/* profile */}
                             <div className="w-20 h-20 rounded-full p-0.75 border border-[#BAE9D3] bg-white">
                               <img
                                 src={item.Profile}
@@ -118,19 +117,17 @@ const FocusCarousel = () => {
                               />
                             </div>
 
-                            {/* نام */}
+                              {/* name */}
                             <p className="mt-3 text-lg font-bold text-[#0A1133]">
                               {item.name}
                             </p>
 
-                            {/* متن کامل */}
                             <p
                               className="mt-2 text-ellipsis line-clamp-4 w-66 h-27.75 text-center text-[14px]  leading-7 text-[#1B1E36] px-2"
                             >
                               {item.content}
                             </p>
 
-                            {/* آیکون قلب و تاریخ پایین */}
                             <div className="mt-auto w-full flex justify-between items-center px-2">
                               <span className="text-[#A9A9A9] text-xs flex items-center gap-1">
                                 <ClockIcon />
@@ -144,7 +141,6 @@ const FocusCarousel = () => {
                             </div>
                           </div>
                         ) : (
-                          // 🟩 حالت ساده وقتی فوکوس نیست
                           <div className="flex flex-col items-center justify-center text-center px-4">
                             <div className="w-16 h-16 rounded-full p-0.5 border border-[#D1F3E2] mt-3">
                               <img
@@ -172,7 +168,6 @@ const FocusCarousel = () => {
 
           </Swiper>
 
-          {/* دکمه‌ها زیر اسلایدر سمت راست، عمودی */}
           <div className="absolute right-0 top-38 z-50 mt-4 flex justify-end">
             <div className="flex flex-col gap-3">
               <button

@@ -49,7 +49,6 @@ const SecoundContainer = () => {
 
                     <div className="flex lg:justify-end justify-center relative w-full  h-115  ">
 
-                        {/* بالا چپ: 126x175 */}
                         <div className="absolute left-18 top-3 w-31.5 h-43.75 flex flex-col items-center justify-center text-white">
                             <div>
                                 <BlueHouse />
@@ -59,19 +58,16 @@ const SecoundContainer = () => {
                             <div className="text-[13px] text-white/80 mt-4 text-center">از هزاران خانه، خانه رویایی را بیابید</div>
                         </div>
 
-                        {/* بالا راست: 240x240 */}
                         <div className="absolute left-61.25 top-0 w-60 h-60 flex items-center justify-center overflow-hidden bg-center">
 
                             <Photograph />
 
                         </div>
 
-                        {/* پایین چپ: 240x240 */}
                         <div className="absolute left-10 top-49 w-60 h-60 bg-center flex items-center justify-center rounded-4xl overflow-hidden">
                             <Photograph2 />
                         </div>
 
-                        {/* پایین راست: 135x176 */}
                         <div className="absolute left-80.75 top-62.5 w-[60 h-60 flex flex-col items-center justify-center  text-white">
                             <div className='mb-5 ' >
                                 <BlueImage />
@@ -80,7 +76,7 @@ const SecoundContainer = () => {
                             <div className="w-33.75 h-12.5 text-center text-sm font-semibold mt-4.5  text-white/80"> پشتیبانی بی‌وقفه، تضمین رضایت</div>
                         </div>
 
-                        {/* وسط: 130x120 */}
+                    
                         <div className="absolute left-46.25 top-41.5 w-30 h-27.5 bg-white/96 rounded-tr-[40px] rounded-bl-[40px] flex items-center justify-center text-sky-700 font-bold">
                             <div className="text-center leading-tight">
                                 <div className="text-sm"> ۳۷۳۰۴۸ +</div>
