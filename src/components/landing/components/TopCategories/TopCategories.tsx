@@ -40,7 +40,7 @@ const TopCategories = () => {
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>
-                                    <div className=' dark:text-white text-blue-400 text-[18px] font-bold '>مغازه</div>
+                                    <div className='text-white  dark:text-blue-400 text-[18px] font-bold '>مغازه</div>
                                     <div className='text-[13px] dark:text-[#adadad] text-blue-400 flex justify-center '>
                                         <div className='text-center '>سرمایه گذاری مطمئن،آینده روشن</div>
                                     </div>

@@ -31,7 +31,7 @@ const FocusCarousel = () => {
 
   return (
     <div className=" flex ">
-      <div className="w-355 flex justify-between border border-white  ">
+      <div className="w-355 flex justify-between">
 
         {/* ////// */}
         <div className='w-70 lg:w-82 h-88 hidden lg:flex items-center ml-4 lg:items-end  '>
@@ -58,7 +58,7 @@ const FocusCarousel = () => {
         </div>
         {/* ////// */}
 
-        <div className="relative w-300 border border-white  h-100  overflow-hidden ">
+        <div className="relative w-300 h-100  overflow-hidden ">
           <div
             className="absolute right-0 top-0 w-76.25 h-93.75 bg-green-100 rounded-bl-[5px] rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px] "
 
