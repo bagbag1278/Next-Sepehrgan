@@ -26,7 +26,6 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
@@ -39,7 +38,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          {children}
+          <main className="">{children}</main>
+
           <Footer />
         </ThemeProvider>
       </body>
