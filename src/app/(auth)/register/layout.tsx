@@ -14,7 +14,7 @@ const RegisterLayout: FC<IChildren> = ({ children }) => {
   ];
 
   return (
-    <div dir="rtl" className="h-179.5 flex justify-center">
+    <div dir="rtl" className="h-179.5 flex justify-center relative">
       <div className="w-2/4 h-175.25 mr-2 mt-2 relative">
         <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col gap-4">
           <h3 className="text-2xl font-bold text-center">

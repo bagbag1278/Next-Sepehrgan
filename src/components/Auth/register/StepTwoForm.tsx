@@ -75,3 +75,8 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
 };
 
 export default StepTwoForm;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+function setCurrentStep(arg0: (prev: any) => any) {
+  throw new Error("Function not implemented.");
+}

@@ -1,10 +1,9 @@
 "use client";
 import { checkPasswordStrength } from "@/core/validation/PassWord";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
-import { useFormState } from "react-dom";
 import { loginAction } from "@/action/auth/login";
 
 const initialState = { message: "" };
@@ -14,7 +13,7 @@ const LoginForm = () => {
   const [strength, setStrength] = useState(0);
   const [showPassword, setShowPassword] = useState(true);
 
-  const [state, formAction] = useFormState(loginAction, initialState);
+  const [state, formAction] = useActionState(loginAction, initialState);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

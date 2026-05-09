@@ -24,7 +24,7 @@ const RegistrationSteps: React.FC<RegistrationStepsProps> = ({
     const CompletedIcon = <FaCheckCircle />;
 
     let iconToRender;
-    let iconColorClass = "text-black";
+    let iconColorClass = "text-black dark:text-white";
 
     if (isCompleted) {
       iconToRender = CompletedIcon;
@@ -54,7 +54,7 @@ const RegistrationSteps: React.FC<RegistrationStepsProps> = ({
         >
           <div
             className={`size-10 rounded-xl flex items-center justify-center 
-              ${step === stepNumber ? "bg-blue-100" : step > stepNumber ? "bg-green-200" : "border border-black opacity-70"} 
+              ${step === stepNumber ? "bg-blue-100 dark:bg-blue-200" : step > stepNumber ? "bg-green-200" : "border border-black dark:border-white opacity-70"} 
               px-3.25 py-1.25 transition-all duration-300 cursor-pointer
             `}
             onClick={() => completeStep(stepNumber)}
@@ -65,7 +65,7 @@ const RegistrationSteps: React.FC<RegistrationStepsProps> = ({
             {renderIcon(stepNumber)}
           </div>
           <span
-            className={`${step === stepNumber ? "text-blue-100" : step > stepNumber ? "text-green-200" : "text-black opacity-70"} text-[12px]`}
+            className={`${step === stepNumber ? "text-blue-100 dark:text-blue-200" : step > stepNumber ? "text-green-200" : "text-black dark:text-white opacity-70"} text-[12px]`}
           >
             {stepNumber === 1
               ? "ایمیل"
@@ -75,7 +75,7 @@ const RegistrationSteps: React.FC<RegistrationStepsProps> = ({
           </span>
           {stepNumber < 3 && (
             <div
-              className={`border border-dashed ${step === stepNumber ? "border-blue-100" : step > stepNumber ? "border-green-200" : "border-black opacity-70"} w-0 h-14`}
+              className={`border border-dashed ${step === stepNumber ? "border-blue-100 dark:border-blue-200" : step > stepNumber ? "border-green-200" : "border-black dark:border-white opacity-70"} w-0 h-14`}
             ></div>
           )}
         </div>

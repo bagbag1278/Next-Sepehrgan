@@ -1,15 +1,11 @@
-import MultiStepForm from '@/components/Auth/register/MultiStepForm';
-import StepThirdForm from '@/components/Auth/register/StepThirdForm';
-
-import React from 'react'
+import MultiStepForm from "@/components/Auth/register/MultiStepForm";
 
 const RegisterPage = () => {
   return (
-    <div dir='rtl'>
-      <MultiStepForm/>
-      
+    <div dir="rtl">
+      <MultiStepForm />
     </div>
-  )
-}
+  );
+};
 
 export default RegisterPage;
