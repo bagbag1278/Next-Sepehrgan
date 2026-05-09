@@ -1,70 +1,71 @@
-@import 'swiper/css/pagination';
-@import 'swiper/css';
-@import 'leaflet/dist/leaflet.css';
+    @import "tailwindcss";
+    @plugin "daisyui";
 
-:root {
-  --background: #F5F5F5;
-  --foreground: #000000;
-}
-@custom-variant dark (&:where(.dark, .dark *));
-@theme {
-  --color-scheme: dark;
+    :root {
+      --background: #F5F5F5;
+      --foreground: #000000;
+    }
+    @custom-variant dark (&:where(.dark, .dark *));
+    @theme {
+      --color-scheme: dark;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+      --font-sans: var(--font-geist-sans);
+      --font-mono: var(--font-geist-mono);
 
-  /* Colors */
-  --color-blue-100: #10088F;
-  --color-blue-200: #005EA4;
-  --color-blue-300: #0887CA;
-  --color-green-100: #15977D;
-  --color-blue-400: #060425;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ededed;
-    --foreground:  #0a0a0a;
-  }
-}
-.mySwiper .swiper-pagination-bullet {
-  background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
-  width: 12px;
-  height: 12px;
-  margin: 0 1px; /* Add some spacing */
-}
-.mySwiper .swiper-pagination-bullet-active {
-  background-color: #F5F5F5;
-  opacity: 1;
-}
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-.custom-div-scrollbar {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #e0302b #d1d5db;
-}
-.custom-div-scrollbar::-webkit-scrollbar {
-  width: 20px; 
-}
-.custom-div-scrollbar::-webkit-scrollbar-track {
-  background: #d1d5db; 
-  border-radius: 9999px;
-}
-.custom-div-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #f63e3b; 
-  border-radius: 9999px;
-  border: 2px solid #d1d5db;
-  background-clip: content-box; 
-}
-.custom-div-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #2b31e0; 
-}
-@import "tailwindcss";
-@plugin "daisyui";
+      /* Colors */
+      --color-blue-100: #10088F;
+      --color-blue-200: #005EA4;
+      --color-blue-300: #0887CA;
+      --color-green-100: #15977D;
+      --color-blue-400: #060425;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #ededed;
+        --foreground:  #0a0a0a;
+      }
+    }
+    .mySwiper .swiper-pagination-bullet {
+      background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
+      width: 12px;
+      height: 12px;
+      margin: 0 1px; /* Add some spacing */
+    }
+    .mySwiper .swiper-pagination-bullet-active {
+      background-color: #F5F5F5;
+      opacity: 1;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
+    /* --- استایل‌های سفارشی اسکرول‌بار --- */
+    .custom-div-scrollbar {
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: #e0302b #d1d5db; /* thumb (نارنجی تیره‌تر) | track (خاکستری) */
+    }
 
+    /* Chrome / Safari / Edge */
+    .custom-div-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .custom-div-scrollbar::-webkit-scrollbar-track {
+      background: #d1d5db;
+      border-radius: 9999px;
+    }
+
+    .custom-div-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #f63e3b; /* رنگ اصلی نارنجی */
+      border-radius: 9999px;
+      border: 2px solid #d1d5db;
+      background-clip: content-box;
+    }
+    .custom-div-scrollbar::-webkit-scrollbar-thumb:hover {
+      background-color: #e0302b; /* نارنجی تیره‌تر برای hover */
+    }
 
 
