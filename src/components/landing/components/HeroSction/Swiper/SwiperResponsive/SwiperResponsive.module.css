@@ -1,0 +1,33 @@
+
+/* pagination container */
+.swiper :global(.swiper-pagination) {
+
+  bottom: 70px !important;
+  left: 110px;
+  z-index: 10;
+}
+
+/* bullet ها */
+.swiper :global(.swiper-pagination-bullet) {
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 12px;
+  height: 12px;
+  opacity: 1;
+}
+
+/* active bullet */
+.swiper :global(.swiper-pagination-bullet-active) {
+  background-color: #F5F5F5;
+}
+
+
+
+.sliderTopBorder {
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    #ffffff 50%,
+    #10088F 50%
+  );
+}

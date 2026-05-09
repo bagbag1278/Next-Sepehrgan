@@ -15,15 +15,15 @@ const nav = [
 
 const Header = () => {
   const pathname = usePathname();
-// max-w-[1300px] m-auto
+  // max-w-[1300px] m-auto
   return (
-    
-    <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center lg:block xl:block">
+    <div className="  w-full items-center flex justify-center m-auto  sm:w-[600px]  sm:flex sm:justify-center sm:self-center lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center lg:block xl:block">
+      <div className=""></div>
       <div
         dir="rtl"
         className="flex justify-between  w-350  mt-[24px] dark:text-white"
       >
-        <div className="lg:flex xl:flex items-center  whitespace-nowrap gap-5 hidden sm:hidden ">
+        <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 hidden sm:hidden sm:flex sm:justify-end">
           {nav.map((item) => {
             const isActive = pathname === item.href;
 
@@ -52,13 +52,17 @@ const Header = () => {
             );
           })}
         </div>
-        <div className=" dark:hidden justify-center  ">
-          <HeroSction />
+        <div className="flex justify-center items-center w-full">
+          <div className="dark:hidden">
+            <HeroSction />
+          </div>
+
+          <div className="hidden dark:block">
+            <HeroSction2 />
+          </div>
         </div>
-        <div className="hidden dark:block">
-          <HeroSction2 />
-        </div>
-        <div className="w-[278px] h-[48px] xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden  hidden ">
+
+        <div className="w-[278px] h-[48px]  xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden hidden xl:block lg:block  ">
           <Link href="/login">
             <div className="text-blue-100 font-bold  cursor-pointer text-[18px] dark:text-[#28A5E6] ">
               ورود

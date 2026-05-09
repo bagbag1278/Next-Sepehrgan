@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+        className={`${iran.className}  bg-white text-black dark:bg-black dark:text-white`}
       >
         {" "}
         <ThemeProvider
