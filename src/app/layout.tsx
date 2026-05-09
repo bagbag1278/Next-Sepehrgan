@@ -1,8 +1,4 @@
-"use client";
-
 import "./globals.css";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
 
 import { Geist, Geist_Mono } from "next/font/google";
@@ -29,7 +25,7 @@ export default function RootLayout({
 
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-[#121212] dark:text-white`}
       >
         {" "}
         <ThemeProvider
@@ -38,9 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+        
           {children}
-          <Footer />
+         
         </ThemeProvider>
       </body>
     </html>
