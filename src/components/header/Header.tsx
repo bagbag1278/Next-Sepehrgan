@@ -7,7 +7,8 @@ import Link from "next/link";
 
 const nav = [
   { title: "صفحه اصلی", href: "/" },
-  { title: "رزرو سریع", href: "/reserve" },
+  { title: "رزرو سریع", href: "/housereserve" },
+
   { title: " رهن اجاره", href: "/mortgage" },
   { title: "وبلاگ", href: "/blog" },
   { title: "درباره ما", href: "/about" },
@@ -24,33 +25,35 @@ const Header = () => {
         className="flex justify-between  w-350  mt-[24px] dark:text-white"
       >
         <div className="lg:flex xl:flex items-center  whitespace-nowrap gap-5 hidden sm:hidden ">
-          {nav.map((item) => {
-            const isActive = pathname === item.href;
+   {nav.map((item) => {  
+  const isActive = item.href === "/" 
+    ? pathname === "/" 
+    : pathname.startsWith(item.href);
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="relative flex flex-col items-center "
-              >
-                <span
-                  className={`text-[16px] font-medium transition-all ${
-                    isActive
-                      ? "text-blue-300 mb-3"
-                      : "text-black dark:text-white"
-                  }`}
-                >
-                  {item.title}
-                </span>
+  return (
+    <Link
+      key={item.href}
+      href={item.href}
+      className="relative flex flex-col items-center group"
+    >
+      <span
+        className={`text-[16px] font-medium transition-all duration-300 ${
+          isActive
+            ? "text-[#28A5E6] mb-3" // رنگ آبی وقتی فعال است
+            : "text-black dark:text-white"
+        }`}
+      >
+        {item.title}
+      </span>
 
-                {isActive && (
-                  <div className="absolute top-5 ">
-                    <HeaderIcon3 />
-                  </div>
-                )}
-              </Link>
-            );
-          })}
+      {isActive && (
+        <div className="absolute top-6">
+          <HeaderIcon3 />
+        </div>
+      )}
+    </Link>
+  );
+})}
         </div>
         <div className=" dark:hidden justify-center  ">
           <HeroSction />

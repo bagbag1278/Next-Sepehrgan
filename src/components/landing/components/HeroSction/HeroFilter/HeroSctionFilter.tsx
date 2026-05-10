@@ -2,14 +2,13 @@ import React from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import HeaderIcon3 from "@/components/header/Icon/HeaderIcon3";
 import Arrow from "../Icon/Arrow";
-import DropDown from "./DropDown";
 import Search from "../Icon/Search";
 
 function HeroSctionFilter() {
   return (
     <div className="p-4  overflow-hidden" dir="">
       {" "}
-      {}
+      {}  
       <Tabs.Root className="flex flex-col w-full  " defaultValue="account">
         <Tabs.List className="flex justify-center">
           <Tabs.Trigger
@@ -72,7 +71,6 @@ function HeroSctionFilter() {
                   <div className="w-[92px] h-[54px]">
                     تاریخ ورود
                     <div className="">
-                      <DropDown/>
                     </div>
                     <div className="relative  right-[80px] bottom-[20px] ">
                       <Arrow />

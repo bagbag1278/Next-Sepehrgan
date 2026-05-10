@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Sliderr() {
+function Room() {
   return (
     <div>
       <svg width="2060" height="470" viewBox="0 0 219 440" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -29,4 +29,4 @@ function Sliderr() {
   )
 }
 
-export default Sliderr
+export default Room

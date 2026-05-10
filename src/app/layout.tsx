@@ -1,4 +1,3 @@
-"use client";
 
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
