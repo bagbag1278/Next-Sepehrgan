@@ -1,34 +1,83 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import GoogleLogin from "@/components/common/GooleLogin/GoogleLogin";
+import GoogleLogin from "@/components/common/GooleLogin/GoogleLogin"; // مسیر این کامپوننت را چک کنید
+import http from "@/core/interceptor/interceptor";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 interface StepOneFormProps {
-  onNext: () => void;
+  onNext: () => void; // تابعی که والد برای رفتن به مرحله بعد صدا می‌زند
 }
 
 const StepOneForm: FC<StepOneFormProps> = ({ onNext }) => {
-  const handleNext = (e: React.FormEvent) => {
-    e.preventDefault();
-    setCurrentStep((prev) => prev + 1);
+  const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (error) {
+      setError(null); // پاک کردن خطا هنگام تایپ مجدد
+    }
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // جلوگیری از رفرش شدن صفحه
+
+    // اعتبارسنجی اولیه ایمیل
+    if (!email) {
+      setError("لطفاً ایمیل خود را وارد کنید.");
+      return;
+    }
+    // می‌توانید اعتبارسنجی قوی‌تری برای فرمت ایمیل اضافه کنید
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("فرمت ایمیل نامعتبر است.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null); // پاک کردن خطا قبل از ارسال درخواست
+
+    try {
+      // *** آدرس API را اینجا تنظیم کنید ***
+      // این یک مثال است. آدرس دقیق API خود را جایگزین کنید.
+      const apiEndpoint = "/auth/register";
+      const response = await http.post(apiEndpoint, { email: email });
+
+      // اگر interceptor خطا را برنگردانده باشد، یعنی درخواست موفق بوده
+      // toast موفقیت یا خطا توسط interceptor نمایش داده می‌شود.
+
+      // پس از موفقیت API، به مرحله بعد می‌رویم
+      onNext();
+    } catch (err) {
+      // خطاهای عمومی (مانند 4xx, 5xx) توسط interceptor مدیریت و نمایش داده می‌شوند.
+      // اگر نیاز به منطق خاصی برای خطا دارید، اینجا اضافه کنید.
+      console.error("Registration send code error:", err);
+      // اگر interceptor خطا را مدیریت نکرد و نیاز به پیام خاصی اینجا بود:
+      // setError("خطا در ارسال کد. لطفاً مجدداً تلاش کنید.");
+    } finally {
+      setLoading(false); // پایان وضعیت بارگذاری
+    }
+  };
+
   return (
     <form
-      onSubmit={handleNext}
+      onSubmit={handleSubmit} // استفاده از تابع handleSubmit سفارشی
       className="flex mt-6 flex-col justify-between gap-6"
     >
       <GoogleLogin />
       <div className="flex flex-col gap-2 relative">
-        {" "}
         <input
           type="email"
           name="email"
+          value={email}
+          onChange={handleEmailChange}
           className="peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500 "
-          placeholder=""
+          placeholder=" " // placeholder خالی گذاشته شده تا label کار کند
         />
         <label
           htmlFor="email"
-          className="absolute right-4 top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
+          className="absolute right-4 top-2 text-xs text-blue-300/70 transition-all duration-200 ease-out
                peer-placeholder-shown:top-2 peer-placeholder-shown:text-base
                peer-focus:top-0 peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
 peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
@@ -36,6 +85,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
           ایمیل
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
+          {/* آیکون ایمیل */}
           <svg
             width="19"
             height="15"
@@ -53,20 +103,27 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
         </div>
       </div>
 
+      {/* نمایش خطا */}
+      {error && <p className="text-red-500 text-sm -mt-4">{error}</p>}
+
       <button
-        type="submit"
-        onClick={(e) => {
-          e.preventDefault();
-          onNext();
-        }}
-        className="h-12 w-full rounded-2xl bg-blue-100 text-white hover:bg-blue-200 transition-colors"
+        type="submit" // نوع submit برای فعال کردن onSubmit فرم
+        disabled={loading} // غیرفعال کردن دکمه در زمان ارسال
+        className={`h-12 w-full rounded-2xl text-white transition-colors duration-300 ease-in-out
+          ${
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-100 hover:bg-blue-200"
+          }`}
       >
-        ارسال کد
+        {loading ? "در حال ارسال..." : "ارسال کد"}
       </button>
 
       <div className="h-6 mx-auto flex gap-0.5 justify-center items-center">
         <h6 className="font-normal text-[13px]">آیا حساب دارید ؟</h6>
         <Link href={"/login"}>
+          {" "}
+          {/* مسیر صفحه ورود را چک کنید */}
           <h5 className="text-blue-100 font-medium underline dark:text-blue-300 text-[15px]">
             ورود
           </h5>
@@ -77,6 +134,3 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
 };
 
 export default StepOneForm;
-function setCurrentStep(arg0: (prev: any) => any) {
-  throw new Error("Function not implemented.");
-}
