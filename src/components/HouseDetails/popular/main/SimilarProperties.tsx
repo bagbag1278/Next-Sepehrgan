@@ -32,7 +32,7 @@ const SimilarProperties = () => {
   ];
 
   return (
-    <div className="w-full max-w-[430px] mx-auto p-6 rounded-[16px] bg-[#F5F5F5] border shadow-sm border border-[#F1F5F9]" dir="rtl">
+    <div className="w-full max-w-[430px] mx-auto p-6 rounded-[16px] bg-[#F5F5F5]  shadow-sm border border-[#F1F5F9]" dir="rtl">
       <div className="text-center mb-6">
         <h2 className="text-[#081F62] text-lg font-bold">موارد مشابه</h2>
         <div className="w-24 h-0.5 bg-blue-100 mx-auto mt-2"></div>
@@ -42,7 +42,7 @@ const SimilarProperties = () => {
         {properties.map((item) => (
           <div 
             key={item.id} 
-            className="bg-[#F5F5F5] rounded-[24px]  shadow-[8px_0px_20px_rgba(8,135,202,0.30)] p-3 flex gap-4 items-center border border-transparent hover:border-blue-200 transition-all cursor-pointer group"
+            className="bg-[#F5F5F5] rounded-[24px]  p-3 flex gap-4 items-center border border-transparent hover:border-blue-200 transition-all cursor-pointer group"
           >
             <div className="relative w-[167px] h-[104px] rounded-lg overflow-hidden">
             <HomeReserve/>

@@ -1,24 +1,25 @@
 "use client";
-import Foarward from "@/components/HouseReserveDetails/icon/icon/Foarward";
-import Link from "@/components/HouseReserveDetails/icon/icon/Link";
-import Loaction from "@/components/HouseReserveDetails/icon/icon/Loaction";
-import Star from "@/components/HouseReserveDetails/icon/icon/Star";
-import Bread from "@/components/HouseReserveDetails/popular/Header/Bread";
-import CommentsSection from "@/components/HouseReserveDetails/popular/Comment/CommentsSection";
-import FleshHome from "@/components/HouseReserveDetails/popular/FleshHome";
-import Popular from "@/components/HouseReserveDetails/popular/main/Popular";
-import Reserve from "@/components/HouseReserveDetails/popular/Reserve";
+import Foarward from "@/components/HouseDetails/icon/icon/Foarward";
+import Link from "@/components/HouseDetails/icon/icon/Link";
+import Loaction from "@/components/HouseDetails/icon/icon/Loaction";
+import Star from "@/components/HouseDetails/icon/icon/Star";
+import Bread from "@/components/HouseDetails/popular/Header/Bread";
+import CommentsSection from "@/components/HouseDetails/popular/Comment/CommentsSection";
+import FleshHome from "@/components/HouseDetails/popular/FleshHome";
+import Popular from "@/components/HouseDetails/popular/main/Popular";
+import Reserve from "@/components/HouseDetails/popular/Reserve";
 
 import React, { useState } from "react";
-import SwiperGalery from "@/components/HouseReserveDetails/popular/main/Slider/SwiperGalery";
-import SimilarProperties from "@/components/HouseReserveDetails/popular/main/SimilarProperties";
+import SwiperGalery from "@/components/HouseDetails/popular/main/Slider/SwiperGalery";
+import SimilarProperties from "@/components/HouseDetails/popular/main/SimilarProperties";
 
 const Detail = {
   id: 1,
   title: " هتل همایون‌فر کیش ایران",
   address: "هرمزگان، جزیره کیش، میدان پردیس، جنب بازار پردیس ۲",
   rating: 4.8,
-  whydescription:"  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است گرها و متون بلکه روزنامه و مجله در ست...لورم ایپسوم متن ساختگی با تولید سادگی نامف...لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است گرها و متون بلکه روزنامه و مجله ست...لورم ایپسوم متن ساختگی با تولید سادگی نامف...لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت.....",
+  whydescription:
+    "  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است گرها و متون بلکه روزنامه و مجله در ست...لورم ایپسوم متن ساختگی با تولید سادگی نامف...لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است گرها و متون بلکه روزنامه و مجله ست...لورم ایپسوم متن ساختگی با تولید سادگی نامف...لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت.....",
   description:
     "هتل همایون‌فر یکی از مجلل‌ترین هتل‌های ۵ ستاره در قلب جزیره کیش است. این هتل با دسترسی عالی به مراکز خرید و ساحل نیلگون خلیج فارس، تجربه‌ای فراموش‌نشدنی را برای مسافران رقم می‌زند. از امکانات ویژه این هتل می‌توان به استخر روباز، رستوران بین‌المللی و ویو ابدی دریا اشاره کرد.",
   images: [
@@ -37,12 +38,22 @@ const Detail = {
   ],
 };
 
+const breadcrumbItems = [
+  { title: "رزرو هتل", href: "/housereserve" },
+  { title: "رزرو هتل رشت", href: "/search?city=rasht" },
+  { title: "هتل رشت سراوان رایان" }, // آیتم آخر href ندارد چون صفحه فعلی است
+];
+
 const HouseReserveDetails = () => {
   const [data, setData] = useState<any>(Detail);
   const [loading, setLoading] = useState(false);
   return (
     <div>
       <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative">
+        <div className="w-full">
+          <Bread items={breadcrumbItems} />
+        </div>
+
         <div className="w-full h-102 flex">
           <div className="w-full">
             <SwiperGalery images={data.images} />
@@ -98,17 +109,19 @@ const HouseReserveDetails = () => {
                 <div className="w-181 h-80 flex">
                   <Popular />
                 </div>
-                <div className="w-full border  flex flex-col items-end gap-2 mt-16 relative top-7" dir="rtl">
+                <div
+                  className="w-full   flex flex-col items-end gap-2 mt-16 relative top-7"
+                  dir="rtl"
+                >
                   <div className="relative left-119 top-4">
-                        <h2 className="text-blue-100  font-bold text-[14px] ml-12 mb-4">
-                    درباره {data.title}
-                  </h2>
+                    <h2 className="text-blue-100  font-bold text-[14px] ml-12 mb-4">
+                      درباره {data.title}
+                    </h2>
 
-                  <h1 className="text-[#060425] font-black  text-[20px] mb-4">
-                    {data.title}
-                  </h1>
+                    <h1 className="text-[#060425] font-black  text-[20px] mb-4">
+                      {data.title}
+                    </h1>
                   </div>
-              
 
                   <div className="w-full max-w-[720px]">
                     <p className="font-medium text-[16px] text-[#475569] leading-8 text-justify">
@@ -145,7 +158,7 @@ const HouseReserveDetails = () => {
                   dir="rtl"
                   className="font-medium text-[16px] text-gray-600 mt-5"
                 >
-                {data.whydescription}
+                  {data.whydescription}
                 </p>
               </div>
               <div className="w-173 mt-8">

@@ -13,7 +13,9 @@ const Reserve = () => {
   const searchParams = useSearchParams();
 
   const [checkIn, setCheckIn] = useState<any>(searchParams.get("in") || null);
-  const [checkOut, setCheckOut] = useState<any>(searchParams.get("out") || null);
+  const [checkOut, setCheckOut] = useState<any>(
+    searchParams.get("out") || null,
+  );
   const [guests, setGuests] = useState(Number(searchParams.get("guests")) || 1);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,7 +23,10 @@ const Reserve = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -32,33 +37,39 @@ const Reserve = () => {
   // 2. اصلاح تابع آپدیت URL
   const updateUrl = (key: string, value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
-    
+
     if (value) {
-      params.set(key, value); 
+      params.set(key, value);
     } else {
       params.delete(key);
     }
-    
-    // اعمال تغییرات در URL بدون رفرش صفحه
+
     router.push(`?${params.toString()}`, { scroll: false });
   };
-  
+
+    const toEnglishDigits = (str: string) => {
+    return str
+      .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString())
+      .replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d).toString());
+  };
+
   const handleCheckInChange = (date: any) => {
     setCheckIn(date);
     if (date) {
-      const dateString = date.format("YYYY/MM/DD"); 
-      updateUrl("in", dateString);
+      const dateString = date.format("YYYY/MM/DD", "en");
+      updateUrl("out", toEnglishDigits(dateString));
     }
   };
+
+
 
   const handleCheckOutChange = (date: any) => {
     setCheckOut(date);
     if (date) {
-      const dateString = date.format("YYYY/MM/DD");
-      updateUrl("out", dateString);
+      const dateString = date.format("YYYY/MM/DD", "en");
+      updateUrl("in", toEnglishDigits(dateString));
     }
   };
-
   // 3. تابع مدیریت تعداد مسافران
   const handleGuestsSelect = (num: number) => {
     setGuests(num);
@@ -126,19 +137,27 @@ const Reserve = () => {
         </div>
 
         {/* انتخاب تعداد مسافران */}
-        <div className="relative border-b border-gray-100 mb-8" ref={dropdownRef}>
+        <div
+          className="relative border-b border-gray-100 mb-8"
+          ref={dropdownRef}
+        >
           <div
             onClick={() => setIsOpen(!isOpen)}
             className="w-full h-[60px] flex items-center justify-between cursor-pointer"
           >
             <div className="flex flex-col gap-1">
-              <span className="text-[#94A3B8] text-[11px]">انتخاب کن چند نفرین</span>
+              <span className="text-[#94A3B8] text-[11px]">
+                انتخاب کن چند نفرین
+              </span>
               <div className="flex items-center gap-2 text-[#475569] font-bold">
                 <Users size={18} className="text-[#94A3B8]" />
                 <span>{guests} نفر</span>
               </div>
             </div>
-            <ChevronDown size={18} className={`text-[#94A3B8] transition-transform ${isOpen ? "rotate-180" : ""}`} />
+            <ChevronDown
+              size={18}
+              className={`text-[#94A3B8] transition-transform ${isOpen ? "rotate-180" : ""}`}
+            />
           </div>
 
           {isOpen && (
@@ -160,7 +179,9 @@ const Reserve = () => {
         <div className="flex justify-between items-center mb-8">
           <div className="flex flex-col">
             <span className="text-[#64748B] text-[12px]">قیمت کل با تخفیف</span>
-            <span className="text-[#94A3B8] line-through text-[12px]">۲۵۰,۰۰۰,۰۰۰</span>
+            <span className="text-[#94A3B8] line-through text-[12px]">
+              ۲۵۰,۰۰۰,۰۰۰
+            </span>
           </div>
           <div className="text-[#0887CA] text-[20px] font-black">
             ۲۵۰,۰۰۰,۰۰۰ <span className="text-[12px]">تومان</span>

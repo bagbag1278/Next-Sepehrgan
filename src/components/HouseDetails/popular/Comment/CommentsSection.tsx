@@ -108,6 +108,7 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
               <p className="text-[12px] text-[#475569] leading-[50px]">
                 {reply.text}
               </p>
+              
             </div>
           ))}
         </div>

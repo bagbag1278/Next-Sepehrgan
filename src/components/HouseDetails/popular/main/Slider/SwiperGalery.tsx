@@ -6,7 +6,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
-import Slider from "@/components/HouseReserveDetails/icon/Slider/Slider";
+import Slider from "@/components/HouseDetails/icon/Slider/Slider";
 
 // ۱. تعریف تایپ برای پروپ‌هایی که کامپوننت می‌پذیرد
 interface SwiperGaleryProps {

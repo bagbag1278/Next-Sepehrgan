@@ -9,51 +9,60 @@ const nav = [
   { title: "صفحه اصلی", href: "/" },
   { title: "رزرو سریع", href: "/housereserve" },
 
-  { title: " رهن اجاره", href: "/mortgage" },
+  { title: " رهن اجاره", href: "/houserent" },
   { title: "وبلاگ", href: "/blog" },
   { title: "درباره ما", href: "/about" },
 ];
 
 const Header = () => {
   const pathname = usePathname();
-// max-w-[1300px] m-auto
+  // max-w-[1300px] m-auto
   return (
-    
     <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center lg:block xl:block">
       <div
         dir="rtl"
         className="flex justify-between  w-350  mt-[24px] dark:text-white"
       >
         <div className="lg:flex xl:flex items-center  whitespace-nowrap gap-5 hidden sm:hidden ">
-   {nav.map((item) => {  
-  const isActive = item.href === "/" 
-    ? pathname === "/" 
-    : pathname.startsWith(item.href);
+          {nav.map((item) => {
+            let isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href);
+                
+            if (item.title === "رزرو سریع" && pathname.startsWith("/housereserve")) {
+              isActive = true;
+            }
+            if (
+              item.title === " رهن اجاره" &&
+              pathname.startsWith("/houserent")
+            ) {
+              isActive = true;
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="relative flex flex-col items-center group"
+              >
+                <span
+                  className={`text-[16px] font-medium transition-all duration-300 ${
+                    isActive
+                      ? "text-[#28A5E6] mb-3" // رنگ آبی وقتی فعال است
+                      : "text-black dark:text-white"
+                  }`}
+                >
+                  {item.title}
+                </span>
 
-  return (
-    <Link
-      key={item.href}
-      href={item.href}
-      className="relative flex flex-col items-center group"
-    >
-      <span
-        className={`text-[16px] font-medium transition-all duration-300 ${
-          isActive
-            ? "text-[#28A5E6] mb-3" // رنگ آبی وقتی فعال است
-            : "text-black dark:text-white"
-        }`}
-      >
-        {item.title}
-      </span>
-
-      {isActive && (
-        <div className="absolute top-6">
-          <HeaderIcon3 />
-        </div>
-      )}
-    </Link>
-  );
-})}
+                {isActive && (
+                  <div className="absolute top-6">
+                    <HeaderIcon3 />
+                  </div>
+                )}
+              </Link>
+            );
+          })}
         </div>
         <div className=" dark:hidden justify-center  ">
           <HeroSction />
