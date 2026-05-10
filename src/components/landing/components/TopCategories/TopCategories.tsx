@@ -4,6 +4,11 @@ import Flood from '../../Icon/TopCategories/FloodIcon'
 import Store from '../../Icon/TopCategories/StoreIcon'
 import Duplex from '../../Icon/TopCategories/DuplexIcon'
 import EcoHouse from '../../Icon/TopCategories/EcoHouseIcon'
+import StoreDarkIcon from '../../Icon/TopCategories/StoreDarkIcon'
+import EcoHouseDarkIcon from '../../Icon/TopCategories/EcoHouseDarkIcon'
+import DuplexDarkIcon from '../../Icon/TopCategories/DuplexDarkIcon'
+import MansionDarkIcon from '../../Icon/TopCategories/MansionDarkIcon'
+import FloodDarkIcon from '../../Icon/TopCategories/FloodDarkIcon'
 
 const TopCategories = () => {
     return (
@@ -35,12 +40,15 @@ const TopCategories = () => {
                         >
                             <div className='w-33 h-32  flex flex-wrap justify-center'>
                                 <div className='w-full  flex justify-center'>
-                                    <div className='w-10 h-10  '>
+                                   <div className='not-dark:hidden  w-10 h-10  '>
                                         <Store />
+                                    </div>
+                                    <div className='hidden not-dark:flex w-10 h-10  '>
+                                        <StoreDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>
-                                    <div className='text-white  dark:text-blue-400 text-[18px] font-bold '>مغازه</div>
+                                    <div className='dark:text-white text-blue-400 text-[18px] font-bold '>مغازه</div>
                                     <div className='text-[13px] dark:text-[#adadad] text-blue-400 flex justify-center '>
                                         <div className='text-center '>سرمایه گذاری مطمئن،آینده روشن</div>
                                     </div>
@@ -55,8 +63,11 @@ const TopCategories = () => {
                         >
                             <div className='w-33 h-32  flex flex-wrap justify-center'>
                                 <div className='w-full  flex justify-center'>
-                                    <div className='w-10 h-10 '>
+                                    <div className='dark:flex hidden w-10 h-10 '>
                                         <Duplex />
+                                    </div>
+                                    <div className='not-dark:flex hidden w-10 h-10 '>
+                                        <EcoHouseDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full  h-20 flex-wrap justify-center gap-2'>
@@ -75,8 +86,11 @@ const TopCategories = () => {
                         >
                             <div className='w-33 h-32 flex flex-wrap justify-center'>
                                 <div className='w-full  flex justify-center'>
-                                    <div className='w-10 h-10'>
+                                    <div className='dark:flex hidden w-10 h-10'>
                                         <EcoHouse />
+                                    </div>
+                                    <div className='not-dark:flex hidden w-10 h-10'>
+                                     <DuplexDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>
@@ -95,8 +109,11 @@ const TopCategories = () => {
                         >
                             <div className='w-33 h-32  flex flex-wrap justify-center'>
                                 <div className='w-full  flex justify-center'>
-                                    <div className='w-10 h-10  '>
+                                    <div className='dark:flex hidden w-10 h-10'>
                                         <Mansion />
+                                    </div>
+                                    <div className='not-dark:flex hidden w-10 h-10'>
+                                     <MansionDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>
@@ -115,8 +132,11 @@ const TopCategories = () => {
                         >
                             <div className='w-33 h-32 flex flex-wrap justify-center'>
                                 <div className='w-full  flex justify-center'>
-                                    <div className='w-10 h-10 lg:flex hidden'>
-                                        <Flood  />
+                                     <div className='dark:flex hidden w-10 h-10'>
+                                        <Flood />
+                                    </div>
+                                    <div className='not-dark:flex hidden w-10 h-10'>
+                                     <FloodDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>
