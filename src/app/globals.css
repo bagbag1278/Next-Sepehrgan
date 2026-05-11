@@ -2,11 +2,14 @@
 @import 'swiper/css/pagination';
 @import 'swiper/css';
 @plugin "daisyui";
+
 :root {
   --background: #F5F5F5;
   --foreground: #000000;
 }
+
 @custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-scheme: dark;
 
@@ -27,18 +30,39 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #ededed;
-    --foreground:  #0a0a0a;
+    --foreground: #0a0a0a;
   }
-  }
+}
+
 .mySwiper .swiper-pagination-bullet {
-  background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
+  background-color: rgba(255, 255, 255, 0.7);
+  /* White with opacity */
   width: 12px;
   height: 12px;
-  margin: 0 1px; /* Add some spacing */
+  margin: 0 1px;
+  /* Add some spacing */
 }
+
 .mySwiper .swiper-pagination-bullet-active {
-  background-color: #F5F5F5; 
+  background-color: #F5F5F5;
   opacity: 1;
+}
+
+.category-swiper .swiper-wrapper {
+  padding: 8px 0;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: flex;
+  }
 }
 
 body {

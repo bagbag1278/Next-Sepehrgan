@@ -257,9 +257,9 @@ const Landing = () => {
               </button>
             </div>
             <div className='flex justify-center '>
-              <div className="relative w-[462px] h-[460px]">
+              <div className="relative w-115.5 h-115">
                 {/* بالا چپ: 126x175 */}
-                <div className="absolute left-[60px] top-[20px] w-[126px] h-[175px] flex flex-col items-center justify-center text-white">
+                <div className="absolute left-15 top-5 w-31.5 h-43.75 flex flex-col items-center justify-center text-white">
                   <div>
                     <BlueHouse />
                   </div>
@@ -269,14 +269,14 @@ const Landing = () => {
                 </div>
 
                 {/* بالا راست: 240x240 */}
-                <div className="absolute left-[245px] top-0 w-[240px] h-[240px] bg-center flex items-center justify-center overflow-hidden bg-center">
+                <div className="absolute left-61.25 top-0 w-60 h-60  flex items-center justify-center overflow-hidden bg-center">
 
                   <Photograph />
 
                 </div>
 
                 {/* پایین چپ: 240x240 */}
-                <div className="absolute left-[40px] top-[196px] w-[240px] h-[240px] bg-center flex items-center justify-center rounded-4xl overflow-hidden">
+                <div className="absolute left-10 top-49 w-60 h-60 bg-center flex items-center justify-center rounded-4xl overflow-hidden">
                   <Photograph2 />
                 </div>
 
