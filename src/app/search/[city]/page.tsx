@@ -114,7 +114,6 @@ const HeroDropdowns = () => {
         </ul>
       </div>
 
-      {/* ۳. دراپ‌دان تعداد نفرات */}
       <div className="dropdown dropdown-center absolute bo  bottom-[1px] mr-[340px]">
         <div
           tabIndex={0}
@@ -135,7 +134,6 @@ const HeroDropdowns = () => {
         </ul>
       </div>
 
-      {/* ۴. مقصد دقیق و دکمه جستجو */}
       <div className="dropdown dropdown-center absolute bottom-[1px] mr-[-235px]">
         <div
           tabIndex={0}
@@ -155,7 +153,6 @@ const HeroDropdowns = () => {
           ))}
         </ul>
 
-        {/* دکمه نهایی جستجو */}
         <div className="relative right-190 bottom-5">
           <button
             className="btn bg-[#060425] w-[120px] h-[48px] rounded-[16px] relative cursor-pointer text-white text-[14px] font-medium hover:bg-[#0a0835] transition-all flex items-center justify-center gap-2"

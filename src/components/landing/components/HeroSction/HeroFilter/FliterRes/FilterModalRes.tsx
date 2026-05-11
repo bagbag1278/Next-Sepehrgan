@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import SearchFilter from "../../Icon/IconAndd/Search/SearchFilter";
-import * as Slider from "@radix-ui/react-slider"; // اضافه شد
+import * as Slider from "@radix-ui/react-slider"; 
 
 const FilterModalRes = () => {
   const router = useRouter();
@@ -179,7 +179,6 @@ const FilterModalRes = () => {
               )}
             </div>
 
-            {/* ۳. اسلایدر قیمت حرفه‌ای Radix */}
             <div className="space-y-6 py-2">
               <div className="flex justify-between items-center px-2">
                 <div className="flex gap-1 text-[#0887CA] font-bold text-[14px]">
