@@ -1,5 +1,4 @@
 import React from 'react'
-import HouseReserveDetails from './[id]/page';
 
 const HouseReservePage = () => {
   return (
