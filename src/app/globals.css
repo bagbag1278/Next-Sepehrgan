@@ -4,6 +4,7 @@
     :root {
       --background: #F5F5F5;
       --foreground: #000000;
+      --font-iran: 'IRANSans';
     }
     @custom-variant dark (&:where(.dark, .dark *));
     @theme {
@@ -21,6 +22,7 @@
       --color-blue-300: #0887CA;
       --color-green-100: #15977D;
       --color-blue-400: #060425;
+      --color-red-100: #ED053F;
     }
     @media (prefers-color-scheme: dark) {
       :root {
@@ -32,7 +34,7 @@
       background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
       width: 12px;
       height: 12px;
-      margin: 0 1px; /* Add some spacing */
+      margin: 0 1px; 
     }
     .mySwiper .swiper-pagination-bullet-active {
       background-color: #F5F5F5;
@@ -40,32 +42,18 @@
     }
     body {
       font-family: Arial, Helvetica, sans-serif;
+       font-family: var(--font-iran);
+    
+    /* این خط باعث میشه اعداد انگلیسی (123) هم با استایل فونت فارسی نمایش داده بشن */
+    font-variant-numeric: tabular-nums; 
+
+    font-feature-settings: "ss01";
     }
 
-    /* --- استایل‌های سفارشی اسکرول‌بار --- */
-    .custom-div-scrollbar {
-      scrollbar-width: thin; /* Firefox */
-      scrollbar-color: #e0302b #d1d5db; /* thumb (نارنجی تیره‌تر) | track (خاکستری) */
-    }
 
-    /* Chrome / Safari / Edge */
-    .custom-div-scrollbar::-webkit-scrollbar {
-      width: 8px;
-    }
 
-    .custom-div-scrollbar::-webkit-scrollbar-track {
-      background: #d1d5db;
-      border-radius: 9999px;
-    }
 
-    .custom-div-scrollbar::-webkit-scrollbar-thumb {
-      background-color: #f63e3b; /* رنگ اصلی نارنجی */
-      border-radius: 9999px;
-      border: 2px solid #d1d5db;
-      background-clip: content-box;
-    }
-    .custom-div-scrollbar::-webkit-scrollbar-thumb:hover {
-      background-color: #e0302b; /* نارنجی تیره‌تر برای hover */
-    }
+
+
 
 
