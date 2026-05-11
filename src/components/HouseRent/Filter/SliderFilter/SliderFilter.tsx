@@ -2,8 +2,6 @@
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { categories } from './Categories';
@@ -15,7 +13,7 @@ import { categories } from './Categories';
 const SliderFilter = () => {
     return (
         <div className="w-full bg-white py-4 border-b border-gray-100">
-            {/* Container with max-width 1248px */}
+
             <div className="relative max-w-312 mx-auto px-4 overflow-hidden border border-black ">
                 <Swiper
                     modules={[Navigation]}
@@ -45,7 +43,6 @@ const SliderFilter = () => {
                     ))}
                 </Swiper>
 
-                {/* Custom Navigation Buttons */}
                 <button
                     className="swiper-button-prev w-7 h-7 rounded-full bg-white dark:bg-blue-100 p-2
                      transition-all active:scale-95  border border-gray-400 "

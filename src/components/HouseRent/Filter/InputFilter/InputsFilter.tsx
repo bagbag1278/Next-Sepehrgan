@@ -41,7 +41,6 @@ export default function FilterBar() {
     const dropdownRef2 = useRef<HTMLDivElement>(null);
     const dropdownRef3 = useRef<HTMLDivElement>(null);
 
-    // بستن دراپ‌داون با کلیک خارج
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (!dropdownRef1.current?.contains(event.target as Node)) setOpen1(false);
@@ -74,7 +73,6 @@ export default function FilterBar() {
                 />
             </button>
 
-            {/* Dropdown Menu - DailyUI Style */}
             {isOpen && (
                 <div className="absolute mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 max-h-55 overflow-y-auto custom-scroll">
                     {options.map((item: string, index: number) => (
@@ -98,7 +96,6 @@ export default function FilterBar() {
         <div className="w-full border border-gray-100 shadow-sm p-3 flex items-center justify-center bg-white" dir="ltr">
             <div className="w-312 flex items-center gap-4">
 
-                {/* Dropdowns */}
                 <div className="flex items-center gap-3 flex-1">
                     <Dropdown
                         options={transactionTypes}
@@ -128,7 +125,6 @@ export default function FilterBar() {
                     />
                 </div>
 
-                {/* Search */}
                 <div className="flex-1 relative max-w-md">
                     <div className="relative">
                         <input
