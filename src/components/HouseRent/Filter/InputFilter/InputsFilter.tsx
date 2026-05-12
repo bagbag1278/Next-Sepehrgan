@@ -60,10 +60,10 @@ export default function FilterBar() {
         setIsOpen,
         ref
     }: any) => (
-        <div className="relative" ref={ref}>
+        <div className="relative " ref={ref}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-between gap-3 px-5 py-3 bg-white border border-[#0887CAB2] rounded-2xl hover:border-blue-500 active:scale-[0.985] transition-all min-w-45 w-full group"
+                className="flex items-center justify-between gap-3 px-5 py-3 border border-[#0887CAB2] rounded-2xl hover:border-blue-500 active:scale-[0.985] transition-all min-w-45 w-full group"
             >
                 <span className="text-[#0887CAB2] text-sm font-medium truncate">
                     {selected}
@@ -93,7 +93,7 @@ export default function FilterBar() {
     );
 
     return (
-        <div className="w-full border border-gray-100 shadow-sm p-3 flex items-center justify-center bg-white" dir="ltr">
+        <div className="w-full p-3 flex items-center justify-center" dir="ltr">
             <div className="w-312 flex items-center gap-4">
 
                 <div className="flex items-center gap-3 flex-1">
@@ -125,7 +125,7 @@ export default function FilterBar() {
                     />
                 </div>
 
-                <div className="flex-1 relative max-w-md">
+                <div className="flex-1 relative ">
                     <div className="relative">
                         <input
                             dir="rtl"
@@ -133,7 +133,7 @@ export default function FilterBar() {
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
                             placeholder="نام هتل، منطقه یا آدرس مورد نظر ..."
-                            className="w-full outline-none bg-white border border-[#0887CAB2] rounded-2xl py-3 pl-5 pr-8 text-sm  placeholder:text-[#0887CAB2]"
+                            className="w-full outline-none  border border-[#0887CAB2] rounded-2xl py-3 pl-5 pr-8 text-sm  placeholder:text-[#0887CAB2]"
                         />
                         <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
                             <SearchIcon />
