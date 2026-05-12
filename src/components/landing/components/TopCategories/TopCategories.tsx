@@ -35,12 +35,14 @@ const TopCategories = () => {
                     <div className='lg:w-full lg:h-auto h-90.5 w-85.5  flex flex-wrap justify-between'>
                         {/* ///// */}
                         <div
-                            className='w-39.75 h-40 cursor-pointer   dark:drop-shadow-[(0px 0px 10px rgba(0, 94, 164, 0.5))] dark:hover:bg-slate-950 hover:border-amber-100 p-[14.5px] rounded-2xl '
-                        
+                            className='w-39.75 h-40 cursor-pointer hover:border hover:border-blue-500/20 dark:hover:bg-slate-950 p-[14.5px] rounded-2xl '
+                            style={{
+                                filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
+                            }}
                         >
                             <div className='w-33 h-32  flex flex-wrap justify-center'>
                                 <div className='w-full  flex justify-center'>
-                                   <div className='not-dark:hidden  w-10 h-10  '>
+                                    <div className='not-dark:hidden  w-10 h-10  '>
                                         <Store />
                                     </div>
                                     <div className='hidden not-dark:flex w-10 h-10  '>
@@ -56,7 +58,7 @@ const TopCategories = () => {
                             </div>
                         </div>
                         {/* ///// */}
-                        <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8 dark:hover:bg-slate-950  hover:border-amber-100 p-[14.5px] rounded-2xl '
+                        <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8  hover:border hover:border-blue-500/20 dark:hover:bg-slate-950  p-[14.5px] rounded-2xl '
                             style={{
                                 filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                             }}
@@ -79,7 +81,7 @@ const TopCategories = () => {
                             </div>
                         </div>
                         {/* ///// */}
-                        <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-12 rounded-2xl dark:hover:bg-slate-950 not-dark::hover:border hover:border-amber-100 p-[14.5px]'
+                        <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-12 rounded-2xl  hover:border hover:border-blue-500/20 dark:hover:bg-slate-950 not-dark::hover:border p-[14.5px]'
                             style={{
                                 filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                             }}
@@ -90,7 +92,7 @@ const TopCategories = () => {
                                         <EcoHouse />
                                     </div>
                                     <div className='not-dark:flex hidden w-10 h-10'>
-                                     <DuplexDarkIcon />
+                                        <DuplexDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>
@@ -102,7 +104,7 @@ const TopCategories = () => {
                             </div>
                         </div>
                         {/* ///// */}
-                        <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8 dark:hover:bg-slate-950 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl '
+                        <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8 dark:hover:bg-slate-950 not-dark::hover:border  hover:border hover:border-blue-500/20 p-[14.5px] rounded-2xl '
                             style={{
                                 filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                             }}
@@ -113,7 +115,7 @@ const TopCategories = () => {
                                         <Mansion />
                                     </div>
                                     <div className='not-dark:flex hidden w-10 h-10'>
-                                     <MansionDarkIcon />
+                                        <MansionDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>
@@ -125,18 +127,18 @@ const TopCategories = () => {
                             </div>
                         </div>
                         {/* ///// */}
-                        <div className='hidden lg:flex w-39.75 h-40 cursor-pointer  dark:hover:bg-slate-950 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl'
+                        <div className='hidden lg:flex w-39.75 h-40 cursor-pointer  dark:hover:bg-slate-950 not-dark::hover:border  hover:border hover:border-blue-500/20 p-[14.5px] rounded-2xl'
                             style={{
                                 filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                             }}
                         >
                             <div className='w-33 h-32 flex flex-wrap justify-center'>
                                 <div className='w-full  flex justify-center'>
-                                     <div className='dark:flex hidden w-10 h-10'>
+                                    <div className='dark:flex hidden w-10 h-10'>
                                         <Flood />
                                     </div>
                                     <div className='not-dark:flex hidden w-10 h-10'>
-                                     <FloodDarkIcon />
+                                        <FloodDarkIcon />
                                     </div>
                                 </div>
                                 <div className='flex w-full h-20 flex-wrap justify-center gap-2'>

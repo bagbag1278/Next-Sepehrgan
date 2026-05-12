@@ -33,9 +33,9 @@ const SecoundContainer = () => {
                         <div className='z-50 mr-1 w-103.75 h-65 flex items-center justify-between flex-wrap '>
                             <div className='w-70.75 h-17  '>
                                 <div className='w-60 h-7 text-[14px]  text-blue-300 '>سفر به طبیعت، با عشق و اعتماد !  </div>
-                                <div className='w-41.5 h-7.75 text-[20px] text-[#F5F5F5]  '>معرفی رهن کده</div>
+                                <div className='w-41.5 h-7.75 text-[20px] text-blue-400 dark:text-[#F5F5F5]  '>معرفی رهن کده</div>
                             </div>
-                            <div className='w-101.25  text-[#F5F5F5D9] flex items-center '>
+                            <div className='w-101.25  dark:text-[#F5F5F5D9] text-blue-400 flex items-center '>
                                 <div>
                                     در رهن کده ، ما به شما این امکان را می‌دهیم که به سادگی و با
                                     اطمینان، به دنیای گسترده‌ای از املاک دسترسی پیدا کنید و بتوانید ...
@@ -54,8 +54,8 @@ const SecoundContainer = () => {
                                 <BlueHouse />
                             </div>
 
-                            <div className="text-xl font-bold mt-5">۲۰۰ واحد</div>
-                            <div className="text-[13px] text-white/80 mt-4 text-center">از هزاران خانه، خانه رویایی را بیابید</div>
+                            <div className="text-xl  text-blue-400 dark:text-white/80 font-bold mt-5">۲۰۰ واحد</div>
+                            <div className="text-[13px] text-blue-400 dark:text-white/80 mt-4 text-center">از هزاران خانه، خانه رویایی را بیابید</div>
                         </div>
 
                         <div className="absolute left-61.25 top-0 w-60 h-60 flex items-center justify-center overflow-hidden bg-center">
@@ -72,8 +72,8 @@ const SecoundContainer = () => {
                             <div className='mb-5 ' >
                                 <BlueImage />
                             </div>
-                            <div className="font-bold mt-2   ">پشتبانی 24 ساعته</div>
-                            <div className="w-33.75 h-12.5 text-center text-sm font-semibold mt-4.5  text-white/80"> پشتیبانی بی‌وقفه، تضمین رضایت</div>
+                            <div className="font-bold  text-blue-400 dark:text-white/80  ">پشتبانی 24 ساعته</div>
+                            <div className="w-33.75 h-12.5 text-center text-[13px] font-semibold mt-4.5 text-blue-400 dark:text-white/80"> پشتیبانی بی‌وقفه، تضمین رضایت</div>
                         </div>
 
                     
