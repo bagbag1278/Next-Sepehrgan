@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import toast from "react-hot-toast";
 
 const getItem = (key: string) => {
@@ -17,48 +17,48 @@ const http = axios.create({
   baseURL,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSuccess = (response: any) => {
-  console.log("interceptor response:", response);
+type ApiSuccessResponse = {
+  success?: boolean;
+  message?: string;
+};
 
-  if (response?.data?.success !== undefined && !response.data.success) {
-    toast.error(response.data.message);
-  } else if (response?.data?.success !== undefined && response.data.success) {
-    toast(response.data.message);
+// response interceptor
+const onSuccess = (response: { data: ApiSuccessResponse }) => {
+  const data = response?.data;
+
+  if (data?.success === false && data?.message) {
+    toast.error(data.message);
+  } else if (data?.success === true && data?.message) {
+    toast.success(data.message);
   }
 
   return response.data;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onError = (err: any) => {
-  console.log("interceptor error:", err);
-
-  const status = err?.response?.status;
+const onError = (err: AxiosError<{ message?: string }>) => {
+  const status = err.response?.status;
 
   if (status === 401) {
-    removeItem("token");
-
-    // window.location.pathname = "/";
+    removeItem("accessToken");
+    removeItem("refreshToken");
     toast.error("لطفا دوباره وارد شوید");
   }
 
-  if (status >= 400 && status < 500) {
-    // alert("Client error: " + status);
-  }
+  const message =
+    err.response?.data?.message || err.message || "خطایی رخ داده است";
+
+  toast.error(message);
 
   return Promise.reject(err);
 };
 
 http.interceptors.response.use(onSuccess, onError);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-http.interceptors.request.use((opt: any) => {
-  const token = getItem("token");
+http.interceptors.request.use((opt: InternalAxiosRequestConfig) => {
+  const token = getItem("accessToken");
 
   if (token) {
-    opt.headers = opt.headers ?? {};
-    opt.headers.Authorization = "Bearer " + token;
+    opt.headers.Authorization = `Bearer ${token}`;
   }
 
   return opt;

@@ -28,7 +28,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, delay = 5000 }) => {
   }, []);
 
   return (
-    <div className={`rounded-bl-[50px] overflow-hidden rounded-tl-[50px]`}>
+    <div className={``}>
       {" "}
       <Swiper
         modules={[Autoplay, Pagination]}

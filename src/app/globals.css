@@ -1,41 +1,58 @@
-@import "tailwindcss";
-@import 'swiper/css/pagination';
-@import 'swiper/css';
-:root {
-  --background: #F5F5F5;
-  --foreground: #000000;
-}
-@custom-variant dark (&:where(.dark, .dark *));
+    @import "tailwindcss";
+    /* @plugin "daisyui"; */
 
-@theme {
-  --color-scheme: dark;
+    :root {
+      --background: #F5F5F5;
+      --foreground: #000000;
+      --font-iran: 'IRANSans';
+    }
+    @custom-variant dark (&:where(.dark, .dark *));
+    @theme {
+      --color-scheme: dark;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+      --font-sans: var(--font-geist-sans);
+      --font-mono: var(--font-geist-mono);
 
-  /* Colors */
-  --color-blue-100: #10088F;
-  --color-blue-200: #005EA4;
-  --color-blue-300: #0887CA;
-  --color-green-100: #15977D;
-  --color-blue-400: #060425;
-  --color-green-200: #05ED6A;
-}
+      /* Colors */
+      --color-blue-100: #10088F;
+      --color-blue-200: #005EA4;
+      --color-blue-300: #0887CA;
+      --color-green-100: #15977D;
+      --color-blue-400: #060425;
+      --color-red-100: #ED053F;
+      --color-green-200: #05ED6A;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #ededed;
+        --foreground:  #0a0a0a;
+      }
+    }
+    .mySwiper .swiper-pagination-bullet {
+      background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
+      width: 12px;
+      height: 12px;
+      margin: 0 1px; 
+    }
+    .mySwiper .swiper-pagination-bullet-active {
+      background-color: #F5F5F5;
+      opacity: 1;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+       font-family: var(--font-iran);
+    font-variant-numeric: tabular-nums; 
 
-.mySwiper .swiper-pagination-bullet {
-  background-color: rgba(255, 255, 255, 0.7);
-  width: 12px;
-  height: 12px;
-  margin: 0 1px;
-}
-.mySwiper .swiper-pagination-bullet-active {
-  background-color: #F5F5F5; 
-  opacity: 1;
-}
+    font-feature-settings: "ss01";
+    }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+
+
+
+
+
+
+

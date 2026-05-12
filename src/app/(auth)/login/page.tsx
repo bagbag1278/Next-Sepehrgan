@@ -1,4 +1,5 @@
 "use client";
+import ImageSlider from "@/components/Auth/ImgSlider/ImageSlider";
 import LoginForm from "@/components/Auth/Login/LoginForm";
 import CircularDropdown from "@/components/common/AuthMenu/AuthMenu";
 import GoogleLogin from "@/components/common/GooleLogin/GoogleLogin";
@@ -7,8 +8,14 @@ import Image from "next/image";
 import React from "react";
 
 const LoginPage = () => {
+  const slideImages = [
+    { src: "/auth/left.png", alt: "Slide 1 Description" },
+    { src: "/auth/left.png", alt: "Slide 2 Description" },
+    { src: "/auth/left.png", alt: "Slide 3 Description" },
+    { src: "/auth/left.png", alt: "Slide 4 Description" },
+  ];
   return (
-    <div dir="rtl" className=" h-179.5 flex justify-between relative">
+    <div dir="rtl" className="h-179.5 flex justify-between relative">
       <div className="w-180 mr-2">
         <div className="absolute right-24  top-3.5">
           <CircularDropdown />
@@ -39,8 +46,20 @@ const LoginPage = () => {
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="w-[48%] h-175.25 ml-2 mt-2 rounded-br-[50px] rounded-tr-[50px] :hidden">
-        <Image src={"/auth/left.png"} alt="left" width={688} height={700} />
+      <div className="w-[48%] relative h-175.25 ml-2 mt-2 rounded-br-[50px] rounded-tr-[50px] hidden md:block">
+        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col gap-4">
+          <h3 className="text-2xl font-bold text-center">
+            وارد رهن کده شو و خونت رو پیدا کن !!!
+          </h3>
+          <p className="text-white/85 text-center">
+            وارد شو و با یک قدم ساده، به سوی خونه‌ای که همیشه آرزوش را داشتی،
+            برو!
+          </p>
+          <span className="text-[14px] text-white/85 text-center">
+            صفا باشه! عشق باشه! معرفت باشه!
+          </span>
+        </div>
+        <ImageSlider images={slideImages} delay={5000} />
       </div>
     </div>
   );

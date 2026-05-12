@@ -1,17 +1,20 @@
 "use client";
 
+import { login } from "@/core/api/authApi";
 import { checkPasswordStrength } from "@/core/validation/PassWord";
 import Link from "next/link";
-import { useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 
 const LoginForm = () => {
-  const { pending } = useFormStatus();
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
   const [showPassword, setShowPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -28,8 +31,50 @@ const LoginForm = () => {
     if (strength === 3) return "border-green-100 text-green-100";
     return "border-blue-300";
   };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (loading) return;
+
+    const formData = new FormData(e.currentTarget);
+    const email = String(formData.get("email") ?? "").trim();
+    const pwd = String(formData.get("password") ?? "").trim();
+
+    if (!email) {
+      alert("ایمیل را وارد کنید");
+      return;
+    }
+
+    if (!pwd) {
+      alert("رمز عبور را وارد کنید");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await login({ email, password: pwd });
+
+      const accessToken = res?.accessToken;
+      const refreshToken = res?.refreshToken;
+
+      if (typeof window !== "undefined") {
+        if (accessToken) localStorage.setItem("accessToken", accessToken);
+        if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
+      }
+      router.push("/");
+
+      toast.success("خوش آمدید");
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form className=" mt-6 flex flex-col justify-between gap-6">
+    <form
+      onSubmit={handleSubmit}
+      className=" mt-6 flex flex-col justify-between gap-6"
+    >
       <div className="flex flex-col gap-2 relative">
         {" "}
         <input
@@ -137,26 +182,32 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
         </div>
       </div>
       <div className="w-107.5 h-5 flex justify-between items-center ">
-        <span className="text-blue-100 text-[13px] underline font-medium dark:text-white">
+        <Link
+          href={"/loginphone"}
+          className="text-blue-100 text-[13px] underline underline-offset-4 font-medium dark:text-white"
+        >
           ورود با شماره موبایل
-        </span>
-        <span className="text-blue-300 text-[11px] underline font-medium decoration">
+        </Link>
+        <Link
+          href={"/forgetpass"}
+          className="text-blue-300 text-[11px] underline underline-offset-4 font-medium decoration"
+        >
           رمز عبور خود را فراموش کردید؟
-        </span>
+        </Link>
       </div>
       <button
         type="submit"
-        disabled={pending}
-        className={`w-full h-12 rounded-2xl ${
-          pending ? "bg-blue-300" : "bg-blue-100 hover:bg-blue-200"
-        } transition-colors duration-200 text-white`}
+        disabled={loading}
+        className="w-full h-12 rounded-2xl
+           bg-blue-100  hover:bg-blue-200
+         transition-colors duration-200 text-white disabled:bg-blue-400/50"
       >
-        {pending ? "در حال ورود..." : "ورود"}
+        {loading ? "در حال ورود..." : "ورود"}
       </button>
       <div className="h-6 mx-auto flex gap-0.5 justify-center items-center">
         <h6 className="font-normal text-[13px]">حساب کاربری ندارید ؟</h6>
         <Link href={"/register"}>
-          <h5 className="text-blue-100 font-medium text-[15px] underline dark:text-blue-300">
+          <h5 className="text-blue-100 font-medium text-[15px] underline underline-offset-4 dark:text-blue-300">
             ثبت نام
           </h5>
         </Link>
