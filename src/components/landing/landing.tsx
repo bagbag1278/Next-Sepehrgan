@@ -5,10 +5,12 @@ import TopCategories from './components/TopCategories/TopCategories';
 import FirstContainer from './components/FirstContainer/FirstContainer';
 import BuyAndSellSlider from './components/BuyAndSellSlider/BuyAndSellSlider';
 import UserComments from './components/Comments/UserComments';
+import HeroSction from './components/HeroSction/HeroSction';
 
 const Landing = () => {
   return (
     <div className=' w-full flex flex-col gap-18' dir='rtl'>
+      <HeroSction/>
       {/* **** Top categories **** */}
       <TopCategories />
       {/* **** buy and sell sliedr **** */}
