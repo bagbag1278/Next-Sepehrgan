@@ -1,26 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // useEffect اضافه شد
 import { MessageSquare, ChevronDown, Reply } from "lucide-react";
-import ProfilComment from "../../icon/icon/ProfilComment";
-import StarRate from "../../icon/icon/StarRate";
+import ProfilComment from "../../../../../../../components/HouseDetails/icon/icon/ProfilComment";
+import StarRate from "../../../../../../../components/HouseDetails/icon/icon/StarRate";
 import AddComment from "./AddComment";
 
-// کامپوننت کارت نظر (شامل منطق پاسخ‌ها)
 const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
   const [showReplies, setShowReplies] = useState(false);
   const [isReplyInputOpen, setIsReplyInputOpen] = useState(false);
 
   return (
-    <div className="flex flex-col w-full mb-10  ">
-      {/* کارت اصلی نظر */}
-      <div className="w-162 h-28 bg-[#F5F8FA] rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] p-6 border  border-[#E8EFF3] shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)]">
+    <div className="flex flex-col w-full mb-10">
+      <div className="w-162 h-28 bg-[#F5F8FA] rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] p-6 border border-[#E8EFF3] shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)]">
         <div className="flex justify-between items-start mb-4">
           <div className="flex gap-4 items-center -mb-6">
             <div className="w-[52px] h-[52px] rounded-full bg-[#E2E8F0] flex items-center justify-center relative bottom-4 right-1 text-gray-500 border-2 border-white shadow-sm overflow-hidden">
               <ProfilComment />
             </div>
-
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-3">
                 <h4 className="font-bold text-[#060425] text-[15px] relative bottom-6 right-1">
@@ -28,7 +25,7 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
                 </h4>
                 {rate && (
                   <div className="flex items-center gap-1 bg-white px-2 py-0.5 rounded-full border relative bottom-6 right-1 border-[#F1F5F9]">
-                    <span className="text-[11px] font-bold text-[#64748B] ">
+                    <span className="text-[11px] font-bold text-[#64748B]">
                       {rate}
                     </span>
                     <StarRate />
@@ -41,11 +38,9 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
             </div>
           </div>
         </div>
-
         <p className="text-[#475569] text-[13px] leading-[22px] text-right whitespace-nowrap relative bottom-6 mr-14 px-2">
           {text}
         </p>
-
         <div className="flex justify-start gap-8 items-center border-t border-gray-100 pt-4 relative bottom-6">
           {replies.length > 0 && (
             <button
@@ -59,7 +54,6 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
               مشاهده پاسخ‌ها ({replies.length})
             </button>
           )}
-
           <button
             onClick={() => setIsReplyInputOpen(!isReplyInputOpen)}
             className="flex items-center gap-2 text-[12px] text-[#0887CA] font-bold hover:opacity-70 transition-opacity"
@@ -68,7 +62,6 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
             <span>پاسخ دادن</span>
           </button>
         </div>
-
         {isReplyInputOpen && (
           <div className="flex gap-2 relative bottom-3 z-20">
             <input
@@ -82,21 +75,20 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
           </div>
         )}
       </div>
-        {/* Replay */}
       {showReplies && (
         <div className="mr-3 mt-11 border-r-2 border-gray-200 pr-4 flex flex-col gap-3">
           {replies.map((reply: any) => (
             <div
               key={reply.id}
-              className="w-150 h-28 bg-green-50 rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] p-6 border  border-[#E8EFF3] shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)]"
+              className="w-150 h-28 bg-green-50 rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] p-6 border border-[#E8EFF3] shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)]"
             >
               <div className="flex justify-between items-center mb-2">
                 <div className="w-[52px] h-[52px] rounded-full bg-[#E2E8F0] flex items-center justify-center absolute text-gray-500 border-2 border-white shadow-sm overflow-hidden">
                   <ProfilComment />
                 </div>
                 <div className="flex items-center gap-1 bg-[#0887CA0D] px-2 py-0.5 rounded-full border absolute right-35 border-[#F1F5F9]">
-                  <span className="text-[11px] font-bold text-[#64748B] ">
-                    {rate}
+                  <span className="text-[11px] font-bold text-[#64748B]">
+                    {reply.rate || rate}
                   </span>
                   <StarRate />
                 </div>
@@ -108,7 +100,6 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
               <p className="text-[12px] text-[#475569] leading-[50px]">
                 {reply.text}
               </p>
-              
             </div>
           ))}
         </div>
@@ -117,59 +108,74 @@ const CommentCard = ({ name, date, rate, text, replies = [] }: any) => {
   );
 };
 
-const CommentsSection = ({ houseId }: { houseId: any }) => {  
+const CommentsSection = ({ houseId }: { houseId: any }) => {
+  // تعریف استیت برای ذخیره کامنت‌ها
+  const [comments, setComments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+const fetchComments = async () => {
+  try {
+    setLoading(true);
+    const response = await fetch(`http://next.genzuni.website/api/comments/${houseId}`);
+    const result = await response.json();
+
+
+
+
+    let rawList = [];
+    if (Array.isArray(result)) {
+      rawList = result;
+    } else if (result && typeof result === 'object' && result.id) {
+      rawList = [result];
+    }
+
   
-  const comments = [
-    {
-      id: 1,
-      name: "غزال بانو",
-      date: "۱۸ خرداد ۱۴۰۴",
-      rate: "۴.۵",
-      text: "من به تازگی از وب‌سایت رهن کده برای جستجوی یک خانه جدید استفاده کردم واقعا عالی بود .",
-      replies: [
-        {
-          id: 101,
-          rate: "۴.۵",
-          name: "پشتیبانی رهن کده",
-          date: "۱۹ خرداد ۱۴۰۴",
-          text: "خوشحالیم که تجربه خوبی داشتید غزال عزیز.",
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "خانم احمدی",
-      date: "۲۰ خرداد ۱۴۰۴",
-      rate: "۴.۰",
-      text: "امکان مقایسه قیمت‌ها خیلی به من کمک کرد.",
-      replies: [],
-    },
-    {
-      id: 3,
-      name: "خانم احمدی",
-      date: "۲۰ خرداد ۱۴۰۴",
-      rate: "۴.۰",
-      text: "امکان مقایسه قیمت‌ها خیلی به من کمک کرد.",
-      replies: [],
-    },
-  ];
+    const formattedComments = rawList.map((comment: any) => ({
+      id: comment.id,
+      name: comment.user 
+        ? `${comment.user.firstName} ${comment.user.lastName}` 
+        : (comment.title || "کاربر مهمان"),
+      date: comment.created_at 
+        ? new Date(comment.created_at).toLocaleDateString("fa-IR") 
+        : "۱۴۰۴/۰۳/۱۵",
+      rate: comment.rating ? comment.rating.toString() : "۰",
+      text: comment.caption || "بدون متن",
+      replies: [] 
+    }));
+
+    setComments(formattedComments);
+  } catch (error) {
+    console.error("خطا در دریافت یا پردازش دیتا:", error);
+    setComments([]);
+  } finally {
+    setLoading(false);
+  }
+};
+    if (houseId) {
+      fetchComments();
+    }
+  }, [houseId]);
 
   return (
     <div className="w-full max-w-[850px] mx-auto p-6" dir="rtl">
       <div className="flex justify-between items-center mb-10 px-2">
-        <h2 className="text-[#10088F] text-[18px] font-bold relative  left-6">
+        <h2 className="text-[#10088F] text-[18px] font-bold relative left-6">
           نظرات دیگر کاربران ({comments.length})
         </h2>
         <div className="relative right-8">
-                  <AddComment />
-
+          <AddComment />
         </div>
       </div>
 
       <div className="flex flex-col">
-        {comments.map((comment) => (
-          <CommentCard key={comment.id} {...comment} />
-        ))}
+        {loading ? (
+          <div className="text-center py-10 text-gray-500">در حال بارگذاری نظرات...</div>
+        ) : (
+          comments.map((comment) => (
+            <CommentCard key={comment.id} {...comment} />
+          ))
+        )}
       </div>
 
       <button className="flex justify-center items-center w-full mt-8 text-[14px] font-medium text-[#005EA4] hover:underline gap-2">

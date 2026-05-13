@@ -8,25 +8,22 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Slider from "@/components/HouseDetails/icon/Slider/Slider";
 
-// ۱. تعریف تایپ برای پروپ‌هایی که کامپوننت می‌پذیرد
 interface SwiperGaleryProps {
-  images?: { url: string }[]; // فرض بر این است که API آرایه‌ای از اشیا شامل url برمی‌گرداند
+  images?: { url: string }[];
 }
 
 const SwiperGalery = ({ images }: SwiperGaleryProps) => {
-  // ۲. اگر عکس از API نیامد، از عکس‌های پیش‌فرض استفاده کن تا صفحه خالی نباشد
   const defaultImages = [
     "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200",
     "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200",
   ];
 
-  // تبدیل دیتای API به آرایه‌ای از رشته‌ها برای استفاده راحت‌تر
   const displayImages = images && images.length > 0 
     ? images.map(img => img.url) 
     : defaultImages;
 
   return (
-    <div className="w-full py-10 bg-white overflow-hidden">
+    <div className="w-full py-10  overflow-hidden dark:text-white ">
       <Swiper
         modules={[Navigation, Autoplay]}
         spaceBetween={40} 
@@ -44,7 +41,6 @@ const SwiperGalery = ({ images }: SwiperGaleryProps) => {
       >
         {displayImages.map((imgUrl, index) => (
           <SwiperSlide key={index}>
-            {/* اینجا مطمئن شو کامپوننت Slider هم پروپ imageSrc را در تایپ خود دارد */}
             <Slider imageSrc={imgUrl} />
           </SwiperSlide>
         ))}

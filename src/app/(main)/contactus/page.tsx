@@ -2,7 +2,7 @@ import React from 'react'
 
 const ContactUsPage = () => {
   return (
-    <div>
+    <div className='min-h-min'>
       
     </div>
   )

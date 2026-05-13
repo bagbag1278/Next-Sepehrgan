@@ -2,7 +2,8 @@ import React from 'react'
 
 const HouseReservePage = () => {
   return (
-    <div className=' '>
+    <div className="">
+      
     </div>
   )
 }

@@ -1,36 +1,29 @@
+// فایل اصلی: src/app/layout.tsx
 
+"use client";
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
-
-import { Geist, Geist_Mono } from "next/font/google";
+import { usePathname } from "next/navigation";
 import LocalFont from "next/font/local";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 const iran = LocalFont({
-  src: "../assets/font/IRANSans-web.woff",
+  src: "../assets/font/IRANSans-web.woff", 
 });
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
-  return (
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  
+  const isBookingPage = pathname?.includes("/booking");
 
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
-      >
-        {" "}
+  return (
+    <html lang="fa" dir="ltr" suppressHydrationWarning>
+      <body className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -38,8 +31,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          {children}
-          <Footer />
+          
+          <main>{children}</main>
+          
+          {!isBookingPage && <Footer />}
         </ThemeProvider>
       </body>
     </html>
