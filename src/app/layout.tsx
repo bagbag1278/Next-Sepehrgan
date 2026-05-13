@@ -1,12 +1,18 @@
-// فایل اصلی: src/app/layout.tsx
-
-"use client";
 import "./globals.css";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
-import { usePathname } from "next/navigation";
+
+import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff", 
@@ -14,27 +20,23 @@ const iran = LocalFont({
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  const pathname = usePathname();
-  
-  const isBookingPage = pathname?.includes("/booking");
-
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fa" dir="ltr" suppressHydrationWarning>
-      <body className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}>
+
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-[#121212] dark:text-white`}
+      >
+        {" "}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          
-          <main>{children}</main>
-          
-          {!isBookingPage && <Footer />}
+
+          {children}
+            
         </ThemeProvider>
       </body>
     </html>

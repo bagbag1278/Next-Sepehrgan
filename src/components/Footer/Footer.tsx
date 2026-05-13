@@ -9,24 +9,23 @@ import LocationIcon from './Icon/LocationIcon';
 import PhoneIcon from './Icon/PhoneIcon';
 import EmailIcon from './Icon/EmailIcon';
 import LogoF from './Icon/LogoF';
-import ArrowUp from './Icon/ArrowUp';
-import VectorUp from './Icon/VectorUp';
+import BacktoTopButton from './BackToTopButton/BacktoTopButton';
 
 const Footer = () => {
   return (
-    <div className=' w-full flex justify-center border '>
-      <div className='relative w-full border border-white '>
+    <div className=' w-full hidden sm:flex justify-center '>
+      <div className='w-full  relative'>
 
-      <div className='flex items-end w-full h-125 border border-white '>
+      <div className='flex items-end w-full h-125'>
 
-        <div className='w-full h-91.5 rounded-tl-[200px] flex-wrap bg-blue-200 dark:bg-blue-400 flex justify-center items-center '>
-          <div className='w-268.75 h-70 flex flex-wrap gap-4 '>
-            <div className='w-268.75 h-45  flex justify-between items-center ' >
-              <div className='w-167.5 h-45 flex justify-between '>
-                <div className='w-48 h-full flex flex-col gap-6 ' dir='rtl'>
+        <div className=' w-full h-91.5 rounded-tl-[200px] flex-wrap bg-blue-200 dark:bg-blue-400 flex justify-center items-center '>
+          <div className='lg:w-268.75 w-100  flex flex-col lg:flex-wrap border flex-wrap border-white  gap-4 justify-center items-center mr-17 '>
+            <div className='xl:w-268.75 flex-wrap w-110 lg:w-186  flex justify-center lg:justify-between  items-center border border-white ' >
+              <div className='xl:w-167.5 w-90 h-45 flex xl:justify-between justify-center border border-white '>
+                <div className='w-48 h-full hidden xl:flex flex-col gap-6 ' dir='rtl'>
                   <div className='w-28.5 h-4.5  text-white '>محلات محبوب</div>
-                  <div className='flex flex-col gap-3 '>
-                    <div className='flex items-center '>
+                  <div className='flex flex-col gap-3 border border-white '>
+                    <div className='flex items-center  '>
                       <ArrowLeft />
                       <div className='w-40 h-4 text-white text-[12px] font-normal '>رهن و اجاره ویلا در مازندران</div>
                     </div>
@@ -44,7 +43,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className='w-46 h-full  flex flex-col gap-6' dir='rtl'>
+                <div className='w-46 h-full  flex flex-col gap-6 border border-white' dir='rtl'>
                   <div className='w-30.5 h-4.5  text-white '>بیشترین جستجو</div>
                   <div className='flex flex-col gap-3 '>
                     <div className='flex items-center '>
@@ -65,7 +64,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className='w-46 h-full  flex flex-col gap-6' dir='rtl'>
+                <div className='w-46 h-full  flex flex-col gap-6 border border-white'  dir='rtl'>
                   <div className='w-28.5 h-4.5  text-white '>ارتباط با ما</div>
                   <div className='flex flex-col gap-3 '>
                     <div className='flex items-center '>
@@ -84,7 +83,7 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
-              <div className='w-77.25 h-35.75  text-white'>
+              <div className='w-77.25 h-35.75  text-white border border-white'>
                 <div className='flex justify-end '>
                   <LogoF />
                 </div>
@@ -96,13 +95,13 @@ const Footer = () => {
               </div>
 
             </div>
-            <div className='w-269 h-10 text-white flex justify-between '>
+            <div className='w-269 h-10 text-white hidden xl:flex justify-between '>
               <div className='w-104.25 h-10 flex justify-between'>
                 <button className='w-25 h-10 bg-[#F5F5F5] rounded-lg hover:bg-[#F5F5F5D9] cursor-pointer '>
                   <p className='text-black ' >ارسال</p>
                 </button>
                 <input
-                  type='email'
+                  type=''
                   placeholder='ایمیلت رو وارد کن'
                   className='w-75 h-10 border-2 border-white text-[13px] p-3.5 rounded-lg ' dir='rtl'
                 >
@@ -114,7 +113,7 @@ const Footer = () => {
 
         </div>
 
-        <div className='absolute right-0 w-30 h-104.75 bg-green-100 rounded-tl-[500px]'>
+        <div className='absolute right-0 w-20 lg:w-30 h-104.75 bg-green-100 rounded-tl-[500px]'>
           <div className='h-full w-full flex  items-center justify-center'>
             <div className='w-6 h-55 flex items-end flex-wrap  '>
               <div className='w-6 h-6  cursor-pointer'>
@@ -136,14 +135,7 @@ const Footer = () => {
           </div>
         </div>
 
-    <div className=' absolute top-0 w-27 h-40.5 flex items-center justify-center'>
-      <button className='absolute left-7 rounded-2xl bg-white p-3 cursor-pointer '>
-        <p className='w-2.5 h-2.5'>
-        <ArrowUp />
-        </p>
-      </button>
-      <VectorUp />
-    </div>
+   <BacktoTopButton />
 
       </div>
       </div>
