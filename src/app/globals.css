@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import 'swiper/css/pagination';
 @import 'swiper/css';
 @plugin "daisyui";
 :root {
