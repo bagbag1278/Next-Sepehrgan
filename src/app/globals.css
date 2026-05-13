@@ -2,6 +2,11 @@
 @import 'swiper/css/pagination';
 @import 'swiper/css';
 @plugin "daisyui";
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/effect-coverflow';
+
 :root {
   --background: #F5F5F5;
   --foreground: #000000;
@@ -44,3 +49,23 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.swiper-container-flex {
+  display: flex !important;
+  flex-direction: row !important;
+  overflow: visible !important; 
+}
+
+.swiper-slide-flex {
+  flex-shrink: 0 !important; 
+
+  display: flex !important; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+.swiper {
+  overflow: visible !important;
+}
+
+

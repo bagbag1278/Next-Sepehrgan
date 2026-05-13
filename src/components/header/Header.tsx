@@ -18,11 +18,16 @@ const Header = () => {
   const pathname = usePathname();
   // max-w-[1300px] m-auto
   return (
+<<<<<<< HEAD
     <div className="  w-full items-center flex justify-center m-auto  sm:w-[600px]  sm:flex sm:justify-center sm:self-center lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center lg:block xl:block">
       <div className=""></div>
+=======
+    
+    <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center xl:block">
+>>>>>>> dcd68ad0423988d9833a75e7371d13233beccce3
       <div
         dir="rtl"
-        className="flex justify-between  w-350  mt-[24px] dark:text-white"
+        className="flex justify-between  w-350  mt-6 dark:text-white"
       >
         <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 hidden sm:hidden sm:flex sm:justify-end">
           {nav.map((item) => {
@@ -74,8 +79,15 @@ const Header = () => {
             <HeroSction2 />
           </div>
         </div>
+<<<<<<< HEAD
 
         <div className="w-[278px] h-[48px]  xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden hidden xl:block lg:block  ">
+=======
+        <div className="hidden dark:block">
+          <HeroSction2 />
+        </div>
+        <div className="w-69.5 h-12 xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden  hidden ">
+>>>>>>> dcd68ad0423988d9833a75e7371d13233beccce3
           <Link href="/login">
             <div className="text-blue-100 font-bold  cursor-pointer text-[18px] dark:text-[#28A5E6] ">
               ورود
