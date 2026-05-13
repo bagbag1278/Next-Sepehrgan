@@ -25,7 +25,6 @@ const Landing = () => {
       {/* *** third container *** */}
       <ThirdContainer />
       {/* **** users comment **** */}
-      
       <UserComments />
     </div>
   )

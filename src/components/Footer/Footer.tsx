@@ -13,18 +13,18 @@ import BacktoTopButton from './BackToTopButton/BacktoTopButton';
 
 const Footer = () => {
   return (
+
     <div className=' w-full hidden sm:flex justify-center '>
       <div className='w-full  relative'>
 
       <div className='flex items-end w-full h-125'>
-
         <div className=' w-full h-91.5 rounded-tl-[200px] flex-wrap bg-blue-200 dark:bg-blue-400 flex justify-center items-center '>
-          <div className='lg:w-268.75 w-100  flex flex-col lg:flex-wrap border flex-wrap border-white  gap-4 justify-center items-center mr-17 '>
-            <div className='xl:w-268.75 flex-wrap w-110 lg:w-186  flex justify-center lg:justify-between  items-center border border-white ' >
-              <div className='xl:w-167.5 w-90 h-45 flex xl:justify-between justify-center border border-white '>
+          <div className='lg:w-268.75 w-100  flex flex-col lg:flex-wrap  flex-wrap  gap-4 justify-center items-center mr-17 '>
+            <div className='xl:w-268.75 flex-wrap w-110 lg:w-186  flex justify-center lg:justify-between  items-center ' >
+              <div className='xl:w-167.5 w-90 h-45 flex xl:justify-between justify-center '>
                 <div className='w-48 h-full hidden xl:flex flex-col gap-6 ' dir='rtl'>
                   <div className='w-28.5 h-4.5  text-white '>محلات محبوب</div>
-                  <div className='flex flex-col gap-3 border border-white '>
+                  <div className='flex flex-col gap-3  '>
                     <div className='flex items-center  '>
                       <ArrowLeft />
                       <div className='w-40 h-4 text-white text-[12px] font-normal '>رهن و اجاره ویلا در مازندران</div>
@@ -43,7 +43,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className='w-46 h-full  flex flex-col gap-6 border border-white' dir='rtl'>
+                <div className='w-46 h-full  flex flex-col gap-6 ' dir='rtl'>
                   <div className='w-30.5 h-4.5  text-white '>بیشترین جستجو</div>
                   <div className='flex flex-col gap-3 '>
                     <div className='flex items-center '>
@@ -64,7 +64,7 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
-                <div className='w-46 h-full  flex flex-col gap-6 border border-white'  dir='rtl'>
+                <div className='w-46 h-full  flex flex-col gap-6 '  dir='rtl'>
                   <div className='w-28.5 h-4.5  text-white '>ارتباط با ما</div>
                   <div className='flex flex-col gap-3 '>
                     <div className='flex items-center '>
@@ -83,7 +83,7 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
-              <div className='w-77.25 h-35.75  text-white border border-white'>
+              <div className='w-77.25 h-35.75  text-white '>
                 <div className='flex justify-end '>
                   <LogoF />
                 </div>

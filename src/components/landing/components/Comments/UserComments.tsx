@@ -10,6 +10,7 @@ import CommentsIcon from "../../Icon/Comments/CommentsIcon";
 import Image from "next/image";
 import ClockIcon from "../../Icon/Comments/ClockIcon";
 import LikeIcon from "../../Icon/Comments/LikeIcon";
+import HugeArrow from "../../Icon/Comments/HugeArrow";
 
 const FocusCarousel = () => {
   const items = useMemo(
@@ -25,13 +26,11 @@ const FocusCarousel = () => {
     ],
     []
   );
-
-  // index اسلایدی که الان باید اکتیو باشد (focuseRight)
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <div className=" flex ">
-      <div className="w-355 flex justify-between border border-white  ">
+      <div className="relative w-355 flex justify-between">
 
         {/* ////// */}
         <div className='w-70 lg:w-82 h-88 hidden lg:flex items-center ml-4 lg:items-end  '>
@@ -58,7 +57,7 @@ const FocusCarousel = () => {
         </div>
         {/* ////// */}
 
-        <div className="relative w-300 border border-white  h-100  overflow-hidden ">
+        <div className="relative w-300 h-100  overflow-hidden ">
           <div
             className="absolute right-0 top-0 w-76.25 h-93.75 bg-green-100 rounded-bl-[5px] rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px] "
 
@@ -91,18 +90,19 @@ const FocusCarousel = () => {
 
               return (
                 <SwiperSlide key={item.key}>
-                  <div className="flex items-center justify-center mt-8 mr-20 border border-[#005EA480]">
+                  <div className="flex items-center justify-center mt-8 mr-20 z-50 border border-[#005EA480]">
                     <div
                       className={[
                         "transition-all duration-300 flex items-center justify-center",
-                        focused ? "scale-[1.08]" : "scale-100",
+                        focused ? "scale-[1.08] " : "scale-100",
                       ].join(" ")}
                     >
                       <div
                         className={[
-                          // ⬅️ حفظ ابعاد اصلی
-                          "rounded-2xl border border-slate-100 bg-white shadow-sm flex items-center justify-center",
-                          focused ? "w-70 h-77.5 ml-2.5" : "w-55 h-60",
+                          "rounded-2xl bg-[#F5F5F5] dark:bg-blue-400 shadow-sm flex items-center justify-center",
+                          focused
+                            ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
+                            : "w-55 h-60 bg-[#F5F5F5] dark:bg-black",
                         ].join(" ")}
                       >
 
@@ -120,8 +120,8 @@ const FocusCarousel = () => {
                               </div>
                             </div>
 
-                              {/* name */}
-                            <p className="mt-3 text-lg font-bold text-[#0A1133]">
+                            {/* name */}
+                            <p className="mt-3 text-lg font-bold  text-[#0A1133]">
                               {item.name}
                             </p>
 
@@ -155,10 +155,16 @@ const FocusCarousel = () => {
                                 {item.Profile}
                               </div>
                             </div>
-                            <p className="mt-4 text-base font-bold text-[#0A1133]">
+                            <p className={[
+                              "mt-4 text-base font-bold", 
+                              focused ? "text-[#0A1133]" : "text-[#0A1133] dark:text-white"
+                            ].join("")}>
                               {item.name}
                             </p>
-                            <p className="mt-2 text-sm text-[#1B1E36] leading-6">
+                            <p className={[
+                              "mt-2 text-sm leading-6", 
+                              focused ? "text-[#1B1E36]" :"dark:text-white"
+                            ].join("")}>
                               {item.content.slice(0, 45)}...
                             </p>
                           </div>
@@ -194,6 +200,10 @@ const FocusCarousel = () => {
             </div>
           </div>
         </div>
+                {/* Arrow */}
+                <div className="hidden lg:flex  absolute -bottom-7 left-0 ">
+                  <HugeArrow />
+                </div>
       </div>
     </div>
   );

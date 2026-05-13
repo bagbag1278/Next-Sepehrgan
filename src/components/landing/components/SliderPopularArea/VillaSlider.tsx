@@ -5,25 +5,26 @@ import { Navigation } from "swiper/modules";
 import Image from "next/image";
 import { useRef } from "react";
 import MountainsSun from "../../Icon/ThirdContainer/mountainsSun";
+import StarIcon from "../../Icon/FirstContainer/StarIcon";
 
 function VillaSlider() {
   const swiperRef = useRef<any>(null);
 
   const items = [
-    { title: "ویلای سنگده", img: "/v1.jpg" },
-    { title: "ویلای مازندران", img: "/v2.jpg" },
-    { title: "ویلای یزد", img: "/v3.jpg" },
-    { title: "ویلای مشهد", img: "/v4.jpg" },
-    { title: "ویلای اصفهان", img: "/v5.jpg" },
-    { title: "ویلای یزد", img: "/v3.jpg" },
-    { title: "ویلای مشهد", img: "/v4.jpg" },
-    { title: "ویلای اصفهان", img: "/v5.jpg" },
+    { img: "/v1.jpg", ponit: "4.5", place: "ویلای مشهد" },
+    { img: "/v2.jpg", ponit: "4.6", place: "ویلای اصفهان" },
+    { img: "/v3.jpg", ponit: "4.12", place: "ویلای گهردشت" },
+    { img: "/v4.jpg", ponit: "4.6", place: "ویلای ساری" },
+    { img: "/v5.jpg", ponit: "4.9", place: "ویلای مشهد" },
+    { img: "/v3.jpg", ponit: "4.2", place: "ویلای تهران" },
+    { img: "/v4.jpg", ponit: "4.1", place: "ویلای مشهد" },
+    { img: "/v5.jpg", ponit: "4.3", place: "ویلای اصفهان" },
   ];
 
   return (
     <div className="w-full hidden lg:flex justify-center overflow-x-hidden">
       <div className="flex flex-wrap justify-center h-100 w-312 overflow-x-hidden">
-        <div className="w-79 h-15 border border-white flex justify-center flex-wrap">
+        <div className="w-79 h-15 flex justify-center flex-wrap">
           <div className="flex gap-3 dark:text-[#28A5E6] text-blue-200 text-[12px]">
             <MountainsSun />
             <div>جدید ترین ها را با ما کشف کنید لذت ببرید</div>
@@ -57,7 +58,7 @@ function VillaSlider() {
             modules={[Navigation]}
             slidesPerView={5}
             centeredSlides
-            loop
+            loop={true}
             spaceBetween={30}
             watchSlidesProgress
             onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -75,25 +76,37 @@ function VillaSlider() {
             {items.map((item, idx) => (
               <SwiperSlide
                 key={idx}
-                className="flex items-center justify-center border border-white transition-all duration-300"
+                className="group flex items-center justify-cente transition-all duration-300"
               >
-                <div className="rounded-3xl overflow-hidden shadow-2xl">
+
+                <div className="relative rounded-2xl border border-white overflow-hidden shadow-2xl">
                   <Image
                     src={item.img}
-                    alt={item.title}
+                    alt={item.place}
                     width={420}
                     height={260}
                     className="w-full h-64 object-cover"
                   />
+                  <div className="absolute bottom-2 w-full flex justify-center gap-4 ">
+                    <div className=" flex gap-0.5 text-white text-[14px]">
+                      <div>{item.place} </div>
+                    </div>
+                    {/* Star and point  */}
+                    <div className="opacity-0 transition-all duration-300 group-[.swiper-slide-active]:opacity-100 flex gap-0.5 items-center">
+                      <div className="text-white text-[13px]">
+                        {item.ponit}
+                      </div>
+                      <StarIcon />
+                    </div>
+                  </div>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
 
-        {/* ✅ زیر lg کاملاً حذف می‌شود (هیچی رندر/نمایش داده نمی‌شود) */}
       </div>
-    </div>
+    </div >
   );
 }
 

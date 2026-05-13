@@ -1,6 +1,12 @@
 @import "tailwindcss";
+@import 'swiper/css/pagination';
 @import 'swiper/css';
 @plugin "daisyui";
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/effect-coverflow';
+
 :root {
   --background: #F5F5F5;
   --foreground: #000000;
