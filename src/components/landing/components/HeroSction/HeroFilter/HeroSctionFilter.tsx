@@ -1,14 +1,13 @@
 import React from "react";
 import * as Tabs from "@radix-ui/react-tabs";
 import HeaderIcon3 from "@/components/header/Icon/HeaderIcon3";
-import Arrow from "../Icon/Arrow";
-import Search from "../Icon/Search";
+import Arrow from "../Icon/IconAndd/FilterIcon/Arrow";
+import HeroDropdowns from "@/app/search/[city]/page";
 
 function HeroSctionFilter() {
   return (
     <div className="p-4  overflow-hidden" dir="">
-      {" "}
-      {}  
+
       <Tabs.Root className="flex flex-col w-full  " defaultValue="account">
         <Tabs.List className="flex justify-center">
           <Tabs.Trigger
@@ -70,7 +69,9 @@ function HeroSctionFilter() {
                   <div className="w-[2px] h-[54px] opacity-20 bg-[#060425] relative left-[px] bottom-[px]"></div>
                   <div className="w-[92px] h-[54px]">
                     تاریخ ورود
+                    {/* Drop */}
                     <div className="">
+                      <HeroDropdowns />
                     </div>
                     <div className="relative  right-[80px] bottom-[20px] ">
                       <Arrow />
@@ -91,12 +92,7 @@ function HeroSctionFilter() {
                       <Arrow />
                     </div>
                   </div>
-                  <button className="bg-[#060425] w-[120px] h-[48px] rounded-[16px] relative cursor-pointer right-[102px] text-white text-[14px] font-medium ">
-                    جستجو
-                    <div className="absolute bottom-[13px] right-[8px] ">
-                      <Search />
-                    </div>
-                  </button>
+   
                 </div>
               </div>
             </div>

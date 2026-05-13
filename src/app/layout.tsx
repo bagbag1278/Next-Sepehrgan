@@ -1,3 +1,4 @@
+import Header from "@/components/header/Header";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 
@@ -34,7 +35,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-
+            <Header/>
           {children}
             
         </ThemeProvider>
