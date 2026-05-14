@@ -11,7 +11,7 @@ const nav = [
 
   { title: " رهن اجاره", href: "/houserent" },
   { title: "وبلاگ", href: "/blog" },
-  { title: "درباره ما", href: "/about" },
+  { title: "درباره ما", href: "/contactus" },
 ];
 
 const Header = () => {
@@ -26,7 +26,7 @@ const Header = () => {
         dir="rtl"
         className="flex justify-between  w-350  mt-6 dark:text-white"
       >
-        <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 hidden sm:hidden sm:flex sm:justify-end">
+        <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 z-20 hidden sm:hidden sm:flex sm:justify-end">
           {nav.map((item) => {
             let isActive =
               item.href === "/"
