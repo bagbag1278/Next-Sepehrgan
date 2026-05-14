@@ -1,10 +1,8 @@
 "use client";
 import ImageSlider from "@/components/Auth/ImgSlider/ImageSlider";
-import RegistrationProgress from "@/components/Auth/register/RegistrationProgress";
-
 import CircularDropdown from "@/components/common/AuthMenu/AuthMenu";
 import Image from "next/image";
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode } from "react";
 interface IChildren {
   children: ReactNode;
 }

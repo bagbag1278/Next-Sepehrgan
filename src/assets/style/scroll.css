@@ -1,0 +1,19 @@
+.custom-scroll::-webkit-scrollbar {
+  width: 8px !important; /* عرض */
+  height: 8px !important; /* ارتفاع (اگر اسکرول عمودی داری) */
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #1357df !important; /* رنگ پس‌زمینه (خاکستری خیلی روشن) */
+  border-radius: 10px !important;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #115de1 !important; /* رنگ دسته (خاکستری تیره‌تر) */
+  border-radius: 10px !important;
+  border: 2px solid #f3f4f6 !important; /* فاصله سفید دور دسته */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #6b7280 !important; /* رنگ هنگام هاور */
+}

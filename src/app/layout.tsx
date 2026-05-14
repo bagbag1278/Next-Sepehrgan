@@ -1,10 +1,7 @@
-"use client";
-
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
-
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 
@@ -20,13 +17,17 @@ const geistMono = Geist_Mono({
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
+  variable: "--font-iran",
+  display: "swap",
+  // اگر فونت شما اعداد فارسی (۱۲۳) دارد، این خط را اضافه کن:
+  // style: 'normal',
 });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="fa" suppressHydrationWarning>
       <body
         className={`${iran.className}  bg-white text-black dark:bg-black dark:text-white`}
       >
@@ -38,7 +39,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          {children}
+          <main className="">{children}</main>
+
           <Footer />
         </ThemeProvider>
       </body>

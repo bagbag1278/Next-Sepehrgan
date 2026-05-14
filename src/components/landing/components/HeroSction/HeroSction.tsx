@@ -26,13 +26,13 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-      <div className="flex justify-center xl:w-full xl:max-w-[1273px] sm:max-w-[360px] m-auto w-[360px] border sm:h-[800px]  sm:m-auto lg:w-full lg:max-w-[1273px] sm:w-[393px] sm:flex sm:justify-start   xl:h-[752px] h-[1052px]  lg:m-auto  relative  ">
-        <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-[#005EA4] shadow-lg shadow-green-100/25 cursor-pointer">
+      <div className="flex justify-center xl:w-full xl:max-w-318.25 lg:w-full lg:max-w-318.25 sm:w-98.25 sm:flex sm:justify-start   xl:h-188 h-263  lg:m-auto  relative border ">
+        <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
         </div>
-        <div className="absolute top-[472px] left-1/2 -translate-x-1/2 flex justify-center z-10">
+        <div className="absolute top-118 left-1/2 -translate-x-1/2 flex justify-center z-10">
           {" "}
-          <div className="w-[1020px] h-[140px] bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] rounded-xl relative gap-[22px] flex   shadow-[8px_0px_20px_rgba(8,135,202,0.30)] hidden lg:block xl:block">
+          <div className="w-255 h-35 bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] rounded-xl relative gap-5.5 flex  z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] lg:block xl:block">
             <div className="flex justify-center w-full   items-start  ">
               <HeroSctionFilter />
             </div>
