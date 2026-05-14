@@ -10,7 +10,7 @@ const nav = [
   { title: "رزرو سریع", href: "/reserve" },
   { title: " رهن اجاره", href: "/mortgage" },
   { title: "وبلاگ", href: "/blog" },
-  { title: "درباره ما", href: "/about" },
+  { title: "درباره ما", href: "/contactus" },
 ];
 
 const Header = () => {
