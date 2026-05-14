@@ -1,36 +1,68 @@
 "use client";
 import React, { useState } from "react";
-import LocationSlider from "./LocationSlider";
-import { Mail, Phone, MapPin } from "lucide-react";
-import TallerFleshGreen from "./icon/FleshGreen/TallerFleshGreen";
-import LeftFleshGreen from "./icon/FleshGreen/LeftFleshGreen";
-import RightFleshGreen from "./icon/FleshGreen/RightFleshGreen";
+// بقیه ایمپورت‌ها...
+import { toast } from 'react-hot-toast';
 import TallerFleshBlue from "./icon/FleshBlue/TallerFleshBlue";
 import FleshBlueLeft from "./icon/FleshBlue/FleshBlueLeft";
 import FleshBlueRight from "./icon/FleshBlue/FleshBlueRight";
+import LocationSlider from "./LocationSlider";
+import { Mail, MapPin, Phone } from "lucide-react";
+import TallerFleshGreen from "./icon/FleshGreen/TallerFleshGreen";
+import LeftFleshGreen from "./icon/FleshGreen/LeftFleshGreen";
+import RightFleshGreen from "./icon/FleshGreen/RightFleshGreen";
 
 const ContactPage = () => {
-  const [data, setData] = useState();
+  const [formData, setFormData] = useState({
+    title: "",
+    message: ""
+  });
+  const [loading, setLoading] = useState(false);
 
-  const FetchContactus = async () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formData.title || !formData.message) {
+      toast.error("لطفاً تمامی فیلدها را پر کنید");
+      return;
+    }
+
+    const loadingToast = toast.loading("در حال ارسال پیام...");
+    setLoading(true);
+
     try {
-      const response = await fetch(
-        `http://next.genzuni.website/api/contact-us`,
-      );
-      if (!response.ok) {
-        throw new Error("noting");
+      const response = await fetch("http://next.genzuni.website/api/contact-us", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: formData.title,  
+          message: formData.message, 
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("پیام شما با موفقیت ثبت شد", { id: loadingToast });
+        setFormData({ title: "", message: "" });
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "خطایی در سرور رخ داد", { id: loadingToast });
       }
-      const result = await response.json();
-      console.log("الان دیتا رسید:", result);
-      console.log("اطلاعات کاربر در دیتا:", result.user);
-      setData(result);
-    } catch {}
+    } catch (error) {
+      console.error("ارور در ارسال:", error);
+      toast.error("خطا در اتصال! اینترنت خود را چک کنید", { id: loadingToast });
+    } finally {
+      setLoading(false);
+    }
   };
+
+
+
   return (
     <div className="w-full bg-[#FDFDFD] min-h-screen pb-20 font-sans" dir="rtl">
       <section className="text-center pt-16 pb-10 relative">
-        <h1 className="text-2xl md:text-3xl font-black text-[rgb(6,4,37)]">
-          حس خوبت رو به ما بسپار ، ما کنارقیم!!
+        <h1 className="text-2xl md:text-3xl font-black dark:text-white text-[rgb(6,4,37)]">
+          حس خوبت رو به ما بسپار ، ما کنارتیم!!
         </h1>
         <div className="absolute right-0 pl-10 -top-10 max-[1390]:hidden ">
           <TallerFleshBlue />
@@ -46,7 +78,7 @@ const ContactPage = () => {
             </div>
           </div>
         </div>
-        <p className="text-gray-500 text-sm mt-4 max-w-lg mx-auto leading-relaxed">
+        <p className="text-gray-500 text-sm mt-4 max-w-lg mx-auto leading-relaxed dark:text-white">
           هر خونه ای یه حس خوب داره ، ما اینجا هستیم تا کمکت کنیم حس خوبت رو
           پیدا کنی!! بیا با هم سفر جستجوی خونه ات رو شروع کنیم.
         </p>
@@ -63,14 +95,14 @@ const ContactPage = () => {
       </section>
 
       <LocationSlider />
-      <h2 className="text-[16px] font-medium text-[rgb(6,4,37)] w-full justify-center flex relative top-10">
+      <h2 className="text-[16px] font-medium text-[rgb(6,4,37)] dark:text-white w-full justify-center flex relative top-10">
         خانه مان را با هم میسازیم
       </h2>
       <div className="flex flex-wrap justify-center gap-10 my-16 text-[rgb(6,4,37)]">
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <p className="font-bold text-sm">آدرس ما</p>
-            <p className="text-xs text-gray-500 italic">
+            <p className="font-bold text-sm dark:text-white">آدرس ما</p>
+            <p className="text-xs text-gray-500 italic dark:text-white" >
               مازندران _ ساری _ دودانگه _ روستای بکر سنگده
             </p>
           </div>
@@ -79,13 +111,13 @@ const ContactPage = () => {
         <div className="flex items-center gap-3">
           <div className="text-right">
             <p className="font-bold text-sm">آدرس ایمیل</p>
-            <p className="text-xs text-gray-500 italic">RahnKadeh@gmail.com</p>
+            <p className="text-xs text-gray-500 italic dark:text-white">RahnKadeh@gmail.com</p>
           </div>
           <Mail className="text-blue-600" size={24} />
         </div>
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <p className="font-bold text-sm">تلفن ما</p>
+            <p className="font-bold text-sm dark:text-white">تلفن ما</p>
             <p className="text-xs text-gray-500 italic">
               (۰۱۱) ۴۴۴-۷۳۸۹ و ۰۹۱۱-۵۶۴-۷۳۸۹
             </p>
@@ -94,17 +126,17 @@ const ContactPage = () => {
         </div>
       </div>
 
-      <section className="max-w-6xl border mx-auto grid grid-cols-1 md:grid-cols-2 gap-40 px-6">
+      <section className=" max-w-7xl mx-auto  grid grid-cols-1 md:grid-cols-2 gap-40 max-[1300]:gap-20 px-6">
         <div className="relative p-8 rounded-[40px]  shadow-blue-100/50">
           <div className="mb-6 text-center">
             <p className="text-[rgb(6,4,37)] font-bold underline decoration-blue-200 underline-offset-8">
               ما رو دریاب :)
             </p>
             <div className="max-[1055]:hidden ">
-              <div className="absolute right-90 bottom-25 ">
+              <div className="absolute right-100 bottom-25 ">
                 <TallerFleshGreen />
               </div>
-              <div className="absolute rotate-90 right-115 bottom-25">
+              <div className="absolute rotate-90 right-126 bottom-25">
                 <div className="absolute -left-[25px] ">
                   <LeftFleshGreen />
                 </div>
@@ -121,20 +153,27 @@ const ContactPage = () => {
             </h2>
           </div>
 
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
               placeholder="نام و نام خانوادگی"
+              value={formData.title}
+               onChange={(e) => setFormData({...formData,title:e.target.value})}
               className="w-full p-4  rounded-2xl outline-none border border-transparen border-[#0887CA80] text-[#0887CAB2]"
             />
             <input
               type="text"
               placeholder="ایمیل"
+              
               className="w-full p-4  rounded-2xl outline-none border border-transparen border-[#0887CA80] text-[#0887CAB2]"
             />
+                      <Mail className="absolute max-[1138]:right-90 max-[1050]:hidden top-51 right-115  text-blue-600" size={24} />
+
             <textarea
               rows={4}
               placeholder="پیام شما"
+              value={formData.message}
+              onChange={(e) => setFormData({...formData,message:e.target.value})}
               className="w-full p-4 bg-white rounded-2xl outline-none border  border-[#0887CA80] text-[#0887CAB2]"
             ></textarea>
 
@@ -149,7 +188,7 @@ const ContactPage = () => {
             alt=""
           />
         </div>
-        <div className="rounded-tl-[42px] rounded-br-[42px] overflow-hidden shadow-lg border-8 border-white w-[592px] h-[487px] ">
+        <div className="rounded-tl-[42px] rounded-br-[42px] z-10 overflow-hidden shadow-lg border-8 border-white w-11/12 h-[487px] ">
           <iframe
             src="https://www.google.com/maps/embed?..."
             className="w-full h-full grayscale-[0.5]"
