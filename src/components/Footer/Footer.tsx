@@ -14,10 +14,10 @@ import VectorUp from './Icon/VectorUp';
 
 const Footer = () => {
   return (
-    <div className=' w-full flex justify-center border '>
-      <div className='relative w-full border border-white '>
+    <div className=' w-full flex justify-center'>
+      <div className='relative w-full '>
 
-      <div className='flex items-end w-full h-125 border border-white '>
+      <div className='flex items-end w-full h-125'>
 
         <div className='w-full h-91.5 rounded-tl-[200px] flex-wrap bg-blue-200 dark:bg-blue-400 flex justify-center items-center '>
           <div className='w-268.75 h-70 flex flex-wrap gap-4 '>
@@ -104,7 +104,7 @@ const Footer = () => {
                 <input
                   type='email'
                   placeholder='ایمیلت رو وارد کن'
-                  className='w-75 h-10 border-2 border-white text-[13px] p-3.5 rounded-lg ' dir='rtl'
+                  className='w-75 h-10 border-2 border-white text-[13px] p-3.5 rounded-lg outline-0 placeholder:text-white' dir='rtl'
                 >
                 </input>
               </div>

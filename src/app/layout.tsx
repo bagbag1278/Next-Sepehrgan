@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="fa" suppressHydrationWarning>
       <body
-        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} bg-white flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
       >
         {" "}
         <ThemeProvider
@@ -39,7 +39,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="">{children}</main>
+          <main className=" w-full max-w-360 ">{children}</main>
 
           <Footer />
         </ThemeProvider>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { toPersianNum } from "../utils/FarsiNum";
 import { FC } from "react";
 import { House } from "@/core/api/house";
+import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools";
 
 interface ProductHouseProps {
   houses: House;
@@ -9,7 +10,7 @@ interface ProductHouseProps {
 
 const ProductHouse: FC<ProductHouseProps> = ({ houses }) => {
   return (
-    <div dir="rtl" className="w-174.75 flex relative pr-3">
+    <div dir="rtl" className="w-174.75 flex relative pr-3 mr-24">
       <div
         key={houses.id}
         className=" hover:border-2 hover:border-blue-200 dark:border dark:border-blue-300 transition-opacity duration-1000 shadow shadow-blue-300/25 rounded-4xl w-161.75 h-54 flex justify-center gap-2 items-center mx-auto"
@@ -19,6 +20,38 @@ const ProductHouse: FC<ProductHouseProps> = ({ houses }) => {
         </div>
         {/* img */}
         <div className="w-81 h-50 rounded-3xl relative overflow-hidden">
+          <div className=" w-77 h-6 absolute z-10 top-2 right-2 flex items-center justify-between">
+            <div className="flex gap-1 items-center">
+              <span className="text-white leading-16">{toPersianNum(houses.rate)}</span>
+              <svg
+                width="22"
+                height="21"
+                viewBox="0 0 22 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10.1901 1.02872C10.3735 0.657094 10.9034 0.657094 11.0868 1.02872L13.7549 6.43491C13.8277 6.58248 13.9685 6.68477 14.1314 6.70843L20.0975 7.57535C20.5076 7.63495 20.6713 8.13893 20.3746 8.4282L16.0575 12.6363C15.9396 12.7512 15.8858 12.9167 15.9137 13.0789L16.9328 19.0209C17.0028 19.4293 16.5741 19.7408 16.2073 19.548L10.8711 16.7425C10.7254 16.666 10.5514 16.666 10.4057 16.7425L5.06952 19.548C4.7027 19.7408 4.27399 19.4293 4.34404 19.0209L5.36317 13.0789C5.39099 12.9167 5.33722 12.7512 5.21937 12.6363L0.902273 8.4282C0.605514 8.13893 0.769269 7.63495 1.17938 7.57535L7.14547 6.70843C7.30832 6.68477 7.4491 6.58248 7.52194 6.43491L10.1901 1.02872Z"
+                  stroke="#F5F5F5"
+                  strokeWidth="1.5"
+                />
+              </svg>
+            </div>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.6495 10.6495L1.45711 1.45711M0.75 9.23528V1.75C0.75 1.19772 1.19772 0.75 1.75 0.75H9.23528"
+                stroke="#F5F5F5"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
           <Image src={"/auth/img.png"} width={324} height={200} alt="img" />
           <div className="absolute inset-0 bg-linear-to-b from-blue-400 to-transparent transition-opacity duration-300 opacity-50 hover:opacity-0"></div>
         </div>
@@ -81,13 +114,13 @@ const ProductHouse: FC<ProductHouseProps> = ({ houses }) => {
             {/* count */}
             <div className="w-70.75 h-6 flex justify-center gap-6">
               {/* dis */}
-              <div className="text-[13px] opacity-80 line-through decoration-red-600">
-                {toPersianNum(houses.price)}تومان
+              <div className="text-[12px] opacity-80 line-through decoration-red-600">
+                {digitsEnToFa(addCommas(houses.price))}تومان
               </div>
               {/*  */}
               <div className="h-6.25 flex justify-center">
-                <span className="text-blue-300 text-[15px] font-bold opacity-100">
-                  {toPersianNum(houses.discounted_price)} تومان
+                <span className="text-blue-300 text-[14px] font-bold opacity-100">
+                  {digitsEnToFa(addCommas(houses.discounted_price))}تومان
                 </span>
                 <span className="text-[11px] opacity-70 leading-7">/هرشب</span>
               </div>

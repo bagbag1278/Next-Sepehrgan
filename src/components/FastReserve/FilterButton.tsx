@@ -1,17 +1,28 @@
-"use client";
 
-import React from "react";
+import React, { useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import FastFilter from "./Filter/FastFilter";
 
-const FilterButton = () => {
+// تعریف نوع برای sortBy
+type SortByType = "--" | "last_updated" | "price";
+
+type FilterButtonProps = {
+  query: string;
+  setQuery: (value: string) => void;
+  // sortBy و setSortBy از والد (HouseReserveClient) دریافت می‌شوند
+  sortBy: SortByType;
+  setSortBy: (sortBy: SortByType) => void;
+};
+
+const FilterButton = ({ query, setQuery, sortBy, setSortBy }: FilterButtonProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className="w-37 border border-blue-300/70 dark:bg-white rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 flex justify-center gap-1 items-center text-sm p-2"
+          className="w-37 border outline-0 border-blue-300/70 dark:bg-white rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 flex justify-center gap-1 items-center text-sm p-2"
           type="button"
         >
+          {/* SVG icon */}
           <svg
             width="20"
             height="20"
@@ -37,7 +48,13 @@ const FilterButton = () => {
           align="end"
           className="z-50 w-76 rounded-tl-2xl rounded-bl-2xl border border-blue-300/40 bg-white dark:bg-white/90 px-5 py-6 shadow-lg"
         >
-          <FastFilter />
+          {/* FastFilter prop های sortBy و setSortBy را دریافت می‌کند */}
+          <FastFilter
+            query={query}
+            setQuery={setQuery}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
