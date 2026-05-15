@@ -15,7 +15,7 @@ const LoginForm = () => {
         className="border py-1 px-4 h-12 border-blue-300 outline-0 w-107.5 rounded-2xl "
       />
       <div className="w-107.5 h-5 flex justify-between items-center ">
-        <span className="text-blue-100 text-[13px] font-medium ">
+        <span className="text-blue-100 text-[13px] font-medium dark:text-blue-300">
           ورود با شماره موبایل
         </span>
         <span className="text-blue-300 text-[11px] font-medium decoration">
