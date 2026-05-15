@@ -17,6 +17,9 @@ const BookingStepThree = ({
   extraEmail,
   extraPhone,
   description,
+  handelFinalBooking,
+  loading,
+  isAllFormsValid
 }: any) => {
   const [coupon, setCoupon] = useState("");
   const [isOpenn, setIsOpenn] = useState(true);
@@ -121,16 +124,23 @@ const BookingStepThree = ({
                 </div>
                 <div className=" rounded-[40px] p-8 relative bottom-10">
                   <div className="flex justify-between items-center mb-6">
-                    <span className="text-[rgb(0,94,164)] font-bold">قیمت هتل</span>
+                    <span className="text-[rgb(0,94,164)] font-bold">
+                      قیمت هتل
+                    </span>
                     <span className="text-blue-900 font-black text-2xl">
                       {bookingSummary.finalTotal} تومان
                     </span>
                   </div>
                   <button
-                    onClick={() => setStep(5)}
-                    className="w-full bg-[rgb(16,8,143)] text-white py-5 rounded-3xl font-black mb-4"
+                    disabled={!isAllFormsValid || loading}
+                    onClick={handelFinalBooking}
+                    className={`w-full py-5 rounded-3xl font-black mt-10 transition-all ${
+                      isAllFormsValid && !loading
+                        ? "bg-[rgb(21,151,125)] text-white"
+                        : "bg-gray-300 text-gray-500"
+                    }`}
                   >
-                    پرداخت آنلاین
+                    {loading ? "در حال ثبت..." : "تأیید و پرداخت نهایی"}
                   </button>
                   <button
                     onClick={() => setStep(2)}
@@ -158,7 +168,7 @@ const BookingStepThree = ({
                     </h3>
                     <p className="font-normal text-[14px] text-[rgba(6,4,37,0.5)] mt-3">
                       {" "}
-                      { description}
+                      {description}
                     </p>
                   </div>
                 </div>
