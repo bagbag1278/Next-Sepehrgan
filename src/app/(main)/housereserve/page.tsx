@@ -2,9 +2,19 @@ import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs";
 import { fetchHouses, House } from "@/core/api/house";
 import HouseReserveClient from "@/components/FastReserve/HouseReserveClient";
 
+const HouseReservePage = async () => {
+  let housesData: House[] = [];
 
+  try {
+    housesData = await fetchHouses({
+      limit: 10,
+      order: "DESC",
+      sort: "last_updated",
+    });
+  } catch (error) {
+    console.error("Failed to load houses:", error);
+  }
 
-const ReserveDetails = () => {
   return (
     <div dir="rtl" className="relative w-360 mx-auto flex justify-between">
       <div className="h-5.5 absolute top-6 right-24">
@@ -16,4 +26,4 @@ const ReserveDetails = () => {
   );
 };
 
-export default ReserveDetails
+export default HouseReservePage;
