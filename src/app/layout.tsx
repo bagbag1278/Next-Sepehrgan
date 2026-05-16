@@ -1,10 +1,9 @@
-import Header from "@/components/header/Header";
-import "./globals.css";
-import { ThemeProvider } from "next-themes";
-
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
-import Footer from "@/components/Footer/Footer";
+import "./globals.css";
+import "./globals.css";
+import { ThemeProvider } from "next-themes";
 import LayoutWrapper from "./(main)/housereserve/LayoutWrapper";
 
 const geistSans = Geist({
@@ -19,7 +18,8 @@ const geistMono = Geist_Mono({
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
-});
+
+})
 
 export default function RootLayout({
   children,

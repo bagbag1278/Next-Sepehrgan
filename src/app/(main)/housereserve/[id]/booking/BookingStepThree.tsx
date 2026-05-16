@@ -17,6 +17,9 @@ const BookingStepThree = ({
   extraEmail,
   extraPhone,
   description,
+  handelFinalBooking,
+  loading,
+  isAllFormsValid
 }: any) => {
   const [coupon, setCoupon] = useState("");
   const [isOpenn, setIsOpenn] = useState(true);
@@ -48,9 +51,9 @@ const BookingStepThree = ({
                     {" "}
                     <button
                       onClick={() => setIsOpenn(!isOpenn)}
-                      className="w-full flex flex-col items-center p-4 justify-center"
+                      className="w-full flex flex-col items-center p-4 mt-20 justify-center"
                     >
-                      <div className="flex items-center justify-center gap-2 mb-4 ml-10 w-full ">
+                      <div className="flex items-center justify-center gap-2 mb-4  ml-10 w-full ">
                         <h3 className="font-bold text-lg w-full whitespace-nowrap">
                           اطلاع رسانی سفر
                         </h3>{" "}
@@ -121,20 +124,27 @@ const BookingStepThree = ({
                 </div>
                 <div className=" rounded-[40px] p-8 relative bottom-10">
                   <div className="flex justify-between items-center mb-6">
-                    <span className="text-[rgb(0,94,164)] font-bold">قیمت هتل</span>
+                    <span className="text-[rgb(0,94,164)] font-bold">
+                      قیمت هتل
+                    </span>
                     <span className="text-blue-900 font-black text-2xl">
                       {bookingSummary.finalTotal} تومان
                     </span>
                   </div>
                   <button
-                    onClick={() => setStep(5)}
-                    className="w-full bg-[rgb(16,8,143)] text-white py-5 rounded-3xl font-black mb-4"
+                    disabled={!isAllFormsValid || loading}
+                    onClick={handelFinalBooking}
+                    className={`w-full py-5 rounded-3xl  font-black mt-10 transition-all  ${
+                      isAllFormsValid && !loading
+                        ? "bg-[rgb(16,8,143)] text-white"
+                        : "bg-gray-300 text-gray-500"
+                    }`}
                   >
-                    پرداخت آنلاین
+                    {loading ? "در حال ثبت..." : "پرداخت آنلاین"}
                   </button>
                   <button
                     onClick={() => setStep(2)}
-                    className="w-full border-2 border-blue-900 text-blue-900 py-4 rounded-3xl font-bold"
+                    className="w-full border-2 border-blue-900 text-blue-900 mt-3 py-4 rounded-3xl font-bold"
                   >
                     مرحله قبل
                   </button>
@@ -158,7 +168,7 @@ const BookingStepThree = ({
                     </h3>
                     <p className="font-normal text-[14px] text-[rgba(6,4,37,0.5)] mt-3">
                       {" "}
-                      { description}
+                      {description}
                     </p>
                   </div>
                 </div>

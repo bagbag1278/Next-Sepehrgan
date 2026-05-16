@@ -7,16 +7,18 @@ import Stepper from "../components/Stepper";
 import BookingStepThree from "./BookingStepThree";
 
 import BookingStepFour from "./BookingStepFour";
+import { error } from "node:console";
 
 const BookingPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
 
   const [hotelData, setHotelData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(2);
   const [extraEmail, setExtraEmail] = useState("");
   const [extraPhone, setExtraPhone] = useState("");
+  
   const initialGuests = Number(searchParams.get("guests")) || 1;
 
   const [passengers, setPassengers] = useState(
@@ -30,6 +32,47 @@ const BookingPage = () => {
       email: "",
     })),
   );
+  
+
+  const handelFinalBooking = async () => {
+    try {
+      setLoading(true);
+
+      const bookingPayload = {
+        houseId: Number(params.id),
+        userId: 456,
+        reservedDates: [checkInDate, checkOutDate],
+
+        traveler_details: passengers.map((p) => ({
+          firstName: p.fullName.split(" ")[0] || "",
+          lastName: p.fullName.split(" ").slice(1).join(" ") || "",
+          gender: p.gender,
+          birthDate: p.birthDate,
+          nationalId: p.nationalCode,
+        })),
+        status: "pending",
+      };
+      const respons = await fetch(`http://next.genzuni.website/api/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingPayload),
+      });
+      if (!respons.ok) throw new Error("خطا در ثبت رزور");
+      const result = await respons.json();
+
+      setStep(5);
+      console.log("رزرو با موفقیت ثبت شد:", result);
+    } catch {
+      alert("متاسفانه رزرو ثبت نشد. دوباره تلاش کنید.");
+    }
+     finally {
+    setLoading(false);
+  }
+  };
+  
+
   // filter
   const updatePassenger = (index: number, field: string, newValue: string) => {
     let finalValue = newValue;
@@ -140,11 +183,11 @@ const BookingPage = () => {
     if (params.id) fetchHotelDetails();
   }, [params.id]);
 
-const description = hotelData?.description || "توضیحاتی برای این هتل ثبت نشده است.";
+  const description =
+    hotelData?.description || "توضیحاتی برای این هتل ثبت نشده است.";
 
   const checkInDate = searchParams.get("in") || "۱۴۰۴/۰۶/۱۶";
   const checkOutDate = searchParams.get("out") || "۱۴۰۴/۰۶/۱۷";
- 
 
   if (loading)
     return (
@@ -335,7 +378,7 @@ const description = hotelData?.description || "توضیحاتی برای این 
                             : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-70"
                         }`}
                       >
-                       ثبت اطلاعات
+                        ثبت اطلاعات
                       </button>
                       <div className="mt-12 pt-6 border-t border-gray-100">
                         <div className="flex justify-between items-center mb-6">
@@ -388,34 +431,31 @@ const description = hotelData?.description || "توضیحاتی برای این 
                   extraPhone={extraPhone}
                   setExtraPhone={setExtraPhone}
                   description={description}
+                  handelFinalBooking={handelFinalBooking}
+                  isAllFormsValid={isAllFormsValid}
+                  loading={loading}
                 />
               </div>
             )}
 
-            {step === 5 &&(
-  
-
-                      <BookingStepFour
-                        step={step}
-                        setStep={setStep}
-                        hotelData={hotelData}
-                        bookingSummary={bookingSummary}
-                        checkInDate={checkInDate}
-                        checkOutDate={checkOutDate}
-                        passengers={passengers}
-                        updatePassenger={updatePassenger}
-                        removePassenger={removePassenger}
-                        addPassenger={addPassenger}
-                        extraEmail={extraEmail}
-                        setExtraEmail={setExtraEmail}
-                        extraPhone={extraPhone}
-                        setExtraPhone={setExtraPhone}
-                      />
-           
+            {step === 5 && (
+              <BookingStepFour
+                step={step}
+                setStep={setStep}
+                hotelData={hotelData}
+                bookingSummary={bookingSummary}
+                checkInDate={checkInDate}
+                checkOutDate={checkOutDate}
+                passengers={passengers}
+                updatePassenger={updatePassenger}
+                removePassenger={removePassenger}
+                addPassenger={addPassenger}
+                extraEmail={extraEmail}
+                setExtraEmail={setExtraEmail}
+                extraPhone={extraPhone}
+                setExtraPhone={setExtraPhone}
+              />
             )}
-            
-           
-            
           </div>
 
           <div className="left-0 top-30 absolute">

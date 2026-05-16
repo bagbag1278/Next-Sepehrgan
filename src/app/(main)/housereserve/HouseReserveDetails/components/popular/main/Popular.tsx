@@ -21,7 +21,7 @@ interface PopularProps {
 const Popular = ({ data }: PopularProps) => {
 
   if (!data)
-    return <div className="w-full h-40 animate-pulse bg-gray-50 rounded-3xl" />;
+    return <div className="w-full h-40 animate-pulse  rounded-3xl" />;
 
   const amenities = [
     {
@@ -76,7 +76,7 @@ const Popular = ({ data }: PopularProps) => {
           تمامی امکانات رفاهی محبوب هتل ما
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 max-[768]:w-full max-[768]:justify-center max-[768]:flex max-[768]:flex-wrap">
           {amenities.map((item) => {
             const isSelected =
               (typeof data[item.id] === "number" && data[item.id] > 0) ||
@@ -85,10 +85,10 @@ const Popular = ({ data }: PopularProps) => {
             return (
               <div
                 key={item.id}
-                className={`flex items-center gap-3 p-3 transition-all h-[65px] rounded-2xl border 
+                className={`flex items-center gap-3 p-3 transition-all  h-[65px] rounded-2xl border 
                 ${
                   isSelected
-                    ? "bg-white  shadow-[0_8px_20px_rgba(8,135,202,0.12)] scale-105 border-[#0887CA44]"
+                    ? "bg-white max-[768]:gap-0 max-[768]:w-40 shadow-[0_8px_20px_rgba(8,135,202,0.12)] scale-105 border-[#0887CA44]"
                     : "bg-gray-50/50 border-transparent opacity-50 grayscale-[0.5]"
                 }
               `}
