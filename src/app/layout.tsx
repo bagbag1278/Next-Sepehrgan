@@ -1,15 +1,15 @@
-// فایل اصلی: src/app/layout.tsx
-
-"use client";
+'use client'
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import LocalFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
-import LocalFont from "next/font/local";
 
 const iran = LocalFont({
-  src: "../assets/font/IRANSans-web.woff", 
+  src: "../assets/font/IRANSans.ttf",
 });
 
 export default function RootLayout({
