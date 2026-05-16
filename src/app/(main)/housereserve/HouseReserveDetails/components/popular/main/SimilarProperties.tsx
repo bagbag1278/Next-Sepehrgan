@@ -14,7 +14,7 @@ const SimilarProperties = () => {
       location: "گیلان ، رشت ، میدان آزادی ....",
       price: "۲۵۰,۰۰۰,۰۰۰ تومان",
       rating: "۴.۹",
-      image: "/hotel1.jpg", // جایگزین با آدرس تصویر واقعی
+      image: "/hotel1.jpg", 
     },
     {
       id: 6,
