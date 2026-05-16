@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 import type { Metadata } from "next";
+=======
+import "./globals.css";
+import Footer from "@/components/Footer/Footer";
+import Header from "@/components/header/Header";
+import { ThemeProvider } from "next-themes";
+>>>>>>> Feature/HeroSection
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
@@ -18,8 +25,9 @@ const geistMono = Geist_Mono({
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
-
-})
+  variable: "--font-iran",
+  display: "swap",
+});
 
 export default function RootLayout({
   children,

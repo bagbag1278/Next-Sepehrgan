@@ -1,79 +1,52 @@
-@import "tailwindcss";
-@import 'swiper/css/pagination';
-@import 'swiper/css';
-@plugin "daisyui";
-@import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
-@import 'swiper/css/effect-coverflow';
+    @import "tailwindcss";
+    @plugin "daisyui";
 
-:root {
-  --background: #F5F5F5;
-  --foreground: #000000;
-  --font-iran: 'IRANSans';
-}
+    :root {
+      --background: #F5F5F5;
+      --foreground: #000000;
+      --font-iran: 'IRANSans';
+    }
+    @custom-variant dark (&:where(.dark, .dark *));
+    @theme {
+      --color-scheme: dark;
 
-@custom-variant dark (&:where(.dark, .dark *));
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
 
-@theme {
-  --color-scheme: dark;
+      --font-sans: var(--font-geist-sans);
+      --font-mono: var(--font-geist-mono);
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+      /* Colors */
+      --color-blue-100: #10088F;
+      --color-blue-200: #005EA4;
+      --color-blue-300: #0887CA;
+      --color-green-100: #15977D;
+      --color-blue-400: #060425;
+      --color-red-100: #ED053F;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #ededed;
+        --foreground:  #0a0a0a;
+      }
+    }
+    .mySwiper .swiper-pagination-bullet {
+      background-color: rgba(255, 255, 255, 0.7); /* White with opacity */
+      width: 12px;
+      height: 12px;
+      margin: 0 1px; 
+    }
+    .mySwiper .swiper-pagination-bullet-active {
+      background-color: #F5F5F5;
+      opacity: 1;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+       font-family: var(--font-iran);
+    
+    /* این خط باعث میشه اعداد انگلیسی (123) هم با استایل فونت فارسی نمایش داده بشن */
+    font-variant-numeric: tabular-nums; 
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-
-  /* Colors */
-  --color-blue-100: #10088F;
-  --color-blue-200: #005EA4;
-  --color-blue-300: #0887CA;
-  --color-blue-400: #060425;
-  --color-green-100: #15977D;
-  --color-green-200: #05ED6A;
-  --color-red-100: #ED053F;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ededed;
-    --foreground: #0a0a0a;
-  }
-}
-.mySwiper .swiper-pagination-bullet {
-  background-color: rgba(255, 255, 255, 0.7);
-  width: 12px;
-  height: 12px;
-  margin: 0 1px;
-}
-
-.mySwiper .swiper-pagination-bullet-active {
-  background-color: #F5F5F5;
-  opacity: 1;
-}
-
-body {
-  font-family: var(--font-iran);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "ss01";
-}
-
-.swiper-container-flex {
-  display: flex !important;
-  flex-direction: row !important;
-  overflow: visible !important; 
-}
-
-.swiper-slide-flex {
-  flex-shrink: 0 !important; 
-
-  display: flex !important; 
-  justify-content: center; 
-  align-items: center; 
-}
-
-.swiper {
-  overflow: visible !important;
-}
-
+    font-feature-settings: "ss01";
+    }
 

@@ -21,19 +21,20 @@ import Profiless from "./Icon/Profile/Profiless";
 import Profilesss from "./Icon/Profile/Profilesss";
 import SwiperComponent from "./Swiper/SwiperComponent";
 import SwiperResponsiv from "./Swiper/SwiperResponsive/SwiperResponsive";
+import Link from "next/link";
 
 const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-      <div className="flex justify-center xl:w-full xl:max-w-[1273px] sm:max-w-[360px] m-auto w-[360px] border sm:h-[800px]  sm:m-auto lg:w-full lg:max-w-[1273px] sm:w-[393px] sm:flex sm:justify-start   xl:h-[752px] h-[1052px]  lg:m-auto  relative  ">
-        <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-[#005EA4] shadow-lg shadow-green-100/25 cursor-pointer">
+      <div className="flex justify-center xl:w-full xl:max-w-318.25 lg:w-full max-[1023]:w-11/12 max-[1023]:mr-50 max-[640]:mr-2   lg:max-w-318.25     xl:h-188 h-263  lg:m-auto  relative  ">
+        <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
         </div>
-        <div className="absolute top-[472px] left-1/2 -translate-x-1/2 flex justify-center z-10">
+        <div className="absolute top-118 left-1/2 -translate-x-1/2 flex justify-center z-10">
           {" "}
-          <div className="w-[1020px] h-[140px] bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] rounded-xl relative gap-[22px] flex   shadow-[8px_0px_20px_rgba(8,135,202,0.30)] hidden lg:block xl:block">
-            <div className="flex justify-center w-full   items-start  ">
+          <div className="w-255 h-35 bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] max-[1024]:hidden rounded-xl relative gap-5.5 flex   z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] lg:block xl:block">
+            <div className="flex justify-center w-full items-start ">
               <HeroSctionFilter />
             </div>
           </div>
@@ -41,7 +42,7 @@ const HeroSction = () => {
         <div className="w-328.25 h-110.5  flex  ">
           {/* Filter */}
           <div className="sm:block  relative   lg:hidden xl:hidden  border  -left-100 top-5 sm:top-[29px] sm:left-0 ">
-            <ModalSearchRes/>
+            <ModalSearchRes />
             <div className="">
               <Frame />
             </div>
@@ -51,10 +52,14 @@ const HeroSction = () => {
               <FelshRes />
             </div>
             <div className="relative ">
-                      <div className="absolute left-58 top-31"><FleshLeftRes/></div>
+              <div className="absolute left-58 top-31">
+                <FleshLeftRes />
+              </div>
             </div>
-          <div className="relative ">
-                      <div className="absolute left-58 top-28"><FleshRightRes/></div>
+            <div className="relative ">
+              <div className="absolute left-58 top-28">
+                <FleshRightRes />
+              </div>
             </div>
           </div>
           <div className="xl:w-127.5 xl:h-95 lg:w-127.5 lg:h-95 sm:w-0 sm:h-0  flex self-center right-0 sm:right-12 sm:-top-30  xl:top-0 lg:top-0 sm:relative  ">
@@ -66,9 +71,11 @@ const HeroSction = () => {
                   <button className="w-62.5 text-[16px] h-12 rounded-2xl border-2 cursor-pointer bg-blue-100 dark:bg-[#F5F5F5] dark:text-black text-white  sm:relative sm:right-10 xl:right-0 xl:relative lg:right-0 lg:relative">
                     با یه کلیک شروع کن !
                   </button>
-                  <button className="w-45 h-12 text-[16px] rounded-2xl  cursor-pointer border border-b-blue-100 dark:border-white dark:text-white text-blue-100 hidden lg:block xl:block">
-                    درباره رهن کده
-                  </button>
+                  <Link href="/contactus">
+                    <button className="w-45 h-12 text-[16px] rounded-2xl  cursor-pointer border border-b-blue-100 dark:border-white dark:text-white text-blue-100 hidden lg:block xl:block">
+                      درباره رهن کده
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
