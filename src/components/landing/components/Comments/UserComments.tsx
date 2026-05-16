@@ -29,7 +29,7 @@ const FocusCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className=" flex ">
+    <div className="2xl:hidden flex  ">
       <div className="relative w-355 flex justify-between">
 
         {/* ////// */}
@@ -90,7 +90,7 @@ const FocusCarousel = () => {
 
               return (
                 <SwiperSlide key={item.key}>
-                  <div className="flex items-center justify-center mt-8 mr-20 z-50 border border-[#005EA480]">
+                  <div className="flex items-center justify-center mt-8 mr-20 z-50 ">
                     <div
                       className={[
                         "transition-all duration-300 flex items-center justify-center",
