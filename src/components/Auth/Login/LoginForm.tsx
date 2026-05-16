@@ -25,7 +25,7 @@ const LoginForm = () => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
-    setStrength(checkPasswordStrength(value));
+    setStrength(checkPasswordStrength(value)); 
   };
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);

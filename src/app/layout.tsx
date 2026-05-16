@@ -28,7 +28,7 @@ export default function RootLayout({
     <html
       lang="en"
       className="h-full antialiased flex justify-center"
-      suppressHydrationWarning
+      suppressHydrationWarning={true}
     >
       <body className={`flex flex-col w-360 ${iran.className}`}>
         <ThemeProvider
