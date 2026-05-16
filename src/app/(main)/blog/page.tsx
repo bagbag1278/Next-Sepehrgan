@@ -170,10 +170,8 @@ const Blog = () => {
         </div>
       </div>
 
-      {/* ================= مودال جدید کاملاً تحت نظارت ری‌آکت ================= */}
       {isModalOpen && activeBlog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* لایه تیره پس‌زمینه (Backdrop) با قابلیت کلیک برای بستن */}
           <div className="fixed inset-0 bg-black/60 backdrop-blur-md" onClick={closeModal}></div>
           
           {/* بدنه اصلی مودال */}
