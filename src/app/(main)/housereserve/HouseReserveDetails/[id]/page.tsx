@@ -19,7 +19,8 @@ const fallbackImage =
 
 const HouseReserveDetails = () => {
   const params = useParams();
-
+  const houseId = params.id;
+  
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -93,17 +94,15 @@ const HouseReserveDetails = () => {
               </h2>
 
               <div className="flex items-center gap-2 text-gray-500">
-                <Loaction
-                
-                />
+                <Loaction />
                 <span className="text-[14px] font-bold">{data.address}</span>
               </div>
             </div>
           </div>
 
-          <div className="flex justify-between gap-4 max-[1300px]:flex-col">
-            <div className="flex gap-16 flex-col items-center w-full lg:w-auto">
-              <div className="w-107 h-117 rounded-[40px] p-8 shadow-lg">
+          <div className="flex justify-between gap-4  max-[1300px]:flex-col">
+            <div className="flex gap-16 flex-col  items-center w-full lg:w-auto">
+              <div className="w-107 h-117  rounded-[40px] p-8 shadow-lg">
                 <Reserve
                   price={data.price}
                   discountedPrice={data.discounted_price}
@@ -112,14 +111,12 @@ const HouseReserveDetails = () => {
               </div>
 
               <div className="w-107 h-142 flex-col  ">
-                <RentSimilarProperties
-                currentId={data.id}
-                />
+                <RentSimilarProperties currentId={data.id} />
               </div>
 
-              <div className="absolute -left-40 bottom-128 transform rotate-[-10deg] min-[1600px]:hiddenc opacity-70 max-[1300px]:hidden">
-                <FleshHome />
-              </div>
+         <div className="absolute -left-30 top-492 rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
+  <FleshHome />
+</div>
             </div>
 
             <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 dark:text-white dark:bg-[#060425] bg-[#F5F5F5D9] shadow-lg p-6 mx-auto">
@@ -184,8 +181,7 @@ const HouseReserveDetails = () => {
                 {data.caption}
               </p>
               <div className="w-173 mt-8">
-                <CommentsSection 
-                houseId={15} />
+                <CommentsSection houseId={houseId} />
               </div>
             </div>
           </div>

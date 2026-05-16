@@ -32,6 +32,7 @@ const BookingPage = () => {
       email: "",
     })),
   );
+  
 
   const handelFinalBooking = async () => {
     try {
