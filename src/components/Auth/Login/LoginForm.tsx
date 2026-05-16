@@ -1,20 +1,26 @@
 "use client";
 
-import { login } from "@/core/api/authApi";
+import { ActionState, loginAction } from "@/core/action/Login.action";
 import { checkPasswordStrength } from "@/core/validation/PassWord";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { redirect } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
-
+const initialState: ActionState = {
+  success: false,
+  error: "",
+  message: "",
+};
 const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
   const [showPassword, setShowPassword] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [state, formAction, pending] = useActionState(
+    loginAction,
+    initialState,
+  );
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -31,48 +37,23 @@ const LoginForm = () => {
     if (strength === 3) return "border-green-100 text-green-100";
     return "border-blue-300";
   };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (loading) return;
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.message || "با موفقیت وارد شدید!");
 
-    const formData = new FormData(e.currentTarget);
-    const email = String(formData.get("email") ?? "").trim();
-    const pwd = String(formData.get("password") ?? "").trim();
-
-    if (!email) {
-      alert("ایمیل را وارد کنید");
-      return;
+      setTimeout(() => {
+        redirect("/");
+      }, 1000);
     }
 
-    if (!pwd) {
-      alert("رمز عبور را وارد کنید");
-      return;
+    if (state.error) {
+      toast.error(state.error);
     }
+  }, [state.success, state.error, state.message]);
 
-    try {
-      setLoading(true);
-
-      const res = await login({ email, password: pwd });
-
-      const accessToken = res?.accessToken;
-      const refreshToken = res?.refreshToken;
-
-      if (typeof window !== "undefined") {
-        if (accessToken) localStorage.setItem("accessToken", accessToken);
-        if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
-      }
-      router.push("/");
-
-      toast.success("خوش آمدید");
-    } catch (error) {
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
   return (
     <form
-      onSubmit={handleSubmit}
+      action={formAction}
       className=" mt-6 flex flex-col justify-between gap-6"
     >
       <div className="flex flex-col gap-2 relative">
@@ -197,12 +178,12 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
       </div>
       <button
         type="submit"
-        disabled={loading}
+        disabled={pending}
         className="w-full h-12 rounded-2xl
            bg-blue-100  hover:bg-blue-200
          transition-colors duration-200 text-white disabled:bg-blue-400/50"
       >
-        {loading ? "در حال ورود..." : "ورود"}
+        {pending ? "در حال ورود..." : "ورود"}
       </button>
       <div className="h-6 mx-auto flex gap-0.5 justify-center items-center">
         <h6 className="font-normal text-[13px]">حساب کاربری ندارید ؟</h6>

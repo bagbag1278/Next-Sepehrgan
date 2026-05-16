@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,15 +25,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased flex justify-center"suppressHydrationWarning>
+    <html
+      lang="en"
+      className="h-full antialiased flex justify-center"
+      suppressHydrationWarning
+    >
       <body className={`flex flex-col w-360 ${iran.className}`}>
-        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster position="top-center" gutter={8} />
           <main>{children}</main>
         </ThemeProvider>
       </body>
