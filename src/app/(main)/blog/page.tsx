@@ -11,7 +11,6 @@ const Blog = () => {
   const [activeBlog, setActiveBlog] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
     const fetchBlogs = async () => {
       try {
         setLoading(true);
@@ -24,6 +23,9 @@ const Blog = () => {
         setLoading(false);
       }
     };
+
+
+  useEffect(() => {
 
     fetchBlogs();
   }, []);
@@ -60,7 +62,6 @@ const Blog = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* سمت راست: فیلترها */}
         <div className="lg:col-span-1 flex flex-col gap-6">
           <div className="w-full bg-[#F5F8FA] border border-[#E8EFF3] rounded-[20px] p-5 shadow-sm shadow-[4px_4px_15px_rgba(8,135,202,0.1)]">
             <h3 className="text-[#10088F] text-[15px] font-bold mb-3 flex items-center gap-2">
