@@ -4,11 +4,11 @@ const ImageDef2 = () => {
     return (
         <svg width="444" height="261" viewBox="0 0 444 261" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <g filter="url(#filter0_d_553_3844)">
-                <rect x="30" y="30" width="384" height="201" rx="32" fill="url(#pattern0_553_3844)" shape-rendering="crispEdges" />
+                <rect x="30" y="30" width="384" height="201" rx="32" fill="url(#pattern0_553_3844)" shapeRendering="crispEdges" />
             </g>
             <defs>
                 <filter id="filter0_d_553_3844" x="0" y="0" width="444" height="261" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                     <feOffset />
                     <feGaussianBlur stdDeviation="15" />

@@ -18,7 +18,7 @@ const FocusCarousel = () => {
       { key: "1", Profile:  "2" , name: "آیتم1", content: "1", date: "1404/03/16" },
       { key: "2", Profile: "2", name: "آیتم 8", content: "2", date: "1404/03/16" },
       { key: "3", Profile: "3", name: "آیتم 16", content: "3", date: "1404/03/16" },
-      { key: "4", Profile: "4", name: "آیتم 2", content: "1fvbgfklvdfvkmgb .xv,d.zfvgmkb. nmcvx/mlvk.bjnmvxc,zd/vk.bjnmvx,dcsd/fvmkbjn xmv,c,fvطزیسنترلربثشصپبقلفهتذبنیپبمثلقهشخذ", date: "1404/03/16" },
+      { key: "4", Profile: "4", name: "آیتم 2", content: "1fvbgfklvdfvkmgb ,dcsd/fvmkbjnتذبنیپبمثلقهشخذ", date: "1404/03/16" },
       { key: "5", Profile: "5", name: "آیتم 1", content: "5", date: "1404/03/16" },
       { key: "6", Profile: "6", name: "آیتم 2", content: "6", date: "1404/03/16" },
       { key: "7", Profile: "7", name: "آیتم 4", content: "7", date: "1404/03/16" },
@@ -110,11 +110,7 @@ const FocusCarousel = () => {
                           <div className="flex flex-col items-center justify-between text-center w-full h-full p-5">
                             {/* profile */}
                             <div className="w-20 h-20 rounded-full p-0.75 border border-[#BAE9D3] bg-white">
-                              {/* <img
-                                src={item.Profile}
-                                alt={item.name}
-                                className="w-full h-full rounded-full object-cover"
-                              /> */}
+                              {/* <img src="" alt="" /> */}
                               <div>
                                 {item.Profile}
                               </div>

@@ -12,6 +12,7 @@ const BuyAndSellSlider = () => {
             try {
                 const res = await fetch(
                    "http://next.genzuni.website/api/houses"
+                   
                 );
 
                 if (!res.ok) {
