@@ -27,7 +27,7 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-      <div className="flex justify-center xl:w-full xl:max-w-318.25 lg:w-full max-[1023]:w-11/12 max-[1023]:mr-50 max-[640]:mr-2   lg:max-w-318.25     xl:h-188 h-263  lg:m-auto  relative  ">
+      <div className="flex justify-center  xl:w-full xl:max-w-318.25 lg:w-full max-[1023]:w-11/12 max-[1023]:mr-50 max-[640]:mr-2   lg:max-w-318.25     xl:h-188 h-263  lg:m-auto  relative  ">
         <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
         </div>
@@ -41,7 +41,7 @@ const HeroSction = () => {
         </div>
         <div className="w-328.25 h-110.5  flex  ">
           {/* Filter */}
-          <div className="sm:block  relative   lg:hidden xl:hidden  border  -left-100 top-5 sm:top-[29px] sm:left-0 ">
+          <div className="sm:block  relative   lg:hidden xl:hidden    -left-100 top-5 sm:top-[29px] sm:left-0 ">
             <ModalSearchRes />
             <div className="">
               <Frame />
@@ -142,7 +142,7 @@ const HeroSction = () => {
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-30   bottom-11 text-[21px]">
                     +
                   </span>
-                  <span className="text-[16px] top-15 left-2 absolute font-medium ">
+                  <span className="text-[16px]  top-15 left-2 absolute font-medium ">
                     رضایت مشتریان ما{" "}
                   </span>
                 </div>
@@ -154,7 +154,7 @@ const HeroSction = () => {
           </div>
 
           {/* felesh && dark */}
-          <div className="xl:justify-end xl:flex xl:w-full lg:w-full lg:justify-end lg:flex border sm:hidden lg:block xl:block hidden">
+          <div className="xl:justify-end xl:flex xl:w-full lg:w-full lg:justify-end lg:flex  sm:hidden lg:block xl:block hidden">
             <div className="  ">
               <SwiperComponent />
             </div>

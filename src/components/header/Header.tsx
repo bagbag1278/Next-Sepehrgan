@@ -16,7 +16,6 @@ const nav = [
 
 const Header = () => {
   const pathname = usePathname();
-  // max-w-[1300px] m-auto
   return (
     
     <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center xl:block">
@@ -49,7 +48,7 @@ const Header = () => {
                 <span
                   className={`text-[16px] font-medium transition-all duration-300 ${
                     isActive
-                      ? "text-[#28A5E6] mb-3" // رنگ آبی وقتی فعال است
+                      ? "text-[#28A5E6] mb-3" 
                       : "text-black dark:text-white"
                   }`}
                 >
@@ -74,12 +73,10 @@ const Header = () => {
             <HeroSction2 />
           </div>
         </div>
-        <div className="hidden dark:block">
-          <HeroSction2 />
-        </div>
+
         <div className="w-69.5 h-12 xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden  hidden ">
           <Link href="/login">
-            <div className="text-blue-100 font-bold  cursor-pointer text-[18px] dark:text-[#28A5E6] ">
+            <div className="text-blue-100 font-bold  cursor-pointer z-20 relative text-[18px] dark:text-[#28A5E6] ">
               ورود
             </div>
           </Link>

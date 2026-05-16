@@ -20,7 +20,6 @@ const cities = [
   { id: "ramsar-moallem", name: "رامسر، بلوار معلم" },
   { id: "noshahr-azadi", name: "نوشهر، خیابان آزادی" },
   { id: "tehran-saadat-abad", name: "تهران، سعادت آباد" },
-  { id: "babolsar-oboori", name: "بابلسر، کوچه عبوری" },
 ];
 
 const HeroDropdowns = ({ type }: { type: string }) => {
@@ -201,7 +200,8 @@ const handleSearch = () => {
               </div>
             </>
           ) : (
-            <>چ              <div className="w-[180px] h-[70px] flex flex-col justify-center px-4">
+            <>
+            <div className="w-[180px] h-[70px] flex flex-col justify-center px-4">
                 <span className="text-[16px] font-bold text-[#060425]">
                   نوع ملک
                 </span>

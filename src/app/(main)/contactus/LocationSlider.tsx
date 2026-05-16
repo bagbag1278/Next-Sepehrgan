@@ -24,7 +24,7 @@ const LocationSlider = () => {
   return (
     <>
       <div className="w-full py-10 relative group   ">
-        <h2 className="text-center text-[#060425] font-bold text-xl mb-8">
+        <h2 className="text-center text-[#060425] font-bold text-xl mb-8 dark:text-white">
           املاکی های ما در سراسر جهان
         </h2>
 
@@ -46,7 +46,7 @@ const LocationSlider = () => {
             prevEl: ".prev-btn",
           }}
           modules={[EffectCoverflow, Navigation]}
-          className="w-[220px] max-w-5xl relative "
+          className="w-[220px] max-w-5xl relative !overflow-visible"
         >
           {locations.map((item) => (
             <SwiperSlide key={item.id} className="w-[300px]  sm:w-[350px]">

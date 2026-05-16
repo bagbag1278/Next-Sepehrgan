@@ -11,7 +11,7 @@ const SwiperComponent = () => {
   return (
     <div className="">
       {" "}
-      <div className="w-[606px] h-[675px] relative justify-end rounded-tr-[50px] rounded-bl-[50px]  overflow-hidden">
+      <div className="w-[606px] h-[675px] relative  justify-end rounded-tr-[50px] rounded-bl-[50px]  overflow-hidden">
         {" "}
         <div className="h-[4px] w-[359px] flex right-28 bg-gradient-to-r top-[60px] relative z-10 from-[#0887CA] to-white- sm:hidden hidden xl:block lg:block" />{" "}
         <div className="h-[4px] w-[180px] flex right-32 bg-white top-[60px] absolute z-10  sm:hidden hidden xl:block lg:block" />{" "}

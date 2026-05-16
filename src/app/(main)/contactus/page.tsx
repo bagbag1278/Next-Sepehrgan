@@ -59,7 +59,7 @@ const ContactPage = () => {
 
 
   return (
-    <div className="w-full bg-[#FDFDFD] min-h-screen pb-20 font-sans" dir="rtl">
+    <div className="w-full  min-h-screen pb-20 font-sans" dir="rtl">
       <section className="text-center pt-16 pb-10 relative">
         <h1 className="text-2xl md:text-3xl font-black dark:text-white text-[rgb(6,4,37)]">
           حس خوبت رو به ما بسپار ، ما کنارتیم!!
@@ -110,7 +110,7 @@ const ContactPage = () => {
         </div>
         <div className="flex items-center gap-3">
           <div className="text-right">
-            <p className="font-bold text-sm">آدرس ایمیل</p>
+            <p className="font-bold text-sm dark:text-white">آدرس ایمیل</p>
             <p className="text-xs text-gray-500 italic dark:text-white">RahnKadeh@gmail.com</p>
           </div>
           <Mail className="text-blue-600" size={24} />
@@ -118,7 +118,7 @@ const ContactPage = () => {
         <div className="flex items-center gap-3">
           <div className="text-right">
             <p className="font-bold text-sm dark:text-white">تلفن ما</p>
-            <p className="text-xs text-gray-500 italic">
+            <p className="text-xs text-gray-500 italic dark:text-white">
               (۰۱۱) ۴۴۴-۷۳۸۹ و ۰۹۱۱-۵۶۴-۷۳۸۹
             </p>
           </div>
@@ -129,7 +129,7 @@ const ContactPage = () => {
       <section className=" max-w-7xl mx-auto  grid grid-cols-1 md:grid-cols-2 gap-40 max-[1300]:gap-20 px-6">
         <div className="relative p-8 rounded-[40px]  shadow-blue-100/50">
           <div className="mb-6 text-center">
-            <p className="text-[rgb(6,4,37)] font-bold underline decoration-blue-200 underline-offset-8">
+            <p className="text-[rgb(6,4,37)] font-bold underline decoration-blue-200 underline-offset-8 dark:text-white">
               ما رو دریاب :)
             </p>
             <div className="max-[1055]:hidden ">
@@ -148,7 +148,7 @@ const ContactPage = () => {
               </div>
             </div>
 
-            <h2 className="text-blue-700 font-black text-xl mt-2">
+            <h2 className="text-blue-700 font-black text-xl mt-2 dark:text-white">
               پیام بفرست تا کمکت کنیم!
             </h2>
           </div>
@@ -174,7 +174,7 @@ const ContactPage = () => {
               placeholder="پیام شما"
               value={formData.message}
               onChange={(e) => setFormData({...formData,message:e.target.value})}
-              className="w-full p-4 bg-white rounded-2xl outline-none border  border-[#0887CA80] text-[#0887CAB2]"
+              className="w-full p-4  rounded-2xl outline-none border  border-[#0887CA80] text-[#0887CAB2]"
             ></textarea>
 
             <button className="w-full py-4 bg-[rgb(16,8,143)] text-white  rounded-2xl font-bold shadow-xl hover:bg-blue-900 transition-all">

@@ -114,7 +114,7 @@ const HouseReserveDetails = () => {
                 <RentSimilarProperties currentId={data.id} />
               </div>
 
-              <div className="absolute -left-30 top-492 rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
+              <div className="absolute -left-18 top-503 rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
                 <FleshHome />
               </div>
             </div>
