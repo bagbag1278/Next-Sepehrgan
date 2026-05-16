@@ -20,7 +20,7 @@ const fallbackImage =
 const HouseReserveDetails = () => {
   const params = useParams();
   const houseId = params.id;
-  
+
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -114,9 +114,9 @@ const HouseReserveDetails = () => {
                 <RentSimilarProperties currentId={data.id} />
               </div>
 
-         <div className="absolute -left-30 top-492 rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
-  <FleshHome />
-</div>
+              <div className="absolute -left-30 top-492 rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
+                <FleshHome />
+              </div>
             </div>
 
             <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 dark:text-white dark:bg-[#060425] bg-[#F5F5F5D9] shadow-lg p-6 mx-auto">

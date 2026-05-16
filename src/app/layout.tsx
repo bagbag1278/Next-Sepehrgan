@@ -1,16 +1,12 @@
-<<<<<<< HEAD
 import type { Metadata } from "next";
-=======
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
->>>>>>> Feature/HeroSection
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
 import LayoutWrapper from "./(main)/housereserve/LayoutWrapper";
 
 const geistSans = Geist({
