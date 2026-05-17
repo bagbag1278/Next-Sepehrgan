@@ -27,7 +27,7 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-      <div className="flex justify-center  xl:w-full xl:max-w-318.25 lg:w-full max-[1023]:w-11/12 max-[1023]:mr-50 max-[640]:mr-2   lg:max-w-318.25     xl:h-188 h-263  lg:m-auto  relative  ">
+      <div className="flex justify-center  xl:w-full xl:max-w-318.25 lg:w-full   max-[1023]:w-11/12 max-[1023]:mr-80 max-[923]:mr-70 max-[823]:mr-55 max-[723]:mr-45 pr-4 max-[640]:mr-2   lg:max-w-318.25     xl:h-188 h-263  lg:m-auto  relative  ">
         <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
         </div>

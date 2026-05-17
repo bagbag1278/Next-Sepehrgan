@@ -47,7 +47,7 @@ const LoginPage = () => {
         </AnimatePresence>
       </div>
       <div className="w-[48%] relative h-175.25 ml-2 mt-2 rounded-br-[50px] rounded-tr-[50px] hidden md:block">
-        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col gap-4">
+        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col max-[1310]:hidden gap-4">
           <h3 className="text-2xl font-bold text-center">
             وارد رهن کده شو و خونت رو پیدا کن !!!
           </h3>

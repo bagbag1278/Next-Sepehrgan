@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 // بقیه ایمپورت‌ها...
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 import TallerFleshBlue from "./icon/FleshBlue/TallerFleshBlue";
 import FleshBlueLeft from "./icon/FleshBlue/FleshBlueLeft";
 import FleshBlueRight from "./icon/FleshBlue/FleshBlueRight";
@@ -14,7 +14,8 @@ import RightFleshGreen from "./icon/FleshGreen/RightFleshGreen";
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     title: "",
-    message: ""
+    message: "",
+    email: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -30,23 +31,28 @@ const ContactPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://next.genzuni.website/api/contact-us", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "http://next.genzuni.website/api/contact-us",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: formData.title,
+            message: formData.message,
+          }),
         },
-        body: JSON.stringify({
-          title: formData.title,  
-          message: formData.message, 
-        }),
-      });
+      );
 
       if (response.ok) {
         toast.success("پیام شما با موفقیت ثبت شد", { id: loadingToast });
-        setFormData({ title: "", message: "" });
+        setFormData({ title: "", message: "", email: "" });
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || "خطایی در سرور رخ داد", { id: loadingToast });
+        toast.error(errorData.message || "خطایی در سرور رخ داد", {
+          id: loadingToast,
+        });
       }
     } catch (error) {
       console.error("ارور در ارسال:", error);
@@ -55,8 +61,6 @@ const ContactPage = () => {
       setLoading(false);
     }
   };
-
-
 
   return (
     <div className="w-full  min-h-screen pb-20 font-sans" dir="rtl">
@@ -102,7 +106,7 @@ const ContactPage = () => {
         <div className="flex items-center gap-3">
           <div className="text-right">
             <p className="font-bold text-sm dark:text-white">آدرس ما</p>
-            <p className="text-xs text-gray-500 italic dark:text-white" >
+            <p className="text-xs text-gray-500 italic dark:text-white">
               مازندران _ ساری _ دودانگه _ روستای بکر سنگده
             </p>
           </div>
@@ -111,7 +115,9 @@ const ContactPage = () => {
         <div className="flex items-center gap-3">
           <div className="text-right">
             <p className="font-bold text-sm dark:text-white">آدرس ایمیل</p>
-            <p className="text-xs text-gray-500 italic dark:text-white">RahnKadeh@gmail.com</p>
+            <p className="text-xs text-gray-500 italic dark:text-white">
+              RahnKadeh@gmail.com
+            </p>
           </div>
           <Mail className="text-blue-600" size={24} />
         </div>
@@ -158,22 +164,32 @@ const ContactPage = () => {
               type="text"
               placeholder="نام و نام خانوادگی"
               value={formData.title}
-               onChange={(e) => setFormData({...formData,title:e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
               className="w-full p-4  rounded-2xl outline-none border border-transparen border-[#0887CA80] text-[#0887CAB2]"
             />
             <input
               type="text"
               placeholder="ایمیل"
-              
+              value={formData.email} 
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               className="w-full p-4  rounded-2xl outline-none border border-transparen border-[#0887CA80] text-[#0887CAB2]"
             />
-                      <Mail className="absolute max-[1138]:right-90 max-[1050]:hidden top-51 right-115  text-blue-600" size={24} />
+            <Mail
+              className="absolute max-[1138]:right-90 max-[1050]:hidden top-51 right-115  text-blue-600"
+              size={24}
+            />
 
             <textarea
               rows={4}
               placeholder="پیام شما"
               value={formData.message}
-              onChange={(e) => setFormData({...formData,message:e.target.value})}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
               className="w-full p-4  rounded-2xl outline-none border  border-[#0887CA80] text-[#0887CAB2]"
             ></textarea>
 

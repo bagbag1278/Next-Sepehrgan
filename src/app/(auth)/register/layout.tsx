@@ -16,7 +16,7 @@ const RegisterLayout: FC<IChildren> = ({ children }) => {
   return (
     <div dir="rtl" className="h-179.5 flex justify-center relative">
       <div className="w-2/4 h-175.25 mr-2 mt-2 relative">
-        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col gap-4">
+        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col gap-4 max-[1268]:hidden">
           <h3 className="text-2xl font-bold text-center">
             وارد رهن کده شو و خونت رو پیدا کن !!!
           </h3>
@@ -28,13 +28,16 @@ const RegisterLayout: FC<IChildren> = ({ children }) => {
             صفا باشه! عشق باشه! معرفت باشه!
           </span>
         </div>
-        <ImageSlider images={slideImages} delay={5000} />
+        <div className="max-[600]:hidden">
+                  <ImageSlider images={slideImages} delay={5000} />
+        </div>
+
       </div>
       <div dir="ltr" className="w-180 ml-2">
         <div className="absolute left-24 top-3.5">
           <CircularDropdown />
         </div>
-        <div className="absolute left-36">
+        <div className="absolute left-36 ">
           <Image src={"/auth/vec2.png"} alt="vec" width={130} height={143} />
         </div>
         <div className=" w-44.25 h-16 mx-auto mt-40 flex gap-2 flex-col">
