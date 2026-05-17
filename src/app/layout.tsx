@@ -19,8 +19,7 @@ const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
   variable: "--font-iran",
   display: "swap",
-  // اگر فونت شما اعداد فارسی (۱۲۳) دارد، این خط را اضافه کن:
-  // style: 'normal',
+
 });
 
 export default function RootLayout({
