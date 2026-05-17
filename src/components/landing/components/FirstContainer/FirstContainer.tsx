@@ -10,7 +10,7 @@ const FirstContainer = () => {
             <div className=' w-full hidden sm:flex justify-center '>
                 <div className='w-330.75  relative'>
                     {/* ///// */}
-                    <div className='w-full flex justify-center  lg:justify-between gap-y-5.5 flex-wrap items-start border border-white '>
+                    <div className='w-full flex justify-center  lg:justify-between gap-y-5.5 flex-wrap items-start '>
 
                         <div className='w-70 lg:w-82 h-88 hidden lg:flex items-center lg:items-end '>
                             <div className='flex flex-wrap justify-center h-56 lg:h-77  w-90 '>
@@ -70,13 +70,13 @@ const FirstContainer = () => {
                         <div className="flex gap-4 justify-start items-center flex-row-reverse">
 
                             <div className="flex flex-col gap-4">
-                                <div className="hidden xl:flex w-164 h-52.75 rounded-2xl overflow-hidden bg-slate-700"> بالا بزرگ</div>
+                                <div className="hidden xl:flex w-164 h-52.75 rounded-2xl overflow-hidden bg-slate-700">  </div>
                                 <div className=" xl:flex gap-3 xl:gap-4 xl:flex-wrap  ">
-                                    <div className="w-80 h-55.75 xl:mb-0 mb-3 rounded-2xl overflow-hidden bg-slate-700"> پایین چپ </div>
-                                    <div className="w-80 h-55.75 rounded-2xl overflow-hidden bg-slate-700"> پایین وسط </div>
+                                    <div className="w-80 h-55.75 xl:mb-0 mb-3 rounded-2xl overflow-hidden bg-slate-700">   </div>
+                                    <div className="w-80 h-55.75 rounded-2xl overflow-hidden bg-slate-700">   </div>
                                 </div>
                             </div>
-                            <div className="flex w-60 h-113.5 rounded-2xl overflow-hidden bg-slate-700 z-50"> راست بلند </div>
+                            <div className="flex w-60 h-113.5 rounded-2xl overflow-hidden bg-slate-700 z-50">   </div>
 
 
 

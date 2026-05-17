@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${iran.className} bg-white flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} bg-white overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
       >
         {" "}
         <ThemeProvider
@@ -45,9 +45,9 @@ export default function RootLayout({
         >
           <Toaster position="top-center" gutter={8} />
 
-          <Header />
+          <Header/>
           <main className=" w-full max-w-360 ">{children}</main>
-          <Footer />
+          <Footer/>
         </ThemeProvider>
       </body>
     </html>

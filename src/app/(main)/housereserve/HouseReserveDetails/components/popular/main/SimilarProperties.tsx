@@ -46,7 +46,7 @@ const SimilarProperties = () => {
           <Link 
       href={`/housereserve/HouseReserveDetails/${data.id}`} 
       key={data.id}
-      className="block" // برای اینکه استایل به هم نریزد
+      className="block" 
     >
           <div 
             key={data.id} 

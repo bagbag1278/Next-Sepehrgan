@@ -3,6 +3,7 @@ import { toPersianNum } from "../utils/FarsiNum";
 import { FC } from "react";
 import { House } from "@/core/api/house";
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools";
+import Link from "next/link";
 
 interface ProductHouseProps {
   houses: House;
@@ -127,9 +128,15 @@ const ProductHouse: FC<ProductHouseProps> = ({ houses }) => {
             </div>
           </div>
           {/*  */}
+              <Link 
+      href={`/housereserve/HouseReserveDetails/${houses.id}`} 
+      key={houses.id}
+      className="block" 
+    >
           <div className="border border-blue-300 w-70.75 h-8 rounded-xl cursor-pointer text-sm text-blue-300/50 hover:text-white justify-center hover:bg-blue-300 dark:bg-white transition-colors duration-200 flex flex-col items-center">
             بررسی و رزرو
           </div>
+          </Link>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ import ImageDef3 from '../../Icon/ThirdContainer/ImageDef3';
 const ThirdContainer = () => {
     return (
         <div className='flex w-full justify-center p-4' dir='ltr'>
-            <div className='w-full max-w-7xl border border-white gap-6 flex flex-col lg:flex-row items-center lg:items-start'>
+            <div className='w-full max-w-7xl gap-6 flex flex-col lg:flex-row items-center lg:items-start'>
 
                 <div className='w-full flex flex-col items-center lg:items-start'>
 
@@ -32,31 +32,31 @@ const ThirdContainer = () => {
                     </div>
 
 
-                    <div className='w-full hidden sm:flex flex-col lg:flex-row gap-5 border border-white'>
+                    <div className='w-full hidden sm:flex flex-col lg:flex-row gap-5'>
 
                         <div className='w-full lg:w-2/4 h-auto lg:h-105 bg-gray-500 flex justify-center items-center rounded-4xl mb-5 lg:mb-0'>
                         <div className='border border-white '>
 
-                             <ImageDef />
+                             {/* <ImageDef /> */}
                         </div>
                         </div>
 
                         <div className='w-full lg:w-1/4 h-auto lg:h-105 flex justify-center items-center rounded-4xl bg-gray-500 mb-5 lg:mb-0'>
                                 <div className='border border-white '>
 
-                             <ImageDef1 />
+                             {/* <ImageDef1 /> */}
                         </div>
                         </div>
 
                         <div className='w-full lg:w-2/3 flex flex-col gap-5'>
                             <div className='w-full h-50.25 flex justify-end items-center bg-gray-500 rounded-4xl'>
                                 <div className='border border-white'>
-                                    <ImageDef2 />
+                                    {/* <ImageDef2 /> */}
                                 </div>
                             </div>
                             <div className='w-full h-50.25 flex justify-center items-center  bg-gray-500 rounded-4xl'>
                                 <div className='border border-white'>
-                                    <ImageDef3 />
+                                    {/* <ImageDef3 /> */}
                                 </div>
                             </div>
                         </div>

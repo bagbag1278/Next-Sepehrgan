@@ -130,7 +130,7 @@ const FocusCarousel = () => {
                             <div className="mt-auto w-full flex justify-between items-center px-2">
                               <span className="text-[#A9A9A9] text-xs flex items-center gap-1">
                                 <ClockIcon />
-                                {item.date}
+                                {/* {item?.date} */}
                               </span>
 
                               <div className=" cursor-pointer" >
