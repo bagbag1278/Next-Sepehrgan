@@ -43,15 +43,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LayoutWrapper>{children}</LayoutWrapper>
+          <Toaster position="top-center" gutter={8} />
 
           <Header />
           <main className=" w-full max-w-360 ">{children}</main>
-
           <Footer />
-
-          <Toaster position="top-center" gutter={8} />
-          <main>{children}</main>
         </ThemeProvider>
       </body>
     </html>
