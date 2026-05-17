@@ -29,7 +29,11 @@ export default function RootLayout({
 
     <html lang="en" suppressHydrationWarning>
       <body
+<<<<<<< HEAD
         className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+=======
+        className={`${iran.className} bg-white overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
+>>>>>>> 47ba05b (a)
       >
         {" "}
         <ThemeProvider
@@ -38,9 +42,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+<<<<<<< HEAD
           <Header />
           {children}
           <Footer />
+=======
+          <Toaster position="top-center" gutter={8} />
+
+          <Header/>
+          <main className=" w-full max-w-360 ">{children}</main>
+          <Footer/>
+>>>>>>> 47ba05b (a)
         </ThemeProvider>
       </body>
     </html>
