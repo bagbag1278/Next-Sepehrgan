@@ -6,8 +6,11 @@ import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
+
 import "./globals.css";
 import LayoutWrapper from "./(main)/housereserve/LayoutWrapper";
+
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +49,9 @@ export default function RootLayout({
           <main className=" w-full max-w-360 ">{children}</main>
 
           <Footer />
+
+          <Toaster position="top-center" gutter={8} />
+          <main>{children}</main>
         </ThemeProvider>
       </body>
     </html>

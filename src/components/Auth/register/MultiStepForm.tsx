@@ -6,8 +6,18 @@ import StepTwoForm from "./StepTwoForm";
 import StepThirdForm from "./StepThirdForm";
 import RegistrationSteps from "./RegistrationProgress";
 
-export default function MultiStepForm() {
+interface MultiStepFormProps {
+  initialTempUserId: number | null;
+}
+
+export default function MultiStepForm({
+  initialTempUserId,
+}: MultiStepFormProps) {
   const [currentStep, setCurrentStep] = useState(1);
+  const [tempUserId, setTempUserId] = useState<number | null>(
+    initialTempUserId,
+  );
+  const [verificationCode, setVerificationCode] = useState<string | null>(null);
 
   const handleNext = () => {
     setCurrentStep((prev) => prev + 1);
@@ -15,6 +25,12 @@ export default function MultiStepForm() {
 
   const handleBack = () => {
     setCurrentStep((prev) => prev - 1);
+  };
+
+  const handleStepOneComplete = (userId: number, code: string) => {
+    setTempUserId(userId);
+    setVerificationCode(code);
+    handleNext();
   };
 
   return (
@@ -30,7 +46,7 @@ export default function MultiStepForm() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <StepOneForm onNext={handleNext} />
+            <StepOneForm onNext={handleStepOneComplete} />
           </motion.div>
         )}
 
@@ -42,7 +58,11 @@ export default function MultiStepForm() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <StepTwoForm onNext={handleNext} onBack={handleBack} />
+            <StepTwoForm
+              tempUserId={tempUserId || 0}
+              onNext={handleNext}
+              onBack={handleBack}
+            />
           </motion.div>
         )}
 
@@ -54,12 +74,7 @@ export default function MultiStepForm() {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <StepThirdForm
-              onBack={handleBack}
-              onNext={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
+            <StepThirdForm userId={tempUserId || 0} />
           </motion.div>
         )}
       </AnimatePresence>
