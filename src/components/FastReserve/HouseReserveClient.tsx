@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import FilterButton from "@/components/FastReserve/FilterButton"; 
+import FilterButton from "@/components/FastReserve/FilterButton";
 import Houses from "@/components/FastReserve/Houses";
 import SearchForm from "@/components/FastReserve/SearchForm";
 import Map from "@/components/Map/Map";
-import { House } from "@/core/api/house"; 
+import { House } from "@/core/api/house";
 import { debounce } from "lodash-es";
-
 
 type SortByType = "--" | "last_updated" | "price";
 
@@ -20,6 +19,12 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
   const [query, setQuery] = useState("");
   const [sortBy, setSortBy] = useState<SortByType>("--");
 
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");
+  const [selectedRooms, setSelectedRooms] = useState<number>(0);
+  const [selectedBathrooms, setSelectedBathrooms] = useState<number>(0);
+  const [selectedToilets, setSelectedToilets] = useState<number>(0);
+  const [selectedParking, setSelectedParking] = useState<number>(0);
   useEffect(() => {
     const handler = debounce((value: string) => {
       setQuery(value);
@@ -31,16 +36,34 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
       handler.cancel();
     };
   }, [inputValue]);
-
+  const filters = {
+    minPrice,
+    maxPrice,
+    rooms: selectedRooms,
+    bathrooms: selectedBathrooms,
+    toilets: selectedToilets,
+    parking: selectedParking,
+  };
   return (
     <div className="flex justify-between">
       <div className="h-12 absolute right-30 top-17.5 flex justify-between gap-4">
-        
         <FilterButton
           query={inputValue}
           setQuery={setInputValue}
           sortBy={sortBy}
           setSortBy={setSortBy}
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+          selectedRooms={selectedRooms}
+          setSelectedRooms={setSelectedRooms}
+          selectedBathrooms={selectedBathrooms}
+          setSelectedBathrooms={setSelectedBathrooms}
+          selectedToilets={selectedToilets}
+          setSelectedToilets={setSelectedToilets}
+          selectedParking={selectedParking}
+          setSelectedParking={setSelectedParking}
         />
         <SearchForm value={query} onSearchChange={setQuery} />
       </div>
@@ -49,7 +72,8 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
         searchQuery={query}
         initialHouses={initialHouses}
         isLoading={false}
-        sortBy={sortBy} 
+        sortBy={sortBy}
+        filters={filters}
       />
 
       <div className="w-[43%] h-209 mt-6 rounded-tl-lg overflow-hidden rounded-br-lg rounded-bl-[42px] rounded-tr-[42px] drop-shadow-blue-300">

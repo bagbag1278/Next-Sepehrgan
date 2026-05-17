@@ -6,13 +6,23 @@ import SearchField from "./components/SearchField";
 import SortFilter from "./components/SortFilter";
 import BedRoomsFilter from "./components/BedRoomsFilter";
 
-
 type SortByType = "--" | "last_updated" | "price";
 
 type FastFilterProps = {
   query: string;
   setQuery: (value: string) => void;
-
+  minPrice: string;
+  setMinPrice: (value: string) => void;
+  maxPrice: string;
+  setMaxPrice: (value: string) => void;
+  selectedRooms: number;
+  setSelectedRooms: (value: number) => void;
+  selectedBathrooms: number;
+  setSelectedBathrooms: (value: number) => void;
+  selectedToilets: number;
+  setSelectedToilets: (value: number) => void;
+  selectedParking: number;
+  setSelectedParking: (value: number) => void;
   sortBy: SortByType;
   setSortBy: (sortBy: SortByType) => void;
 };
@@ -22,6 +32,18 @@ const FastFilter = ({
   setQuery,
   sortBy,
   setSortBy,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  selectedRooms,
+  setSelectedRooms,
+  selectedBathrooms,
+  setSelectedBathrooms,
+  selectedToilets,
+  setSelectedToilets,
+  selectedParking,
+  setSelectedParking,
 }: FastFilterProps) => {
   console.log("Props passed from FastFilter to SearchField:", {
     query,
@@ -63,7 +85,16 @@ const FastFilter = ({
             </span>
           </summary>
           <div className="mt-3  transition-all duration-150">
-            <BedRoomsFilter />
+            <BedRoomsFilter
+              selectedRooms={selectedRooms}
+              setSelectedRooms={setSelectedRooms}
+              selectedBathrooms={selectedBathrooms}
+              setSelectedBathrooms={setSelectedBathrooms}
+              selectedToilets={selectedToilets}
+              setSelectedToilets={setSelectedToilets}
+              selectedParking={selectedParking}
+              setSelectedParking={setSelectedParking}
+            />
           </div>
         </details>
         {/* at least price*/}
@@ -103,7 +134,6 @@ const FastFilter = ({
         </div>
         {/*  */}
       </div>
-
     </div>
   );
 };

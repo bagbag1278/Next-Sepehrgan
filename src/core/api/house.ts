@@ -1,23 +1,23 @@
 export interface House {
-  id: number; 
+  id: number;
   title: string;
-  address: string; 
-  photos: string[] | null; 
-  rate: string; 
-  discounted_price: string; 
+  address: string;
+  photos: string[] | null;
+  rate: string;
+  discounted_price: string;
   price: string;
-  tags: string | null; 
-  last_updated: string; 
+  tags: string | null;
+  last_updated: string;
   capacity: number;
-  location: string; 
-  categories: string[] | null; 
+  location: string;
+  categories: string[] | null;
   bathrooms: number;
   parking: number;
   rooms: number;
   yard_type: string | null;
   num_comments: number;
   discount_id: number | null;
-  transaction_type: string; // 
+  transaction_type: string; //
   sellerId: number;
   sellerName: string;
   caption: string;
@@ -44,16 +44,15 @@ export async function fetchHouses(
 
   try {
     const response = await fetch(apiUrl.toString(), {
-      next: { revalidate: 60 }
+      next: { revalidate: 60 },
     });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // تغییر مهم: پاسخ API در یک کلید "houses" قرار داره
     const data = await response.json();
-    return data.houses as House[]; // این قسمت رو چک کن که درست باشه
+    return data.houses as House[];
   } catch (error) {
     console.error("Failed to fetch houses:", error);
     return [];

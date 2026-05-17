@@ -1,20 +1,45 @@
-
-import React, { useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import FastFilter from "./Filter/FastFilter";
 
-// تعریف نوع برای sortBy
 type SortByType = "--" | "last_updated" | "price";
 
 type FilterButtonProps = {
   query: string;
   setQuery: (value: string) => void;
-  // sortBy و setSortBy از والد (HouseReserveClient) دریافت می‌شوند
+  minPrice: string;
+  setMinPrice: (value: string) => void;
+  maxPrice: string;
+  setMaxPrice: (value: string) => void;
+  selectedRooms: number;
+  setSelectedRooms: (value: number) => void;
+  selectedBathrooms: number;
+  setSelectedBathrooms: (value: number) => void;
+  selectedToilets: number;
+  setSelectedToilets: (value: number) => void;
+  selectedParking: number;
+  setSelectedParking: (value: number) => void;
   sortBy: SortByType;
   setSortBy: (sortBy: SortByType) => void;
 };
 
-const FilterButton = ({ query, setQuery, sortBy, setSortBy }: FilterButtonProps) => {
+const FilterButton = ({
+  query,
+  setQuery,
+  sortBy,
+  setSortBy,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  selectedRooms,
+  setSelectedRooms,
+  selectedBathrooms,
+  setSelectedBathrooms,
+  selectedToilets,
+  setSelectedToilets,
+  selectedParking,
+  setSelectedParking,
+}: FilterButtonProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -48,12 +73,23 @@ const FilterButton = ({ query, setQuery, sortBy, setSortBy }: FilterButtonProps)
           align="end"
           className="z-50 w-76 rounded-tl-2xl rounded-bl-2xl border border-blue-300/40 bg-white dark:bg-white/90 px-5 py-6 shadow-lg"
         >
-          {/* FastFilter prop های sortBy و setSortBy را دریافت می‌کند */}
           <FastFilter
             query={query}
             setQuery={setQuery}
             sortBy={sortBy}
             setSortBy={setSortBy}
+            minPrice={minPrice}
+            setMinPrice={setMinPrice}
+            maxPrice={maxPrice}
+            setMaxPrice={setMaxPrice}
+            selectedRooms={selectedRooms}
+            setSelectedRooms={setSelectedRooms}
+            selectedBathrooms={selectedBathrooms}
+            setSelectedBathrooms={setSelectedBathrooms}
+            selectedToilets={selectedToilets}
+            setSelectedToilets={setSelectedToilets}
+            selectedParking={selectedParking}
+            setSelectedParking={setSelectedParking}
           />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

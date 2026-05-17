@@ -1,14 +1,27 @@
 "use client";
 import { toPersianNum } from "@/components/utils/FarsiNum";
-import React, { useState } from "react";
-
-const BedRoomsFilter = () => {
-  const [selectedBedrooms, setSelectedBedrooms] = useState(0);
-  const [selectedBathrooms, setSelectedBathrooms] = useState(0);
-  const [selectedToilets, setSelectedToilets] = useState(0);
-  const [selectedParking, setSelectedParking] = useState(0);
-
-  const renderButtons = (stateSetter, currentValue, maxCount) => {
+import { FC } from "react";
+type BedRoomsFilterProps = {
+  selectedRooms: number;
+  setSelectedRooms: (value: number) => void;
+  selectedBathrooms: number;
+  setSelectedBathrooms: (value: number) => void;
+  selectedToilets: number;
+  setSelectedToilets: (value: number) => void;
+  selectedParking: number;
+  setSelectedParking: (value: number) => void;
+};
+const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
+  selectedRooms,
+  setSelectedRooms,
+  selectedBathrooms,
+  setSelectedBathrooms,
+  selectedToilets,
+  setSelectedToilets,
+  selectedParking,
+  setSelectedParking,
+}) => {
+  const renderButtons = (stateSetter: { (value: number): void; (value: number): void; (value: number): void; (value: number): void; (arg0: number): void; }, currentValue: number, maxCount: number) => {
     const buttons = [];
 
     buttons.push(
@@ -19,12 +32,12 @@ const BedRoomsFilter = () => {
             ? " shadow-md"
             : "text-blue-300 hover:text-blue-300"
         }`}
-        onClick={() => stateSetter(0)}
+        onClick={() => stateSetter(0)} 
       >
         {toPersianNum(0)}
       </button>,
     );
-
+    
     for (let i = 1; i <= maxCount; i++) {
       buttons.push(
         <button
@@ -34,7 +47,7 @@ const BedRoomsFilter = () => {
               ? "border-blue-100 border text-blue-100 bg-blue-300/50 shadow-md"
               : "border border-gray-400 text-gray-700 hover:bg-gray-100"
           }`}
-          onClick={() => stateSetter(i)}
+          onClick={() => stateSetter(i)} 
         >
           {toPersianNum(i)}
         </button>,
@@ -51,7 +64,7 @@ const BedRoomsFilter = () => {
           تعداد تخت
         </label>
         <div className="flex items-center space-x-2">
-          {renderButtons(setSelectedBedrooms, selectedBedrooms, 5)}
+          {renderButtons(setSelectedRooms, selectedRooms, 5)}
         </div>
       </div>
 
