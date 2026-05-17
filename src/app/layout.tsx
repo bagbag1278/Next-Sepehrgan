@@ -5,11 +5,6 @@ import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
-import "./globals.css";
-
-import "./globals.css";
-import LayoutWrapper from "./(main)/housereserve/LayoutWrapper";
-
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
@@ -36,7 +31,6 @@ export default function RootLayout({
       <body
         className={`${iran.className} bg-white overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
       >
-        {" "}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -44,10 +38,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Toaster position="top-center" gutter={8} />
-
-          <Header/>
-          <main className=" w-full max-w-360 ">{children}</main>
-          <Footer/>
+          <Header />
+          <main className="w-full max-w-360">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
