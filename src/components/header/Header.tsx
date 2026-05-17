@@ -7,9 +7,8 @@ import Link from "next/link";
 
 const nav = [
   { title: "صفحه اصلی", href: "/" },
-  { title: "رزرو سریع", href: "/housereserve" },
-
-  { title: " رهن اجاره", href: "/houserent" },
+  { title: "رزرو سریع", href: "/houserent" },
+  { title: " رهن اجاره", href: "/mortgage" },
   { title: "وبلاگ", href: "/blog" },
   { title: "درباره ما", href: "/contactus" },
 ];
