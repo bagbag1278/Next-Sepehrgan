@@ -1,17 +1,53 @@
-"use client";
-
-import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import FastFilter from "./Filter/FastFilter";
 
-const FilterButton = () => {
+type SortByType = "--" | "last_updated" | "price";
+
+type FilterButtonProps = {
+  query: string;
+  setQuery: (value: string) => void;
+  minPrice: string;
+  setMinPrice: (value: string) => void;
+  maxPrice: string;
+  setMaxPrice: (value: string) => void;
+  selectedRooms: number;
+  setSelectedRooms: (value: number) => void;
+  selectedBathrooms: number;
+  setSelectedBathrooms: (value: number) => void;
+  selectedToilets: number;
+  setSelectedToilets: (value: number) => void;
+  selectedParking: number;
+  setSelectedParking: (value: number) => void;
+  sortBy: SortByType;
+  setSortBy: (sortBy: SortByType) => void;
+};
+
+const FilterButton = ({
+  query,
+  setQuery,
+  sortBy,
+  setSortBy,
+  minPrice,
+  setMinPrice,
+  maxPrice,
+  setMaxPrice,
+  selectedRooms,
+  setSelectedRooms,
+  selectedBathrooms,
+  setSelectedBathrooms,
+  selectedToilets,
+  setSelectedToilets,
+  selectedParking,
+  setSelectedParking,
+}: FilterButtonProps) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className="w-37 border border-blue-300/70 dark:bg-white rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 flex justify-center gap-1 items-center text-sm p-2"
+          className="w-37 border outline-0 border-blue-300/70 dark:bg-white rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 flex justify-center gap-1 items-center text-sm p-2"
           type="button"
         >
+          {/* SVG icon */}
           <svg
             width="20"
             height="20"
@@ -37,7 +73,24 @@ const FilterButton = () => {
           align="end"
           className="z-50 w-76 rounded-tl-2xl rounded-bl-2xl border border-blue-300/40 bg-white dark:bg-white/90 px-5 py-6 shadow-lg"
         >
-          <FastFilter />
+          <FastFilter
+            query={query}
+            setQuery={setQuery}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            minPrice={minPrice}
+            setMinPrice={setMinPrice}
+            maxPrice={maxPrice}
+            setMaxPrice={setMaxPrice}
+            selectedRooms={selectedRooms}
+            setSelectedRooms={setSelectedRooms}
+            selectedBathrooms={selectedBathrooms}
+            setSelectedBathrooms={setSelectedBathrooms}
+            selectedToilets={selectedToilets}
+            setSelectedToilets={setSelectedToilets}
+            selectedParking={selectedParking}
+            setSelectedParking={setSelectedParking}
+          />
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>

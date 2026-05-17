@@ -1,22 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
-  value: string;
+  value?: string;
   onSearchChange: (value: string) => void;
 };
 
-const SearchForm = ({ value, onSearchChange }: Props) => {
+const SearchForm = ({ value = "", onSearchChange }: Props) => {
+  const [inputValue, setInputValue] = useState(value);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setInputValue(value);
+  }, [value]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      onSearchChange(inputValue);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [inputValue, onSearchChange]);
+
   return (
-    <form
-      className="relative"
-    >
+    <form className="relative">
       <input
         type="search"
         name="house"
         placeholder="مقصدت کجاست ...."
-        value={value}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className="w-126.25 h-12 text-sm border border-blue-300/70 dark:bg-white py-1 px-4 outline-0 text-blue-300 rounded-2xl"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        className="w-126.25 h-12 text-sm border placeholder:text-blue-300/70 border-blue-300/70 dark:bg-white py-1 px-4 outline-0 text-blue-300 rounded-2xl"
       />
 
       <div className="absolute top-3.5 left-4 bg-white pointer-events-none">
