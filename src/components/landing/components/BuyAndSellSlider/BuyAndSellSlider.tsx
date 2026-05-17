@@ -1,7 +1,35 @@
-import React from 'react'
+"use client";
+
+import React, { useEffect, useState } from 'react'
 import RealEstateSlider from './RealEstateSlider'
 
 const BuyAndSellSlider = () => {
+
+    const [houses, setHouses] = useState([])
+
+    useEffect(() => {
+        const getHouses = async () => {
+            try {
+                const res = await fetch(
+                   "http://next.genzuni.website/api/houses"
+                   
+                );
+
+                if (!res.ok) {
+                    throw new Error("API Error");
+                }
+
+                const data = await res.json();
+                setHouses(data.houses || []);
+            } catch (error) {
+                console.error("Fetch Error:", error);
+            }
+        };
+
+        getHouses();
+    }, []);
+
+
     return (
         <div className=' h-140 hidden xl:flex flex-wrap justify-center '>
             <div className='w-365   flex justify-center flex-wrap overflow-hidden '>
@@ -39,7 +67,7 @@ const BuyAndSellSlider = () => {
 
                 <div className='w-300 '>
 
-                    <RealEstateSlider />
+                    <RealEstateSlider houses={houses} />
                 </div>
             </div>
             {/* *** SliderShow ***  */}

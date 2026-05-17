@@ -6,12 +6,14 @@ import Image from "next/image";
 import { useRef } from "react";
 import MountainsSun from "../../Icon/ThirdContainer/mountainsSun";
 import StarIcon from "../../Icon/FirstContainer/StarIcon";
+import Imagevilla from "../../Icon/VillasSlider/Imagevilla";
+
 
 function VillaSlider() {
   const swiperRef = useRef<any>(null);
 
   const items = [
-    { img: "/v1.jpg", ponit: "4.5", place: "ویلای مشهد" },
+    { img: "/v1.jpg" , ponit: "4.5", place: "ویلای مشهد" },
     { img: "/v2.jpg", ponit: "4.6", place: "ویلای اصفهان" },
     { img: "/v3.jpg", ponit: "4.12", place: "ویلای گهردشت" },
     { img: "/v4.jpg", ponit: "4.6", place: "ویلای ساری" },
