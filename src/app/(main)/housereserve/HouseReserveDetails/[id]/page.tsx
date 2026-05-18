@@ -19,8 +19,8 @@ const fallbackImage =
 
 const HouseReserveDetails = () => {
   const params = useParams();
-  const houseId = params.id;
-  
+  const houseId = params.id ? Number(params.id) : null;
+
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -30,7 +30,7 @@ const HouseReserveDetails = () => {
         setLoading(true);
 
         const response = await fetch(
-          `http://next.genzuni.website/api/houses/${params.id}`,
+          `http://next.genzuni.website/api/houses/${houseId}`,
         );
         const result = await response.json();
         setData(result);
@@ -44,7 +44,7 @@ const HouseReserveDetails = () => {
     if (params.id) {
       fetchHotelDetails();
     }
-  }, [params.id]);
+  }, [houseId]);
 
   const breadcrumbItems = [
     { title: "رزرو هتل", href: "/housereserve" },
@@ -56,6 +56,7 @@ const HouseReserveDetails = () => {
   if (!data) return <div>Data not found</div>;
   return (
     <div>
+      
       <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative">
         <div className="w-full">
           <Bread items={breadcrumbItems} />
@@ -68,8 +69,8 @@ const HouseReserveDetails = () => {
         </div>
 
         <div className="mt-20 ">
-          <div className="w-300 h-16   flex  justify-between items-center">
-            <div className="w-18 h-8  flex flex-wrap gap-1 relative  max-[1300px]:left-30">
+          <div className="w-300 h-16   flex  justify-between items-center ">
+            <div className="w-18 h-8  flex flex-wrap gap-1 relative  max-[1300px]:left-30 ">
               <div className="w-8 h-8 bg-[#F5F5F5]  rounded-lg flex items-center justify-center  border border-blue-400">
                 <Link />
               </div>
@@ -78,10 +79,10 @@ const HouseReserveDetails = () => {
               </div>
             </div>
             <div
-              className="flex flex-col gap-4 -mt-8 pr-5 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
+              className="flex flex-col gap-4  -mt-8 pr-5 relative max-[1300px]:bottom-8 max-[1300px]:m-auto "
               dir="rtl"
             >
-              <h2 className="text-2xl font-bold text-blue-400 flex gap-3 max-[1300px]:justify-center dark:text-white">
+              <h2 className="text-2xl bor font-bold text-blue-400 flex relative gap-3 max-[1300px]:justify-center  dark:text-white ">
                 {data.title}
 
                 <div className="text-[14px]  w-20   font-bold text-gray-600 -mt-2 max-[1300px]">
@@ -93,7 +94,7 @@ const HouseReserveDetails = () => {
                 </div>
               </h2>
 
-              <div className="flex items-center gap-2 text-gray-500">
+              <div className="flex items-center gap-2 text-gray-500 relative">
                 <Loaction />
                 <span className="text-[14px] font-bold">{data.address}</span>
               </div>
@@ -102,7 +103,7 @@ const HouseReserveDetails = () => {
 
           <div className="flex justify-between gap-4  max-[1300px]:flex-col">
             <div className="flex gap-16 flex-col  items-center w-full lg:w-auto">
-              <div className="w-107 h-117  rounded-[40px] p-8 shadow-lg">
+              <div className="w-107 h-155  rounded-[40px] p-8 shadow-lg">
                 <Reserve
                   price={data.price}
                   discountedPrice={data.discounted_price}
@@ -114,14 +115,12 @@ const HouseReserveDetails = () => {
                 <RentSimilarProperties currentId={data.id} />
               </div>
 
-         <div className="absolute -left-30 top-492 rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
-  <FleshHome />
-</div>
+             
             </div>
 
-            <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 dark:text-white dark:bg-[#060425] bg-[#F5F5F5D9] shadow-lg p-6 mx-auto">
+            <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 dark:text-white dark:bg-[#060425] bg-[#F5F5F5D9] shadow-lg p-6 mx-auto max-[844]:max-w-110 ">
               <div className="flex flex-wrap gap-10 justify-center ">
-                <div className="w-181 h-80 flex">
+                <div className="w-181 h-60 max-[888]:h-100 flex">
                   <Popular data={data} />
                 </div>
 
@@ -129,12 +128,12 @@ const HouseReserveDetails = () => {
                   className="w-full flex flex-col justify-start  items-end gap-2 mt-16  top-7"
                   dir="rtl"
                 >
-                  <div className="flex flex-col justify-start w-full relative top-10">
+                  <div className="flex flex-col justify-start w-full relative max-[844]:pr-44 ">
                     <h2 className="text-blue-100  font-bold text-[14px] ml-12 mb-4">
                       درباره {data.title}
                     </h2>
 
-                    <p className="  text-[16px] text-[#475569] font-black  mb-4">
+                    <p className="  max-[844]:wrap-break-word  max-[844]:w-93 text-[16px] text-[#475569] font-black  mb-4">
                       {data.caption}
                     </p>
                   </div>
@@ -150,21 +149,21 @@ const HouseReserveDetails = () => {
                   className="w-full flex mt-5 gap-2 justify-center"
                   dir="rtl"
                 >
-                  <div className="w-1/3 flex flex-col gap-2">
+                  <div className="w-1/3 max-[844]:w-30 flex flex-col gap-2">
                     <img
                       src={data?.photo || fallbackImage}
-                      className="rounded-lg h-43 object-cover shadow-sm"
+                      className="rounded-lg h-43 max-[888]:h-33 object-cover rounded-tr-[42px] shadow-sm"
                     />
 
                     <img
                       src={data?.photo || fallbackImage}
-                      className="rounded-lg h-43 object-cover shadow-sm"
+                      className="rounded-lg h-43  object-cover shadow-sm"
                     />
                   </div>
 
                   <img
                     src={data?.photo || fallbackImage}
-                    className="w-[384px] h-88 rounded-lg object-cover shadow-sm"
+                    className="w-94 rounded-bl-[42px] max-[888]:w-[234px] max-[888]:h-78 h-88 rounded-lg object-cover shadow-sm"
                   />
                 </div>
               </div>
@@ -176,12 +175,14 @@ const HouseReserveDetails = () => {
               </div>
               <p
                 dir="rtl"
-                className="font-medium w-full relative bottom-6 text-[16px] text-gray-600 mt-5"
+                className="font-medium w-full relative   max-[844]:w-93 bottom-6 text-[16px] text-gray-600 mt-5"
               >
                 {data.caption}
+
               </p>
-              <div className="w-173 mt-8">
-                <CommentsSection houseId={houseId} />
+               
+              <div className="w-173 max-[844]:w-full   mt-8">
+                {houseId && <CommentsSection houseId={houseId} />}
               </div>
             </div>
           </div>

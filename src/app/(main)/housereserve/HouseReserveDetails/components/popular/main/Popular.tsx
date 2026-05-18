@@ -21,7 +21,7 @@ interface PopularProps {
 const Popular = ({ data }: PopularProps) => {
 
   if (!data)
-    return <div className="w-full h-40 animate-pulse  rounded-3xl" />;
+    return <div className="w-full max-[844]:max-w-100 h-40 animate-pulse  rounded-3xl" />;
 
   const amenities = [
     {
@@ -68,15 +68,15 @@ const Popular = ({ data }: PopularProps) => {
 
   return (
     <div
-      className="w-full max-w-7xl mx-auto p-4 lg:p-8 flex flex-col gap-6"
+      className="w-full max-w-7xl mx-auto p-4 lg:p-8 flex flex-col gap-6 relative max-[888]:right-3"
       dir="rtl"
     >
       <div className="w-full lg:bg-transparent rounded-[32px] p-6 lg:p-0">
-        <h2 className="text-blue-400 text-[16px] font-bold mb-8 text-right dark:text-white dark:bg-[#060425] dark:text-white">
+        <h2 className="text-blue-400 max-[844]:text-center text-[16px] font-bold mb-8 text-right dark:text-white  dark:text-white">
           تمامی امکانات رفاهی محبوب هتل ما
         </h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 max-[768]:w-full max-[768]:justify-center max-[768]:flex max-[768]:flex-wrap">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6  max-[844]:max-w-100 max-[844]:justify-center mx-auto">
           {amenities.map((item) => {
             const isSelected =
               (typeof data[item.id] === "number" && data[item.id] > 0) ||

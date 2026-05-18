@@ -21,6 +21,7 @@ const LoginForm = () => {
     setPassword(value);
     setStrength(checkPasswordStrength(value));
   };
+
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -31,6 +32,7 @@ const LoginForm = () => {
     if (strength === 3) return "border-green-100 text-green-100";
     return "border-blue-300";
   };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
@@ -40,43 +42,72 @@ const LoginForm = () => {
     const pwd = String(formData.get("password") ?? "").trim();
 
     if (!email) {
-      alert("ایمیل را وارد کنید");
+      toast.error("ایمیل را وارد کنید");
       return;
     }
 
     if (!pwd) {
-      alert("رمز عبور را وارد کنید");
+      toast.error("رمز عبور را وارد کنید");
       return;
     }
 
     try {
       setLoading(true);
 
-      const res = await login({ email, password: pwd });
+      const res = (await login({ email, password: pwd })) as any;
 
       const accessToken = res?.accessToken;
       const refreshToken = res?.refreshToken;
+      const user = res?.user; // اطلاعات کاربر از سرور
 
       if (typeof window !== "undefined") {
         if (accessToken) localStorage.setItem("accessToken", accessToken);
         if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
-      }
-      router.push("/");
 
+        // ✅ ذخیره اطلاعات کاربر
+        if (user) {
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              role: user.role || "user",
+            })
+          );
+          console.log("✅ user saved to localStorage:", user);
+        } else {
+          // اگر اطلاعات کاربر نیومد (موقت برای تست)
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              id: 1,
+              firstName: "امیرحسین",
+              lastName: "نصراله پور",
+              role: "user",
+            })
+          );
+          console.log("⚠️ fallback user saved");
+        }
+      }
+
+      router.push("/");
       toast.success("خوش آمدید");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Login error:", error);
+      toast.error(error?.response?.data?.message || "خطا در ورود به حساب کاربری");
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit}
       className=" mt-6 flex flex-col justify-between gap-6"
     >
       <div className="flex flex-col gap-2 relative">
-        {" "}
         <input
           type="email"
           name="email"
@@ -109,10 +140,10 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
           </svg>
         </div>
       </div>
+
       <div className="flex flex-col gap-3">
         <div className="relative flex flex-col gap-2">
           <div className="relative">
-            {" "}
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -159,10 +190,10 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
               strength === 1
                 ? "bg-red-600"
                 : strength === 2
-                  ? "bg-amber-400"
-                  : strength === 3
-                    ? "bg-green-100"
-                    : "bg-white dark:bg-[#121212]"
+                ? "bg-amber-400"
+                : strength === 3
+                ? "bg-green-100"
+                : "bg-white dark:bg-[#121212]"
             }`}
           />
           <span
@@ -181,6 +212,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
           />
         </div>
       </div>
+
       <div className="w-107.5 h-5 flex justify-between items-center ">
         <Link
           href={"/loginphone"}
@@ -195,6 +227,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
           رمز عبور خود را فراموش کردید؟
         </Link>
       </div>
+
       <button
         type="submit"
         disabled={loading}
@@ -204,6 +237,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
       >
         {loading ? "در حال ورود..." : "ورود"}
       </button>
+
       <div className="h-6 mx-auto flex gap-0.5 justify-center items-center">
         <h6 className="font-normal text-[13px]">حساب کاربری ندارید ؟</h6>
         <Link href={"/register"}>

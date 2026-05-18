@@ -5,20 +5,24 @@ import Bread from "@/app/(main)/housereserve/HouseReserveDetails/components/popu
 import BookingSummary from "../components/BookingSummary";
 import Stepper from "../components/Stepper";
 import BookingStepThree from "./BookingStepThree";
-
 import BookingStepFour from "./BookingStepFour";
-import { error } from "node:console";
+import { toast } from "react-hot-toast";
 
 const BookingPage = () => {
   const params = useParams();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [hotelData, setHotelData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(2);
   const [extraEmail, setExtraEmail] = useState("");
   const [extraPhone, setExtraPhone] = useState("");
-  
+  const [bookingResult, setBookingResult] = useState<any>(null);
+  const [isOpen,setIsOpen] = useState(false)
+
+  const checkInDate = searchParams.get("in") || "۱۴۰۴/۰۶/۱۶";
+  const checkOutDate = searchParams.get("out") || "۱۴۰۴/۰۶/۱۷";
   const initialGuests = Number(searchParams.get("guests")) || 1;
 
   const [passengers, setPassengers] = useState(
@@ -29,51 +33,182 @@ const BookingPage = () => {
       gender: "جنسیت",
       birthDate: "",
       number: "",
-      email: "",
     })),
   );
-  
+
+  const persianToGregorian = (persianDate: string) => {
+    if (!persianDate) return null;
+
+    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+    const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+    let englishDate = persianDate;
+    persianDigits.forEach((p, i) => {
+      englishDate = englishDate.replace(new RegExp(p, "g"), englishDigits[i]);
+    });
+
+    const parts = englishDate.split("/");
+    if (parts.length === 3) {
+      const persianYear = parseInt(parts[0]);
+      const month = parts[1].padStart(2, "0");
+      const day = parts[2].padStart(2, "0");
+      const gregorianYear = persianYear + 621;
+      return `${gregorianYear}/${month}/${day}`;
+    }
+    return persianDate;
+  };
+
+  const calculateNights = (inDate: string, outDate: string) => {
+    if (!inDate || !outDate) return 1;
+
+    const start = persianToGregorian(inDate);
+    const end = persianToGregorian(outDate);
+
+    if (!start || !end) return 1;
+
+    const [startYear, startMonth, startDay] = start.split("/").map(Number);
+    const [endYear, endMonth, endDay] = end.split("/").map(Number);
+
+    const startDate = new Date(startYear, startMonth - 1, startDay);
+    const endDate = new Date(endYear, endMonth - 1, endDay);
+
+    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return diffDays || 1;
+  };
+
+  const finalTotal = useMemo(() => {
+    if (!hotelData) return "۰";
+
+    const nights = calculateNights(checkInDate, checkOutDate);
+    const pricePerNight = hotelData.discountedPrice || hotelData.price || 0;
+    const total = pricePerNight * nights * passengers.length;
+
+    return total.toLocaleString();
+  }, [hotelData, checkInDate, checkOutDate, passengers.length]);
 
   const handelFinalBooking = async () => {
+    console.log(" شروع فرآیند رزرو...");
+
+    const token = localStorage.getItem("accessToken");
+    const userData = localStorage.getItem("user");
+
+    if (!token) {
+      toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید");
+      router.push("/login");
+      return;
+    }
+
+    let userId = null;
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        userId = user.id;
+      } catch (e) {
+        console.error("خطا در parse user:", e);
+      }
+    }
+
+    if (!userId) {
+      toast.error("اطلاعات کاربر یافت نشد");
+      return;
+    }
+
+    const traveler_details = [];
+    for (let i = 0; i < passengers.length; i++) {
+      const p = passengers[i];
+
+      const nameParts = p.fullName.trim().split(" ");
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      if (!firstName) {
+        toast.error(`لطفاً نام مسافر شماره ${i + 1} را وارد کنید`);
+        return;
+      }
+
+      if (!p.nationalCode || p.nationalCode.length !== 10) {
+        toast.error(`لطفاً کد ملی مسافر شماره ${i + 1} را به درستی وارد کنید`);
+        return;
+      }
+
+      if (!p.gender || p.gender === "جنسیت") {
+        toast.error(`لطفاً جنسیت مسافر شماره ${i + 1} را انتخاب کنید`);
+        return;
+      }
+
+      if (!p.birthDate) {
+        toast.error(`لطفاً تاریخ تولد مسافر شماره ${i + 1} را وارد کنید`);
+        return;
+      }
+
+      const formattedBirthDate = p.birthDate.replace(/\//g, "-");
+
+      traveler_details.push({
+        firstName: firstName,
+        lastName: lastName || firstName,
+        gender: p.gender === "male" ? "مرد" : "زن",
+        birthDate: formattedBirthDate,
+        nationalId: Number(p.nationalCode),
+      });
+    }
+
     try {
       setLoading(true);
 
       const bookingPayload = {
         houseId: Number(params.id),
-        userId: 456,
-        reservedDates: [checkInDate, checkOutDate],
-
-        traveler_details: passengers.map((p) => ({
-          firstName: p.fullName.split(" ")[0] || "",
-          lastName: p.fullName.split(" ").slice(1).join(" ") || "",
-          gender: p.gender,
-          birthDate: p.birthDate,
-          nationalId: p.nationalCode,
-        })),
-        status: "pending",
+        user_id: userId,
+        reservedDates: [
+          persianToGregorian(checkInDate),
+          persianToGregorian(checkOutDate),
+        ],
+        traveler_details: traveler_details,
+        totalPrice: Number(finalTotal.replace(/,/g, "")),
+        guestsCount: passengers.length,
       };
-      const respons = await fetch(`http://next.genzuni.website/api/bookings`, {
+
+      console.log(" Payload:", JSON.stringify(bookingPayload, null, 2));
+
+      const response = await fetch(`http://next.genzuni.website/api/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(bookingPayload),
       });
-      if (!respons.ok) throw new Error("خطا در ثبت رزور");
-      const result = await respons.json();
 
+      const responseText = await response.text();
+      console.log("📡 پاسخ خام:", responseText);
+
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (e) {
+        console.error(" پاسخ JSON نیست:", responseText);
+        throw new Error("پاسخ سرور نامعتبر است");
+      }
+
+      if (!response.ok) {
+        console.error("خطای سرور:", result);
+        throw new Error(result.message || "خطا در ثبت رزرو");
+      }
+
+      console.log("✅ نتیجه موفقیت:", result);
+
+      setBookingResult(result.booking);
       setStep(5);
-      console.log("رزرو با موفقیت ثبت شد:", result);
-    } catch {
-      alert("متاسفانه رزرو ثبت نشد. دوباره تلاش کنید.");
+      toast.success(`رزرو با موفقیت ثبت شد! شماره رزرو: ${result.booking?.id}`);
+    } catch (error: any) {
+      console.error(" خطا:", error);
+      toast.error(error.message || "متاسفانه رزرو ثبت نشد. دوباره تلاش کنید.");
+    } finally {
+      setLoading(false);
     }
-     finally {
-    setLoading(false);
-  }
   };
-  
 
-  // filter
   const updatePassenger = (index: number, field: string, newValue: string) => {
     let finalValue = newValue;
     if (field === "nationalCode") {
@@ -84,7 +219,6 @@ const BookingPage = () => {
       const numbers = newValue.replace(/[^0-9]/g, "");
       const char: Record<number, string> = { 4: "/", 6: "/" };
       finalValue = "";
-
       for (let i = 0; i < numbers.length && i < 8; i++) {
         finalValue += (char[i] || "") + numbers[i];
       }
@@ -98,42 +232,30 @@ const BookingPage = () => {
     newPassengers[index] = { ...newPassengers[index], [field]: finalValue };
     setPassengers(newPassengers);
   };
+
   const isAllFormsNotif = useMemo(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^09\d{9}$/;
 
-    return passengers.every((p) => {
-      const isEmailValid = p.email === "" || emailRegex.test(p.email);
-      const isPhoneValid = p.number === "" || phoneRegex.test(p.number);
+    const extraEmailValid = extraEmail === "" || emailRegex.test(extraEmail);
+    const extraPhoneValid = extraPhone === "" || phoneRegex.test(extraPhone);
 
-      return { isEmailValid, isPhoneValid };
-    });
-  }, [passengers]);
+    return extraEmailValid && extraPhoneValid;
+  }, [extraEmail, extraPhone]);
 
   const isAllFormsValid = useMemo(() => {
-    return passengers.every(
-      (p) =>
-        p.fullName.length > 3 &&
+    return passengers.every((p) => {
+      const nameParts = p.fullName.trim().split(" ");
+      const firstName = nameParts[0] || "";
+
+      return (
+        firstName.length > 0 &&
         p.nationalCode.length === 10 &&
-        p.gender !== "جنسیت",
-    );
+        p.gender !== "جنسیت" &&
+        p.birthDate.length > 0
+      );
+    });
   }, [passengers]);
-
-  //  قیمت
-  const bookingSummary = useMemo(() => {
-    if (!hotelData)
-      return { count: 0, finalTotal: "۰", priceAfterDiscount: "۰" };
-    const count = passengers.length;
-    const basePrice = hotelData.price || 0;
-    const priceAfterDiscount = basePrice * 0.95;
-    const finalTotal = priceAfterDiscount * count;
-
-    return {
-      count,
-      priceAfterDiscount: Math.round(priceAfterDiscount).toLocaleString(),
-      finalTotal: Math.round(finalTotal).toLocaleString(),
-    };
-  }, [passengers.length, hotelData]);
 
   const addPassenger = () => {
     setPassengers([
@@ -145,7 +267,6 @@ const BookingPage = () => {
         gender: "جنسیت",
         birthDate: "",
         number: "",
-        email: "",
       },
     ]);
   };
@@ -155,39 +276,78 @@ const BookingPage = () => {
       setPassengers(passengers.filter((p) => p.id !== id));
     }
   };
-  console.log("Validation Status:", {
-    passengersValid: passengers.every(
-      (p) =>
-        p.fullName.trim().length >= 5 &&
-        p.nationalCode.length === 10 &&
-        p.gender !== "جنسیت",
-    ),
-    extraEmailValid: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(extraEmail),
-    extraPhoneValid: /^09\d{9}$/.test(extraPhone),
-    values: { extraEmail, extraPhone },
-  });
-  useEffect(() => {
-    const fetchHotelDetails = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api-proxy/houses/${params.id}`);
-        if (!response.ok) throw new Error(`خطای سرور: ${response.status}`);
-        const result = await response.json();
-        setHotelData(result);
-      } catch (error) {
-        console.error("Error details:", error);
-      } finally {
-        setLoading(false);
-      }
+
+  const bookingPrices = useMemo(() => {
+    const originalPricePerNight = hotelData?.price || 0;
+    const discountedPricePerNight =
+      hotelData?.discounted_price || Math.floor(originalPricePerNight * 0.95);
+
+    const gregorianIn = persianToGregorian(checkInDate);
+    const gregorianOut = persianToGregorian(checkOutDate);
+
+    const nights = calculateNights(gregorianIn || "", gregorianOut || "");
+    const guestCount = passengers.length;
+
+    const originalTotal = originalPricePerNight * nights * guestCount;
+    const discountedTotal = discountedPricePerNight * nights * guestCount;
+
+    return {
+      originalPricePerNight,
+      discountedPricePerNight,
+      nights,
+      originalTotal,
+      discountedTotal,
     };
-    if (params.id) fetchHotelDetails();
-  }, [params.id]);
+  }, [hotelData, checkInDate, checkOutDate, passengers.length]);
+
+ useEffect(() => {
+  const fetchHotelDetails = async () => {
+    if (!params.id) {
+      console.error("آیدی هتل وجود ندارد");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      
+      const response = await fetch(
+        `http://next.genzuni.website/api/houses/${params.id}`
+      );
+
+      if (response.status === 401) {
+        toast.error("نشست شما منقضی شده است. لطفاً مجدداً وارد شوید");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("user");
+        router.push("/login");
+        return;
+      }
+
+      if (response.status === 404) {
+        toast.error("هتل مورد نظر یافت نشد");
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`خطای سرور: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setHotelData(result);
+      
+    } catch (error) {
+      console.error("Error details:", error);
+      toast.error("خطا در دریافت اطلاعات هتل");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchHotelDetails();
+}, [params.id]);
 
   const description =
     hotelData?.description || "توضیحاتی برای این هتل ثبت نشده است.";
-
-  const checkInDate = searchParams.get("in") || "۱۴۰۴/۰۶/۱۶";
-  const checkOutDate = searchParams.get("out") || "۱۴۰۴/۰۶/۱۷";
 
   if (loading)
     return (
@@ -198,11 +358,12 @@ const BookingPage = () => {
 
   if (!hotelData)
     return (
-      <div className="text-center mt-20 font-bold ">اطلاعات هتل یافت نشد.</div>
+      <div className="text-center mt-20 font-bold">اطلاعات هتل یافت نشد.</div>
     );
+
   return (
-    <div className="w-11/12 px-4  " dir="rtl">
-      <div className=" space-y-4 md:space-y-6   ">
+    <div className="w-11/12 px-4" dir="rtl">
+      <div className="space-y-4 md:space-y-6">
         <div className="pt-10">
           <Bread
             items={[
@@ -212,24 +373,25 @@ const BookingPage = () => {
           />
         </div>
 
-        <div className="rounded-2xl  p-4 md:p-6">
-          <div className="space-y-6 ">
+        <div className="rounded-2xl p-4 md:p-6">
+          <div className="space-y-6">
             {step === 2 && (
-              <div className=" ">
+              <div className="">
                 <div className="ml-20 flex gap-50 mx-auto justify-center max-[1360px]:flex-col">
-                  <div className="  ">
+                  <div>
                     <BookingSummary
                       hotelData={hotelData}
-                      bookingSummary={bookingSummary}
                       checkInDate={checkInDate}
                       checkOutDate={checkOutDate}
+                      prices={bookingPrices}
+                       guestsCount={passengers.length}
                     />
                   </div>
 
-                  <div className="rounded-[40px] p-10  ">
-                    <div className="rounded-[40px] ">
+                  <div className="rounded-[40px] p-10">
+                    <div className="rounded-[40px]">
                       <h3 className="font-bold text-gray-800 text-lg mb-20 dark:text-white">
-                        مسافران انتخاب شده ( {passengers.length} )
+                        مسافران انتخاب شده ({passengers.length})
                       </h3>
                     </div>
                     <h2 className="text-xl font-black mb-10 text-[hsl(244,80%,8%)] dark:text-white">
@@ -261,7 +423,6 @@ const BookingPage = () => {
                             <input
                               name="fullName"
                               required
-                              pattern="^[آ-ی\s]+$"
                               type="text"
                               placeholder="نام و نام خانوادگی"
                               value={passenger.fullName}
@@ -293,7 +454,7 @@ const BookingPage = () => {
                               onChange={(e) =>
                                 updatePassenger(index, "gender", e.target.value)
                               }
-                              className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747]  text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl appearance-none outline-none"
+                              className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747] text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl appearance-none outline-none"
                             >
                               <option disabled>جنسیت</option>
                               <option value="male">مرد</option>
@@ -323,7 +484,7 @@ const BookingPage = () => {
                       + افزودن مسافر جدید
                     </button>
 
-                    <div className="rounded-[40px] p-10 ">
+                    <div className="rounded-[40px] p-10">
                       <h3 className="font-bold text-[rgb(6,4,37)] mb-8 text-lg dark:text-white">
                         ارسال بلیط به دیگران
                       </h3>
@@ -345,7 +506,6 @@ const BookingPage = () => {
                               : "border-gray-100"
                           }`}
                         />
-
                         <input
                           type="text"
                           placeholder="شماره تماس (۰۹xxxxxxxxx)"
@@ -383,11 +543,11 @@ const BookingPage = () => {
                       <div className="mt-12 pt-6 border-t border-gray-100">
                         <div className="flex justify-between items-center mb-6">
                           <span className="text-gray-400 text-xs font-black">
-                            قیمت بلیط
+                            قیمت نهایی
                           </span>
-
                           <span className="font-black text-[rgb(16,8,143)] text-xl">
-                            {bookingSummary.finalTotal} تومان
+                            {bookingPrices.discountedTotal.toLocaleString()}{" "}
+                            تومان
                           </span>
                         </div>
 
@@ -413,13 +573,13 @@ const BookingPage = () => {
                 </div>
               </div>
             )}
+
             {step === 3 && (
-              <div className="w-full  ">
+              <div className="w-full">
                 <BookingStepThree
                   step={step}
                   setStep={setStep}
                   hotelData={hotelData}
-                  bookingSummary={bookingSummary}
                   checkInDate={checkInDate}
                   checkOutDate={checkOutDate}
                   passengers={passengers}
@@ -433,6 +593,7 @@ const BookingPage = () => {
                   description={description}
                   handelFinalBooking={handelFinalBooking}
                   isAllFormsValid={isAllFormsValid}
+                  finalTotal={finalTotal}
                   loading={loading}
                 />
               </div>
@@ -443,7 +604,7 @@ const BookingPage = () => {
                 step={step}
                 setStep={setStep}
                 hotelData={hotelData}
-                bookingSummary={bookingSummary}
+                finalTotal={finalTotal}
                 checkInDate={checkInDate}
                 checkOutDate={checkOutDate}
                 passengers={passengers}
@@ -454,6 +615,7 @@ const BookingPage = () => {
                 setExtraEmail={setExtraEmail}
                 extraPhone={extraPhone}
                 setExtraPhone={setExtraPhone}
+                bookingResult={bookingResult}
               />
             )}
           </div>
