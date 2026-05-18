@@ -186,7 +186,7 @@ const FocusCarousel = () => {
                       >
                         <div
                           className={[
-                            "rounded-2xl shadow-sm flex items-center justify-center transition-all duration-300",
+                            "rounded-2xl shadow-sm flex items-center justify-center transition-all duration-300 overflow-hidden",
                             focused
                               ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
                               : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400", // <--- تغییر از dark:bg-black به dark:bg-blue-400

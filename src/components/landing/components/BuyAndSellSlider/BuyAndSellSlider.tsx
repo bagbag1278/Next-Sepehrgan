@@ -16,11 +16,12 @@ const BuyAndSellSlider = () => {
                 );
 
                 if (!res.ok) {
-                    throw new Error("API Error");
+                    throw new Error(`API Error : ${res.status}`);
                 }
 
                 const data = await res.json();
                 setHouses(data.houses || []);
+
             } catch (error) {
                 console.error("Fetch Error:", error);
             }
@@ -76,4 +77,4 @@ const BuyAndSellSlider = () => {
     )
 }
 
-export default BuyAndSellSlider
+export default BuyAndSellSlider;

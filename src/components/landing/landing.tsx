@@ -14,7 +14,7 @@ const Landing = () => {
       {/* **** Top categories **** */}
       <TopCategories />
       {/* **** buy and sell sliedr **** */}
-      <BuyAndSellSlider />   
+      {/* <BuyAndSellSlider />    */}
       {/* *** container ***  */}
       <FirstContainer />
       {/**** popular area Slider ****/}
