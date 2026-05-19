@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
@@ -38,9 +36,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Toaster position="top-center" gutter={8} />
-          <Header />
+          {/* <Header /> */}
           <main className="w-full max-w-360">{children}</main>
-          <Footer />
+          {/* <Footer /> */}
         </ThemeProvider>
       </body>
     </html>
