@@ -1,9 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import { useEffect, useRef } from "react";
 
 interface MapProps {
   lat?: number;
@@ -11,6 +8,7 @@ interface MapProps {
   zoom?: number;
   popupText?: string;
   height?: string;
+  apiKey: string;
 }
 
 export default function Map({
@@ -19,45 +17,53 @@ export default function Map({
   zoom = 13,
   popupText = "موقعیت انتخاب شده",
   height = "400px",
+  apiKey,
 }: MapProps) {
+  const mapRef = useRef<any>(null);
+  const markerRef = useRef<any>(null);
+
   useEffect(() => {
+    // اطمینان از اینکه SDK بارگذاری شده و پنجره (window) در دسترس است
+    if (
+      typeof (window as any).L !== "undefined" &&
+      lat != null &&
+      lng != null &&
+      apiKey
+    ) {
+      // ایجاد نقشه نشان
+      const neshanMap = new (window as any).NeshanMap({
+        key: apiKey, // کلید API
+        mapid: "map", // آی‌دی div که نقشه در آن رندر می‌شود
+        lat: lat,
+        lng: lng,
+        zoom: zoom,
+        // you can add more options here based on Neshan Docs
+      });
+      mapRef.current = neshanMap; // ذخیره آبجکت نقشه
 
-    delete (L.Icon.Default.prototype as any)._getIconUrl;
+      // اضافه کردن مارکر
+      const marker = new (window as any).NeshanMap.Marker({
+        position: {
+          latitude: lat,
+          longitude: lng,
+        },
+      }).addTo(neshanMap);
+      markerRef.current = marker;
 
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl:
-        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-      iconUrl:
-        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-      shadowUrl:
-        "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-    });
-  }, []);
+      return () => {
+        if (mapRef.current) {
+        }
+      };
+    }
+  }, [lat, lng, zoom, apiKey]);
 
-  if (lat == null || lng == null) {
+  if (lat == null || lng == null || !apiKey) {
     return (
       <div className="text-center" style={{ height }}>
-        مختصات نقشه موجود نیست
+        {apiKey ? "مختصات نقشه موجود نیست" : "کلید API نشان وارد نشده است"}
       </div>
     );
   }
 
-  return (
-    <div style={{ width: "100%", height:"100%" }}>
-      <MapContainer
-        center={[lat, lng]}
-        zoom={zoom}
-        scrollWheelZoom={true}
-        style={{ width: "100%", height: "100%" }}
-      >
-        <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={[lat, lng]}>
-          <Popup>{popupText}</Popup>
-        </Marker>
-      </MapContainer>
-    </div>
-  );
+  return <div id="map" style={{ width: "100%", height: height }}></div>;
 }

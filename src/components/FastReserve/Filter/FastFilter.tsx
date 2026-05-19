@@ -50,6 +50,7 @@ const FastFilter = ({
     setQuery,
   });
   const [isAmenitiesOpen, setIsAmenitiesOpen] = useState(false);
+  const [value, setValue] = useState(0);
 
   return (
     <div dir="rtl" className=" flex flex-col gap-6 ">
@@ -114,7 +115,20 @@ const FastFilter = ({
                 />
               </span>
             </summary>
-            <div className="mt-3 space-y-2 transition-all duration-150"></div>
+            <div className="mt-3 space-y-2 transition-all duration-150">
+              <input
+                type="range"
+                min={0}
+                max={10000000000}
+                step={1000000000}
+                value={value}
+                onChange={(e) => setValue(Number(e.target.value))}
+              />
+
+              <div className="text-sm text-blue-200 mt-2">
+                قیمت : {value.toLocaleString("fa-IR")}
+              </div>
+            </div>
           </details>
           {/* at most price*/}
           <details className="group w-full transition-all  duration-150 max-w-sm rounded-2xl border border-blue-300 p-3">
@@ -129,7 +143,20 @@ const FastFilter = ({
                 />
               </span>
             </summary>
-            <div className="mt-3 space-y-2 transition-all duration-150"></div>
+            <div className="mt-3 space-y-2 transition-all duration-150">
+              {" "}
+              <input
+                type="range"
+                min={0}
+                max={10000000000}
+                step={1000000000}
+                value={value}
+                onChange={(e) => setValue(Number(e.target.value))}
+              />
+              <div className="text-sm text-blue-200 mt-2">
+                قیمت : {value.toLocaleString("fa-IR")}
+              </div>
+            </div>
           </details>
         </div>
         {/*  */}

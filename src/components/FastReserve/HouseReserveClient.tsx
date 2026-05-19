@@ -44,6 +44,9 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
     toilets: selectedToilets,
     parking: selectedParking,
   };
+  const userLat = 35.6892; // مثال: مختصات تهران
+  const userLng = 51.389;
+  const neshanApiKey = "YOUR_NESHAN_API_KEY";
   return (
     <div className="flex justify-between">
       <div className="h-12 absolute right-30 top-17.5 flex justify-between gap-4">
@@ -77,7 +80,14 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
       />
 
       <div className="w-[43%] h-209 mt-6 rounded-tl-lg overflow-hidden rounded-br-lg rounded-bl-[42px] rounded-tr-[42px] drop-shadow-blue-300">
-        <Map lat={35.6892} lng={51.389} popupText="تهران" />
+        {/* <Map
+          lat={userLat}
+          lng={userLng}
+          zoom={14}
+          popupText="اینجا تهران است"
+          height="100%" // ارتفاع 100% نسبت به parent div
+          apiKey={neshanApiKey}
+        /> */}
       </div>
     </div>
   );

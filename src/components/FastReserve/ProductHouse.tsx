@@ -13,7 +13,7 @@ const ProductHouse: FC<ProductHouseProps> = ({ houses }) => {
     <div dir="rtl" className="w-174.75 flex relative pr-3 mr-24">
       <div
         key={houses.id}
-        className=" hover:border-2 hover:border-blue-200 dark:border dark:border-blue-300 transition-opacity duration-1000 shadow shadow-blue-300/25 rounded-4xl w-161.75 h-54 flex justify-center gap-2 items-center mx-auto"
+        className=" hover:border-2 hover:border-blue-200 dark:border dark:border-blue-300 transition-all duration-300 shadow shadow-blue-300/25 hover:shadow-lg rounded-4xl w-161.75 h-54 flex justify-center gap-2 items-center mx-auto"
       >
         <div className="size-7.5 rounded-tr-sm text-white rounded-br-sm bg-red-100 absolute top-11.5 right-2 text-center leading-8">
           {toPersianNum("%5")}

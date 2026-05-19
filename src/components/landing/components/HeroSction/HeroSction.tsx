@@ -1,5 +1,6 @@
 "use client";
 
+import { toPersianNum } from "@/components/utils/FarsiNum";
 import DarkModeHero from "./HeroFilter/DarkModeHero";
 import HeroSctionFilter from "./HeroFilter/HeroSctionFilter";
 import FleshRght2 from "./Icon/FleshRght2";
@@ -21,7 +22,7 @@ const HeroSction = () => {
     <>
       {/* TitelText */}
       <div className="flex justify-center xl:w-full xl:max-w-318.25 lg:w-full lg:max-w-318.25 sm:w-98.25 sm:flex sm:justify-start   xl:h-188 h-263  lg:m-auto  relative border ">
-        <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
+        <div className="">
           <DarkModeHero />
         </div>
         <div className="absolute top-118 left-1/2 -translate-x-1/2 flex justify-center z-10">
@@ -91,14 +92,14 @@ const HeroSction = () => {
               <div className="w-[522px] h-[79px] dark:text-white flex flex-wrap gap-35   absolute font-bold items-center text-3xl ">
                 <div className="">
                   {" "}
-                  2625
+                  {toPersianNum("2625")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-130 bottom-11 text-[21px] ">
                     +
                   </span>
                 </div>
                 <div className="">
                   {" "}
-                  266
+                  {toPersianNum("266")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-78 bottom-11 text-[21px]">
                     +
                   </span>
@@ -112,7 +113,7 @@ const HeroSction = () => {
                 </div>
                 <div className="">
                   {" "}
-                  6595
+                  {toPersianNum("6595")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-30   bottom-11 text-[21px]">
                     +
                   </span>

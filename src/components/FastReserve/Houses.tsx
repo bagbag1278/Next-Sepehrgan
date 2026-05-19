@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import SkeletonProductHouse from "./SkeletonProductHouse";
 import ProductHouse from "./ProductHouse";
 import { IReserveHouse } from "@/core/types/ReserveHouse/IHouse";
-
+import { motion } from "framer-motion";
 type Props = {
   searchQuery: string;
   initialHouses: IReserveHouse[];
@@ -90,26 +90,57 @@ const Houses = ({
     }
 
     return result;
-  },  [searchQuery, initialHouses, sortBy, filters]);
+  }, [searchQuery, initialHouses, sortBy, filters]);
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15, // فاصله زمانی بین هر کارت
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      x: -40, // از چپ وارد شود
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
 
   return (
-        <ScrollArea.Root className="w-177.5 h-174 mt-39 mr-22.25">
+    <ScrollArea.Root className="w-177.5 h-174 mt-39 mr-22.25">
       <ScrollArea.Viewport className="h-full w-full">
-        <div dir="ltr" className="flex justify-end flex-wrap gap-6 ">
+        <motion.div
+          dir="ltr"
+          className="flex justify-end flex-wrap gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {isLoading ? (
             [...Array(initialHouses.length > 0 ? initialHouses.length : 3)].map(
               (_, index) => <SkeletonProductHouse key={index} />,
             )
           ) : filteredAndSortedHouses.length > 0 ? (
             filteredAndSortedHouses.map((house) => (
-              <ProductHouse key={house.id} houses={house} />
+              <motion.div key={house.id} variants={itemVariants}>
+                <ProductHouse houses={house} />
+              </motion.div>
             ))
           ) : (
             <div className="text-center text-lg text-blue-400 mt-6 col-span-full">
               موردی یافت نشد
             </div>
           )}
-        </div>
+        </motion.div>
       </ScrollArea.Viewport>
       <ScrollArea.Scrollbar
         orientation="vertical"

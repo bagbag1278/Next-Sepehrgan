@@ -40,7 +40,7 @@ const Landing = () => {
             <div className='w-full flex flex-wrap justify-between'>
               {/* ///// */}
               <div
-                className='w-39.75 h-40 cursor-pointer not-dark:hover:border dark:hover:bg-slate-950 hover:border-amber-100 p-[14.5px] rounded-2xl '
+                className='w-39.75 h-40 cursor-pointer not-dark:hover:border dark:hover:bg-blue-400 hover:border-amber-100 p-[14.5px] rounded-2xl '
                 style={{
                   filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                 }}
@@ -60,7 +60,7 @@ const Landing = () => {
                 </div>
               </div>
               {/* ///// */}
-              <div className='w-39.75 h-40 cursor-pointer mt-8 dark:hover:bg-slate-950 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl '
+              <div className='w-39.75 h-40 cursor-pointer mt-8 dark:hover:bg-blue-400 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl '
                 style={{
                   filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                 }}
@@ -80,7 +80,7 @@ const Landing = () => {
                 </div>
               </div>
               {/* ///// */}
-              <div className='w-39.75 h-40 cursor-pointer mt-12 rounded-2xl dark:hover:bg-slate-950 not-dark::hover:border hover:border-amber-100 p-[14.5px]'
+              <div className='w-39.75 h-40 cursor-pointer mt-12 rounded-2xl dark:hover:bg-blue-400 not-dark::hover:border hover:border-amber-100 p-[14.5px]'
                 style={{
                   filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                 }}
@@ -100,7 +100,7 @@ const Landing = () => {
                 </div>
               </div>
               {/* ///// */}
-              <div className='w-39.75 h-40 cursor-pointer  mt-8 dark:hover:bg-slate-950 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl '
+              <div className='w-39.75 h-40 cursor-pointer  mt-8 dark:hover:bg-blue-400 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl '
                 style={{
                   filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                 }}
@@ -120,7 +120,7 @@ const Landing = () => {
                 </div>
               </div>
               {/* ///// */}
-              <div className='w-39.75 h-40 cursor-pointer  dark:hover:bg-slate-950 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl'
+              <div className='w-39.75 h-40 cursor-pointer  dark:hover:bg-blue-400 not-dark::hover:border hover:border-amber-100 p-[14.5px] rounded-2xl'
                 style={{
                   filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))"
                 }}
@@ -236,10 +236,8 @@ const Landing = () => {
       </div>
 
       {/* **** secound container **** */}
-      <div className='w-full flex justify-center'
-        style={{
-          background: "linear-gradient(180deg, #121212 0%, rgba(4, 38, 55, 0.5) 49.65%, #121212 100%)",
-        }}
+      <div className='w-full flex justify-center bg-linear-to-b from dark:via-[#042637] via-[#E3F2FF]'
+
       >
         <div className='w-312 h-125  '>
           <div className='w-295 h-full flex flex-wrap items-center justify-between gap-0.5 '>
