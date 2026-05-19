@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BuyerDashPage = () => {
+const DashboardPage = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const BuyerDashPage = () => {
   )
 }
 
-export default BuyerDashPage;
+export default DashboardPage
