@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/header/Header";
 import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
+import Footer from "@/components/Footer/Footer";
+import { Header } from "@radix-ui/themes/components/table";
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans.ttf",
