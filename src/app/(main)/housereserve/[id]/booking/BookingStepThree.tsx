@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import TallerFlash from "./icon/flesh/TallerFlash";
 import SmallFlash from "./icon/flesh/SmallFlash";
 import SmallTwo from "./icon/flesh/SmallTwo";
+import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
 const BookingStepThree = ({
   hotelData,
@@ -196,14 +197,15 @@ const BookingStepThree = ({
               </div>
 
               <div className="w-full lg:w-235 relative mt-26 flex max-[1024]:left-0 max-[1100]:left-20 max-[1330px]:justify-center">
-                <BookingSummaryTwo
-                  finalTotal={finalTotal}
-                  hotelData={hotelData}
-                  checkInDate={checkInDate}
-                  checkOutDate={checkOutDate}
-                  passengers={passengers}
-                />
-
+                <AdvancedScrollAnimation type="slide-up" delay={0.2}>
+                  <BookingSummaryTwo
+                    finalTotal={finalTotal}
+                    hotelData={hotelData}
+                    checkInDate={checkInDate}
+                    checkOutDate={checkOutDate}
+                    passengers={passengers}
+                  />
+                </AdvancedScrollAnimation>
                 <div className="absolute max-[888]:mr-30  -bottom-30 flex-col  gap-5 flex justify-center w-122">
                   <div className="border-b border-gray-200 w-full"></div>
                   <div>

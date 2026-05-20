@@ -14,13 +14,14 @@ const LoginPage = () => {
     { src: "/auth/left.png", alt: "Slide 3 Description" },
     { src: "/auth/left.png", alt: "Slide 4 Description" },
   ];
+  
   return (
     <div dir="rtl" className="h-179.5 flex justify-between relative">
-      <div className="w-180 mr-2">
-        <div className="absolute right-24  top-3.5">
+      <div className="w-180 mr-2 relative z-20 bg-white">
+        <div className="absolute right-24 top-3.5 z-30">
           <CircularDropdown />
         </div>
-        <div className="absolute right-35.25">
+        <div className="absolute right-35.25 z-10">
           <Image src={"/auth/vec.png"} alt="vec" width={130} height={143} />
         </div>
         <AnimatePresence mode="wait">
@@ -30,8 +31,7 @@ const LoginPage = () => {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            {" "}
-            <div className=" w-44.25 h-16 mx-auto mt-25 flex gap-2 flex-col">
+            <div className="w-44.25 h-16 mx-auto mt-25 flex gap-2 flex-col">
               <h3 className="font-bold text-center text-[16px] opacity-80">
                 خوش آمدید :)
               </h3>
@@ -46,8 +46,8 @@ const LoginPage = () => {
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="w-[48%] relative h-175.25 ml-2 mt-2 rounded-br-[50px] rounded-tr-[50px] hidden md:block">
-        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col gap-4">
+      <div className="w-[48%] relative h-175.25 ml-2 mt-2 rounded-br-[50px] rounded-tr-[50px] hidden md:block overflow-hidden z-0">
+        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-10 flex flex-col gap-4">
           <h3 className="text-2xl font-bold text-center">
             وارد رهن کده شو و خونت رو پیدا کن !!!
           </h3>
@@ -59,7 +59,9 @@ const LoginPage = () => {
             صفا باشه! عشق باشه! معرفت باشه!
           </span>
         </div>
-        <ImageSlider images={slideImages} delay={5000} />
+        <div className="relative z-0">
+          <ImageSlider images={slideImages} delay={5000} />
+        </div>
       </div>
     </div>
   );

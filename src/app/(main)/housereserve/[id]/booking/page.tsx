@@ -8,6 +8,7 @@ import BookingStepThree from "./BookingStepThree";
 import BookingStepFour from "./BookingStepFour";
 import { toast } from "react-hot-toast";
 import { ChevronDown } from "lucide-react";
+import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
 const BookingPage = () => {
   const params = useParams();
@@ -365,261 +366,305 @@ const BookingPage = () => {
   return (
     <div className="w-11/12 px-4" dir="rtl">
       <div className="space-y-4 md:space-y-6">
-        <div className="pt-10">
-          <Bread
-            items={[
-              { title: "رزرو هتل", href: "/housereserve" },
-              { title: hotelData?.title },
-            ]}
-          />
-        </div>
+        <AdvancedScrollAnimation type="slide-up" delay={0.1}>
+          <div className="pt-10 ">
+            <Bread
+              items={[
+                { title: "رزرو هتل", href: "/housereserve" },
+                { title: hotelData?.title },
+              ]}
+            />
+          </div>
+        </AdvancedScrollAnimation>
 
         <div className="rounded-2xl p-4 md:p-6">
           <div className="space-y-6">
             {step === 2 && (
               <div className="">
-                <div className="ml-20 max-[888]:left-5 max-[888]:ml-0 relative flex  gap-50 mx-auto justify-center max-[1360px]:flex-col">
-                  <div>
-                    <BookingSummary
-                      hotelData={hotelData}
-                      checkInDate={checkInDate}
-                      checkOutDate={checkOutDate}
-                      prices={bookingPrices}
-                      guestsCount={passengers.length}
-                    />
-                  </div>
-
-                  <div className="rounded-[40px] p-10">
-                    <div className="rounded-[40px]">
-                      <h3 className="font-bold text-gray-800 whitespace-nowrap text-lg mb-20 dark:text-white">
-                        مسافران انتخاب شده ({passengers.length})
-                      </h3>
+                <div className="ml-20 max-[888]:left-5 max-[888]:ml-0 relative flex gap-50 mx-auto justify-center max-[1360px]:flex-col">
+                  <AdvancedScrollAnimation type="slide-right" delay={0.2}>
+                    <div>
+                      <BookingSummary
+                        hotelData={hotelData}
+                        checkInDate={checkInDate}
+                        checkOutDate={checkOutDate}
+                        prices={bookingPrices}
+                        guestsCount={passengers.length}
+                      />
                     </div>
-                    <h2 className="text-xl font-black mb-10 whitespace-nowrap text-[hsl(244,80%,8%)] dark:text-white">
-                      مشخصات مسافران
-                    </h2>
-                    <div className="space-y-12">
-                      {passengers.map((passenger, index) => (
-                        <div
-                          key={passenger.id}
-                          className="space-y-6 border-b border-gray-50 pb-8 last:border-0"
+                  </AdvancedScrollAnimation>
+
+                  <AdvancedScrollAnimation type="slide-left" delay={0.2}>
+                    <div className="rounded-[40px] p-10">
+                      <div className="rounded-[40px]">
+                        <h3 className="font-bold text-gray-800 whitespace-nowrap text-lg mb-20 dark:text-white">
+                          مسافران انتخاب شده ({passengers.length})
+                        </h3>
+                      </div>
+                      <h2 className="text-xl font-black mb-10 whitespace-nowrap text-[hsl(244,80%,8%)] dark:text-white">
+                        مشخصات مسافران
+                      </h2>
+                      <div className="space-y-12">
+                        {passengers.map((passenger, index) => (
+                          <AdvancedScrollAnimation
+                            key={passenger.id}
+                            type="slide-up"
+                            delay={0.1 + index * 0.05}
+                            duration={0.4}
+                          >
+                            <div className="space-y-6 border-b border-gray-50 pb-8 last:border-0">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                  <span className="font-bold text-gray-700">
+                                    مسافر شماره {index + 1}
+                                  </span>
+                                </div>
+                                {passengers.length > 1 && (
+                                  <button
+                                    onClick={() => removePassenger(passenger.id)}
+                                    className="text-red-500 text-xs font-bold hover:underline"
+                                  >
+                                    حذف مسافر ×
+                                  </button>
+                                )}
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <input
+                                  name="fullName"
+                                  required
+                                  type="text"
+                                  placeholder="نام و نام خانوادگی"
+                                  value={passenger.fullName}
+                                  onChange={(e) =>
+                                    updatePassenger(
+                                      index,
+                                      "fullName",
+                                      e.target.value,
+                                    )
+                                  }
+                                  className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none focus:ring-1 ring-blue-200"
+                                />
+                                <input
+                                  type="text"
+                                  inputMode="numeric"
+                                  placeholder="کد ملی"
+                                  value={passenger.nationalCode}
+                                  onChange={(e) =>
+                                    updatePassenger(
+                                      index,
+                                      "nationalCode",
+                                      e.target.value,
+                                    )
+                                  }
+                                  className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none focus:ring-1 ring-blue-200"
+                                />
+                                <div className="relative">
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setOpenGenderIndex(
+                                        openGenderIndex === index ? null : index,
+                                      )
+                                    }
+                                    className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747] text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl flex items-center justify-between"
+                                  >
+                                    <span>
+                                      {passenger.gender === "male"
+                                        ? "مرد"
+                                        : passenger.gender === "female"
+                                          ? "زن"
+                                          : "جنسیت"}
+                                    </span>
+                                    <ChevronDown
+                                      size={18}
+                                      className={`transition-transform ${openGenderIndex === index ? "rotate-180" : ""}`}
+                                    />
+                                  </button>
+
+                                  {openGenderIndex === index && (
+                                    <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#060425] border border-[#0887CAB2] rounded-2xl overflow-hidden z-20 shadow-lg">
+                                      <button
+                                        onClick={() => {
+                                          updatePassenger(index, "gender", "male");
+                                          setOpenGenderIndex(null);
+                                        }}
+                                        className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
+                                      >
+                                        مرد
+                                      </button>
+                                      <button
+                                        onClick={() => {
+                                          updatePassenger(
+                                            index,
+                                            "gender",
+                                            "female",
+                                          );
+                                          setOpenGenderIndex(null);
+                                        }}
+                                        className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
+                                      >
+                                        زن
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                                <input
+                                  type="text"
+                                  placeholder="تاریخ تولد"
+                                  value={passenger.birthDate}
+                                  onChange={(e) =>
+                                    updatePassenger(
+                                      index,
+                                      "birthDate",
+                                      e.target.value,
+                                    )
+                                  }
+                                  className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none"
+                                />
+                              </div>
+                            </div>
+                          </AdvancedScrollAnimation>
+                        ))}
+                      </div>
+                      
+                      <AdvancedScrollAnimation type="scale" delay={0.3}>
+                        <button
+                          onClick={addPassenger}
+                          className="w-full py-5 mt-10 whitespace-nowrap border-2 border-dashed border-blue-100 rounded-3xl text-[rgb(16,8,143)] font-black hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
                         >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                              <span className="font-bold text-gray-700">
-                                مسافر شماره {index + 1}
+                          + افزودن مسافر جدید
+                        </button>
+                      </AdvancedScrollAnimation>
+
+                      <AdvancedScrollAnimation type="fade" delay={0.2}>
+                        <div className="rounded-[40px] p-10">
+                          <h3 className="font-bold text-[rgb(6,4,37)] whitespace-nowrap mb-8 text-lg dark:text-white">
+                            ارسال بلیط به دیگران
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 dark:text-black">
+                            <input
+                              type="email"
+                              placeholder="ایمیل (example@mail.com)"
+                              value={extraEmail}
+                              onChange={(e) => {
+                                const val = e.target.value
+                                  .replace(/[^\x00-\x7F]/g, "")
+                                  .replace(/\s/g, "");
+                                setExtraEmail(val);
+                              }}
+                              className={`bg-[#F8FAFC] border p-4 rounded-2xl outline-none transition-all ${
+                                extraEmail &&
+                                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(extraEmail)
+                                  ? "border-red-500 bg-red-50"
+                                  : "border-gray-100"
+                              }`}
+                            />
+                            <input
+                              type="text"
+                              placeholder="شماره تماس (۰۹xxxxxxxxx)"
+                              value={extraPhone}
+                              inputMode="numeric"
+                              maxLength={11}
+                              onChange={(e) => {
+                                const val = e.target.value.replace(/[^0-9]/g, "");
+                                setExtraPhone(val);
+                              }}
+                              className={`bg-[#F8FAFC] border p-4 rounded-2xl outline-none transition-all dark:text-black ${
+                                extraPhone && !/^09\d{9}$/.test(extraPhone)
+                                  ? "border-red-500 bg-red-50"
+                                  : "border-gray-100"
+                              }`}
+                            />
+                          </div>
+
+                          <button
+                            type="button"
+                            disabled={!isAllFormsNotif}
+                            onClick={() => {
+                              if (isAllFormsNotif) {
+                                window.scrollTo(0, 0);
+                              }
+                            }}
+                            className={`w-full py-5 rounded-3xl font-black mt-10 transition-all duration-300 ${
+                              isAllFormsNotif
+                                ? "bg-[rgb(21,151,125)] text-white hover:bg-[#12806a] shadow-lg cursor-pointer"
+                                : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-70"
+                            }`}
+                          >
+                            ثبت اطلاعات
+                          </button>
+                          
+                          <div className="mt-12 pt-6 border-t border-gray-100">
+                            <div className="flex justify-between max-[888]:flex-col items-center mb-6">
+                              <span className="text-gray-400 text-xs font-black whitespace-nowrap">
+                                قیمت نهایی
+                              </span>
+                              <span className="font-black whitespace-nowrap max-[888]:mt-4 text-[rgb(16,8,143)] text-xl">
+                                {bookingPrices.discountedTotal.toLocaleString()} تومان
                               </span>
                             </div>
-                            {passengers.length > 1 && (
-                              <button
-                                onClick={() => removePassenger(passenger.id)}
-                                className="text-red-500 text-xs font-bold hover:underline"
-                              >
-                                حذف مسافر ×
-                              </button>
-                            )}
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input
-                              name="fullName"
-                              required
-                              type="text"
-                              placeholder="نام و نام خانوادگی"
-                              value={passenger.fullName}
-                              onChange={(e) =>
-                                updatePassenger(
-                                  index,
-                                  "fullName",
-                                  e.target.value,
-                                )
-                              }
-                              className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none focus:ring-1 ring-blue-200"
-                            />
-                            <input
-                              type="text"
-                              inputMode="numeric"
-                              placeholder="کد ملی"
-                              value={passenger.nationalCode}
-                              onChange={(e) =>
-                                updatePassenger(
-                                  index,
-                                  "nationalCode",
-                                  e.target.value,
-                                )
-                              }
-                              className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none focus:ring-1 ring-blue-200"
-                            />
-                            <div className="relative">
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  setOpenGenderIndex(
-                                    openGenderIndex === index ? null : index,
-                                  )
+
+                            <button
+                              disabled={!isAllFormsValid}
+                              onClick={() => {
+                                if (isAllFormsValid) {
+                                  setStep(3);
+                                  window.scrollTo(0, 0);
                                 }
-                                className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747] text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl flex items-center justify-between"
-                              >
-                                <span>
-                                  {passenger.gender === "male"
-                                    ? "مرد"
-                                    : passenger.gender === "female"
-                                      ? "زن"
-                                      : "جنسیت"}
-                                </span>
-                                <ChevronDown
-                                  size={18}
-                                  className={`transition-transform ${openGenderIndex === index ? "rotate-180" : ""}`}
-                                />
-                              </button>
-
-                              {openGenderIndex === index && (
-                                <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#060425] border border-[#0887CAB2] rounded-2xl overflow-hidden z-20 shadow-lg">
-                                  <button
-                                    onClick={() => {
-                                      updatePassenger(index, "gender", "male");
-                                      setOpenGenderIndex(null);
-                                    }}
-                                    className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
-                                  >
-                                    مرد
-                                  </button>
-                                  <button
-                                    onClick={() => {
-                                      updatePassenger(
-                                        index,
-                                        "gender",
-                                        "female",
-                                      );
-                                      setOpenGenderIndex(null);
-                                    }}
-                                    className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
-                                  >
-                                    زن
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-                            <input
-                              type="text"
-                              placeholder="تاریخ تولد"
-                              value={passenger.birthDate}
-                              onChange={(e) =>
-                                updatePassenger(
-                                  index,
-                                  "birthDate",
-                                  e.target.value,
-                                )
-                              }
-                              className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none"
-                            />
+                              }}
+                              className={`w-full py-5 rounded-3xl font-black mt-10 transition-all ${
+                                isAllFormsValid
+                                  ? "bg-[rgb(21,151,125)] text-white hover:bg-[#12806a] cursor-pointer"
+                                  : "bg-gray-300 whitespace-nowrap text-gray-500 cursor-not-allowed"
+                              }`}
+                            >
+                              تأیید و ادامه فرآیند
+                            </button>
                           </div>
                         </div>
-                      ))}
+                      </AdvancedScrollAnimation>
                     </div>
-                    <button
-                      onClick={addPassenger}
-                      className="w-full py-5 mt-10 whitespace-nowrap border-2 border-dashed border-blue-100 rounded-3xl text-[rgb(16,8,143)] font-black hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
-                    >
-                      + افزودن مسافر جدید
-                    </button>
-
-                    <div className="rounded-[40px] p-10">
-                      <h3 className="font-bold text-[rgb(6,4,37)] whitespace-nowrap mb-8 text-lg dark:text-white">
-                        ارسال بلیط به دیگران
-                      </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 dark:text-black">
-                        <input
-                          type="email"
-                          placeholder="ایمیل (example@mail.com)"
-                          value={extraEmail}
-                          onChange={(e) => {
-                            const val = e.target.value
-                              .replace(/[^\x00-\x7F]/g, "")
-                              .replace(/\s/g, "");
-                            setExtraEmail(val);
-                          }}
-                          className={`bg-[#F8FAFC] border p-4 rounded-2xl outline-none transition-all ${
-                            extraEmail &&
-                            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(extraEmail)
-                              ? "border-red-500 bg-red-50"
-                              : "border-gray-100"
-                          }`}
-                        />
-                        <input
-                          type="text"
-                          placeholder="شماره تماس (۰۹xxxxxxxxx)"
-                          value={extraPhone}
-                          inputMode="numeric"
-                          maxLength={11}
-                          onChange={(e) => {
-                            const val = e.target.value.replace(/[^0-9]/g, "");
-                            setExtraPhone(val);
-                          }}
-                          className={`bg-[#F8FAFC] border p-4 rounded-2xl outline-none transition-all dark:text-black ${
-                            extraPhone && !/^09\d{9}$/.test(extraPhone)
-                              ? "border-red-500 bg-red-50"
-                              : "border-gray-100"
-                          }`}
-                        />
-                      </div>
-
-                      <button
-                        type="button"
-                        disabled={!isAllFormsNotif}
-                        onClick={() => {
-                          if (isAllFormsNotif) {
-                            window.scrollTo(0, 0);
-                          }
-                        }}
-                        className={`w-full py-5 rounded-3xl font-black mt-10 transition-all duration-300 ${
-                          isAllFormsNotif
-                            ? "bg-[rgb(21,151,125)] text-white hover:bg-[#12806a] shadow-lg cursor-pointer"
-                            : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-70"
-                        }`}
-                      >
-                        ثبت اطلاعات
-                      </button>
-                      <div className="mt-12 pt-6 border-t border-gray-100">
-                        <div className="flex justify-between max-[888]:flex-col  items-center mb-6">
-                          <span className="text-gray-400 text-xs font-black  whitespace-nowrap ">
-                            قیمت نهایی
-                          </span>
-                          <span className="font-black whitespace-nowrap max-[888]:mt-4 text-[rgb(16,8,143)] text-xl">
-                            {bookingPrices.discountedTotal.toLocaleString()}{" "}
-                            تومان
-                          </span>
-                        </div>
-
-                        <button
-                          disabled={!isAllFormsValid}
-                          onClick={() => {
-                            if (isAllFormsValid) {
-                              setStep(3);
-                              window.scrollTo(0, 0);
-                            }
-                          }}
-                          className={`w-full py-5 rounded-3xl font-black mt-10 transition-all ${
-                            isAllFormsValid
-                              ? "bg-[rgb(21,151,125)] text-white hover:bg-[#12806a] cursor-pointer"
-                              : "bg-gray-300 whitespace-nowrap text-gray-500 cursor-not-allowed"
-                          }`}
-                        >
-                          تأیید و ادامه فرآیند
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  </AdvancedScrollAnimation>
                 </div>
               </div>
             )}
 
             {step === 3 && (
-              <div className="w-full">
-                <BookingStepThree
+              <AdvancedScrollAnimation type="fade" delay={0.1}>
+                <div className="w-full">
+                  <BookingStepThree
+                    step={step}
+                    setStep={setStep}
+                    hotelData={hotelData}
+                    checkInDate={checkInDate}
+                    checkOutDate={checkOutDate}
+                    passengers={passengers}
+                    updatePassenger={updatePassenger}
+                    removePassenger={removePassenger}
+                    addPassenger={addPassenger}
+                    extraEmail={extraEmail}
+                    setExtraEmail={setExtraEmail}
+                    extraPhone={extraPhone}
+                    setExtraPhone={setExtraPhone}
+                    description={description}
+                    handelFinalBooking={handelFinalBooking}
+                    isAllFormsValid={isAllFormsValid}
+                    finalTotal={finalTotal}
+                    loading={loading}
+                    bookingPrices={bookingPrices}
+                  />
+                </div>
+              </AdvancedScrollAnimation>
+            )}
+
+            {step === 5 && (
+              <AdvancedScrollAnimation type="scale" delay={0.1}>
+                <BookingStepFour
                   step={step}
                   setStep={setStep}
                   hotelData={hotelData}
+                  finalTotal={finalTotal}
                   checkInDate={checkInDate}
                   checkOutDate={checkOutDate}
                   passengers={passengers}
@@ -630,34 +675,9 @@ const BookingPage = () => {
                   setExtraEmail={setExtraEmail}
                   extraPhone={extraPhone}
                   setExtraPhone={setExtraPhone}
-                  description={description}
-                  handelFinalBooking={handelFinalBooking}
-                  isAllFormsValid={isAllFormsValid}
-                  finalTotal={finalTotal}
-                  loading={loading}
-                  bookingPrices={bookingPrices}
+                  bookingResult={bookingResult}
                 />
-              </div>
-            )}
-
-            {step === 5 && (
-              <BookingStepFour
-                step={step}
-                setStep={setStep}
-                hotelData={hotelData}
-                finalTotal={finalTotal}
-                checkInDate={checkInDate}
-                checkOutDate={checkOutDate}
-                passengers={passengers}
-                updatePassenger={updatePassenger}
-                removePassenger={removePassenger}
-                addPassenger={addPassenger}
-                extraEmail={extraEmail}
-                setExtraEmail={setExtraEmail}
-                extraPhone={extraPhone}
-                setExtraPhone={setExtraPhone}
-                bookingResult={bookingResult}
-              />
+              </AdvancedScrollAnimation>
             )}
           </div>
 
