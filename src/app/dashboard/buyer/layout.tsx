@@ -1,6 +1,6 @@
+import DashboardHeader from "@/components/Dashboard/header";
 import DarkModeHero from "@/components/landing/components/HeroSction/HeroFilter/DarkModeHero";
-import Link from "next/link";
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 
 interface IChildren {
   children: ReactNode;
@@ -17,38 +17,7 @@ const BuyerDashLayout: FC<IChildren> = ({ children }) => {
       {/* Header */}
       <header className="w-255 h-18 rounded-2xl shadow-[0_0_8px] shadow-blue-300/30 py-5 px-6">
         <div className="h-8 flex justify-between items-center">
-          <div className="h-6.25 flex gap-6 text-[15px]">
-            <Link
-              href={"/"}
-              className="hover:text-blue-200 hover:font-bold transition-all duration-150"
-            >
-              صفحه اصلی
-            </Link>
-            <Link
-              href={"/housereserve"}
-              className="hover:text-blue-200 hover:font-bold transition-all duration-150"
-            >
-              رزرو سریع
-            </Link>
-            <Link
-              href={"/mortgage"}
-              className="hover:text-blue-200 hover:font-bold transition-all duration-150"
-            >
-              رهن و اجاره
-            </Link>
-            <Link
-              href={"/blog"}
-              className="hover:text-blue-200 hover:font-bold transition-all duration-150"
-            >
-              وبلاگ
-            </Link>
-            <Link
-              href={"/contactus"}
-              className="hover:text-blue-200 hover:font-bold transition-all duration-150"
-            >
-              درباره ما
-            </Link>
-          </div>
+          <DashboardHeader/>
           <div dir="ltr" className="h-8 w-15 flex gap-2 items-center">
             <div className=" flex items-center justify-center size-8 rounded-full dark:bg-blue-200 shadow-[0_0_2px] shadow-blue-400/20 cursor-pointer">
               <DarkModeHero />

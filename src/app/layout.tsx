@@ -1,20 +1,7 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { ThemeProvider } from "next-themes";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
-import { Toaster } from "react-hot-toast";
-import LayoutWrapper from "@/components/layout/LayoutWrapper";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "./globals.css";
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",

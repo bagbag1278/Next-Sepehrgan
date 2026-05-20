@@ -4,7 +4,7 @@ interface IChildren{
 }
 const DashboardLayout:FC<IChildren> = ({children}) => {
   return (
-    <div dir='rtl' className='min-h-screen flex justify-center items-center border-2 border-b-blue-900'>
+    <div dir='rtl' className='min-h-screen flex justify-center items-center border-2 border-blue-900'>
       {children}
     </div>
   )
