@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-// بقیه ایمپورت‌ها...
 import { toast } from 'react-hot-toast';
 import TallerFleshBlue from "./icon/FleshBlue/TallerFleshBlue";
 import FleshBlueLeft from "./icon/FleshBlue/FleshBlueLeft";
@@ -14,7 +13,8 @@ import RightFleshGreen from "./icon/FleshGreen/RightFleshGreen";
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     title: "",
-    message: ""
+    message: "",
+    email:"",
   });
   const [loading, setLoading] = useState(false);
 
@@ -43,7 +43,7 @@ const ContactPage = () => {
 
       if (response.ok) {
         toast.success("پیام شما با موفقیت ثبت شد", { id: loadingToast });
-        setFormData({ title: "", message: "" });
+        setFormData({ title: "", message: "", email:""});
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || "خطایی در سرور رخ داد", { id: loadingToast });
@@ -64,7 +64,7 @@ const ContactPage = () => {
         <h1 className="text-2xl md:text-3xl font-black dark:text-white text-[rgb(6,4,37)]">
           حس خوبت رو به ما بسپار ، ما کنارتیم!!
         </h1>
-        <div className="absolute right-0 pl-10 -top-10 max-[1390]:hidden ">
+        <div className="absolute right- pl-10 -top-10 max-[1390]:hidden ">
           <TallerFleshBlue />
           <div className="right-148 bottom-23 relative  ">
             <div className="rotate-12">
@@ -162,9 +162,10 @@ const ContactPage = () => {
               className="w-full p-4  rounded-2xl outline-none border border-transparen border-[#0887CA80] text-[#0887CAB2]"
             />
             <input
-              type="text"
+              type="email"
               placeholder="ایمیل"
-              
+              value={formData.email}
+               onChange={(e) => setFormData({...formData,email:e.target.value})}
               className="w-full p-4  rounded-2xl outline-none border border-transparen border-[#0887CA80] text-[#0887CAB2]"
             />
                       <Mail className="absolute max-[1138]:right-90 max-[1050]:hidden top-51 right-115  text-blue-600" size={24} />

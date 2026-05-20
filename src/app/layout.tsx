@@ -1,12 +1,9 @@
-'use client'
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+
 import LocalFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { usePathname } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
-import { Header } from "@radix-ui/themes/components/table";
+import Header from "@/components/header/Header";
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans.ttf",
@@ -17,13 +14,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   
-  const isBookingPage = pathname?.includes("/booking");
 
   return (
     <html lang="fa" dir="ltr" suppressHydrationWarning>
-      <body className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}>
+      <body className={`${iran.className}  overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -34,7 +29,7 @@ export default function RootLayout({
           
           <main>{children}</main>
           
-          {!isBookingPage && <Footer />}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

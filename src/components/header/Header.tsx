@@ -16,7 +16,6 @@ const nav = [
 
 const Header = () => {
   const pathname = usePathname();
-  // max-w-[1300px] m-auto
   return (
     
     <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center xl:block">
