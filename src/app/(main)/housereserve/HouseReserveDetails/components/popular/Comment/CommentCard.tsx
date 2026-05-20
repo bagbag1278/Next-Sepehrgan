@@ -29,9 +29,9 @@ console.log("CommentCard id:", id);
   };
 
   return (
-    <div className="flex flex-col mb-6 left-4 relative">
+    <div className="w-full justify-center flex flex-col  mb-6 ">
       <div
-        className={`w-full h-[114px] max-[]: rounded-[8px] z-30 rounded-tr-[32px] rounded-bl-[32px] p-6 border shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)] transition-all max-[844]:w-95
+        className={`w-full h-[114px] max-[]: rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] p-6 border shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)] transition-all max-[544]:w-95
         ${
           isChild
             ? "bg-[#0887CA0D] border-[#0887CA0D] relative right-15 top-4"
@@ -101,7 +101,7 @@ console.log("CommentCard id:", id);
         </div>
        
 
-          <div className="absolute right-139 max-[888]:right-0 max-[888]:relative ">
+          <div className="  max-[888]:relative ">
             <DeleteComment
               commentId={id}
               onDeleteSuccess={() => {

@@ -20,6 +20,7 @@ const BookingStepThree = ({
   loading,
   isAllFormsValid,
   finalTotal,
+  bookingPrices,
 }: any) => {
   const [coupon, setCoupon] = useState("");
   const [isOpenn, setIsOpenn] = useState(true);
@@ -49,21 +50,24 @@ const BookingStepThree = ({
   };
 
   return (
-    <div className="h-268 max-[1280px]:h-375" dir="rtl">
-      <div className="relative bottom-16 left-3 max-[1280px]:hidden">
-        <div className="absolute left-5 top-150 border">
+    <div
+      className="h-278 w-full relative bottom-30 max-[1280px]:h-375"
+      dir="rtl"
+    >
+      <div className="relative -bottom-23 left-12 max-[1280px]:hidden">
+        <div className="absolute left-5 top-150">
           <TallerFlash />
         </div>
-        <div className="">
-          <div className="absolut">
+        <div className="absolute left-16 top-150">
+          <div className="absolute">
             <SmallFlash />
           </div>
-          <div className=" ">
+          <div className="absolute mb-2 -mr-1">
             <SmallTwo />
           </div>
         </div>
       </div>
-      <div className="w-11/12 mx-auto">
+      <div className="w-11/12">
         <div className="flex items-start">
           <div
             className={`flex-1 flex w-full order-3 ${step === 3 ? "lg:order-1" : "lg:order-2"}`}
@@ -71,12 +75,12 @@ const BookingStepThree = ({
             <div className="flex max-[1330px]:flex-col gap-8 items-start w-full">
               <div className="flex-1 w-full space-y-6 order-2 lg:order-1">
                 <div className="rounded-[40px] p-8">
-                  <div className="w-139">
+                  <div className="">
                     <button
                       onClick={() => setIsOpenn(!isOpenn)}
-                      className="w-full flex flex-col items-center p-4 mt-20 justify-center"
+                      className="w-full max-[888]:hidden flex flex-col items-center p-4 mt-20 "
                     >
-                      <div className="flex items-center justify-center gap-2 mb-4 ml-10 w-full">
+                      <div className="flex items-center  relative left- max-[888]:left-0 gap-2 mb-4">
                         <h3 className="font-bold text-lg w-full whitespace-nowrap">
                           اطلاع رسانی سفر
                         </h3>
@@ -94,13 +98,13 @@ const BookingStepThree = ({
                       </div>
 
                       {isOpenn && (
-                        <div className="flex flex-col gap-4 w-full max-w-114">
+                        <div className="flex flex-col gap-4 w-full ">
                           <div className="flex justify-between items-center">
-                            <span className="text-gray-400">ایمیل</span>
+                            <span className="text-gray-400">ایمیل:</span>
                             <span>{extraEmail || "example@gmail.com"}</span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-gray-400">موبایل</span>
+                            <span className="text-gray-400">موبایل:</span>
                             <span>{extraPhone || "09114456598"}</span>
                           </div>
                         </div>
@@ -108,7 +112,7 @@ const BookingStepThree = ({
                     </button>
                   </div>
 
-                  <div className="w-full mb-8">
+                  <div className="w-full  max-[888]:mt-40">
                     <button
                       onClick={() => setIsOpen(!isOpen)}
                       className="flex items-center justify-between w-full text-sm"
@@ -148,13 +152,17 @@ const BookingStepThree = ({
                       قیمت هتل
                     </span>
                     <span className="text-blue-900 font-black text-2xl">
-                      {finalTotal || "۰"} تومان
+                      {bookingPrices?.discountedTotal.toLocaleString() ||
+                        finalTotal}{" "}
+                      تومان
                     </span>
                   </div>
 
                   {couponApplied && (
                     <div className="flex justify-between items-center mb-4 text-green-600">
-                      <span className="font-bold">تخفیف ({discountAmount}%)</span>
+                      <span className="font-bold">
+                        تخفیف ({discountAmount}%)
+                      </span>
                       <span className="font-bold">- {discountAmount}%</span>
                     </div>
                   )}
@@ -187,7 +195,7 @@ const BookingStepThree = ({
                 </div>
               </div>
 
-              <div className="w-full lg:w-235 relative mb-10 flex max-[1330px]:justify-center">
+              <div className="w-full lg:w-235 relative mt-26 flex max-[1024]:left-0 max-[1100]:left-20 max-[1330px]:justify-center">
                 <BookingSummaryTwo
                   finalTotal={finalTotal}
                   hotelData={hotelData}
@@ -196,13 +204,13 @@ const BookingStepThree = ({
                   passengers={passengers}
                 />
 
-                <div className="absolute top-200 flex-col gap-7 flex justify-center w-116">
-                  <div className="border-b-2 w-124 border-gray-300 flex justify-center"></div>
-                  <div className="">
+                <div className="absolute max-[888]:mr-30  -bottom-30 flex-col  gap-5 flex justify-center w-122">
+                  <div className="border-b border-gray-200 w-full"></div>
+                  <div>
                     <h3 className="font-bold text-[16px] text-[rgb(0,94,164)]">
                       هزینه جانبی
                     </h3>
-                    <p className="font-normal text-[14px] text-[rgba(6,4,37,0.5)] mt-3">
+                    <p className="font-normal text-[14px] text-[rgba(6,4,37,0.5)] mt-3 leading-7">
                       {description}
                     </p>
                   </div>

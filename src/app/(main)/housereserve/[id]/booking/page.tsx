@@ -7,6 +7,7 @@ import Stepper from "../components/Stepper";
 import BookingStepThree from "./BookingStepThree";
 import BookingStepFour from "./BookingStepFour";
 import { toast } from "react-hot-toast";
+import { ChevronDown } from "lucide-react";
 
 const BookingPage = () => {
   const params = useParams();
@@ -19,7 +20,8 @@ const BookingPage = () => {
   const [extraEmail, setExtraEmail] = useState("");
   const [extraPhone, setExtraPhone] = useState("");
   const [bookingResult, setBookingResult] = useState<any>(null);
-  const [isOpen,setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [openGenderIndex, setOpenGenderIndex] = useState<number | null>(null);
 
   const checkInDate = searchParams.get("in") || "۱۴۰۴/۰۶/۱۶";
   const checkOutDate = searchParams.get("out") || "۱۴۰۴/۰۶/۱۷";
@@ -300,51 +302,50 @@ const BookingPage = () => {
     };
   }, [hotelData, checkInDate, checkOutDate, passengers.length]);
 
- useEffect(() => {
-  const fetchHotelDetails = async () => {
-    if (!params.id) {
-      console.error("آیدی هتل وجود ندارد");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      
-      const response = await fetch(
-        `http://next.genzuni.website/api/houses/${params.id}`
-      );
-
-      if (response.status === 401) {
-        toast.error("نشست شما منقضی شده است. لطفاً مجدداً وارد شوید");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("user");
-        router.push("/login");
+  useEffect(() => {
+    const fetchHotelDetails = async () => {
+      if (!params.id) {
+        console.error("آیدی هتل وجود ندارد");
+        setLoading(false);
         return;
       }
 
-      if (response.status === 404) {
-        toast.error("هتل مورد نظر یافت نشد");
-        return;
+      try {
+        setLoading(true);
+
+        const response = await fetch(
+          `http://next.genzuni.website/api/houses/${params.id}`,
+        );
+
+        if (response.status === 401) {
+          toast.error("نشست شما منقضی شده است. لطفاً مجدداً وارد شوید");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("user");
+          router.push("/login");
+          return;
+        }
+
+        if (response.status === 404) {
+          toast.error("هتل مورد نظر یافت نشد");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error(`خطای سرور: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setHotelData(result);
+      } catch (error) {
+        console.error("Error details:", error);
+        toast.error("خطا در دریافت اطلاعات هتل");
+      } finally {
+        setLoading(false);
       }
+    };
 
-      if (!response.ok) {
-        throw new Error(`خطای سرور: ${response.status}`);
-      }
-
-      const result = await response.json();
-      setHotelData(result);
-      
-    } catch (error) {
-      console.error("Error details:", error);
-      toast.error("خطا در دریافت اطلاعات هتل");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchHotelDetails();
-}, [params.id]);
+    fetchHotelDetails();
+  }, [params.id]);
 
   const description =
     hotelData?.description || "توضیحاتی برای این هتل ثبت نشده است.";
@@ -377,24 +378,24 @@ const BookingPage = () => {
           <div className="space-y-6">
             {step === 2 && (
               <div className="">
-                <div className="ml-20 flex gap-50 mx-auto justify-center max-[1360px]:flex-col">
+                <div className="ml-20 max-[888]:left-5 max-[888]:ml-0 relative flex  gap-50 mx-auto justify-center max-[1360px]:flex-col">
                   <div>
                     <BookingSummary
                       hotelData={hotelData}
                       checkInDate={checkInDate}
                       checkOutDate={checkOutDate}
                       prices={bookingPrices}
-                       guestsCount={passengers.length}
+                      guestsCount={passengers.length}
                     />
                   </div>
 
                   <div className="rounded-[40px] p-10">
                     <div className="rounded-[40px]">
-                      <h3 className="font-bold text-gray-800 text-lg mb-20 dark:text-white">
+                      <h3 className="font-bold text-gray-800 whitespace-nowrap text-lg mb-20 dark:text-white">
                         مسافران انتخاب شده ({passengers.length})
                       </h3>
                     </div>
-                    <h2 className="text-xl font-black mb-10 text-[hsl(244,80%,8%)] dark:text-white">
+                    <h2 className="text-xl font-black mb-10 whitespace-nowrap text-[hsl(244,80%,8%)] dark:text-white">
                       مشخصات مسافران
                     </h2>
                     <div className="space-y-12">
@@ -449,17 +450,56 @@ const BookingPage = () => {
                               }
                               className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none focus:ring-1 ring-blue-200"
                             />
-                            <select
-                              value={passenger.gender}
-                              onChange={(e) =>
-                                updatePassenger(index, "gender", e.target.value)
-                              }
-                              className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747] text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl appearance-none outline-none"
-                            >
-                              <option disabled>جنسیت</option>
-                              <option value="male">مرد</option>
-                              <option value="female">زن</option>
-                            </select>
+                            <div className="relative">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setOpenGenderIndex(
+                                    openGenderIndex === index ? null : index,
+                                  )
+                                }
+                                className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747] text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl flex items-center justify-between"
+                              >
+                                <span>
+                                  {passenger.gender === "male"
+                                    ? "مرد"
+                                    : passenger.gender === "female"
+                                      ? "زن"
+                                      : "جنسیت"}
+                                </span>
+                                <ChevronDown
+                                  size={18}
+                                  className={`transition-transform ${openGenderIndex === index ? "rotate-180" : ""}`}
+                                />
+                              </button>
+
+                              {openGenderIndex === index && (
+                                <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#060425] border border-[#0887CAB2] rounded-2xl overflow-hidden z-20 shadow-lg">
+                                  <button
+                                    onClick={() => {
+                                      updatePassenger(index, "gender", "male");
+                                      setOpenGenderIndex(null);
+                                    }}
+                                    className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
+                                  >
+                                    مرد
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      updatePassenger(
+                                        index,
+                                        "gender",
+                                        "female",
+                                      );
+                                      setOpenGenderIndex(null);
+                                    }}
+                                    className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
+                                  >
+                                    زن
+                                  </button>
+                                </div>
+                              )}
+                            </div>
                             <input
                               type="text"
                               placeholder="تاریخ تولد"
@@ -479,13 +519,13 @@ const BookingPage = () => {
                     </div>
                     <button
                       onClick={addPassenger}
-                      className="w-full py-5 mt-10 border-2 border-dashed border-blue-100 rounded-3xl text-[rgb(16,8,143)] font-black hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
+                      className="w-full py-5 mt-10 whitespace-nowrap border-2 border-dashed border-blue-100 rounded-3xl text-[rgb(16,8,143)] font-black hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
                     >
                       + افزودن مسافر جدید
                     </button>
 
                     <div className="rounded-[40px] p-10">
-                      <h3 className="font-bold text-[rgb(6,4,37)] mb-8 text-lg dark:text-white">
+                      <h3 className="font-bold text-[rgb(6,4,37)] whitespace-nowrap mb-8 text-lg dark:text-white">
                         ارسال بلیط به دیگران
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 dark:text-black">
@@ -541,11 +581,11 @@ const BookingPage = () => {
                         ثبت اطلاعات
                       </button>
                       <div className="mt-12 pt-6 border-t border-gray-100">
-                        <div className="flex justify-between items-center mb-6">
-                          <span className="text-gray-400 text-xs font-black">
+                        <div className="flex justify-between max-[888]:flex-col  items-center mb-6">
+                          <span className="text-gray-400 text-xs font-black  whitespace-nowrap ">
                             قیمت نهایی
                           </span>
-                          <span className="font-black text-[rgb(16,8,143)] text-xl">
+                          <span className="font-black whitespace-nowrap max-[888]:mt-4 text-[rgb(16,8,143)] text-xl">
                             {bookingPrices.discountedTotal.toLocaleString()}{" "}
                             تومان
                           </span>
@@ -562,7 +602,7 @@ const BookingPage = () => {
                           className={`w-full py-5 rounded-3xl font-black mt-10 transition-all ${
                             isAllFormsValid
                               ? "bg-[rgb(21,151,125)] text-white hover:bg-[#12806a] cursor-pointer"
-                              : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                              : "bg-gray-300 whitespace-nowrap text-gray-500 cursor-not-allowed"
                           }`}
                         >
                           تأیید و ادامه فرآیند
@@ -595,6 +635,7 @@ const BookingPage = () => {
                   isAllFormsValid={isAllFormsValid}
                   finalTotal={finalTotal}
                   loading={loading}
+                  bookingPrices={bookingPrices}
                 />
               </div>
             )}

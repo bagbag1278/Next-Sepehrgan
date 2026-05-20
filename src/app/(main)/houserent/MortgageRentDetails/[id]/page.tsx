@@ -16,59 +16,106 @@ import { useParams } from "next/navigation";
 import RentSimilarProperties from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/RentSimilarProperties";
 
 const MapRent = dynamic(
-  () =>
-    import("@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/MapRent"),
+  () => import("@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/MapRent"),
   {
     ssr: false,
     loading: () => (
-      <div className="h-[307px] bg-gray-100 animate-pulse rounded-2xl" />
+      <div className="w-full h-[307px] bg-gray-100 animate-pulse rounded-2xl flex items-center justify-center">
+        <span className="text-gray-400">در حال بارگذاری نقشه...</span>
+      </div>
     ),
-  },
+  }
 );
 
 const MortgageRentDetails = () => {
   const params = useParams();
+  const houseId = params?.id ? Number(params.id) : null;
+
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [locationData, setLocationData] = useState<any>(null);
+  const [locationLoading, setLocationLoading] = useState(true);
 
-  const fetchRentData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `http://next.genzuni.website/api/houses/${params.id}`,
-      );
-
-      if (!response.ok) throw new Error("مورد یافت نشد");
-
-      const result = await response.json();
-      console.log("الان دیتا رسید:", result);
-      console.log("اطلاعات کاربر در دیتا:", result.user); // چک کن ببین user داری یا نه
-      setData(result);
-    } catch (error) {
-      console.error("Error fetching house details:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // ✅ گرفتن اطلاعات لوکیشن
   useEffect(() => {
-    if (params.id) {
-      fetchRentData();
-    }
-  }, [params.id]);
+    const fetchLocation = async () => {
+      if (!houseId) return;
+      
+      try {
+        setLocationLoading(true);
+        // ✅ اصلاح آدرس: استفاده از houseId
+        const response = await fetch(
+          `http://next.genzuni.website/api/locations/${houseId}`
+        );
+        
+        if (!response.ok) {
+          // اگر لوکیشن پیدا نشد، از مختصات پیشفرض استفاده کن
+          console.warn(`لوکیشن با آیدی ${houseId} یافت نشد. از مختصات پیشفرض استفاده می‌شود.`);
+          setLocationData({
+            id: houseId,
+            lat: "36.5633", // مختصات ساری
+            lng: "53.0601",
+          });
+        } else {
+          const result = await response.json();
+          console.log("📍 دیتای لوکیشن:", result);
+          setLocationData(result);
+        }
+      } catch (error) {
+        console.error("خطا در گرفتن لوکیشن:", error);
+        // در صورت خطا هم مختصات پیشفرض بده
+        setLocationData({
+          id: houseId,
+          lat: "36.5633",
+          lng: "53.0601",
+        });
+      } finally {
+        setLocationLoading(false);
+      }
+    };
 
-  // نمایش حالت لودینگ
-  if (loading)
+    fetchLocation();
+  }, [houseId]);
+
+  // ✅ گرفتن اطلاعات هتل
+  useEffect(() => {
+    const fetchRentData = async () => {
+      if (!houseId) return;
+      
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://next.genzuni.website/api/houses/${houseId}`
+        );
+        
+        if (!response.ok) throw new Error("مورد یافت نشد");
+        
+        const result = await response.json();
+        console.log("🏠 دیتای هتل:", result);
+        setData(result);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRentData();
+  }, [houseId]);
+
+  if (loading && !data) {
     return (
       <div className="text-center mt-20 animate-pulse">
         در حال دریافت اطلاعات...
       </div>
     );
+  }
 
-  if (!data)
+  if (!data) {
     return (
       <div className="text-center mt-20">اطلاعاتی برای این شناسه یافت نشد.</div>
     );
+  }
 
   const breadcrumbItems = [
     { title: "رزرو هتل", href: "/housereserve" },
@@ -78,7 +125,7 @@ const MortgageRentDetails = () => {
 
   return (
     <div>
-      <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative dark:text-white ">
+      <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative dark:text-white">
         <div className="w-full">
           <Bread items={breadcrumbItems} />
         </div>
@@ -89,13 +136,13 @@ const MortgageRentDetails = () => {
           </div>
         </div>
 
-        <div className="mt-20 ">
+        <div className="mt-20">
           <div className="w-full max-w-7xl flex justify-between items-center">
             <div className="w-18 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-30">
-              <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center border border-blue-400 ">
+              <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center border border-blue-400">
                 <Link />
               </div>
-              <div className="">
+              <div>
                 <Like />
               </div>
             </div>
@@ -104,41 +151,35 @@ const MortgageRentDetails = () => {
               className="flex flex-col gap-4 -mt-8 pr-5 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
               dir="rtl"
             >
-              <h2 className="text-2xl font-bold dark:text-white  text-blue-400 flex gap-3 max-[1300px]:justify-center">
+              <h2 className="text-2xl font-bold dark:text-white text-blue-400 flex gap-3 max-[1300px]:justify-center">
                 {data.title}
-
-                <div className="text-[14px]  w-20   font-bold text-gray-600 -mt-2 max-[1300px]">
-                  <div className="dark:text-white  relative right-4.5 top-4 ">
+                <div className="text-[14px] w-20 font-bold text-gray-600 -mt-2">
+                  <div className="dark:text-white relative right-4.5 top-4">
                     <Star />
                   </div>
-
                   {data.rate}
                 </div>
               </h2>
 
               <div className="flex items-center gap-2 text-gray-500">
                 <Loaction />
-
                 <span className="text-[14px] font-bold">{data.address}</span>
               </div>
             </div>
           </div>
 
           <div className="flex justify-between gap-4 max-[1300px]:flex-col mt-10">
-            {/* سایدبار سمت چپ */}
             <div className="flex gap-16 flex-col items-center w-full lg:w-auto">
-              <div className="w-107 h-117 rounded-[40px] justify-center flex p-8 shadow-lg ">
-               
-                  <Seller
-                    sellerName={data.sellerName}
-                    sellerId={data.sellerId}
-                    price={data.price}
-                    discountedPrice={data.discounted_price}
-                    lastUpdated={data.last_updated}
-                  />
-           
+              <div className="w-107 h-117 rounded-[40px] justify-center flex p-8 shadow-lg">
+                <Seller
+                  sellerName={data.sellerName}
+                  sellerId={data.sellerId}
+                  price={data.price}
+                  discountedPrice={data.discounted_price}
+                  lastUpdated={data.last_updated}
+                />
               </div>
-              <div className="w-107 flex-col shadow-lg ">
+              <div className="w-107 flex-col shadow-lg">
                 <RentSimilarProperties currentId={data.id} />
               </div>
               <div className="absolute -left-35 bottom-120 transform rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
@@ -152,43 +193,42 @@ const MortgageRentDetails = () => {
                   <Popular data={data} />
                 </div>
 
-                <div
-                  className="w-full flex flex-col justify-start  items-end gap-2 mt-16  top-7"
-                  dir="rtl"
-                >
-                  <div className="flex flex-col justify-start w-full relative top-10">
-                    <h2 className="text-blue-100  font-bold text-[14px] ml-12 mb-4">
+                <div className="w-full flex flex-col justify-start items-end gap-2 mt-16 top-7" dir="rtl">
+                  <div className="flex flex-col justify-start w-full relative top-10 max-[888px]:pr-7">
+                    <h2 className="text-blue-100 font-bold text-[14px] ml-12 mb-4">
                       درباره {data.title}
                     </h2>
-
-                    <p className=" text-[16px] text-[#475569] font-black  mb-4">
+                    <p className="text-[16px] text-[#475569] font-black mb-4">
                       {data.caption}
                     </p>
                   </div>
 
                   <div className="w-full max-w-180">
-                    <p className=" leading-8 text-justify">
-                      {data.description}
-                    </p>
+                    <p className="leading-8 text-justify">{data.description}</p>
                   </div>
                 </div>
 
-                {/* بخش نقشه */}
+                {/* ✅ بخش نقشه - اصلاح شده */}
                 <div className="w-full mt-10 flex flex-col gap-6" dir="rtl">
-                  <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px]">
+                  <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-7">
                     موقعیت مکانی
                   </h3>
-                  <MapRent
-                    locationId={data.location_id || 6}
-                    houseId={data.id}
-                    lat={parseFloat(data.latitude) || 0}
-                    lng={parseFloat(data.longitude) || 0}
-                  />
-                  <div className="w-full max-w-177 mt-2">
-                    <h4 className="text-[rgb(6,4,37)] dark:text-white  font-bold text-[16px] mb-3">
+                  
+                  {locationLoading ? (
+                    <div className="w-full h-[307px] bg-gray-200 animate-pulse rounded-2xl" />
+                  ) : (
+                    <MapRent
+                      lat={locationData?.lat}
+                      lng={locationData?.lng}
+                      address={data?.address}
+                    />
+                  )}
+
+                  <div className="w-full max-w-177 mt-2 max-[888px]:pr-8">
+                    <h4 className="text-[rgb(6,4,37)] dark:text-white font-bold text-[16px] mb-3">
                       محل دقیق
                     </h4>
-                    <p className="text-[#475569] text-[15px] leading-8 text-justify">
+                    <p className="text-[#475569] text-[15px] leading-8 max-[888px]:w-90 text-justify">
                       این ملک در یکی از بهترین نقاط شهر قرار گرفته و دسترسی عالی
                       به مراکز رفاهی دارد.
                     </p>
@@ -196,8 +236,7 @@ const MortgageRentDetails = () => {
                 </div>
               </div>
 
-              {/* بخش چرا انتخاب این ملک؟ */}
-              <div className="w-full" dir="rtl">
+              <div className="w-full max-[888px]:pr-6" dir="rtl">
                 <h3 className="font-bold text-[20px] mt-10 text-right">
                   چرا {data.title}؟
                 </h3>
@@ -206,9 +245,8 @@ const MortgageRentDetails = () => {
                 </p>
               </div>
 
-              {/* بخش نظرات */}
-              <div className="w-full mt-8">
-                <CommentsSection houseId={data.id} />
+              <div className="w-full flex mt-8">
+                {houseId && <CommentsSection houseId={houseId} />}
               </div>
             </div>
           </div>

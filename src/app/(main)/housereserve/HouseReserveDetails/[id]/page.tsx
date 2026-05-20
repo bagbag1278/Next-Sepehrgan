@@ -56,7 +56,6 @@ const HouseReserveDetails = () => {
   if (!data) return <div>Data not found</div>;
   return (
     <div>
-      
       <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative">
         <div className="w-full">
           <Bread items={breadcrumbItems} />
@@ -114,8 +113,6 @@ const HouseReserveDetails = () => {
               <div className="w-107 h-142 flex-col  ">
                 <RentSimilarProperties currentId={data.id} />
               </div>
-
-             
             </div>
 
             <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 dark:text-white dark:bg-[#060425] bg-[#F5F5F5D9] shadow-lg p-6 mx-auto max-[844]:max-w-110 ">
@@ -178,10 +175,9 @@ const HouseReserveDetails = () => {
                 className="font-medium w-full relative   max-[844]:w-93 bottom-6 text-[16px] text-gray-600 mt-5"
               >
                 {data.caption}
-
               </p>
-               
-              <div className="w-173 max-[844]:w-full   mt-8">
+
+              <div className="w-full flex mt-8">
                 {houseId && <CommentsSection houseId={houseId} />}
               </div>
             </div>

@@ -50,8 +50,8 @@ const BookingSummaryTwo = ({
   };
 
   return (
-    <div className="w-full lg:w-[500px] sticky top-10 space-y-4">
-      <div className="bg-white dark:bg-[#060425] rounded-3xl p-6 shadow-lg">
+    <div className="w-full lg:w-[500px] max-[888]:w-400  top-10 ">
+      <div className="  rounded-3xl p-6 shadow-lg">
         <div className="w-full mb-6 flex gap-4">
           <div className="relative w-[240px] h-[170px] rounded-[32px] overflow-hidden">
             <img
@@ -63,7 +63,7 @@ const BookingSummaryTwo = ({
           <div className="flex flex-col justify-center">
             <h2 className="font-black text-xl flex items-center text-[#060425] dark:text-white mb-2 gap-2">
               {hotelData?.title}
-              <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-lg">
+              <div className="flex items-center gap-1     py-1 rounded-lg">
                 <span className="text-xs font-bold text-gray-700 dark:text-gray-300">
                   {hotelData?.rate || hotelData?.rating || 0}
                 </span>
@@ -114,7 +114,7 @@ const BookingSummaryTwo = ({
         </div>
 
         {/* مشخصات مسافران */}
-        <div className="mt-8 border-t border-gray-100 dark:border-gray-800 pt-6">
+        <div className="mt-8  dark:border-gray-800 pt-6">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="w-full flex justify-between items-center text-[#060425] dark:text-white mb-4"
@@ -134,7 +134,7 @@ const BookingSummaryTwo = ({
               {passengers?.map((p, index) => (
                 <div
                   key={index}
-                  className="text-xs space-y-3 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl"
+                  className="text-xs space-y-3  dark:bg-gray-800/50 p-4 rounded-2xl"
                 >
                   <div className="flex justify-between">
                     <span className="text-gray-500">بازه سنی</span>

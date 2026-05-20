@@ -55,7 +55,6 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
     fetchComments();
   }, [fetchComments]);
 
-  // اصلاح: باید parent_comment_id باشه نه parentId
   const mainComments = comments.filter(c => !c.parent_comment_id);
 
   const showMore = () => {
@@ -68,7 +67,7 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
   return (
     <div className="w-full max-w-[850px] mx-auto p-6" dir="rtl">
       <div className="flex justify-between items-center mb-10 px-2">
-        <h2 className="text-[#10088F] text-[18px] relative font-bold max-[844]:left-5">
+        <h2 className="text-[#10088F] text-[18px] relative font-bold max-[844]:">
           نظرات دیگر کاربران ({totalCommentsCount})
         </h2>
         <AddComment houseId={houseId} onReplySubmitted={fetchComments} />
