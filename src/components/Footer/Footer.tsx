@@ -103,7 +103,7 @@ const Footer = () => {
                 <input
                   type=''
                   placeholder='ایمیلت رو وارد کن'
-                  className='w-75 h-10 border-2 border-white text-[13px] p-3.5 rounded-lg ' dir='rtl'
+                  className='w-75 h-10 border-2 border-white text-[13px] p-3.5 rounded-lg outline-0 placeholder:text-white' dir='rtl'
                 >
                 </input>
               </div>

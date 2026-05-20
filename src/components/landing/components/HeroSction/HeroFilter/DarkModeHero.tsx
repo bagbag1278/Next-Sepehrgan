@@ -19,7 +19,7 @@ export default function DarkModeHero() {
   return (
     <button
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className=""
+      className="transition-colors duration-500 fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer"
     >
       {resolvedTheme === "dark" ? (
         <Image

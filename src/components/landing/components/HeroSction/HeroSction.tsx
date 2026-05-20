@@ -1,5 +1,6 @@
 "use client";
 
+import { toPersianNum } from "@/components/utils/FarsiNum";
 import DarkModeHero from "./HeroFilter/DarkModeHero";
 import HeroSctionFilter from "./HeroFilter/HeroSctionFilter";
 import FleshRght2 from "./Icon/FleshRght2";
@@ -20,13 +21,13 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-      <div className="flex justify-center xl:w-full xl:max-w-[1273px] lg:w-full lg:max-w-[1273px] sm:w-[393px] sm:flex sm:justify-start   xl:h-[752px] h-[1052px]  lg:m-auto  relative border ">
-        <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-[#005EA4] shadow-lg shadow-green-100/25 cursor-pointer">
+      <div className="flex justify-center xl:w-full xl:max-w-318.25 lg:w-full lg:max-w-318.25 sm:w-98.25 sm:flex sm:justify-start   xl:h-188 h-263  lg:m-auto  relative border ">
+        <div className="">
           <DarkModeHero />
         </div>
-        <div className="absolute top-[472px] left-1/2 -translate-x-1/2 flex justify-center z-10">
+        <div className="absolute top-118 left-1/2 -translate-x-1/2 flex justify-center z-10">
           {" "}
-          <div className="w-[1020px] h-[140px] bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] rounded-xl relative gap-[22px] flex  z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] hidden lg:block xl:block">
+          <div className="w-255 h-35 bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] rounded-xl relative gap-5.5 flex  z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] lg:block xl:block">
             <div className="flex justify-center w-full   items-start  ">
               <HeroSctionFilter />
             </div>
@@ -91,14 +92,14 @@ const HeroSction = () => {
               <div className="w-[522px] h-[79px] dark:text-white flex flex-wrap gap-35   absolute font-bold items-center text-3xl ">
                 <div className="">
                   {" "}
-                  2625
+                  {toPersianNum("2625")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-130 bottom-11 text-[21px] ">
                     +
                   </span>
                 </div>
                 <div className="">
                   {" "}
-                  266
+                  {toPersianNum("266")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-78 bottom-11 text-[21px]">
                     +
                   </span>
@@ -112,7 +113,7 @@ const HeroSction = () => {
                 </div>
                 <div className="">
                   {" "}
-                  6595
+                  {toPersianNum("6595")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-30   bottom-11 text-[21px]">
                     +
                   </span>

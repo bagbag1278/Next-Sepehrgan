@@ -1,3 +1,0 @@
-interface IHouse{
-    title:string;
-}
