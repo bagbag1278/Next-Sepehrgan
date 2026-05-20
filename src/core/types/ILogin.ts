@@ -14,5 +14,4 @@ export interface LoginApiResponse {
 
 export interface LoginApiError {
   message: string;
-  // ممکن است فیلدهای خطای دیگری هم داشته باشد
 }

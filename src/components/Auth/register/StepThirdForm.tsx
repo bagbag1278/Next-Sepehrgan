@@ -1,32 +1,25 @@
 "use client";
+import { completeRegistrationAction } from "@/core/action/register.action";
+import { checkPasswordStrength } from "@/core/validation/PassWord";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 
 interface StepThirdFormProps {
   onNext: () => void;
   onBack: () => void;
+  userId: number;
 }
 
-const checkPasswordStrength = (password: string) => {
-  if (!password) return 0;
-  let strength = 0;
-  if (password.length >= 6) strength += 1;
-  if (/[A-Z]/.test(password)) strength += 1;
-  if (/[0-9]/.test(password)) strength += 1;
-  if (/[^A-Za-z0-9]/.test(password)) strength += 1;
-
-  if (strength <= 1) return 1;
-  if (strength <= 2) return 2;
-  return 3;
-};
-
-const StepThirdForm = ({ onNext }: StepThirdFormProps) => {
+const StepThirdForm = ({ userId }: StepThirdFormProps) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
   const [showPassword, setShowPassword] = useState(true);
-
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
@@ -43,13 +36,43 @@ const StepThirdForm = ({ onNext }: StepThirdFormProps) => {
     return "border-blue-300/50";
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!phone || !password) {
+      toast.error("لطفاً همه فیلدها را تکمیل کنید");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const result = await completeRegistrationAction({
+        userId:userId,
+        phoneNumber: phone, 
+        password,
+      });
+
+      if (result.success) {
+        toast.success(result.message || "ثبت‌نام با موفقیت تکمیل شد");
+
+        setTimeout(() => {
+          router.push("/login");
+        }, 1200);
+      } else {
+        toast.error(result.message || "خطا در تکمیل ثبت‌نام");
+      }
+    } catch {
+      toast.error("خطای غیرمنتظره رخ داد");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <form
       className="flex flex-col justify-between gap-6 h-full"
-      onSubmit={(e) => {
-        e.preventDefault();
-        onNext();
-      }}
+      onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-2 relative">
         <input
@@ -166,9 +189,10 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
       <div className="flex flex-col gap-3 mt-4">
         <button
           type="submit"
+          disabled={loading}
           className="h-12 w-full rounded-2xl cursor-pointer bg-blue-100 text-white hover:bg-blue-200 transition-colors font-medium"
         >
-          ارسال
+          {loading ? "در حال ثبت..." : "ارسال"}
         </button>
       </div>
     </form>

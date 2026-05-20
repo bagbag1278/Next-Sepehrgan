@@ -1,20 +1,29 @@
 "use client";
 
-import { login } from "@/core/api/authApi";
+import { ActionState, loginAction } from "@/core/action/Login.action";
 import { checkPasswordStrength } from "@/core/validation/PassWord";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 
+const initialState: ActionState = {
+  success: false,
+  error: "",
+  message: "",
+};
+
 const LoginForm = () => {
+  const router = useRouter();
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
-  const [showPassword, setShowPassword] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [state, formAction, pending] = useActionState(
+    loginAction,
+    initialState,
+  );
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -29,89 +38,36 @@ const LoginForm = () => {
   const getBorderColor = () => {
     if (strength === 1) return "border-red-500 text-red-500";
     if (strength === 2) return "border-amber-500 text-amber-500";
-    if (strength === 3) return "border-green-100 text-green-100";
+    if (strength === 3) return "border-green-500 text-green-500"; // Fixed color
     return "border-blue-300";
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (loading) return;
+  useEffect(() => {
+    if (state.success) {
+      toast.success(state.message || "با موفقیت وارد شدید!");
 
-    const formData = new FormData(e.currentTarget);
-    const email = String(formData.get("email") ?? "").trim();
-    const pwd = String(formData.get("password") ?? "").trim();
+      const timer = setTimeout(() => {
+        router.push("/");
+      }, 1000);
 
-    if (!email) {
-      toast.error("ایمیل را وارد کنید");
-      return;
+      return () => clearTimeout(timer);
     }
 
-    if (!pwd) {
-      toast.error("رمز عبور را وارد کنید");
-      return;
+    if (state.error) {
+      toast.error(state.error);
     }
-
-    try {
-      setLoading(true);
-
-      const res = (await login({ email, password: pwd })) as any;
-
-      const accessToken = res?.accessToken;
-      const refreshToken = res?.refreshToken;
-      const user = res?.user; // اطلاعات کاربر از سرور
-
-      if (typeof window !== "undefined") {
-        if (accessToken) localStorage.setItem("accessToken", accessToken);
-        if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
-
-        // ✅ ذخیره اطلاعات کاربر
-        if (user) {
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              id: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email,
-              role: user.role || "user",
-            })
-          );
-          console.log("✅ user saved to localStorage:", user);
-        } else {
-          // اگر اطلاعات کاربر نیومد (موقت برای تست)
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              id: 1,
-              firstName: "امیرحسین",
-              lastName: "نصراله پور",
-              role: "user",
-            })
-          );
-          console.log("⚠️ fallback user saved");
-        }
-      }
-
-      router.push("/");
-      toast.success("خوش آمدید");
-    } catch (error: any) {
-      console.error("Login error:", error);
-      toast.error(error?.response?.data?.message || "خطا در ورود به حساب کاربری");
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [state.success, state.error, state.message, router]);
 
   return (
     <form
-      onSubmit={handleSubmit}
-      className=" mt-6 flex flex-col justify-between gap-6"
+      action={formAction}
+      className="mt-6 flex flex-col justify-between gap-6"
     >
       <div className="flex flex-col gap-2 relative">
         <input
           type="email"
           name="email"
-          className="peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500 "
+          className="peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
         <label
@@ -192,7 +148,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
                 : strength === 2
                 ? "bg-amber-400"
                 : strength === 3
-                ? "bg-green-100"
+                ? "bg-green-500"
                 : "bg-white dark:bg-[#121212]"
             }`}
           />
@@ -200,20 +156,20 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
             className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
               strength >= 2
                 ? strength === 3
-                  ? "bg-green-100"
+                  ? "bg-green-500"
                   : "bg-amber-400"
                 : "bg-white dark:bg-[#121212]"
             }`}
           />
           <span
             className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
-              strength === 3 ? "bg-green-100" : "bg-white dark:bg-[#121212]"
+              strength === 3 ? "bg-green-500" : "bg-white dark:bg-[#121212]"
             }`}
           />
         </div>
       </div>
 
-      <div className="w-107.5 h-5 flex justify-between items-center ">
+      <div className="w-107.5 h-5 flex justify-between items-center">
         <Link
           href={"/loginphone"}
           className="text-blue-100 text-[13px] underline underline-offset-4 font-medium dark:text-white"
@@ -230,12 +186,12 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={pending}
         className="w-full h-12 rounded-2xl
-           bg-blue-100  hover:bg-blue-200
+           bg-blue-100 hover:bg-blue-200
          transition-colors duration-200 text-white disabled:bg-blue-400/50"
       >
-        {loading ? "در حال ورود..." : "ورود"}
+        {pending ? "در حال ورود..." : "ورود"}
       </button>
 
       <div className="h-6 mx-auto flex gap-0.5 justify-center items-center">
