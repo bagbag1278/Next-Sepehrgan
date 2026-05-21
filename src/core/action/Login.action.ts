@@ -24,8 +24,12 @@ export async function loginAction(
 
   try {
     const data = await loginApi({ email, password });
+    
+    // ✅ دیباگ - ببین data چی داره
+    console.log("🔵 loginApi response:", JSON.stringify(data, null, 2));
+    console.log("🔵 data.user:", data.user);
+    console.log("🔵 data.accessToken:", data.accessToken);
 
-    // ذخیره در کوکی (برای سمت سرور)
     const cookieStore = await cookies();
     cookieStore.set("accessToken", data.accessToken, {
       httpOnly: true,
@@ -45,7 +49,7 @@ export async function loginAction(
       success: true, 
       message: "خوش آمدید",
       accessToken: data.accessToken,
-      user: data.user 
+      user: data.user  // اگر data.user undefined باشد، اینجا undefined می‌شود
     };
     
   } catch (error: any) {

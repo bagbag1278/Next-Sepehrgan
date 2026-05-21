@@ -21,7 +21,6 @@ const BookingPage = () => {
   const [extraEmail, setExtraEmail] = useState("");
   const [extraPhone, setExtraPhone] = useState("");
   const [bookingResult, setBookingResult] = useState<any>(null);
-  const [isOpen, setIsOpen] = useState(false);
   const [openGenderIndex, setOpenGenderIndex] = useState<number | null>(null);
 
   const checkInDate = searchParams.get("in") || "۱۴۰۴/۰۶/۱۶";
@@ -92,10 +91,9 @@ const BookingPage = () => {
   }, [hotelData, checkInDate, checkOutDate, passengers.length]);
 
   const handelFinalBooking = async () => {
-    console.log(" شروع فرآیند رزرو...");
+    console.log("🔵 شروع فرآیند رزرو...");
 
     const token = localStorage.getItem("accessToken");
-    const userData = localStorage.getItem("user");
 
     if (!token) {
       toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید");
@@ -103,21 +101,7 @@ const BookingPage = () => {
       return;
     }
 
-    let userId = null;
-    if (userData) {
-      try {
-        const user = JSON.parse(userData);
-        userId = user.id;
-      } catch (e) {
-        console.error("خطا در parse user:", e);
-      }
-    }
-
-    if (!userId) {
-      toast.error("اطلاعات کاربر یافت نشد");
-      return;
-    }
-
+    // ساخت traveler_details
     const traveler_details = [];
     for (let i = 0; i < passengers.length; i++) {
       const p = passengers[i];
@@ -151,9 +135,9 @@ const BookingPage = () => {
       traveler_details.push({
         firstName: firstName,
         lastName: lastName || firstName,
-        gender: p.gender === "male" ? "مرد" : "زن",
+        gender: p.gender === "male" ? "male" : "female",
         birthDate: formattedBirthDate,
-        nationalId: Number(p.nationalCode),
+        nationalId: p.nationalCode,
       });
     }
 
@@ -162,17 +146,21 @@ const BookingPage = () => {
 
       const bookingPayload = {
         houseId: Number(params.id),
-        user_id: userId,
         reservedDates: [
           persianToGregorian(checkInDate),
           persianToGregorian(checkOutDate),
         ],
         traveler_details: traveler_details,
-        totalPrice: Number(finalTotal.replace(/,/g, "")),
-        guestsCount: passengers.length,
+        sharedEmail: extraEmail || undefined,
+        sharedMobile: extraPhone || undefined,
       };
 
-      console.log(" Payload:", JSON.stringify(bookingPayload, null, 2));
+      console.log(
+        "🔵 Payload اصلاح شده:",
+        JSON.stringify(bookingPayload, null, 2),
+      );
+
+      console.log("🔵 Payload:", JSON.stringify(bookingPayload, null, 2));
 
       const response = await fetch(`http://next.genzuni.website/api/bookings`, {
         method: "POST",
@@ -190,7 +178,7 @@ const BookingPage = () => {
       try {
         result = JSON.parse(responseText);
       } catch (e) {
-        console.error(" پاسخ JSON نیست:", responseText);
+        console.error("پاسخ JSON نیست:", responseText);
         throw new Error("پاسخ سرور نامعتبر است");
       }
 
@@ -205,7 +193,7 @@ const BookingPage = () => {
       setStep(5);
       toast.success(`رزرو با موفقیت ثبت شد! شماره رزرو: ${result.booking?.id}`);
     } catch (error: any) {
-      console.error(" خطا:", error);
+      console.error("خطا:", error);
       toast.error(error.message || "متاسفانه رزرو ثبت نشد. دوباره تلاش کنید.");
     } finally {
       setLoading(false);
@@ -367,7 +355,7 @@ const BookingPage = () => {
     <div className="w-11/12 px-4" dir="rtl">
       <div className="space-y-4 md:space-y-6">
         <AdvancedScrollAnimation type="slide-up" delay={0.1}>
-          <div className="pt-10 ">
+          <div className="pt-10 z-20">
             <Bread
               items={[
                 { title: "رزرو هتل", href: "/housereserve" },
@@ -422,7 +410,9 @@ const BookingPage = () => {
                                 </div>
                                 {passengers.length > 1 && (
                                   <button
-                                    onClick={() => removePassenger(passenger.id)}
+                                    onClick={() =>
+                                      removePassenger(passenger.id)
+                                    }
                                     className="text-red-500 text-xs font-bold hover:underline"
                                   >
                                     حذف مسافر ×
@@ -464,7 +454,9 @@ const BookingPage = () => {
                                     type="button"
                                     onClick={() =>
                                       setOpenGenderIndex(
-                                        openGenderIndex === index ? null : index,
+                                        openGenderIndex === index
+                                          ? null
+                                          : index,
                                       )
                                     }
                                     className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747] text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl flex items-center justify-between"
@@ -486,7 +478,11 @@ const BookingPage = () => {
                                     <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#060425] border border-[#0887CAB2] rounded-2xl overflow-hidden z-20 shadow-lg">
                                       <button
                                         onClick={() => {
-                                          updatePassenger(index, "gender", "male");
+                                          updatePassenger(
+                                            index,
+                                            "gender",
+                                            "male",
+                                          );
                                           setOpenGenderIndex(null);
                                         }}
                                         className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
@@ -527,7 +523,7 @@ const BookingPage = () => {
                           </AdvancedScrollAnimation>
                         ))}
                       </div>
-                      
+
                       <AdvancedScrollAnimation type="scale" delay={0.3}>
                         <button
                           onClick={addPassenger}
@@ -567,7 +563,10 @@ const BookingPage = () => {
                               inputMode="numeric"
                               maxLength={11}
                               onChange={(e) => {
-                                const val = e.target.value.replace(/[^0-9]/g, "");
+                                const val = e.target.value.replace(
+                                  /[^0-9]/g,
+                                  "",
+                                );
                                 setExtraPhone(val);
                               }}
                               className={`bg-[#F8FAFC] border p-4 rounded-2xl outline-none transition-all dark:text-black ${
@@ -594,14 +593,15 @@ const BookingPage = () => {
                           >
                             ثبت اطلاعات
                           </button>
-                          
+
                           <div className="mt-12 pt-6 border-t border-gray-100">
                             <div className="flex justify-between max-[888]:flex-col items-center mb-6">
                               <span className="text-gray-400 text-xs font-black whitespace-nowrap">
                                 قیمت نهایی
                               </span>
                               <span className="font-black whitespace-nowrap max-[888]:mt-4 text-[rgb(16,8,143)] text-xl">
-                                {bookingPrices.discountedTotal.toLocaleString()} تومان
+                                {bookingPrices.discountedTotal.toLocaleString()}{" "}
+                                تومان
                               </span>
                             </div>
 
@@ -648,7 +648,12 @@ const BookingPage = () => {
                     extraPhone={extraPhone}
                     setExtraPhone={setExtraPhone}
                     description={description}
-                    handelFinalBooking={handelFinalBooking}
+                    handelFinalBooking={() => {
+                      console.log(
+                        "🔵 handelFinalBooking از BookingStepThree فراخوانی شد",
+                      );
+                      handelFinalBooking();
+                    }}
                     isAllFormsValid={isAllFormsValid}
                     finalTotal={finalTotal}
                     loading={loading}

@@ -15,6 +15,7 @@ const LoginPage = () => {
     { src: "/auth/left.png", alt: "Slide 4 Description" },
   ];
 
+  
   return (
     <div
       dir="rtl"

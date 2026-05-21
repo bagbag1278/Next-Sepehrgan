@@ -1,23 +1,4 @@
-.swiper :global(.swiper-button-next),
-.swiper :global(.swiper-button-prev) {
-  width: 25px;
-  height: 25px;
 
-  position: absolute !important;
-  transform: none !important;
-}
-
-/* قبلی = بالا */
-.swiper :global(.swiper-button-next) {
-  right: 570px !important;
-  top: calc(49% + 20px) !important;
-}
-
-/* بعدی = پایین */
-.swiper :global(.swiper-button-prev) {
-  right: 570px !important;
-  top: 320px !important;
-}   
 /* pagination container */
 .swiper :global(.swiper-pagination) {
   bottom: 210px !important;

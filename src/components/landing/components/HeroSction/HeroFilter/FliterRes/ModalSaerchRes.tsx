@@ -27,7 +27,7 @@ const ModalSearchRes = () => {
             readOnly
             className="w-[345px] h-[48px] pr-8 cursor-pointer bg-[#DEDDE1] rounded-2xl absolute dark:bg-[#060425] z-20 overflow-hidden" 
           />
-          <div className="absolute z-50 right-76 top-2">
+          <div className="absolute z-50 right-76 top-[5px]">
              <FilterModalRes/> 
           </div>
           <div className="z-50 absolute top-3 right-2 ">

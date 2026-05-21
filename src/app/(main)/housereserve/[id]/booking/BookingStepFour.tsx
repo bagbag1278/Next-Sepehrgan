@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
-import BookingSummaryTwo from "../components/BookingSummaryTwo";
+
 import Link from "next/link";
 import SatisfactionTike from "@/app/(main)/housereserve/[id]/booking/icon/peyment/SatisfactionTike";
 import SatisfactioMain from "@/app/(main)/housereserve/[id]/booking/icon/peyment/SatisfactioMain";
 import PaymentHandOne from "@/app/(main)/housereserve/[id]/booking/icon/peyment/PaymentHandOne";
 import PaymentHandTwo from "@/app/(main)/housereserve/[id]/booking/icon/peyment/PaymentHandTwo";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
+import BookingSummaryTwo from "../components/BookingSummaryTwo";
 
 const BookingStepFour = ({
   hotelData,
@@ -16,6 +17,7 @@ const BookingStepFour = ({
   step,
   finalTotal,
   bookingResult,
+  description
 }: any) => {
   if (step !== 5) return null;
 
@@ -24,7 +26,6 @@ const BookingStepFour = ({
       <div className="w-full mx-auto">
         <div className="flex flex-col max-[888]:left-5 relative xl:flex-row gap-20 w-full pt-6 md:pt-10">
           
-          <AdvancedScrollAnimation type="slide-right" delay={0.1} duration={0.5}>
             <div className="flex justify-center order-2 lg:order-1">
               <BookingSummaryTwo
                 finalTotal={finalTotal}
@@ -33,13 +34,12 @@ const BookingStepFour = ({
                 checkOutDate={checkOutDate}
                 passengers={passengers}
                 bookingResult={bookingResult}
+                description={description}
               />
             </div>
-          </AdvancedScrollAnimation>
 
           <div className="flex-1 w-full flex flex-col items-center justify-center space-y-6 lg:order-2">
             
-            <AdvancedScrollAnimation type="scale" delay={0.1} duration={0.5}>
               <div className="">
                 <div className="relative w-100 flex justify-end">
                   <div className="max-[508]:hidden">
@@ -58,9 +58,7 @@ const BookingStepFour = ({
                   </div>
                 </div>
               </div>
-            </AdvancedScrollAnimation>
 
-            <AdvancedScrollAnimation type="slide-up" delay={0.2} duration={0.5}>
               <div className="space-y-2 text-center">
                 <h2 className="text-xl dark:text-white md:text-2xl font-black text-[rgb(6,4,37)]">
                   رزرو بلیط شما با موفقیت انجام شد!
@@ -69,9 +67,7 @@ const BookingStepFour = ({
                   جزئیات رزرو به ایمیل و شماره همراه شما ارسال گردید.
                 </p>
               </div>
-            </AdvancedScrollAnimation>
 
-            <AdvancedScrollAnimation type="slide-up" delay={0.3} duration={0.5}>
               <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl text-center space-y-2 w-full max-w-md">
                 <p className="text-gray-600 dark:text-gray-300 text-sm">
                   تاریخ ورود: {checkInDate} | تاریخ خروج: {checkOutDate}
@@ -83,9 +79,7 @@ const BookingStepFour = ({
                   مبلغ پرداختی: {finalTotal} تومان
                 </p>
               </div>
-            </AdvancedScrollAnimation>
 
-            <AdvancedScrollAnimation type="fade" delay={0.4} duration={0.5}>
               <div className="flex flex-col w-full max-w-xl gap-3 md:gap-4">
                 <Link href="/" className="w-full">
                   <button className="w-full dark:text-white bg-[rgb(16,8,143)] text-white py-4 md:py-5 rounded-2xl md:rounded-3xl font-bold md:font-black shadow-md hover:bg-blue-900 transition-all active:scale-[0.98]">
@@ -106,7 +100,6 @@ const BookingStepFour = ({
                   چاپ اطلاعات رزرو
                 </button>
               </div>
-            </AdvancedScrollAnimation>
           </div>
         </div>
       </div>

@@ -30,6 +30,7 @@ interface Props {
   passengers: Passenger[];
   finalTotal: string;
   bookingResult?: any;
+  description:string;
 }
 
 const BookingSummaryTwo = ({
@@ -39,6 +40,7 @@ const BookingSummaryTwo = ({
   passengers,
   finalTotal,
   bookingResult,
+  description
 }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -50,53 +52,50 @@ const BookingSummaryTwo = ({
   };
 
   return (
-    <div className="w-full lg:w-[500px] max-[888]:w-400  top-10 ">
-      <div className="  rounded-3xl p-6 shadow-lg">
-        <div className="w-full mb-6 flex gap-4">
-          <div className="relative w-[240px] h-[170px] rounded-[32px] overflow-hidden">
+    <div className="w-full  mx-auto lg:mx-0 top-10 px-4 sm:px-0">
+      <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg bg-white dark:bg-gray-800">
+        <div className="w-full mb-6 flex flex-col sm:flex-row gap-4 sm:gap-6">
+          <div className="relative w-full sm:w-[200px] lg:w-[240px] h-[160px] sm:h-[170px] rounded-2xl sm:rounded-[32px] overflow-hidden">
             <img
               src={hotelData?.photo || ImageFallback}
               className="w-full h-full object-cover"
               alt={hotelData?.title}
             />
           </div>
-          <div className="flex flex-col justify-center">
-            <h2 className="font-black text-xl flex items-center text-[#060425] dark:text-white mb-2 gap-2">
+          <div className="flex flex-col justify-center text-center sm:text-right">
+            <h2 className="font-black text-lg sm:text-xl flex flex-wrap items-center justify-center sm:justify-start gap-2 text-[#060425] dark:text-white mb-2">
               {hotelData?.title}
-              <div className="flex items-center gap-1     py-1 rounded-lg">
+              <div className="flex items-center gap-1 py-1 rounded-lg">
                 <span className="text-xs font-bold text-gray-700 dark:text-gray-300">
                   {hotelData?.rate || hotelData?.rating || 0}
                 </span>
                 <Star size={14} className="text-yellow-400 fill-yellow-400" />
               </div>
             </h2>
-
-            <div className="flex items-center gap-1 text-gray-400 text-sm">
+            <div className="flex items-center justify-center sm:justify-start gap-1 text-gray-400 text-xs sm:text-sm">
               <Loaction />
-              <span>{hotelData?.address}</span>
+              <span className="line-clamp-1">{hotelData?.address}</span>
             </div>
           </div>
         </div>
 
-        {/* اطلاعات تاریخ */}
-        <div className="space-y-4 border-t border-gray-100 dark:border-gray-800 pt-6">
-          <div className="flex justify-between text-sm font-bold">
+        <div className="space-y-3 sm:space-y-4 border-t border-gray-100 dark:border-gray-700 pt-4 sm:pt-6">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-sm font-bold">
             <span className="text-gray-900 dark:text-white">تاریخ ورود به هتل</span>
-            <span className="text-gray-500 dark:text-gray-400">{checkInDate}</span>
+            <span className="text-gray-500 dark:text-gray-400 text-sm">{checkInDate}</span>
           </div>
-          <div className="flex justify-between text-sm font-bold">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-sm font-bold">
             <span className="text-gray-900 dark:text-white">تاریخ خروج از هتل</span>
             <span className="text-gray-500 dark:text-gray-400">{checkOutDate}</span>
           </div>
           
-          {/* قیمت */}
-          <div className="flex justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-800">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
             <span className="text-gray-500 text-sm font-bold dark:text-gray-400">
               قیمت نهایی
             </span>
-            <div className="text-left">
+            <div className="text-left w-full sm:w-auto">
               {hotelData?.price && hotelData?.discounted_price && (
-                <div className="flex items-center gap-2 justify-end mb-1">
+                <div className="flex items-center justify-end gap-2 mb-1">
                   <span className="text-gray-300 line-through text-xs">
                     {hotelData?.price?.toLocaleString()}
                   </span>
@@ -105,7 +104,7 @@ const BookingSummaryTwo = ({
                   </span>
                 </div>
               )}
-              <div className="text-[#15977D] font-black text-xl">
+              <div className="text-[#15977D] font-black text-lg sm:text-xl">
                 {finalTotal}
                 <span className="text-xs mr-1">تومان</span>
               </div>
@@ -113,8 +112,8 @@ const BookingSummaryTwo = ({
           </div>
         </div>
 
-        {/* مشخصات مسافران */}
-        <div className="mt-8  dark:border-gray-800 pt-6">
+        
+        <div className="mt-6 sm:mt-8 dark:border-gray-700 pt-4 sm:pt-6">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="w-full flex justify-between items-center text-[#060425] dark:text-white mb-4"
@@ -130,33 +129,35 @@ const BookingSummaryTwo = ({
           </button>
 
           {isOpen && (
-            <div className="space-y-4 animate-in fade-in duration-300">
+            <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-300">
               {passengers?.map((p, index) => (
                 <div
                   key={index}
-                  className="text-xs space-y-3  dark:bg-gray-800/50 p-4 rounded-2xl"
+                  className="text-xs sm:text-sm space-y-2 sm:space-y-3 bg-gray-50 dark:bg-gray-800/50 p-3 sm:p-4 rounded-xl sm:rounded-2xl"
                 >
-                  <div className="flex justify-between">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                     <span className="text-gray-500">بازه سنی</span>
                     <span className="font-bold">بزرگسال</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                     <span className="text-gray-500">نام و نام خانوادگی</span>
-                    <span className="font-bold">{p.fullName || "---"}</span>
+                    <span className="font-bold break-words max-w-[200px] sm:max-w-none">
+                      {p.fullName || "---"}
+                    </span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                     <span className="text-gray-500">جنسیت</span>
                     <span className="font-bold">
                       {p.gender === "male" ? "مرد" : p.gender === "female" ? "زن" : "---"}
                     </span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                     <span className="text-gray-500">کد ملی / شماره پاسپورت</span>
                     <span className="font-bold text-[#15977D]">
                       {p.nationalCode || "---"}
                     </span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                     <span className="text-gray-500">تاریخ تولد</span>
                     <span className="font-bold">{p.birthDate || "---"}</span>
                   </div>
@@ -165,21 +166,34 @@ const BookingSummaryTwo = ({
 
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="w-full h-[48px] py-3 bg-[rgb(16,8,143)] text-white rounded-2xl font-bold text-xs hover:bg-blue-800 transition-colors"
+                className="w-full h-11 sm:h-12 py-2 sm:py-3 bg-[rgb(16,8,143)] text-white rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm hover:bg-blue-800 transition-colors"
               >
                 ویرایش مسافران
               </button>
+          
             </div>
           )}
         </div>
 
         {bookingResult?.id && (
-          <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800 text-center">
+          <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700 text-center">
             <p className="text-gray-500 text-xs">شماره رزرو</p>
-            <p className="text-[#15977D] font-bold text-lg">{bookingResult.id}</p>
+            <p className="text-[#15977D] font-bold text-base sm:text-lg">{bookingResult.id}</p>
           </div>
         )}
+        
       </div>
+          <div className="relative bottom- flex-col  gap-5 flex justify-center w-122">
+                  <div className=" w-full"></div>
+                  <div>
+                    <h3 className="font-bold text-[16px] text-[rgb(0,94,164)]">
+                      هزینه جانبی
+                    </h3>
+                    <p className="font-normal text-[14px] text-[rgba(6,4,37,0.5)] mt-3 leading-7">
+                      {description}
+                    </p>
+                  </div>
+                </div>
     </div>
   );
 };

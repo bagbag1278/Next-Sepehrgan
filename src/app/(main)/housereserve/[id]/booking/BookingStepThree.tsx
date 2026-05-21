@@ -55,7 +55,7 @@ const BookingStepThree = ({
       className="h-278 w-full relative bottom-30 max-[1280px]:h-375"
       dir="rtl"
     >
-      <div className="relative -bottom-23 left-12 max-[1280px]:hidden">
+      <div className="relative -bottom-13 left-3 max-[1280px]:hidden">
         <div className="absolute left-5 top-150">
           <TallerFlash />
         </div>
@@ -113,7 +113,7 @@ const BookingStepThree = ({
                     </button>
                   </div>
 
-                  <div className="w-full  max-[888]:mt-40">
+                  <div className="w-full  ">
                     <button
                       onClick={() => setIsOpen(!isOpen)}
                       className="flex items-center justify-between w-full text-sm"
@@ -196,7 +196,7 @@ const BookingStepThree = ({
                 </div>
               </div>
 
-              <div className="w-full lg:w-235 relative mt-26 flex max-[1024]:left-0 max-[1100]:left-20 max-[1330px]:justify-center">
+              <div className="w-full  relative mt-26 flex  justify-center">
                 <AdvancedScrollAnimation type="slide-up" delay={0.2}>
                   <BookingSummaryTwo
                     finalTotal={finalTotal}
@@ -204,19 +204,10 @@ const BookingStepThree = ({
                     checkInDate={checkInDate}
                     checkOutDate={checkOutDate}
                     passengers={passengers}
+                    description={description}
                   />
                 </AdvancedScrollAnimation>
-                <div className="absolute max-[888]:mr-30  -bottom-30 flex-col  gap-5 flex justify-center w-122">
-                  <div className="border-b border-gray-200 w-full"></div>
-                  <div>
-                    <h3 className="font-bold text-[16px] text-[rgb(0,94,164)]">
-                      هزینه جانبی
-                    </h3>
-                    <p className="font-normal text-[14px] text-[rgba(6,4,37,0.5)] mt-3 leading-7">
-                      {description}
-                    </p>
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>

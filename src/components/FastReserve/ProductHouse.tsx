@@ -5,10 +5,12 @@ import { House } from "@/core/api/house";
 import { addCommas, digitsEnToFa } from "@persian-tools/persian-tools";
 
 interface ProductHouseProps {
-  houses: House;
+  houses: any;
+  onCompare?: (house: any) => void;
+  isInCompare?: boolean;
 }
 
-const ProductHouse: FC<ProductHouseProps> = ({ houses }) => {
+const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => {
   return (
     <div dir="rtl" className="w-174.75 flex relative pr-3 mr-24">
       <div
@@ -126,9 +128,29 @@ const ProductHouse: FC<ProductHouseProps> = ({ houses }) => {
               </div>
             </div>
           </div>
-          {/*  */}
-          <div className="border border-blue-300 w-70.75 h-8 rounded-xl cursor-pointer text-sm text-blue-300/50 hover:text-white justify-center hover:bg-blue-300 dark:bg-white transition-colors duration-200 flex flex-col items-center">
-            بررسی و رزرو
+          {/* دکمه‌ها */}
+          <div className="w-70.75 flex gap-2">
+            <div className="flex-1 border border-blue-300 h-8 rounded-xl cursor-pointer text-sm text-blue-300/50 hover:text-white justify-center hover:bg-blue-300 dark:bg-white transition-colors duration-200 flex flex-col items-center">
+              بررسی و رزرو
+            </div>
+     {onCompare && (
+    <button
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("🟣 دکمه مقایسه کلیک شد");
+        onCompare(houses);
+      }}
+      disabled={isInCompare}
+      className={`w-20 h-8 rounded-xl text-sm font-medium transition-all duration-200 ${
+        isInCompare
+          ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+          : "border border-blue-300 text-blue-300/70 hover:bg-blue-100 hover:text-white"
+      }`}
+    >
+      {isInCompare ? "✓" : "مقایسه"}
+    </button>
+  )}
           </div>
         </div>
       </div>

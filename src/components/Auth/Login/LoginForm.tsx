@@ -42,31 +42,41 @@ const LoginForm = () => {
     return "border-blue-300";
   };
 
-  useEffect(() => {
-    if (state.success) {
-      if (state.accessToken) {
-        localStorage.setItem("accessToken", state.accessToken);
-      }
-      if (state.user) {
-        localStorage.setItem("user", JSON.stringify(state.user));
-      }
-      
-      toast.success(state.message || "با موفقیت وارد شدید!");
-
-      const timer = setTimeout(() => {
-        router.push("/");
-      }, 1000);
-
-      return () => clearTimeout(timer);
+useEffect(() => {
+  if (state.success) {
+    if (state.accessToken) {
+      localStorage.setItem("accessToken", state.accessToken);
     }
-
-    if (state.error) {
-      toast.error(state.error);
+    
+    let userId = null;
+    if (state.user) {
+      userId = state.user.id;
+    } else if (state.accessToken) {
+      try {
+        const payload = JSON.parse(atob(state.accessToken.split('.')[1]));
+        userId = payload.id;
+      } catch (e) {}
     }
-  }, [state, router]);
+    
+    if (userId) {
+      localStorage.setItem("user", JSON.stringify({ id: userId }));
+      console.log("✅ user ذخیره شد، userId:", userId);
+    }
+    
+    toast.success(state.message || "با موفقیت وارد شدید!");
+    router.push("/");
+  }
+  if (state.error) {
+    toast.error(state.error);
+  }
+}, [state, router]);
+
 
   return (
-    <form action={formAction} className="mt-6 flex flex-col justify-between gap-6 ">
+    <form
+      action={formAction}
+      className="mt-6 flex flex-col justify-between gap-6"
+    >
       <div className="flex flex-col gap-2 relative">
         <input
           type="email"
@@ -101,7 +111,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 ">
+      <div className="flex flex-col gap-3">
         <div className="relative flex flex-col gap-2">
           <div className="relative">
             <input
@@ -150,10 +160,10 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
               strength === 1
                 ? "bg-red-600"
                 : strength === 2
-                ? "bg-amber-400"
-                : strength === 3
-                ? "bg-green-500"
-                : "bg-white dark:bg-[#121212]"
+                  ? "bg-amber-400"
+                  : strength === 3
+                    ? "bg-green-500"
+                    : "bg-white dark:bg-[#121212]"
             }`}
           />
           <span
@@ -176,17 +186,16 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
       <div className="w-107.5 h-5 flex justify-between items-center relative max-[440]:flex-col max-[440]:left-30 max-[440]:bottom-5">
         <Link
           href={"/loginphone"}
-          className="text-blue-100 text-[13px] underline underline-offset-4 font-medium dark:text-white relative max-[440]:left-9 "
+          className="text-blue-100 text-[13px] underline underline-offset-4 font-medium dark:text-white relative max-[440]:left-9"
         >
           ورود با شماره موبایل
         </Link>
-           <Link
+        <Link
           href={"/forgetpass"}
-          className="text-blue-300  max-[480]:pl-10 max-[440]:mt-2 text-[11px] underline underline-offset-4 font-medium decoration"
+          className="text-blue-300 max-[480]:pl-10 max-[440]:mt-2 text-[11px] underline underline-offset-4 font-medium decoration"
         >
           رمز عبور خود را فراموش کردید؟
         </Link>
-       
       </div>
 
       <button

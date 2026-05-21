@@ -3,7 +3,7 @@ import React from 'react'
 function HomeReserve() {
   return (
     <div>
-      <svg width="167" height="104" viewBox="0 0 167 104" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+      <svg width="267" height="254" viewBox="0 0 167 104" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
 <rect width="167" height="103.896" rx="8" fill="url(#pattern0_2484_2994)"/>
 <rect x="0.215332" y="0.00268555" width="166.785" height="103.997" rx="8" fill="url(#paint0_linear_2484_2994)" fillOpacity="0.5"/>
 <defs>

@@ -9,15 +9,17 @@ import dynamic from "next/dynamic";
 
 import React, { useEffect, useState } from "react";
 import SwiperGalery from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/Slider/SwiperGalery";
-import Seller from "@/app/(main)/blog/houserent/MortgageRentDetails/components/HouseRent/Seller";
-import Like from "@/app/(main)/blog/houserent/MortgageRentDetails/components/HouseRent/Like";
+
 import Bread from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Header/Bread";
 import { useParams } from "next/navigation";
-import RentSimilarProperties from "@/app/(main)/blog/houserent/MortgageRentDetails/components/HouseRent/RentSimilarProperties";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
+import Like from "../components/HouseRent/Like";
+import Seller from "../components/HouseRent/Seller";
+import RentSimilarProperties from "../components/HouseRent/RentSimilarProperties";
+import SimilarProperties from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/SimilarProperties";
 
 const MapRent = dynamic(
-  () => import("@/app/(main)/blog/houserent/MortgageRentDetails/components/HouseRent/MapRent"),
+  () => import("../components/HouseRent/MapRent"),
   {
     ssr: false,
     loading: () => (
@@ -119,7 +121,7 @@ const MortgageRentDetails = () => {
     { title: data.title },
   ];
 
- return (
+  return (
     <div>
       <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative dark:text-white">
         <AdvancedScrollAnimation type="slide-up" delay={0.1}>
@@ -181,9 +183,11 @@ const MortgageRentDetails = () => {
                     lastUpdated={data.last_updated}
                   />
                 </div>
+              
                 <div className="w-107 flex-col shadow-lg">
-                  <RentSimilarProperties currentId={data.id} />
+                  <SimilarProperties currentId={data.id} />
                 </div>
+              
               <div className="absolute -left-35 bottom-120 transform rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
                 <FleshHome />
               </div>
