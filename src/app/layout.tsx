@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,17 +32,29 @@ export default function RootLayout({
   return (
     <html lang="fa" suppressHydrationWarning>
       <body
-        className={`${iran.className} flex flex-col min-h-screen items-center text-black transition-colors duration-500
-                bg-white bg-linear-to-br 
-                dark:from-[#121212] dark:via-gray-900 dark:to-[#121212] dark:bg-linear-to-br dark:text-white`}
+        className={`${iran.className} bg-white text-black dark:bg-black dark:text-white`}
       >
+        {/* اضافه کردن مدیریت خطای اسکریپت‌ها */}
+        <Script
+          id="error-handler"
+          strategy="beforeInteractive"
+        >
+          {`
+            window.addEventListener('error', function(e) {
+              if (e.target.tagName === 'SCRIPT') {
+                console.warn('Script failed to load:', e.target.src);
+                return true;
+              }
+            });
+          `}
+        </Script>
+
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           <ThemeManager>
             <NeshanMapLoader />
-            <main className=" w-full ">{children}</main>
+            <main className="w-full">{children}</main>
           </ThemeManager>
-
           <Footer />
         </ThemeProvider>
       </body>

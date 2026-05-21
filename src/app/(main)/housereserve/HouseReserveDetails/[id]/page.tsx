@@ -55,151 +55,118 @@ const HouseReserveDetails = () => {
 
   if (loading) return <div>Loading...</div>;
   if (!data) return <div>Data not found</div>;
- return (
+return (
     <div>
       <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative">
-        <AdvancedScrollAnimation type="slide-up" delay={0.1}>
-          <div className="w-full">
-            <Bread items={breadcrumbItems} />
-          </div>
-        </AdvancedScrollAnimation>
+        <div className="w-full">
+          <Bread items={breadcrumbItems} />
+        </div>
 
-        <AdvancedScrollAnimation type="scale" delay={0.1}>
-          <div className="w-full h-102 flex">
-            <div className="w-full">
-              <SwiperGalery images={data.images} />
-            </div>
+        <div className="w-full h-102 flex">
+          <div className="w-full">
+            <SwiperGalery images={data.images} />
           </div>
-        </AdvancedScrollAnimation>
+        </div>
 
         <div className="mt-20 ">
-          <AdvancedScrollAnimation type="slide-up" delay={0.1}>
-            <div className="w-300 h-16  flex  justify-between items-center ">
-              <div className="w-18 h-8  flex flex-wrap gap-1 relative  max-[1300px]:left-30 ">
-                <div className="w-8 h-8 bg-[#F5F5F5]  rounded-lg flex items-center justify-center  border border-blue-400">
-                  <Link />
-                </div>
-                <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center  border border-blue-400">
-                  <Foarward />{" "}
-                </div>
+          <div className="w-300 h-16 flex justify-between items-center">
+            <div className="w-18 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-30">
+              <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center border border-blue-400">
+                <Link />
               </div>
-              <div
-                className="flex flex-col gap-4  -mt-8 pr-5 relative max-[1300px]:bottom-8 max-[1300px]:m-auto "
-                dir="rtl"
-              >
-                <h2 className="text-2xl bor font-bold text-blue-400 flex relative gap-3 max-[1300px]:justify-center  dark:text-white ">
-                  {data.title}
-
-                  <div className="text-[14px]  w-20   font-bold text-gray-600 -mt-2 max-[1300px]">
-                    <div className=" relative right-4.5 top-4 ">
-                      <Star />
-                    </div>
-
-                    {data.rate}
-                  </div>
-                </h2>
-
-                <div className="flex items-center gap-2 text-gray-500 relative">
-                  <Loaction />
-                  <span className="text-[14px] font-bold">{data.address}</span>
-                </div>
+              <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center border border-blue-400">
+                <Foarward />
               </div>
             </div>
-          </AdvancedScrollAnimation>
-
-          <div className="flex justify-between gap-4  max-[1300px]:flex-col">
-            <div className="flex gap-16 flex-col  items-center w-full lg:w-auto">
-                <div className="w-107 h-155  rounded-[40px] p-8 shadow-lg">
-                  <Reserve
-                    price={data.price}
-                    discountedPrice={data.discounted_price}
-                    maxCapacity={data.capacity}
-                  />
+            <div
+              className="flex flex-col gap-4 -mt-8 pr-5 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
+              dir="rtl"
+            >
+              <h2 className="text-2xl bor font-bold text-blue-400 flex relative gap-3 max-[1300px]:justify-center dark:text-white">
+                {data.title}
+                <div className="text-[14px] w-20 font-bold text-gray-600 -mt-2 max-[1300px]">
+                  <div className="relative right-4.5 top-4">
+                    <Star />
+                  </div>
+                  {data.rate}
                 </div>
+              </h2>
+              <div className="flex items-center gap-2 text-gray-500 relative">
+                <Loaction />
+                <span className="text-[14px] font-bold">{data.address}</span>
+              </div>
+            </div>
+          </div>
 
-                <div className="w-107 h-142 flex-col  ">
-                  <RentSimilarProperties currentId={data.id} />
-                </div>
+          <div className="flex justify-between gap-4 max-[1300px]:flex-col">
+            <div className="flex gap-16 flex-col items-center w-full lg:w-auto">
+              <div className="w-107 h-155 rounded-[40px] p-8 shadow-lg">
+                <Reserve
+                  price={data.price}
+                  discountedPrice={data.discounted_price}
+                  maxCapacity={data.capacity}
+                />
+              </div>
+              <div className="w-107 h-142 flex-col">
+                <RentSimilarProperties currentId={data.id} />
+              </div>
             </div>
 
-            <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 dark:text-white dark:bg-[#060425] bg-[#F5F5F5D9] shadow-lg p-6 mx-auto max-[844px]:max-w-110 ">
-              <div className="flex flex-wrap gap-10 justify-center ">
-                <AdvancedScrollAnimation type="fade" delay={0.1}>
-                  <div className="w-181 h-60 max-[888px]:h-100 flex">
-                    <Popular data={data} />
+            <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 dark:text-white dark:bg-[#060425] bg-[#F5F5F5D9] shadow-lg p-6 mx-auto max-[844px]:max-w-110">
+              <div className="flex flex-wrap gap-10 justify-center">
+                <div className="w-181 h-60 max-[888px]:h-100 flex">
+                  <Popular data={data} />
+                </div>
+
+                <div
+                  className="w-full flex flex-col justify-start items-end gap-2 mt-16 top-7"
+                  dir="rtl"
+                >
+                  <div className="flex flex-col justify-start w-full relative max-[844px]:pr-44">
+                    <h2 className="text-blue-100 font-bold text-[14px] ml-12 mb-4">
+                      درباره {data.title}
+                    </h2>
+                    <p className="max-[844px]:wrap-break-word max-[844px]:w-93 text-[16px] text-[#475569] font-black mb-4">
+                      {data.caption}
+                    </p>
                   </div>
-                </AdvancedScrollAnimation>
-
-                <AdvancedScrollAnimation type="slide-up" delay={0.2}>
-                  <div
-                    className="w-full flex flex-col justify-start  items-end gap-2 mt-16  top-7"
-                    dir="rtl"
-                  >
-                    <div className="flex flex-col justify-start w-full relative max-[844px]:pr-44 ">
-                      <h2 className="text-blue-100  font-bold text-[14px] ml-12 mb-4">
-                        درباره {data.title}
-                      </h2>
-
-                      <p className="  max-[844px]:wrap-break-word  max-[844px]:w-93 text-[16px] text-[#475569] font-black  mb-4">
-                        {data.caption}
-                      </p>
-                    </div>
-
-                    <div className="w-full max-w-180">
-                      <p className=" leading-8 text-justify">
-                        {data.description}
-                      </p>
-                    </div>
+                  <div className="w-full max-w-180">
+                    <p className="leading-8 text-justify">{data.description}</p>
                   </div>
-                </AdvancedScrollAnimation>
+                </div>
 
-                <AdvancedScrollAnimation type="slide-up" delay={0.3}>
-                  <div
-                    className="w-full flex mt-5 gap-2 justify-center"
-                    dir="rtl"
-                  >
-                    <div className="w-1/3 max-[844px]:w-30 flex flex-col gap-2">
-                      <img
-                        src={data?.photo || fallbackImage}
-                        className="rounded-lg h-43 max-[888px]:h-33 object-cover rounded-tr-[42px] shadow-sm"
-                      />
-
-                      <img
-                        src={data?.photo || fallbackImage}
-                        className="rounded-lg h-43  object-cover shadow-sm"
-                      />
-                    </div>
-
+                <div className="w-full flex mt-5 gap-2 justify-center" dir="rtl">
+                  <div className="w-1/3 max-[844px]:w-30 flex flex-col gap-2">
                     <img
                       src={data?.photo || fallbackImage}
-                      className="w-94 rounded-bl-[42px] max-[888px]:w-[234px] max-[888px]:h-78 h-88 rounded-lg object-cover shadow-sm"
+                      className="rounded-lg h-43 max-[888px]:h-33 object-cover rounded-tr-[42px] shadow-sm"
+                    />
+                    <img
+                      src={data?.photo || fallbackImage}
+                      className="rounded-lg h-43 object-cover shadow-sm"
                     />
                   </div>
-                </AdvancedScrollAnimation>
+                  <img
+                    src={data?.photo || fallbackImage}
+                    className="w-94 rounded-bl-[42px] max-[888px]:w-[234px] max-[888px]:h-78 h-88 rounded-lg object-cover shadow-sm"
+                  />
+                </div>
               </div>
 
-              <AdvancedScrollAnimation type="slide-up" delay={0.4}>
-                <div className="flex justify-end w-full ">
-                  <h3 className=" font-bold text-[20px] mt-10">
-                    چرا{data.title}
-                  </h3>
-                </div>
-              </AdvancedScrollAnimation>
+              <div className="flex justify-end w-full">
+                <h3 className="font-bold text-[20px] mt-10">چرا {data.title}</h3>
+              </div>
 
-              <AdvancedScrollAnimation type="fade" delay={0.5}>
-                <p
-                  dir="rtl"
-                  className="font-medium w-full relative   max-[844px]:w-93 bottom-6 text-[16px] text-gray-600 mt-5"
-                >
-                  {data.caption}
-                </p>
-              </AdvancedScrollAnimation>
+              <p
+                dir="rtl"
+                className="font-medium w-full relative max-[844px]:w-93 bottom-6 text-[16px] text-gray-600 mt-5"
+              >
+                {data.caption}
+              </p>
 
-              <AdvancedScrollAnimation type="slide-up" delay={0.6}>
-                <div className="w-full flex mt-8">
-                  {houseId && <CommentsSection houseId={houseId} />}
-                </div>
-              </AdvancedScrollAnimation>
+              <div className="w-full flex mt-8">
+                {houseId && <CommentsSection houseId={houseId} />}
+              </div>
             </div>
           </div>
         </div>

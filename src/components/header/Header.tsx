@@ -22,7 +22,7 @@ const Header = () => {
         dir="rtl"
         className="flex justify-between  w-350  mt-6 dark:text-white"
       >
-        <div className="lg:flex xl:flex items-center  whitespace-nowrap gap-5 hidden sm:hidden ">
+        <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 hidden sm:hidden sm:flex sm:justify-end">
           {nav.map((item) => {
             let isActive =
               item.href === "/"
@@ -63,8 +63,14 @@ const Header = () => {
             );
           })}
         </div>
-        <div className=" dark:hidden justify-center  ">
-          <HeroSction />
+        <div className="flex justify-center items-center w-full">
+          <div className="dark:hidden">
+            <HeroSction />
+          </div>
+
+          <div className="hidden dark:block">
+            <HeroSction2 />
+          </div>
         </div>
         <div className="hidden dark:block">
           <HeroSction2 />
