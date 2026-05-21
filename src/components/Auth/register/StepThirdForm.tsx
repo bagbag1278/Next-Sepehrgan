@@ -17,14 +17,16 @@ const StepThirdForm = ({ userId }: StepThirdFormProps) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
-  const [showPassword, setShowPassword] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
     setStrength(checkPasswordStrength(value));
   };
+  
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -32,7 +34,7 @@ const StepThirdForm = ({ userId }: StepThirdFormProps) => {
   const getBorderColor = () => {
     if (strength === 1) return "border-red-500 text-red-500";
     if (strength === 2) return "border-amber-400 text-amber-400";
-    if (strength === 3) return "border-green-100 text-green-100";
+    if (strength === 3) return "border-green-500 text-green-500";
     return "border-blue-300/50";
   };
 
@@ -44,11 +46,22 @@ const StepThirdForm = ({ userId }: StepThirdFormProps) => {
       return;
     }
 
+    const phoneRegex = /^09[0-9]{9}$/;
+    if (!phoneRegex.test(phone)) {
+      toast.error("شماره تماس معتبر نیست (باید با 09 شروع شود)");
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("رمز عبور باید حداقل 6 کاراکتر باشد");
+      return;
+    }
+
     try {
       setLoading(true);
 
       const result = await completeRegistrationAction({
-        userId:userId,
+        userId: userId,
         phoneNumber: phone, 
         password,
       });
@@ -71,33 +84,33 @@ const StepThirdForm = ({ userId }: StepThirdFormProps) => {
 
   return (
     <form
-      className="flex flex-col justify-between gap-6 h-full"
+      className="flex flex-col justify-between gap-4 md:gap-6 w-full max-w-md mx-auto px-4 md:px-0"
       onSubmit={handleSubmit}
     >
-      <div className="flex flex-col gap-2 relative">
+      <div className="flex flex-col gap-2 relative w-full">
         <input
-          type="text"
+          type="tel"
           name="phone"
           id="phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder=""
-          className="peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
+          className="peer w-full dark:text-black border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
         />
         <label
           htmlFor="phone"
-          className="absolute right-4 top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
-               peer-placeholder-shown:top-2 peer-placeholder-shown:text-base
-               peer-focus:top-0 peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
-peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md
-               "
+          className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
+               peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm md:peer-placeholder-shown:text-base
+               peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
+               peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
         >
           شماره تماس
         </label>
-        <button className="absolute left-4 top-1/2 -translate-y-1/2">
+        <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
-            width="12"
-            height="19"
+            width="10"
+            height="16"
+            className="md:w-[12px] md:h-[19px]"
             viewBox="0 0 12 19"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -110,28 +123,27 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
               strokeLinecap="round"
             />
           </svg>
-        </button>
+        </div>
       </div>
 
       <div className="flex flex-col gap-3">
         <div className="relative flex flex-col gap-2">
           <div className="relative">
-            {" "}
             <input
               type={showPassword ? "text" : "password"}
               name="password"
               id="password"
               value={password}
               onChange={handlePasswordChange}
-              className={`border peer w-full transition-colors focus:border-blue-500 text-[13px] pt-1 px-4 h-12 bg-white outline-0 rounded-2xl duration-300 ${getBorderColor()}`}
+              className={`border peer w-full transition-colors focus:border-blue-500 text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white outline-0 rounded-2xl duration-300 ${getBorderColor()}`}
               placeholder=" "
             />
             <label
               htmlFor="password"
-              className={`absolute right-4 top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
-                     peer-placeholder-shown:top-2 peer-placeholder-shown:text-base
-                     peer-focus:top-0 peer-focus:text-[12px] peer-focus:text-blue-600
-                     peer-not-placeholder-shown:-top-2 peer-not-placeholder-shown:text-sm
+              className={`absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
+                     peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm md:peer-placeholder-shown:text-base
+                     peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600
+                     peer-not-placeholder-shown:-top-2 peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm
                      peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md
                       ${getBorderColor()}`}
             >
@@ -144,13 +156,13 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
             >
               {showPassword ? (
                 <FaRegEyeSlash
-                  size={20}
-                  className={`text-blue-300 transition-colors duration-300 ${getBorderColor()}`}
+                  size={18}
+                  className="md:w-[20px] md:h-[20px] text-blue-300 transition-colors duration-300"
                 />
               ) : (
                 <IoEyeOutline
-                  size={20}
-                  className={`text-blue-300 transition-colors duration-300 ${getBorderColor()}`}
+                  size={18}
+                  className="md:w-[20px] md:h-[20px] text-blue-300 transition-colors duration-300"
                 />
               )}
             </button>
@@ -165,7 +177,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
                 : strength === 2
                   ? "bg-amber-400"
                   : strength === 3
-                    ? "bg-green-100"
+                    ? "bg-green-500"
                     : "bg-white dark:bg-[#121212]"
             }`}
           />
@@ -173,26 +185,26 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
             className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
               strength >= 2
                 ? strength === 3
-                  ? "bg-green-100"
+                  ? "bg-green-500"
                   : "bg-amber-400"
                 : "bg-white dark:bg-[#121212]"
             }`}
           />
           <span
             className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
-              strength === 3 ? "bg-green-100" : "bg-white dark:bg-[#121212]"
+              strength === 3 ? "bg-green-500" : "bg-white dark:bg-[#121212]"
             }`}
           />
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 mt-4">
+      <div className="flex flex-col gap-3 mt-2 md:mt-4">
         <button
           type="submit"
           disabled={loading}
-          className="h-12 w-full rounded-2xl cursor-pointer bg-blue-100 text-white hover:bg-blue-200 transition-colors font-medium"
+          className="h-11 md:h-12 w-full rounded-2xl cursor-pointer bg-blue-100 text-white hover:bg-blue-200 transition-colors font-medium text-sm md:text-base"
         >
-          {loading ? "در حال ثبت..." : "ارسال"}
+          {loading ? "در حال ثبت..." : "ثبت نام"}
         </button>
       </div>
     </form>

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ChatIcon from "../../../../../../components/HouseDetails/icon/icon/ChatIcon";
+import ChatIcon from "../../../../../../../components/HouseDetails/icon/icon/ChatIcon";
 
 interface SellerProps {
   sellerName?: string;

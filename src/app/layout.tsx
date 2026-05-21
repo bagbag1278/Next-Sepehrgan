@@ -32,23 +32,9 @@ export default function RootLayout({
   return (
     <html lang="fa" suppressHydrationWarning>
       <body
-        className={`${iran.className} bg-white text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
       >
-        {/* اضافه کردن مدیریت خطای اسکریپت‌ها */}
-        <Script
-          id="error-handler"
-          strategy="beforeInteractive"
-        >
-          {`
-            window.addEventListener('error', function(e) {
-              if (e.target.tagName === 'SCRIPT') {
-                console.warn('Script failed to load:', e.target.src);
-                return true;
-              }
-            });
-          `}
-        </Script>
-
+  
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           <ThemeManager>
