@@ -4,7 +4,7 @@ const ImageDef3 = () => {
     return (
         <svg width="444" height="262" viewBox="0 0 444 262" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <g filter="url(#filter0_d_553_3865)">
-                <rect x="30" y="30" width="384" height="202" rx="32" fill="url(#pattern0_553_3865)" shapeRendering="crispEdges" />
+                <rect x="0"  width="384" height="202" rx="32" fill="url(#pattern0_553_3865)" shapeRendering="crispEdges" />
             </g>
             <defs>
                 <filter id="filter0_d_553_3865" x="0" y="0" width="444" height="262" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
