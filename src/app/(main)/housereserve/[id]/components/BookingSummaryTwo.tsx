@@ -30,7 +30,8 @@ interface Props {
   passengers: Passenger[];
   finalTotal: string;
   bookingResult?: any;
-  description:string;
+  description?: string;
+  showExtraCost?: boolean; 
 }
 
 const BookingSummaryTwo = ({
@@ -40,7 +41,8 @@ const BookingSummaryTwo = ({
   passengers,
   finalTotal,
   bookingResult,
-  description
+  description,
+  showExtraCost = false, 
 }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
 
@@ -52,8 +54,9 @@ const BookingSummaryTwo = ({
   };
 
   return (
-    <div className="w-full  mx-auto lg:mx-0 top-10 px-4 sm:px-0">
+    <div className="w-full mx-auto lg:mx-0 top-10 px-4 sm:px-0">
       <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-lg bg-white dark:bg-gray-800">
+        {/* تصویر و عنوان */}
         <div className="w-full mb-6 flex flex-col sm:flex-row gap-4 sm:gap-6">
           <div className="relative w-full sm:w-[200px] lg:w-[240px] h-[160px] sm:h-[170px] rounded-2xl sm:rounded-[32px] overflow-hidden">
             <img
@@ -79,6 +82,7 @@ const BookingSummaryTwo = ({
           </div>
         </div>
 
+        {/* اطلاعات تاریخ و قیمت */}
         <div className="space-y-3 sm:space-y-4 border-t border-gray-100 dark:border-gray-700 pt-4 sm:pt-6">
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-sm font-bold">
             <span className="text-gray-900 dark:text-white">تاریخ ورود به هتل</span>
@@ -111,8 +115,6 @@ const BookingSummaryTwo = ({
             </div>
           </div>
         </div>
-
-        
         <div className="mt-6 sm:mt-8 dark:border-gray-700 pt-4 sm:pt-6">
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -170,7 +172,6 @@ const BookingSummaryTwo = ({
               >
                 ویرایش مسافران
               </button>
-          
             </div>
           )}
         </div>
@@ -181,19 +182,21 @@ const BookingSummaryTwo = ({
             <p className="text-[#15977D] font-bold text-base sm:text-lg">{bookingResult.id}</p>
           </div>
         )}
-        
       </div>
-          <div className="relative bottom- flex-col  gap-5 flex justify-center w-122">
-                  <div className=" w-full"></div>
-                  <div>
-                    <h3 className="font-bold text-[16px] text-[rgb(0,94,164)]">
-                      هزینه جانبی
-                    </h3>
-                    <p className="font-normal text-[14px] text-[rgba(6,4,37,0.5)] mt-3 leading-7">
-                      {description}
-                    </p>
-                  </div>
-                </div>
+
+      {showExtraCost && description && (
+        <div className="mt-4 flex flex-col gap-3">
+          <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+          <div>
+            <h3 className="font-bold text-[14px] md:text-[16px] text-[rgb(0,94,164)] dark:text-blue-400">
+              هزینه جانبی
+            </h3>
+            <p className="font-normal text-[12px] md:text-[14px] text-[rgba(6,4,37,0.5)] dark:text-gray-400 mt-2 leading-6 md:leading-7">
+              {description}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -35,6 +35,7 @@ const BookingStepFour = ({
                 passengers={passengers}
                 bookingResult={bookingResult}
                 description={description}
+                showExtraCost={false}
               />
             </div>
 

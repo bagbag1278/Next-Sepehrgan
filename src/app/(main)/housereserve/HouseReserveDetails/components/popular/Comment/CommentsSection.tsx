@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import AddComment from "./AddComment";
-import CommentCard from "./CommentCard"; // ✅ اضافه کن
+import CommentCard from "./CommentCard";
 
 const CommentsSection = ({ houseId }: { houseId: any }) => {
   const [comments, setComments] = useState<any[]>([]);

@@ -31,7 +31,7 @@ console.log("CommentCard id:", id);
   return (
     <div className="w-full justify-center flex flex-col  mb-6 ">
       <div
-        className={`w-full h-[114px] max-[]: rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] p-6 border shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)] transition-all max-[544]:w-95
+        className={`w-full h-[114px] max-[]: rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] p-6 border shadow-sm relative shadow-[8px_0px_20px_rgba(8,135,202,0.30)] transition-all max-[544]:w-93
         ${
           isChild
             ? "bg-[#0887CA0D] border-[#0887CA0D] relative right-15 top-4"
@@ -67,11 +67,11 @@ console.log("CommentCard id:", id);
           {text}
         </p>
 
-        <div className="flex justify-start gap-8 items-center border-t border-gray-100 pt-4 relative bottom-6">
+        <div className="flex justify-start gap-4 items-center border-t border-gray-100 pt-4 relative bottom-6">
           {replies.length > 0 && (
             <button
               onClick={() => setShowReplies(!showReplies)}
-              className="flex items-center gap-1 text-[11px] whitespace-nowrap text-[#94A3B8] hover:text-[#0887CA] transition-colors"
+              className="flex items-center  max-[600]:gap-1 text-[11px] whitespace-nowrap text-[#94A3B8] hover:text-[#0887CA] transition-colors"
             >
               <ChevronDown
                 size={14}
@@ -101,7 +101,7 @@ console.log("CommentCard id:", id);
         </div>
        
 
-          <div className="  max-[888]:relative ">
+          <div className=" ">
             <DeleteComment
               commentId={id}
               onDeleteSuccess={() => {
@@ -114,7 +114,7 @@ console.log("CommentCard id:", id);
       </div>
 
       {showReplies && replies.length > 0 && (
-        <div className="mt-4 flex flex-col gap-3 w-full">
+        <div className="mt-4 relative left-10 max-[600]:left-15 flex flex-col gap-3 w-full">
           {replies.map((reply: any) => (
             <CommentCard
               key={reply.id}

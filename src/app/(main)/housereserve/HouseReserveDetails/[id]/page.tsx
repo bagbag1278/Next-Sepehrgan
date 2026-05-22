@@ -106,14 +106,14 @@ const HouseReserveDetails = () => {
 
           <div className="flex justify-between gap-4 max-[1300px]:flex-col">
             <div className="flex gap-16 flex-col items-center w-full lg:w-auto">
-              <div className="w-107 h-155 rounded-[40px] p-8 shadow-lg">
+              <div className="w-107 max-[600]:w-90 h-155 rounded-[40px] p-8 shadow-lg">
                 <Reserve
                   price={data.price}
                   discountedPrice={data.discounted_price}
                   maxCapacity={data.capacity}
                 />
               </div>
-              <div className="w-107 h-142 flex-col">
+              <div className="w-100 max-[600]:w-80 h-142 flex-col">
                 <SimilarProperties currentId={houseId} />
               </div>
             </div>
@@ -188,7 +188,7 @@ const HouseReserveDetails = () => {
               </AdvancedScrollAnimation>
 
               <AdvancedScrollAnimation type="slide-up" delay={0.6}>
-                <div className="w-full flex mt-8">
+                <div className="w-full flex mt-8 relative max-[600]:left-4">
                   {houseId && <CommentsSection houseId={houseId} />}
                 </div>
               </AdvancedScrollAnimation>

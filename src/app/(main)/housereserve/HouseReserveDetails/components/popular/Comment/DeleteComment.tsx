@@ -34,7 +34,7 @@ const DeleteComment = ({
         {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${token}`, // ✅ الان token مطمئناً string هست
+            Authorization: `Bearer ${token}`, 
           },
         }
       );

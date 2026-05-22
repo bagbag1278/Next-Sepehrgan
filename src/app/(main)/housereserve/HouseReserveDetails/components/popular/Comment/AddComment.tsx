@@ -4,7 +4,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { X, MessageCircle, Plus, Link } from "lucide-react";
 import { Star } from "lucide-react";
-import Foarward from "@/components/HouseDetails/icon/icon/Foarward";
 
 interface AddCommentProps {
   houseId: any;
@@ -144,14 +143,7 @@ console.log("isReply:", isReply);
       <div className="flex justify-between items-center border-b border-gray-100 pb-2">
         <h3 className="font-bold text-[14px] text-[#10088F]">
           {isReply ? `ثبت پاسخ به نظر #${parentCommentId}` : "نظر جدید"}
-           <div className="w-18 h-8  flex flex-wrap gap-1 absolute right-100 max-[888]:right-75 top-24">
-              <div className="w-7 h-7 bg-[#F5F5F5]  rounded-lg flex items-center justify-center  border border-blue-400">
-                <Link />
-              </div>
-              <div className="w-7 h-7 bg-[#F5F5F5] rounded-lg flex items-center justify-center  border border-blue-400">
-                <Foarward />{" "}
-              </div>
-            </div>
+     
         </h3>
         {isReply && (
           <button

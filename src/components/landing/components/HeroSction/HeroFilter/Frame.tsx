@@ -54,12 +54,10 @@ const Frame = () => {
             href={item.href}
             className="relative flex items-center justify-center"
           >
-            {/* ایکون */}
             <div className={`${isActive ? "text-white bottom-1 relative" : "text-gray-400"}`}>
               <Icon />
             </div>
 
-            {/* خط زیر active */}
             {isActive && (
               <div className="absolute top-10 ">
                 <HeaderIcon4 />

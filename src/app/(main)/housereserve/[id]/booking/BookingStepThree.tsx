@@ -205,6 +205,7 @@ const BookingStepThree = ({
                     checkOutDate={checkOutDate}
                     passengers={passengers}
                     description={description}
+                    showExtraCost={true}
                   />
                 </AdvancedScrollAnimation>
                 

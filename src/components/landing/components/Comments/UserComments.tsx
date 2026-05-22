@@ -1,179 +1,273 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
+
 import CommentsIcon from "../../Icon/Comments/CommentsIcon";
-import Image from "next/image";
 import ClockIcon from "../../Icon/Comments/ClockIcon";
 import LikeIcon from "../../Icon/Comments/LikeIcon";
 import HugeArrow from "../../Icon/Comments/HugeArrow";
 
+// --- Type Definitions ---
+
+type ApiUser = {
+  firstName?: string;
+  lastName?: string;
+  profilePicture?: string | null;
+
+};
+
+type ApiComment = {
+  id: number | string;
+  title?: string | null;
+  caption?: string | null;
+  created_at?: string | null;
+  user?: ApiUser | null;
+};
+
+type ApiResponse = {
+  comments: ApiComment[];
+};
+
+type ItemType = {
+  key: string;
+  Profile: string;
+  name: string;
+  content: string;
+  date: string
+};
+
+// --- Component ---
+
 const FocusCarousel = () => {
-  const items = useMemo(
-    () => [
-      { key: "1", Profile: "1", name: "آیتم1", content: "1", date: "1404/03/16" },
-      { key: "2", Profile: "2", name: "آیتم 8", content: "2", date: "1404/03/16" },
-      { key: "3", Profile: "3", name: "آیتم 16", content: "3", date: "1404/03/16" },
-      { key: "4", Profile: "4", name: "آیتم 2", content: "1fvbgfklvdfvkmgb .xv,d.zfvgmkb. nmcvx/mlvk.bjnmvxc,zd/vk.bjnmvx,dcsd/fvmkbjn xmv,c,fvطزیسنترلربثشصپبقلفهتذبنیپبمثلقهشخذ", date: "1404/03/16" },
-      { key: "5", Profile: "5", name: "آیتم 1", content: "5", date: "1404/03/16" },
-      { key: "6", Profile: "6", name: "آیتم 2", content: "6", date: "1404/03/16" },
-      { key: "7", Profile: "7", name: "آیتم 4", content: "7", date: "1404/03/16" },
-      { key: "8", Profile: "8", name: "آیتم 78", content: "8", date: "1404/03/16" },
-    ],
-    []
-  );
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [items, setItems] = useState<ItemType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await fetch("http://next.genzuni.website/api/comments");
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data: ApiResponse = await res.json();
+
+        const mappedItems: ItemType[] = (data.comments || []).map((comment) => {
+          const fullName =
+            `${comment.user?.firstName ?? ""} ${comment.user?.lastName ?? ""}`.trim() ||
+            "کاربر ناشناس";
+
+          const formattedDate = comment.created_at
+            ? new Date(comment.created_at).toLocaleDateString("fa-IR")
+            : "بدون تاریخ";
+
+          return {
+            key: String(comment.id),
+            Profile: "/placeHolder.jpeg",
+            name: fullName,
+            content: comment.caption ?? comment.title ?? "بدون محتوا",
+            date: formattedDate,
+          };
+        });
+
+        setItems(mappedItems);
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : "خطای ناشناخته در دریافت اطلاعات";
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchComments();
+  }, []);
+
+  // --- Render Logic ---
   return (
-    <div className=" flex ">
+    <div className="2xl:hidden flex">
       <div className="relative w-355 flex justify-between">
-
-        {/* ////// */}
-        <div className='w-70 lg:w-82 h-88 hidden lg:flex items-center ml-4 lg:items-end  '>
-          <div className='flex flex-wrap justify-center h-56 lg:h-77  w-90 '>
-            <div className=' flex flex-wrap justify-center h-14 ' >
-              <div className='flex w-76 h-7 items-center  justify-between gap-1 '>
-                <div className='w-6.75 h-6.5 flex gap-0.5 items-center flex-wrap-reverse  scale-x-[-1] '>
+        {/* Section 1: Header */}
+        <div className="w-70 lg:w-82 h-88 hidden lg:flex items-center ml-4 lg:items-end">
+          <div className="flex flex-wrap justify-center h-56 lg:h-77 w-90">
+            <div className="flex flex-wrap justify-center h-14">
+              <div className="flex w-76 h-7 items-center justify-between gap-1">
+                <div className="w-6.75 h-6.5 flex gap-0.5 items-center flex-wrap-reverse scale-x-[-1]">
                   <CommentsIcon />
                 </div>
-                <div className=' h-5.5 dark:text-[#28A5E6] text-[13px] text-blue-200 '>برترین نظرات شما،صدای شما راهنمای ما</div>
-                <div className='w-6.75 h-6.5 flex gap-0.5 items-center flex-row-reverse '>
+                <div className="dark:text-[#28A5E6] text-[13px] text-blue-200">
+                  برترین نظرات شما، صدای شما راهنمای ما
+                </div>
+                <div className="w-6.75 h-6.5 flex gap-0.5 items-center flex-row-reverse">
                   <CommentsIcon />
                 </div>
               </div>
-              <div className=' dark:text-[#F5F5F5] text-[20px] font-bold text-blue-400 '>نظرات بازدید کنندگان</div>
+
+              <div className="dark:text-[#F5F5F5] text-[20px] font-bold text-blue-400">
+                نظرات بازدید کنندگان
+              </div>
             </div>
-            <div className='hidden lg:flex lg:w-82  lg:h-17 text-center text-blue-400 dark:text-[#F5F5F5D9] '>
+
+            <div className="hidden lg:flex lg:w-82 lg:h-17 text-center text-blue-400 dark:text-[#F5F5F5D9]">
               نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در انتخاب بهترین تجربیات سفر هستند!
             </div>
-            <button className='w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer ' >
-              <p className='text-green-100 text-[14px] '>مشاهده همه</p>
+
+            <button className="w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer">
+              <p className="text-green-100 text-[14px]">مشاهده همه</p>
             </button>
           </div>
         </div>
-        {/* ////// */}
+        {/* End Section 1 */}
 
-        <div className="relative w-300 h-100  overflow-hidden ">
-          <div
-            className="absolute right-0 top-0 w-76.25 h-93.75 bg-green-100 rounded-bl-[5px] rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px] "
+        <div className="relative w-300 h-100 overflow-hidden">
+          <div className="absolute right-0 top-0 w-76.25 h-93.75 bg-green-100 rounded-bl-[5px] rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px]" />
 
-          >
-          </div>
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center text-lg">
+              درحال بارگذاری...
+            </div>
+          )}
 
-          <Swiper
-            modules={[Navigation, A11y]}
-            dir="rtl"
-            loop={true}
-            centeredSlides={false}
-            slidesPerView={4}
-            spaceBetween={10}
-            watchSlidesProgress={true}
-            navigation={{
-              nextEl: ".carousel-next",
-              prevEl: ".carousel-prev",
-            }}
-            onSwiper={(swiper) => {
-              setActiveIndex(swiper.realIndex ?? 0);
-            }}
-            onSlideChange={(swiper) => {
-              setActiveIndex(swiper.realIndex ?? 0);
-            }}
-          >
+          {error && (
+            <div className="absolute inset-0 flex items-center justify-center text-red-500">
+              خطا: {error}
+            </div>
+          )}
 
-            {/* map ++++++ */}
-            {items.map((item, idx) => {
-              const focused = idx === activeIndex;
+          {!loading && !error && items.length === 0 && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              هیچ آیتمی یافت نشد.
+            </div>
+          )}
 
-              return (
-                <SwiperSlide key={item.key}>
-                  <div className="flex items-center justify-center mt-8 mr-20 z-50 border border-[#005EA480]">
-                    <div
-                      className={[
-                        "transition-all duration-300 flex items-center justify-center",
-                        focused ? "scale-[1.08] " : "scale-100",
-                      ].join(" ")}
-                    >
+          {!loading && !error && items.length > 0 && (
+            <Swiper
+              modules={[Navigation, A11y]}
+              dir="rtl"
+              loop={true}
+              centeredSlides={false}
+              slidesPerView={4}
+              spaceBetween={10}
+              watchSlidesProgress={true}
+              navigation={{
+                nextEl: ".carousel-next",
+                prevEl: ".carousel-prev",
+              }}
+              onSwiper={(swiper) => {
+                setActiveIndex(swiper.realIndex ?? 0);
+              }}
+              onSlideChange={(swiper) => {
+                setActiveIndex(swiper.realIndex ?? 0);
+              }}
+            >
+              {items.map((item, idx) => {
+                const focused = idx === activeIndex;
+
+                return (
+                  <SwiperSlide key={item.key}>
+                    <div className="flex items-center justify-center mt-8 mr-20 z-50">
                       <div
                         className={[
-                          "rounded-2xl bg-[#F5F5F5] dark:bg-blue-400 shadow-sm flex items-center justify-center",
-                          focused
-                            ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
-                            : "w-55 h-60 bg-[#F5F5F5] dark:bg-black",
+                          "transition-all duration-300 flex items-center justify-center",
+                          focused ? "scale-[1.08]" : "scale-100",
                         ].join(" ")}
                       >
+                        <div
+                          className={[
+                            "rounded-2xl shadow-sm flex items-center justify-center transition-all duration-300",
+                            focused
+                              ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
+                              : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400", // <--- تغییر از dark:bg-black به dark:bg-blue-400
+                          ].join(" ")}
+                        >
+                          {focused ? (
+                            // --- محتوای اسلاید فعال ---
+                            <div className="flex flex-col items-center justify-between text-center w-full h-full p-5">
+                              <div className="w-20 h-20 rounded-full p-0.75 border border-[#BAE9D3] bg-white flex items-center justify-center overflow-hidden relative">
+                                {item.Profile ? (
+                                  <Image
+                                    src={item.Profile}
+                                    alt={item.name}
+                                    fill
+                                    className="object-cover rounded-full"
+                                  />
+                                ) : (
+                                  <span className="text-xl font-bold text-gray-700">
+                                    {item.name?.[0] ?? "?"}
+                                  </span>
+                                )}
+                              </div>
 
-                        {focused ? (
-                          <div className="flex flex-col items-center justify-between text-center w-full h-full p-5">
-                            {/* profile */}
-                            <div className="w-20 h-20 rounded-full p-0.75 border border-[#BAE9D3] bg-white">
-                              <img
-                                src={item.Profile}
-                                alt={item.name}
-                                className="w-full h-full rounded-full object-cover"
-                              />
-                            </div>
+                              <p className="mt-3 text-lg font-bold text-[#0A1133] dark:text-black">
+                                {item.name}
+                              </p>
 
-                            {/* name */}
-                            <p className="mt-3 text-lg font-bold  text-[#0A1133]">
-                              {item.name}
-                            </p>
+                              <p className="mt-2 text-ellipsis line-clamp-4 w-66 h-27.75 text-center text-[14px] leading-7 text-[#1B1E36] px-2 dark:text-black">
+                                {item.content}
+                              </p>
 
-                            <p
-                              className="mt-2 text-ellipsis line-clamp-4 w-66 h-27.75 text-center text-[14px]  leading-7 text-[#1B1E36] px-2"
-                            >
-                              {item.content}
-                            </p>
+                              <div className="mt-auto w-full flex justify-between items-center px-2">
+                                <span className="text-[#A9A9A9] text-xs flex items-center gap-1">
+                                  <ClockIcon />
+                                  {item.date}
+                                </span>
 
-                            <div className="mt-auto w-full flex justify-between items-center px-2">
-                              <span className="text-[#A9A9A9] text-xs flex items-center gap-1">
-                                <ClockIcon />
-                                {item.date}
-                              </span>
-
-                              <div className=" cursor-pointer" >
-
-                                <LikeIcon />
+                                <div className="cursor-pointer">
+                                  <LikeIcon />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ) : (
-                          <div className="flex flex-col items-center justify-center text-center px-4">
-                            <div className="w-16 h-16 rounded-full p-0.5 border border-[#D1F3E2] mt-3">
-                              <img
-                                src={item.Profile}
-                                alt={item.name}
-                                className="w-full h-full rounded-full object-cover"
-                              />
+                          ) : (
+                            // --- محتوای اسلاید غیرفعال ---
+                            <div className="flex flex-col items-center justify-center text-center px-4">
+                              <div className="w-16 h-16 rounded-full p-0.5 border border-[#D1F3E2] mt-3 flex items-center justify-center overflow-hidden relative">
+                                {item.Profile ? (
+                                  <Image
+                                    src={item.Profile}
+                                    alt={item.name}
+                                    fill
+                                    className="object-cover rounded-full"
+                                  />
+                                ) : (
+                                  <span className="text-lg font-bold text-gray-700">
+                                    {item.name?.[0] ?? "?"}
+                                  </span>
+                                )}
+                              </div>
+
+                              <p className="mt-4 text-base font-bold text-[#0A1133] dark:text-white">
+                                {item.name}
+                              </p>
+
+                              <p className="mt-2 text-sm leading-6 text-[#1B1E36] dark:text-white">
+                                {item.content.length > 45
+                                  ? `${item.content.slice(0, 45)}...`
+                                  : item.content}
+                              </p>
                             </div>
-                            <p className={[
-                              "mt-4 text-base font-bold", 
-                              focused ? "text-[#0A1133]" : "text-[#0A1133] dark:text-white"
-                            ].join("")}>
-                              {item.name}
-                            </p>
-                            <p className={[
-                              "mt-2 text-sm leading-6", 
-                              focused ? "text-[#1B1E36]" :"dark:text-white"
-                            ].join("")}>
-                              {item.content.slice(0, 45)}...
-                            </p>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              );
-            })}
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          )}
 
-
-
-          </Swiper>
-
+          {/* Navigation Buttons */}
           <div className="absolute right-0 top-38 z-50 mt-4 flex justify-end">
             <div className="flex flex-col gap-3">
               <button
@@ -194,10 +288,11 @@ const FocusCarousel = () => {
             </div>
           </div>
         </div>
-                {/* Arrow */}
-                <div className="hidden lg:flex  absolute -bottom-7 left-0 ">
-                  <HugeArrow />
-                </div>
+
+        {/* Arrow */}
+        <div className="hidden lg:flex absolute -bottom-7 left-0">
+          <HugeArrow />
+        </div>
       </div>
     </div>
   );

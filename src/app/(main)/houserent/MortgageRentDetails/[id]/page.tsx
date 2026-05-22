@@ -141,7 +141,7 @@ const MortgageRentDetails = () => {
         <div className="mt-20">
           <AdvancedScrollAnimation type="slide-up" delay={0.1}>
             <div className="w-full max-w-7xl flex justify-between items-center">
-              <div className="w-18 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-30">
+              <div className="w-20 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-30 max-[600]:hidden">
                 <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center border border-blue-400">
                   <Link />
                 </div>
@@ -151,12 +151,12 @@ const MortgageRentDetails = () => {
               </div>
 
               <div
-                className="flex flex-col gap-4 -mt-8 pr-5 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
+                className="flex flex-col gap-4 -mt-8 pr-5 max-[1024]:pr-16 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
                 dir="rtl"
               >
                 <h2 className="text-2xl font-bold dark:text-white text-blue-400 flex gap-3 max-[1300px]:justify-center">
                   {data.title}
-                  <div className="text-[14px] w-20 font-bold text-gray-600 -mt-2">
+                  <div className="text-[14px] w-20 font-bold text-gray-600 -mt-2 ">
                     <div className="dark:text-white relative right-4.5 top-4">
                       <Star />
                     </div>
@@ -174,7 +174,7 @@ const MortgageRentDetails = () => {
 
           <div className="flex justify-between gap-4 max-[1300px]:flex-col mt-10">
             <div className="flex gap-16 flex-col items-center w-full lg:w-auto">
-                <div className="w-107 h-117 rounded-[40px] justify-center flex p-8 shadow-lg">
+                <div className="w-107 h-117  justify-center flex p-8 ">
                   <Seller
                     sellerName={data.sellerName}
                     sellerId={data.sellerId}
@@ -184,7 +184,7 @@ const MortgageRentDetails = () => {
                   />
                 </div>
               
-                <div className="w-107 flex-col shadow-lg">
+                <div className="w-107 flex-col max-[600]:w-90">
                   <SimilarProperties currentId={data.id} />
                 </div>
               
@@ -203,7 +203,7 @@ const MortgageRentDetails = () => {
 
                 <AdvancedScrollAnimation type="slide-up" delay={0.2}>
                   <div className="w-full flex flex-col justify-start items-end gap-2 mt-16 top-7" dir="rtl">
-                    <div className="flex flex-col justify-start w-full relative top-10 max-[888px]:pr-7">
+                    <div className="flex flex-col justify-start w-full relative top-10 max-[1024]:pr-8">
                       <h2 className="text-blue-100 font-bold text-[14px] ml-12 mb-4">
                         درباره {data.title}
                       </h2>
@@ -220,7 +220,7 @@ const MortgageRentDetails = () => {
 
                 <AdvancedScrollAnimation type="slide-up" delay={0.3}>
                   <div className="w-full mt-10 flex flex-col gap-6" dir="rtl">
-                    <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-7">
+                    <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-7 max-[1024]:pr-12">
                       موقعیت مکانی
                     </h3>
                     
@@ -234,11 +234,11 @@ const MortgageRentDetails = () => {
                       />
                     )}
 
-                    <div className="w-full max-w-177 mt-2 max-[888px]:pr-8">
+                    <div className="w-full  mt-2 max-[1024]:pr-9">
                       <h4 className="text-[rgb(6,4,37)] dark:text-white font-bold text-[16px] mb-3">
                         محل دقیق
                       </h4>
-                      <p className="text-[#475569] text-[15px] leading-8 max-[888px]:w-90 text-justify">
+                      <p className="  text-[#475569] text-[15px] leading-8 max-[1024]:w-140 max-[688]:w-90 text-justify">
                         این ملک در یکی از بهترین نقاط شهر قرار گرفته و دسترسی عالی
                         به مراکز رفاهی دارد.
                       </p>
@@ -248,7 +248,7 @@ const MortgageRentDetails = () => {
               </div>
 
               <AdvancedScrollAnimation type="slide-up" delay={0.4}>
-                <div className="w-full max-[888px]:pr-6" dir="rtl">
+                <div className="w-full max-[1024]:pr-8" dir="rtl">
                   <h3 className="font-bold text-[20px] mt-10 text-right">
                     چرا {data.title}؟
                   </h3>

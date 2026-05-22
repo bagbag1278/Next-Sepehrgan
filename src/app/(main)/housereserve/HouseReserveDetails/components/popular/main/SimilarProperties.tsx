@@ -104,7 +104,7 @@ const SimilarProperties = ({ currentId: propId }: { currentId?: number | null })
 
   if (loading) {
     return (
-      <div className="w-full max-w-[430px] mx-auto p-4 sm:p-6 bg-gray-100 dark:bg-gray-800 rounded-2xl animate-pulse">
+      <div className="w-full  mx-auto p-4 sm:p-6 bg-gray-100 dark:bg-gray-800 rounded-2xl animate-pulse">
         <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-32 mx-auto mb-4"></div>
         <div className="space-y-3">
           <div className="h-24 bg-gray-200 dark:bg-gray-700 rounded-xl"></div>

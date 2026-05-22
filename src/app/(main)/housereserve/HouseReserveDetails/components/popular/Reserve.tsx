@@ -180,7 +180,7 @@ const Reserve = ({ price, discountedPrice, maxCapacity }: ReserveProps) => {
           رزرو هتل
         </h3>
         <div className="flex items-center gap-4 w-full border-b border-gray-100 pb-4 mb-4">
-          <div className="flex-1 relative right-5">
+          <div className="flex-1 relative right-5 max-[600]:right-0">
             <DatePicker
               value={checkIn}
               onChange={handleCheckInChange}
