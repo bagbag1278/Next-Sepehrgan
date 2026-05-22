@@ -1,22 +1,7 @@
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/header/Header";
-import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
-import ThemeManager from "@/components/utils/ThemeManager";
-import { ThemeProvider } from "next-themes";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
@@ -26,23 +11,13 @@ const iran = LocalFont({
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fa" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} bg-white overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
       >
-  
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <ThemeManager>
-            <NeshanMapLoader />
-            <main className="w-full">{children}</main>
-          </ThemeManager>
-          <Footer />
-        </ThemeProvider>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );

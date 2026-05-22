@@ -22,7 +22,7 @@ const Header = () => {
         dir="rtl"
         className="flex justify-between  w-350  mt-6 dark:text-white"
       >
-        <div className="lg:flex xl:flex z-30 items-center  whitespace-nowrap gap-5 hidden sm:hidden sm:flex sm:justify-end">
+        <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 z-20 hidden sm:hidden sm:flex sm:justify-end">
           {nav.map((item) => {
             let isActive =
               item.href === "/"
@@ -72,8 +72,8 @@ const Header = () => {
             <HeroSction2 />
           </div>
         </div>
-       
-        <div className="w-69.5 h-12 z-20 xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden  hidden ">
+
+        <div className="w-69.5 h-12 xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden  hidden ">
           <Link href="/login">
             <div className="text-blue-100 font-bold  cursor-pointer z-20 relative text-[18px] dark:text-[#28A5E6] ">
               ورود

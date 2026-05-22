@@ -49,31 +49,30 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex mt-4 md:mt-6 flex-col justify-between gap-4 md:gap-6 w-full max-w-md mx-auto px-4 md:px-0"
+      className="flex mt-6 flex-col justify-between gap-6"
     >
-      <div className="flex flex-col gap-2 relative w-full">
+      <div className="flex flex-col gap-2 relative">
         <input
           type="text"
           name="tempUserId"
           value={userIdInput}
           onChange={(e) => setUserIdInput(e.target.value)}
-          className="peer w-full dark:text-black border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
+          className="peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=" "
         />
         <label
           htmlFor="tempUserId"
-          className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
-               peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm md:peer-placeholder-shown:text-base
-               peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
-               peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
+          className="absolute right-4 top-2 p-0.5 text-xs text-blue-300/70 transition-all duration-200 ease-out
+               peer-placeholder-shown:top-2 peer-placeholder-shown:text-base
+               peer-focus:top-0 peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
+               peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
         >
           شناسه موقت (ID)
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
-            width="16"
-            height="13"
-            className="md:w-[19px] md:h-[15px]"
+            width="19"
+            height="15"
             viewBox="0 0 19 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -88,29 +87,28 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 relative w-full">
+      <div className="flex flex-col gap-2 relative">
         <input
           type="text"
           name="verificationCode"
           value={codeInput}
           onChange={(e) => setCodeInput(e.target.value)}
-          className="peer w-full dark:text-black border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
+          className="peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=" "
         />
         <label
           htmlFor="verificationCode"
-          className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
-               peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm md:peer-placeholder-shown:text-base
-               peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
-               peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
+          className="absolute right-4 top-2 p-0.5 text-xs text-blue-300/70 transition-all duration-200 ease-out
+               peer-placeholder-shown:top-2 peer-placeholder-shown:text-base
+               peer-focus:top-0 peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
+               peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
         >
           کد تایید
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
-            width="16"
-            height="13"
-            className="md:w-[19px] md:h-[15px]"
+            width="19"
+            height="15"
             viewBox="0 0 19 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -125,12 +123,11 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
         </div>
       </div>
 
-      {error && <p className="text-red-500 text-xs md:text-sm text-center -mt-2">{error}</p>}
-
       <button
         type="submit"
+        onClick={() => onNext()}
         disabled={loading}
-        className={`h-11 md:h-12 w-full rounded-2xl text-white cursor-pointer transition-colors duration-300 ease-in-out text-sm md:text-base
+        className={`h-12 w-full rounded-2xl text-white cursor-pointer transition-colors duration-300 ease-in-out
           ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-100 hover:bg-blue-200"}`}
       >
         {loading ? "در حال بررسی..." : "تایید و ثبت‌نام"}
@@ -139,7 +136,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
       <button
         type="button"
         onClick={onBack}
-        className="text-blue-100 h-11 md:h-12 cursor-pointer hover:bg-blue-50 font-bold border-2 border-blue-100 rounded-2xl dark:text-blue-300 text-[13px] md:text-[15px] transition-colors"
+        className="text-blue-100 h-12 cursor-pointer hover:bg-blue-50 font-bold border-2 border-blue-100 rounded-2xl dark:text-blue-300 text-[15px]"
       >
         مرحله قبل
       </button>

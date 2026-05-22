@@ -1,74 +1,75 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
-interface MapRentProps {
+interface MapProps {
   locationId: number;
   houseId: number;
-  lat?: number | string;
-  lng?: number | string;
-}
+  lat?: number;     
+  lng?: number;
+} 
 
-const MapRent = ({ locationId, houseId, lat, lng }: MapRentProps) => {
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
-    null,
-  );
+const MapRent = ({ locationId, houseId, lat, lng }: MapProps) => {
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [icon, setIcon] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchLocation = async () => {
-      if (lat && lng) {
-        setCoords({
-          lat: typeof lat === "string" ? parseFloat(lat) : lat,
-          lng: typeof lng === "string" ? parseFloat(lng) : lng,
-        });
-        setLoading(false);
-      } else {
-        setError("مختصات ملک یافت نشد");
+      try {
+        setLoading(true);
+        // اتصال مستقیم به API که دادی
+        const response = await fetch(`http://next.genzuni.website/api/locations/${locationId}`);
+        
+        if (!response.ok) throw new Error("خطا در پاسخ سرور");
+
+        const data = await response.json();
+        console.log("دیتای دریافتی از لوکیشن:", data);
+
+        if (data.lat && data.lng) {
+          setCoords({
+            lat: parseFloat(data.lat),
+            lng: parseFloat(data.lng),
+          });
+        }
+      } catch (error) {
+        console.error("اتصال به API لوکیشن برقرار نشد:", error);
+      } finally {
         setLoading(false);
       }
     };
-    fetchLocation();
-  }, [locationId, lat, lng]);
 
-  if (loading) {
-    return (
-      <div className="w-full h-[407px] bg-gray-200 animate-pulse flex items-center justify-center rounded-2xl ">
-        <span className="text-gray-500">در حال بارگذاری نقشه...</span>
-      </div>
-    );
+    const L = require("leaflet");
+    const customIcon = new L.Icon({
+      iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+      shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+    });
+    setIcon(customIcon);
+
+    if (locationId) fetchLocation();
+  }, [locationId]);
+  if (loading || !coords) {
+    return <div className="w-full h-[307px] bg-gray-200 animate-pulse flex items-center justify-center rounded-2xl">در حال اتصال به نقشه...</div>;
   }
-
-  if (error || !coords) {
-    return (
-      <div className="w-full h-[307px] bg-gray-100 flex items-center justify-center rounded-2xl">
-        <span className="text-gray-500">
-          {error || "موقعیت مکانی موجود نیست"}
-        </span>
-      </div>
-    );
-  }
-
-  const mapSrc = `https://nshn.ir/embed?lat=${coords.lat}&lng=${coords.lng}&z=15&p=1`;
 
   return (
-    <div className="flex justify-center w-full ">
-          <div className="w-full h-[507px] max-[888]:w-90 max-[888]:h-120   relative rounded-2xl rounded-tl-[50px] rounded-br-[50px] overflow-hidden border-8 dark:border-[#0d084f] border-white shadow-lg">
-      <iframe
-        src={mapSrc}
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        allowFullScreen
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="نقشه نشان"
-        className="rounded-2xl"
-      />
+    <div className="w-[694px] h-[307px] relative rounded-2xl rounded-tl-[50px] rounded-br-[50px] overflow-hidden border-8 dark:border-[#0d084f]  border-white shadow-lg z-0">
+      <MapContainer
+        center={[coords.lat, coords.lng]}
+        zoom={15}
+        style={{ height: "100%", width: "100%" }}
+        key={`${coords.lat}-${coords.lng}`}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Marker position={[coords.lat, coords.lng]} icon={icon}>
+          <Popup>آی‌دی ملک: {houseId}</Popup>
+        </Marker>
+      </MapContainer>
     </div>
-    </div>
-
   );
 };
 

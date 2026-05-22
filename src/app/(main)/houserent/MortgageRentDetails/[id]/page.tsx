@@ -9,111 +9,66 @@ import dynamic from "next/dynamic";
 
 import React, { useEffect, useState } from "react";
 import SwiperGalery from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/Slider/SwiperGalery";
-
+import Seller from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/Seller";
+import Like from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/Like";
 import Bread from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Header/Bread";
 import { useParams } from "next/navigation";
-import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
-import Like from "../components/HouseRent/Like";
-import Seller from "../components/HouseRent/Seller";
-import RentSimilarProperties from "../components/HouseRent/RentSimilarProperties";
-import SimilarProperties from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/SimilarProperties";
+import RentSimilarProperties from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/RentSimilarProperties";
 
 const MapRent = dynamic(
-  () => import("../components/HouseRent/MapRent"),
+  () =>
+    import("@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/MapRent"),
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-[307px] bg-gray-100 animate-pulse rounded-2xl flex items-center justify-center">
-        <span className="text-gray-400">در حال بارگذاری نقشه...</span>
-      </div>
+      <div className="h-[307px] bg-gray-100 animate-pulse rounded-2xl" />
     ),
-  }
+  },
 );
 
 const MortgageRentDetails = () => {
   const params = useParams();
-  const houseId = params?.id ? Number(params.id) : null;
-
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [locationData, setLocationData] = useState<any>(null);
-  const [locationLoading, setLocationLoading] = useState(true);
+
+  const fetchRentData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `http://next.genzuni.website/api/houses/${params.id}`,
+      );
+
+      if (!response.ok) throw new Error("مورد یافت نشد");
+
+      const result = await response.json();
+      console.log("الان دیتا رسید:", result);
+      console.log("اطلاعات کاربر در دیتا:", result.user); // چک کن ببین user داری یا نه
+      setData(result);
+    } catch (error) {
+      console.error("Error fetching house details:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchLocation = async () => {
-      if (!houseId) return;
-      
-      try {
-        setLocationLoading(true);
-        const response = await fetch(
-          `http://next.genzuni.website/api/locations/${houseId}`
-        );
-        
-        if (!response.ok) {
-          console.warn(`لوکیشن با آیدی ${houseId} یافت نشد. از مختصات پیشفرض استفاده می‌شود.`);
-          setLocationData({
-            id: houseId,
-            lat: "36.5633", 
-            lng: "53.0601",
-          });
-        } else {
-          const result = await response.json();
-          console.log("دیتای لوکیشن:", result);
-          setLocationData(result);
-        }
-      } catch (error) {
-        console.error("خطا در گرفتن لوکیشن:", error);
-        setLocationData({
-          id: houseId,
-          lat: "36.5633",
-          lng: "53.0601",
-        });
-      } finally {
-        setLocationLoading(false);
-      }
-    };
+    if (params.id) {
+      fetchRentData();
+    }
+  }, [params.id]);
 
-    fetchLocation();
-  }, [houseId]);
-
-  useEffect(() => {
-    const fetchRentData = async () => {
-      if (!houseId) return;
-      
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `http://next.genzuni.website/api/houses/${houseId}`
-        );
-        
-        if (!response.ok) throw new Error("مورد یافت نشد");
-        
-        const result = await response.json();
-        console.log("🏠 دیتای هتل:", result);
-        setData(result);
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRentData();
-  }, [houseId]);
-
-  if (loading && !data) {
+  // نمایش حالت لودینگ
+  if (loading)
     return (
       <div className="text-center mt-20 animate-pulse">
         در حال دریافت اطلاعات...
       </div>
     );
-  }
 
-  if (!data) {
+  if (!data)
     return (
       <div className="text-center mt-20">اطلاعاتی برای این شناسه یافت نشد.</div>
     );
-  }
 
   const breadcrumbItems = [
     { title: "رزرو هتل", href: "/housereserve" },
@@ -123,58 +78,57 @@ const MortgageRentDetails = () => {
 
   return (
     <div>
-      <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative dark:text-white">
-        <AdvancedScrollAnimation type="slide-up" delay={0.1}>
+      <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative dark:text-white ">
+        <div className="w-full">
+          <Bread items={breadcrumbItems} />
+        </div>
+
+        <div className="w-full h-102 flex">
           <div className="w-full">
-            <Bread items={breadcrumbItems} />
+            <SwiperGalery images={data.images || []} />
           </div>
-        </AdvancedScrollAnimation>
+        </div>
 
-        <AdvancedScrollAnimation type="scale" delay={0.1}>
-          <div className="w-full h-102 flex">
-            <div className="w-full">
-              <SwiperGalery images={data.images || []} />
-            </div>
-          </div>
-        </AdvancedScrollAnimation>
-
-        <div className="mt-20">
-          <AdvancedScrollAnimation type="slide-up" delay={0.1}>
-            <div className="w-full max-w-7xl flex justify-between items-center">
-              <div className="w-20 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-30 max-[600]:hidden">
-                <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center border border-blue-400">
-                  <Link />
-                </div>
-                <div>
-                  <Like />
-                </div>
+        <div className="mt-20 ">
+          <div className="w-full max-w-7xl flex justify-between items-center">
+            <div className="w-18 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-30">
+              <div className="w-8 h-8 bg-[#F5F5F5] rounded-lg flex items-center justify-center border border-blue-400 ">
+                <Link />
               </div>
+              <div className="">
+                <Like />
+              </div>
+            </div>
 
-              <div
-                className="flex flex-col gap-4 -mt-8 pr-5 max-[1024]:pr-16 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
-                dir="rtl"
-              >
-                <h2 className="text-2xl font-bold dark:text-white text-blue-400 flex gap-3 max-[1300px]:justify-center">
-                  {data.title}
-                  <div className="text-[14px] w-20 font-bold text-gray-600 -mt-2 ">
-                    <div className="dark:text-white relative right-4.5 top-4">
-                      <Star />
-                    </div>
-                    {data.rate}
+            <div
+              className="flex flex-col gap-4 -mt-8 pr-5 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
+              dir="rtl"
+            >
+              <h2 className="text-2xl font-bold dark:text-white  text-blue-400 flex gap-3 max-[1300px]:justify-center">
+                {data.title}
+
+                <div className="text-[14px]  w-20   font-bold text-gray-600 -mt-2 max-[1300px]">
+                  <div className="dark:text-white  relative right-4.5 top-4 ">
+                    <Star />
                   </div>
-                </h2>
 
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Loaction />
-                  <span className="text-[14px] font-bold">{data.address}</span>
+                  {data.rate}
                 </div>
+              </h2>
+
+              <div className="flex items-center gap-2 text-gray-500">
+                <Loaction />
+
+                <span className="text-[14px] font-bold">{data.address}</span>
               </div>
             </div>
-          </AdvancedScrollAnimation>
+          </div>
 
           <div className="flex justify-between gap-4 max-[1300px]:flex-col mt-10">
+            {/* سایدبار سمت چپ */}
             <div className="flex gap-16 flex-col items-center w-full lg:w-auto">
-                <div className="w-107 h-117  justify-center flex p-8 ">
+              <div className="w-107 h-117 rounded-[40px] justify-center flex p-8 shadow-lg ">
+               
                   <Seller
                     sellerName={data.sellerName}
                     sellerId={data.sellerId}
@@ -182,12 +136,11 @@ const MortgageRentDetails = () => {
                     discountedPrice={data.discounted_price}
                     lastUpdated={data.last_updated}
                   />
-                </div>
-              
-                <div className="w-107 flex-col max-[600]:w-90">
-                  <SimilarProperties currentId={data.id} />
-                </div>
-              
+           
+              </div>
+              <div className="w-107 flex-col shadow-lg ">
+                <RentSimilarProperties currentId={data.id} />
+              </div>
               <div className="absolute -left-35 bottom-120 transform rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
                 <FleshHome />
               </div>
@@ -195,74 +148,68 @@ const MortgageRentDetails = () => {
 
             <div className="flex-1 w-full max-w-200 h-auto rounded-2xl flex flex-col items-center gap-6 bg-white dark:text-white dark:bg-[#060425] shadow-lg p-6 mx-auto">
               <div className="flex flex-wrap gap-10 justify-center w-full">
-                <AdvancedScrollAnimation type="fade" delay={0.1}>
-                  <div className="w-full">
-                    <Popular data={data} />
+                <div className="w-full">
+                  <Popular data={data} />
+                </div>
+
+                <div
+                  className="w-full flex flex-col justify-start  items-end gap-2 mt-16  top-7"
+                  dir="rtl"
+                >
+                  <div className="flex flex-col justify-start w-full relative top-10">
+                    <h2 className="text-blue-100  font-bold text-[14px] ml-12 mb-4">
+                      درباره {data.title}
+                    </h2>
+
+                    <p className=" text-[16px] text-[#475569] font-black  mb-4">
+                      {data.caption}
+                    </p>
                   </div>
-                </AdvancedScrollAnimation>
 
-                <AdvancedScrollAnimation type="slide-up" delay={0.2}>
-                  <div className="w-full flex flex-col justify-start items-end gap-2 mt-16 top-7" dir="rtl">
-                    <div className="flex flex-col justify-start w-full relative top-10 max-[1024]:pr-8">
-                      <h2 className="text-blue-100 font-bold text-[14px] ml-12 mb-4">
-                        درباره {data.title}
-                      </h2>
-                      <p className="text-[16px] text-[#475569] font-black mb-4">
-                        {data.caption}
-                      </p>
-                    </div>
-
-                    <div className="w-full max-w-180">
-                      <p className="leading-8 text-justify">{data.description}</p>
-                    </div>
+                  <div className="w-full max-w-180">
+                    <p className=" leading-8 text-justify">
+                      {data.description}
+                    </p>
                   </div>
-                </AdvancedScrollAnimation>
+                </div>
 
-                <AdvancedScrollAnimation type="slide-up" delay={0.3}>
-                  <div className="w-full mt-10 flex flex-col gap-6" dir="rtl">
-                    <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-7 max-[1024]:pr-12">
-                      موقعیت مکانی
-                    </h3>
-                    
-                    {locationLoading ? (
-                      <div className="w-full h-[307px] bg-gray-200 animate-pulse rounded-2xl" />
-                    ) : (
-                      <MapRent
-                        lat={locationData?.lat}
-                        lng={locationData?.lng}
-                        address={data?.address}
-                      />
-                    )}
-
-                    <div className="w-full  mt-2 max-[1024]:pr-9">
-                      <h4 className="text-[rgb(6,4,37)] dark:text-white font-bold text-[16px] mb-3">
-                        محل دقیق
-                      </h4>
-                      <p className="  text-[#475569] text-[15px] leading-8 max-[1024]:w-140 max-[688]:w-90 text-justify">
-                        این ملک در یکی از بهترین نقاط شهر قرار گرفته و دسترسی عالی
-                        به مراکز رفاهی دارد.
-                      </p>
-                    </div>
+                {/* بخش نقشه */}
+                <div className="w-full mt-10 flex flex-col gap-6" dir="rtl">
+                  <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px]">
+                    موقعیت مکانی
+                  </h3>
+                  <MapRent
+                    locationId={data.location_id || 6}
+                    houseId={data.id}
+                    lat={parseFloat(data.latitude) || 0}
+                    lng={parseFloat(data.longitude) || 0}
+                  />
+                  <div className="w-full max-w-177 mt-2">
+                    <h4 className="text-[rgb(6,4,37)] dark:text-white  font-bold text-[16px] mb-3">
+                      محل دقیق
+                    </h4>
+                    <p className="text-[#475569] text-[15px] leading-8 text-justify">
+                      این ملک در یکی از بهترین نقاط شهر قرار گرفته و دسترسی عالی
+                      به مراکز رفاهی دارد.
+                    </p>
                   </div>
-                </AdvancedScrollAnimation>
+                </div>
               </div>
 
-              <AdvancedScrollAnimation type="slide-up" delay={0.4}>
-                <div className="w-full max-[1024]:pr-8" dir="rtl">
-                  <h3 className="font-bold text-[20px] mt-10 text-right">
-                    چرا {data.title}؟
-                  </h3>
-                  <p className="font-medium text-[16px] text-gray-600 mt-5 text-right leading-8">
-                    {data.whydescription || data.caption}
-                  </p>
-                </div>
-              </AdvancedScrollAnimation>
+              {/* بخش چرا انتخاب این ملک؟ */}
+              <div className="w-full" dir="rtl">
+                <h3 className="font-bold text-[20px] mt-10 text-right">
+                  چرا {data.title}؟
+                </h3>
+                <p className="font-medium text-[16px] text-gray-600 mt-5 text-right leading-8">
+                  {data.whydescription || data.caption}
+                </p>
+              </div>
 
-              <AdvancedScrollAnimation type="slide-up" delay={0.5}>
-                <div className="w-full flex mt-8">
-                  {houseId && <CommentsSection houseId={houseId} />}
-                </div>
-              </AdvancedScrollAnimation>
+              {/* بخش نظرات */}
+              <div className="w-full mt-8">
+                <CommentsSection houseId={data.id} />
+              </div>
             </div>
           </div>
         </div>

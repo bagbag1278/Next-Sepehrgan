@@ -1,6 +1,5 @@
 "use client";
 
-import { toPersianNum } from "@/components/utils/FarsiNum";
 import DarkModeHero from "./HeroFilter/DarkModeHero";
 import ModalSearchRes from "./HeroFilter/FliterRes/ModalSaerchRes";
 import Frame from "./HeroFilter/Frame";
@@ -28,10 +27,10 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-         <div className="flex max-[1024]:right-80  max-[1024]:mt-10 max-[970]:right-70 max-[890]:right-65 max-[800]:right-54 max-[750]:right-44 max-[636]:right-0 justify-center  xl:h-188 h-206  relative  ">
-        <div className="">
+      <div className="flex justify-center  xl:w-full xl:max-w-318.25 lg:w-full   max-[1023]:w-11/12 max-[1023]:mr-80 max-[923]:mr-70 max-[823]:mr-55 max-[723]:mr-45 pr-4 max-[640]:mr-2   lg:max-w-318.25     xl:h-188 h-263  lg:m-auto  relative  ">
+        <div className="fixed left-5 top-158 z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
-          </div>
+        </div>
         <div className="absolute top-118 left-1/2 -translate-x-1/2 flex justify-center z-10">
           {" "}
           <div className="w-255 h-35 bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] max-[1024]:hidden rounded-xl relative gap-5.5 flex   z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] lg:block xl:block">
@@ -48,7 +47,7 @@ const HeroSction = () => {
               <Frame />
             </div>
           </div>
-          <div className="relative     right-60  top-[135px] max-[640]:right-165 xl:hidden lg:hidden block ">
+          <div className="relative     right-60  top-[185px]  hidden lg:hidden xl:hidden  sm:block ">
             <div className="absolute left-15  bottom-75 ">
               <FelshRes />
             </div>
@@ -64,12 +63,9 @@ const HeroSction = () => {
             </div>
           </div>
           <div className="xl:w-127.5 xl:h-95 lg:w-127.5 lg:h-95 sm:w-0 sm:h-0  flex self-center right-0 sm:right-12 sm:-top-30  xl:top-0 lg:top-0 sm:relative  ">
-            <div className=" text-[50px] max-[1024]:text-[32px] font-black leading-17.5 max-[1024]:leading-12 max-[1024]: sm:font-black sm:relative sm:-right-8  right-112 bottom-10 sm:bottom-0 xl:bottom-0 lg:bottom-0 relative max-[1024]:bottom-3 ">
-             <div className="max-[500]:left-5 relative">
-               با ما به <span className="text-green-100 ">خانه‌تان</span>{" "}
+            <div className=" xl:text-[50px]  lg:text-[50px] sm:text-[32px] font-black leading-17.5 sm:font-black sm:relative sm:-right-8 right-112 bottom-10 sm:bottom-0 xl:bottom-0 lg:bottom-0 relative  ">
+              با ما به <span className="text-green-100 ">خانه‌تان</span>{" "}
               نزدیک‌تر شوید !
-             </div>
-             
               <div className="flex flex-wrap mt-8">
                 <div className="flex font-bold leading-2 gap-4">
                   <button className="w-62.5 text-[16px] h-12 rounded-2xl border-2 cursor-pointer bg-blue-100 dark:bg-[#F5F5F5] dark:text-black text-white  sm:relative sm:right-10 xl:right-0 xl:relative lg:right-0 lg:relative">
@@ -85,12 +81,11 @@ const HeroSction = () => {
             </div>
 
             {/* comprof */}
-            <div className=" w-71.5 h-29 max-[640]:right-80
-             xl:relative xl:left-23 lg:left-23 relative -left-110 -top-12 sm:left-10 max-[500]:right-86  sm:-top-4 ">
+            <div className=" w-71.5 h-29  xl:relative xl:left-23 lg:left-23 relative -left-110 -top-12 sm:left-10 sm:-top-4 ">
               <div className="w-14 h-14  rounded-4xl absolute top-1 bg-center  ">
                 <Profiles />
               </div>
-              <div className="w-8 h-8 max-[500]:-right-4 max-[500]:top-16 max-[500]:absolute rounded-4xl absolute top-[40px] right-[75px] ">
+              <div className="w-8 h-8  rounded-4xl absolute top-[40px] right-[75px] ">
                 <Profiless />
               </div>
               <div className="w-12 h-12  rounded-4xl  absolute top-[75px] right-[25px] ">
@@ -99,7 +94,7 @@ const HeroSction = () => {
             </div>
 
             <div className="hidden lg:block xl:block sm:hidden">
-              <div className="absolute flex -bottom-30 -right-78 items-center gap-3 rotate-90 whitespace-nowrap">
+              <div className="absolute flex -bottom-30 -right-66 items-center gap-3 rotate-90 whitespace-nowrap">
                 <span className="text-[12px] font-medium text-[#15977D80] ">
                   اسکرول کن بعدش خوش گلدی
                 </span>
@@ -122,14 +117,14 @@ const HeroSction = () => {
               <div className="w-[522px] h-[79px] dark:text-white flex flex-wrap gap-35 absolute font-bold items-center text-3xl ">
                 <div className="">
                   {" "}
-                  {toPersianNum("2625")}
+                  2625
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-130 bottom-11 text-[21px] ">
                     +
                   </span>
                 </div>
                 <div className="">
                   {" "}
-                  {toPersianNum("266")}
+                  266
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-78 bottom-11 text-[21px]">
                     +
                   </span>
@@ -143,7 +138,7 @@ const HeroSction = () => {
                 </div>
                 <div className="">
                   {" "}
-                  {toPersianNum("6595")}
+                  6595
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-30   bottom-11 text-[21px]">
                     +
                   </span>
@@ -154,7 +149,7 @@ const HeroSction = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center w-full relative top-80 left-[170px] sm:left-4 sm:block lg:hidden xl:hidden ">
+          <div className="flex justify-center w-full relative top-80 left-[160px] sm:left-4 sm:block lg:hidden xl:hidden ">
             <SwiperResponsiv />{" "}
           </div>
 
@@ -164,7 +159,7 @@ const HeroSction = () => {
               <SwiperComponent />
             </div>
 
-            <div className="relative left-[15px] top-[162px] block  max-[1225]:hidden  ">
+            <div className="relative     left-[15px] top-[162px] hidden lg:hidden xl:block ">
               <div className="absolute left-15  bottom-70 dark:hidden">
                 <Profile1 />
               </div>

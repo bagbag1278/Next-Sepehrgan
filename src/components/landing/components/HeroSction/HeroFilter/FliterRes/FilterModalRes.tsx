@@ -11,6 +11,7 @@ const FilterModalRes = () => {
   const [isDestOpen, setIsDestOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
   
+  // بازه قیمت (به میلیون تومان)
   const [priceRange, setPriceRange] = useState([0, 100]);
 
   const [filters, setFilters] = useState({

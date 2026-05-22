@@ -7,7 +7,6 @@ interface Passenger {
   nationalCode: string;
   gender: string;
   birthDate: string;
-  
 }
 
 interface Props {
