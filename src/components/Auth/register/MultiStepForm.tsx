@@ -34,7 +34,7 @@ export default function MultiStepForm({
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="w-full max-w-md mx-auto mt-6 md:mt-10 px-4 md:px-0">
       <RegistrationSteps step={currentStep} setStep={setCurrentStep} />
 
       <AnimatePresence mode="wait">

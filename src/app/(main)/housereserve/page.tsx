@@ -16,7 +16,7 @@ const HouseReservePage = async () => {
   }
 
   return (
-    <div dir="rtl" className="relative mx-auto">
+    <div dir="rtl" className="relative mx-auto max-w-360">
       <div className="h-5.5 absolute top-6 right-24">
         <Breadcrumbs />
       </div>

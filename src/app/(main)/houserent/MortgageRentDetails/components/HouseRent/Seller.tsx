@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ChatIcon from "../../../../../../components/HouseDetails/icon/icon/ChatIcon";
+import { MessageCircle } from "lucide-react";
 
 interface SellerProps {
   sellerName?: string;
@@ -14,14 +14,13 @@ const Seller = ({ sellerName, sellerId, price, discountedPrice, lastUpdated }: S
   
   const date = lastUpdated 
     ? new Date(lastUpdated).toLocaleDateString("fa-IR") 
-    : "۱۸ خرداد ۱۴۰۴";
+    : "۱۸ خرداد ۱۴۰۴";  
 
   const avatar = `https://ui-avatars.com/api/?name=${sellerName || 'Admin'}&background=random`;
 
   return (
-    <div className="w-107 h-117 bg-white dark:text-white dark:bg-[#060425] rounded-[40px] p-13 relative shadow-[0px_10px_40px_rgba(8,135,202,0.1)] flex flex-col justify-center items-center" dir="rtl">
+    <div className="w-107 max-[600]:w-90 h-117  dark:text-white dark:bg-[#060425] rounded-[40px] p-13 relative shadow-[0px_10px_40px_rgba(8,135,202,0.1)] flex flex-col justify-center items-center" dir="rtl">
       
-      {/* هدر بخش */}
       <h3 className="text-[#10088F] font-black text-[15px]">
         اطلاعات قیمت و تماس
       </h3>
@@ -42,7 +41,6 @@ const Seller = ({ sellerName, sellerId, price, discountedPrice, lastUpdated }: S
         </span>
       </div>
 
-      {/* خط جداکننده مطابق دیزاین قبلی */}
       <div className="w-[324px] h-[1px] bg-gray-200 mt-5 mb-8"></div>
 
       <div className="w-full flex flex-col gap-5 mb-10">
@@ -56,7 +54,6 @@ const Seller = ({ sellerName, sellerId, price, discountedPrice, lastUpdated }: S
           </div>
         </div>
 
-        {/* بخش تخفیف در صورت وجود */}
         {discountedPrice && discountedPrice !== price && (
           <div className="flex justify-between items-center">
             <span className="text-[#64748B] text-[14px] font-bold"> قیمت اجاره از</span>
@@ -71,15 +68,14 @@ const Seller = ({ sellerName, sellerId, price, discountedPrice, lastUpdated }: S
       </div>
 
       <div className="w-full flex flex-col gap-4">
-        <button className="w-79 h-12 bg-[#15977D] hover:bg-[#05b0a1] text-white rounded-[18px] text-[18px] font-black transition-all flex items-center justify-center gap-2 ">
+        <button className="w-79 max-[600]:w-60 h-12 bg-[#15977D] hover:bg-[#05b0a1] text-white rounded-[18px] text-[18px] font-black transition-all flex items-center justify-center gap-2 ">
        تماس با 6598***0911
         </button>
 
-        {/* بخش گفتگو با استایل آیکون شناور قبلی */}
         <span className="justify-center flex items-center cursor-pointer hover:opacity-80 transition-all">
           گفتگو با فروشنده
           <div className="w-8 h-8 text-white rounded-lg flex items-center justify-center mr-2 bg-[#005EA4]">
-            <ChatIcon />
+<MessageCircle size={20} className="text-white" />
           </div>
         </span>
       </div>

@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
+import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
+import ThemeManager from "@/components/utils/ThemeManager";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
-import { Toaster } from "react-hot-toast";
+import "./globals.css";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,21 +26,21 @@ const iran = LocalFont({
 
 export default function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="fa" suppressHydrationWarning>
       <body
-        className={`${iran.className} bg-white overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Toaster position="top-center" gutter={8} />
+  
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <main className="w-full max-w-360">{children}</main>
+          <ThemeManager>
+            <NeshanMapLoader />
+            <main className="w-full">{children}</main>
+          </ThemeManager>
           <Footer />
         </ThemeProvider>
       </body>

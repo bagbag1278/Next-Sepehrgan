@@ -200,8 +200,7 @@ const handleSearch = () => {
               </div>
             </>
           ) : (
-            <>
-            <div className="w-[180px] h-[70px] flex flex-col justify-center px-4">
+            <>           <div className="w-[180px] h-[70px] flex flex-col justify-center px-4">
                 <span className="text-[16px] font-bold text-[#060425]">
                   نوع ملک
                 </span>
