@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react'
 import BreadCrumb from './AddressPage/BreadCrumb'
 import Filters from './Filter/FiltersSection'
 import Content from './Content/HousesList'
-import Pagination from './Content/Pagination/Pagination'
-
 
 const HouseRent = () => {
   const [houses, setHouses] = useState([]);
@@ -42,12 +40,18 @@ const HouseRent = () => {
       </div>
     );
   }
-
   return (
     <div className='flex justify-center flex-wrap gap-6.5' dir='rtl'>
+{/* filter house +++== */}
       <BreadCrumb />
       <Filters />
-      <Content houses={houses} />
+{/* //////////// */}
+
+{/* houses ++++++++ */}
+      <Content
+        houses={houses}
+      />
+      
     </div>
   )
 }
