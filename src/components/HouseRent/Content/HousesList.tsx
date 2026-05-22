@@ -7,55 +7,30 @@ import LocationIcon from './Icon/LocationIcon'
 import HouseImage from './Icon/HouseImage'
 import Pagination from './Pagination/Pagination'
 
-
-type HouseItem = {
-  title: string
-  place: string
-  image: string
-  point: string
-  price: string
-  infokh: string
-  infoH: string
-  infoCar: string
-  infolast: string
+interface House {
+  id: number;
+  title: string;
+  address: string;
+  price: string;
+  photos?: string[] | null;
+  tags?: string[];
+  rooms?: number;
+  bathrooms?: number;
+  parking?: number;
+  capacity?: number;
 }
 
-interface Iprops {
-    currentPage: number;
-  totalPages: number;
+interface Props {
+  houses: House[];
 }
 
-const HousesList = ({ currentPage, totalPages }: Iprops) => {
-  const InfoHouses: HouseItem[] = [
-    { title: "خوشتیپ", place: "آمریکا جنب مک دونالد", image: "", point: "", price: "90000450", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "بد ریخت", place: "فرانسه نرسیده به کقوسان", image: "", point: "", price: "200000", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 1", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 2", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 3", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 4", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 5", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 6", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 7", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 8", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 9", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 10", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 11", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 12", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 13", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 14", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 15", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-    { title: "سگ 16", place: "ساری کنار مرکز جهان", image: "", point: "", price: "بینهات", infokh: "", infoH: "", infoCar: "", infolast: "" },
-  ]
 
-  const itemsPerPage = 10
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const visibleHouses = InfoHouses.slice(startIndex, endIndex)
+const HousesList = ({houses} : Props) => {
 
   return (
     <div className='w-full flex justify-center'>
       <div className='w-312 flex flex-wrap justify-between gap-1'>
-        {visibleHouses.map((items, idx) => (
+        {houses.map((items, idx) => (
           <div
             className='shadow-2xl border border-gray-500/20  rounded-4xl w-153 h-54 flex flex-wrap items-center my-2 justify-around'
             key={idx}
@@ -71,7 +46,7 @@ const HousesList = ({ currentPage, totalPages }: Iprops) => {
                 </div>
                 <div className="flex items-center gap-1 text-blue-400 text-[13px]">
                   <LocationIcon />
-                  <span>{items.place}</span>
+                  <span>{items.address}</span>
                 </div>
               </div>
 
@@ -106,8 +81,9 @@ const HousesList = ({ currentPage, totalPages }: Iprops) => {
           </div>
         ))}
 
+        {/* pagination ====/ */}
         <div className="w-full mt-6">
-          <Pagination currentPage={currentPage} totalPages={totalPages} />
+          <div className='w-full border border-pink-500 h-10 '></div>
         </div>
       </div>
     </div>
