@@ -5,7 +5,6 @@ import CarIcon from './Icon/CarIcon'
 import TreeIcon from './Icon/TreeIcon'
 import LocationIcon from './Icon/LocationIcon'
 import HouseImage from './Icon/HouseImage'
-import Pagination from './Pagination/Pagination'
 
 interface House {
   id: number;
@@ -25,7 +24,7 @@ interface Props {
 }
 
 
-const HousesList = ({houses} : Props) => {
+const HousesList = ({ houses }: Props) => {
 
   return (
     <div className='w-full flex justify-center'>
@@ -82,8 +81,7 @@ const HousesList = ({houses} : Props) => {
         ))}
 
         {/* pagination ====/ */}
-        <div className="w-full mt-6">
-          <div className='w-full border border-pink-500 h-10 '></div>
+        <div className="w-full mt-6 border border-pink-500">
         </div>
       </div>
     </div>
@@ -91,3 +89,27 @@ const HousesList = ({houses} : Props) => {
 }
 
 export default HousesList
+
+
+// const handlePrevious = () => {
+//         if (currentPage > 1) {
+//             onPageChange(currentPage - 1);
+//         }
+//     };
+
+//     const handleNext = () => {
+//         if (currentPage < totalPages) {
+//             onPageChange(currentPage + 1);
+//         }
+//     };
+
+//  <button
+//                   key={page}
+//                   onClick={() => onPageChange(page)}
+//                   className={`px-4 py-2 rounded-md border ${currentPage === page
+//                       ? 'bg-blue-500 text-white font-bold'
+//                       : 'bg-white text-black hover:bg-gray-100'
+//                       }`}
+//               >
+//                   {page}
+//               </button>
