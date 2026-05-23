@@ -29,7 +29,7 @@ const RegisterLayout: FC<IChildren> = ({ children }) => {
           </span>
         </div>
         <div className="max-[600]:hidden">
-                  <ImageSlider images={slideImages} delay={5000} />
+            <ImageSlider images={slideImages} delay={5000} />
         </div>
 
       </div>

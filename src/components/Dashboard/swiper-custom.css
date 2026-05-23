@@ -1,0 +1,100 @@
+/* ----- Container برای کل اسلایدر ----- */
+.custom-slider-container {
+  /* می‌توانید تنظیمات بیشتری اینجا اضافه کنید */
+}
+
+/* ----- کلاس اصلی Swiper ----- */
+.mySwiper {
+  width: 100%;
+  padding-top: 50px; /* فضای بالا برای اینکه اسلایدهای کناری دیده شوند */
+  padding-bottom: 50px; /* فضای پایین برای pagination */
+  overflow: visible; /* اجازه می‌دهد آیتم‌های کناری دیده شوند */
+}
+
+/* ----- استایل اسلایدر ----- */
+.mySwiper .swiper-slide {
+  /* برای slidesPerView: 'auto' اندازه اسلایدها به محتوا بستگی دارد. */
+  /* ما اندازه را در wrapper داخلی تنظیم می‌کنیم */
+  display: flex;
+  justify-content: center; /* آیتم داخلی را در مرکز قرار می‌دهد */
+  align-items: center;
+  width: auto !important; /* اندازه اسلاید باید خودکار باشد */
+  padding: 0 20px; /* کمی فاصله بین اسلایدها */
+}
+
+/* ----- wrapper داخلی برای کنترل اندازه و افکت ----- */
+.slider-item-wrapper {
+  width: 200px; /* اندازه پیش‌فرض اسلاید کناری */
+  height: 200px; /* اندازه پیش‌فرض اسلاید کناری */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* برای دایره‌ای کردن wrapper */
+  transition: all 0.5s ease; /* انیمیشن برای تغییر اندازه و opacity */
+  opacity: 0.7; /* opacity پیش‌فرض برای اسلایدهای کناری */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* سایه ملایم */
+}
+
+/* ----- استایل آیتم دایره‌ای واقعی ----- */
+.circle-item {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8); /* پس‌زمینه برای زمانی که رنگ wrapper نیست */
+}
+
+.item-image {
+  width: 100%; /* عکس کل دایره را بپوشاند */
+  height: 100%;
+  object-fit: cover; /* تصویر را بدون تغییر نسبت ابعاد، کل فضا را بپوشاند */
+  border-radius: 50%; /* اطمینان از دایره‌ای بودن تصویر */
+}
+
+
+/* ----- استایل آیتم فعال (وسطی) ----- */
+.slider-item-wrapper.active-slide {
+  width: 300px; /* بزرگتر کردن اندازه */
+  height: 300px; /* بزرگتر کردن اندازه */
+  opacity: 1; /* opacity کامل */
+  transform: scale(1.2); /* مقیاس بیشتر برای برجسته شدن */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2); /* سایه قوی‌تر */
+  z-index: 10; /* اطمینان از اینکه روی آیتم‌های دیگر باشد */
+}
+
+/* ----- تنظیمات pagination ----- */
+.mySwiper .swiper-pagination-bullet {
+  background: #3b82f6; /* رنگ pagination */
+  opacity: 0.8;
+}
+
+.mySwiper .swiper-pagination-bullet-active {
+  background: #2563eb; /* رنگ pagination فعال */
+  opacity: 1;
+}
+
+/* ----- تنظیمات navigation (دکمه‌های قبلی/بعدی) ----- */
+.mySwiper .swiper-button-prev,
+.mySwiper .swiper-button-next {
+  color: #2563eb; /* رنگ دکمه‌ها */
+  top: 50%; /* قرار دادن در وسط عمودی */
+  transform: translateY(-50%);
+  width: 40px; /* اندازه دکمه‌ها */
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mySwiper .swiper-button-prev::after,
+.mySwiper .swiper-button-next::after {
+  font-size: 20px; /* اندازه آیکون داخل دکمه */
+}
+
+/* ----- تنظیمات autoplay ----- */
+.mySwiper .swiper-autoplay-progress {
+  /* اگر بخواهید نوار پیشرفت autoplay را اضافه کنید */
+}
