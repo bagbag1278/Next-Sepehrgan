@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${iran.className} bg-white overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} bg-[#F5F5F5] overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:bg-linear-to-br from-blue-400 via-blue- to-blue-400 dark:text-white`}
       >
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
