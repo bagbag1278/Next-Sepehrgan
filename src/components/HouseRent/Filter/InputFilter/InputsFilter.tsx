@@ -6,24 +6,18 @@ import SearchIcon from '../../Icon/SearchIcon';
 
 const transactionTypes = [
     'خرید', 'فروش', 'اجاره', 'رزرو هتل', 'تور', 'سرمایه‌گذاری',
-    'مشارکت', 'پیش‌فروش', 'تهاتر', 'اجاره روزانه', 'اجاره ماهانه',
-    'خرید اقساطی', 'فروش اقساطی', 'لیزینگ', 'واگذاری', 'مزایده',
-    'مناقصه', 'Swap', 'زمان‌دار', 'کوتاه مدت'
+
 ];
 
 const locations = [
     'تهران', 'مشهد', 'اصفهان', 'شیراز', 'تبریز', 'کیش',
     'مازندران', 'گیلان', 'بوشهر', 'بندرعباس', 'رامسر', 'چالوس',
-    'کرج', 'قم', 'یزد', 'اهواز', 'سنندج', 'ارومیه', 'زاهدان', 'گرگان',
-    'ساری', 'قزوین', 'همدان', 'اردبیل'
+
 ];
 
 const sortOptions = [
-    'جدیدترین', 'ارزان‌ترین', 'گران‌ترین', 'بالاترین امتیاز',
-    'محبوب‌ترین', 'نزدیک‌ترین', 'بیشترین تخفیف', 'کمترین قیمت',
-    'بیشترین ستاره', 'بیشترین نظر', 'نزدیک به ساحل', 'نزدیک مرکز شهر',
-    'با صبحانه', 'با استخر', 'لوکس', 'اقتصادی', 'خانوادگی', 'رومانتیک',
-    'تخفیف‌دار', 'پرامکانات'
+    'جدیدترین', 'ارزان‌ترین', 'گران‌ترین', 'بالاترین امتیاز', 'کمترین قیمت',
+
 ];
 
 export default function FilterBar() {
@@ -95,10 +89,10 @@ export default function FilterBar() {
 
     return (
         <div className="w-full p-4 flex justify-center" dir="ltr">
-            <div className="w-full max-w-7xl p-4 flex flex-col lg:flex-row lg:flex-nowrap gap-4">
+            <div className="w-full  max-w-7xl p-4 flex flex-col lg:flex-row lg:flex-nowrap gap-4">
 
 
-                
+
                 <div className="flex flex-col gap-3 lg:w-135 w-full lg:flex-row lg:shrink-0">
 
                     <Dropdown
@@ -130,7 +124,7 @@ export default function FilterBar() {
 
                 </div>
 
-                {/* ورودی جستجو */}
+                {/* searching filter ======*/}
                 <div className="relative w-full">
                     <input
                         dir="rtl"

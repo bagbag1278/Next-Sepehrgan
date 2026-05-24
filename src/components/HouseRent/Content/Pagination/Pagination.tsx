@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import ArrowPAgination from '../Icon/ArrowPAgination';
 
 interface PaginationProps {
   currentPage: number;
@@ -54,22 +55,20 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className={`px-4 py-2 rounded-md border ${
-          currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100'
-        }`}
+        className={`px-4 py-2 ml-3 rounded-4xl border ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100'
+          }`}
       >
-        قبلی
+        <ArrowPAgination />
       </button>
 
       {pageNumbers.map((page) => (
         <button
           key={page}
           onClick={() => updatePage(page)}
-          className={`px-4 py-2 rounded-md border ${
-            currentPage === page
+          className={`px-4 py-2 rounded-full border ${currentPage === page
               ? 'bg-blue-500 text-white font-bold'
               : 'bg-white text-black hover:bg-gray-100'
-          }`}
+            }`}
         >
           {page}
         </button>
@@ -78,11 +77,12 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 rounded-md border ${
-          currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100'
-        }`}
+        className={`px-4 py-2 mr-3 rounded-4xl border ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100'
+          }`}
       >
-        بعدی
+        <div className='scale-x-[-1]'>
+          <ArrowPAgination />
+        </div>
       </button>
     </div>
   );

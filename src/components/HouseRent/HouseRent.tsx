@@ -1,45 +1,29 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+import { House } from './Content/Hosues'; // مطمئن شوید این مسیر درست است
+import FiltersSection from './Filter/FiltersSection';
 import BreadCrumb from './AddressPage/BreadCrumb';
-import Filters from './Filter/FiltersSection';
-import Content from './Content/HousesList'; // این همون HousesList هست که شما داشتید
+import HosueList from './Content/HousesList';
 import Pagination from './Content/Pagination/Pagination';
 
-// Interface House باید اینجا یا در یک فایل مشترک تعریف شود
-interface House {
-  id: number;
-  title: string;
-  address: string;
-  price: string;
-  photos?: string[] | null;
-  tags?: string[];
-  rooms?: number;
-  bathrooms?: number;
-  parking?: number;
-  capacity?: number;
-}
+const HouseRentContent = () => {
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
 
-interface ApiResponse {
-  houses: House[];
-  totalCount: number;
-}
-
-const HouseRent: React.FC = () => {
   const [houses, setHouses] = useState<House[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, seterror] = useState(null)
 
-  const housesPerPage = 10; // تعداد خانه‌ها در هر صفحه
+  const housesPerPage = 10;
   const totalPages = Math.ceil(totalCount / housesPerPage);
 
   useEffect(() => {
     const getHouses = async () => {
       setIsLoading(true);
       try {
-        // ساخت URL با پارامترهای صفحه و محدودیت
         const apiUrl = `http://next.genzuni.website/api/houses?page=${currentPage}&limit=${housesPerPage}`;
         const res = await fetch(apiUrl);
 
@@ -47,13 +31,28 @@ const HouseRent: React.FC = () => {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
 
-        const data: ApiResponse = await res.json();
-        setHouses(data.houses || []);
-        setTotalCount(data.totalCount || 0); // دریافت totalCount از API
+        // اضافه کردن Type Assertion برای data
+        const data = await res.json() as { houses?: House[]; totalCount?: number };
+
+        // log =====
+        console.log("--- پاسخ دریافتی از API ---");
+        console.log("کل داده‌ها:", data);
+        console.log("لیست خانه‌ها:", data.houses);
+        ////
+
+        const validHouses = (data.houses || []).filter((house: House) => {
+          
+          return house && house.id && house.title;
+        });
+
+      
+
+        setHouses(validHouses); 
+        setTotalCount(data.totalCount || 0);
 
       } catch (err) {
         console.error("Fetch Error:", err);
-        setHouses([]); // در صورت خطا، لیست را خالی کن
+        setHouses([]);
         setTotalCount(0);
       } finally {
         setIsLoading(false);
@@ -61,46 +60,38 @@ const HouseRent: React.FC = () => {
     };
 
     getHouses();
-  }, [currentPage]); // فراخوانی مجدد هر بار که currentPage تغییر می‌کند
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    // می‌توانید اینجا اسکرول به بالای صفحه را هم اضافه کنید
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, [currentPage]);
 
   return (
     <div className='flex justify-center flex-wrap gap-6.5' dir='rtl'>
       <BreadCrumb />
-      <Filters />
+      <FiltersSection />
 
-      {/* نمایش وضعیت بارگذاری یا خطا */}
-      {isLoading && (
+      {isLoading ? (
         <div className='w-full flex justify-center items-center h-140'>
           <p className='text-lg text-gray-600'>در حال بارگذاری...</p>
         </div>
-      )}
-     
-
-      {/* نمایش لیست خانه‌ها در صورت عدم خطا و اتمام بارگذاری */}
-     
+      ) : (
         <>
-          <Content houses={houses} />
+          <HosueList houses={houses} />
 
-          {/* نمایش Pagination فقط در صورتی که تعداد صفحات بیشتر از 1 باشد */}
           {totalPages > 1 && (
-            <div className="w-full mt-8 flex justify-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                // onPageChange={handlePageChange}
-              />
+            <div className="w-full mt-8 flex justify-center border-none">
+              <Pagination currentPage={currentPage} totalPages={totalPages} />
             </div>
           )}
         </>
-    
+      )}
     </div>
   );
 };
 
-export default HouseRent;
+const HouseRentPage = () => {
+  return (
+    <Suspense fallback={<div>در حال بارگذاری اولیه...</div>}>
+      <HouseRentContent />
+    </Suspense>
+  );
+};
+
+export default HouseRentPage;
