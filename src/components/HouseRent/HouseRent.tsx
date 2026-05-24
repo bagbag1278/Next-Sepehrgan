@@ -3,7 +3,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import { House } from './Content/Hosues'; // مطمئن شوید این مسیر درست است
+import { House } from './Content/Hosues';
 import FiltersSection from './Filter/FiltersSection';
 import BreadCrumb from './AddressPage/BreadCrumb';
 import HosueList from './Content/HousesList';
@@ -16,6 +16,7 @@ const HouseRentContent = () => {
   const [houses, setHouses] = useState<House[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const housesPerPage = 10;
   const totalPages = Math.ceil(totalCount / housesPerPage);
@@ -23,39 +24,39 @@ const HouseRentContent = () => {
   useEffect(() => {
     const getHouses = async () => {
       setIsLoading(true);
+      setError(null);
       try {
         const apiUrl = `http://next.genzuni.website/api/houses?page=${currentPage}&limit=${housesPerPage}`;
         const res = await fetch(apiUrl);
 
         if (!res.ok) {
+
           throw new Error(`HTTP error! status: ${res.status}`);
         }
 
-        // اضافه کردن Type Assertion برای data
         const data = await res.json() as { houses?: House[]; totalCount?: number };
 
-        // log =====
         console.log("--- پاسخ دریافتی از API ---");
         console.log("کل داده‌ها:", data);
         console.log("لیست خانه‌ها:", data.houses);
-        ////
 
-        const validHouses = (data.houses || []).filter((house: House) => {
+
+          // filter for without title && id ============== $
           
+        const validHouses = (data.houses || []).filter((house: House) => {
           return house && house.id && house.title;
         });
 
-      
-
-        setHouses(validHouses); 
+        setHouses(validHouses);
         setTotalCount(data.totalCount || 0);
 
       } catch (err) {
         console.error("Fetch Error:", err);
+        setError("متاسفانه محتوای مورد نظر در حال حاضر در دسترس نیست. لطفاً بعداً دوباره امتحان کنید.");
         setHouses([]);
         setTotalCount(0);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     };
 
@@ -70,6 +71,10 @@ const HouseRentContent = () => {
       {isLoading ? (
         <div className='w-full flex justify-center items-center h-140'>
           <p className='text-lg text-gray-600'>در حال بارگذاری...</p>
+        </div>
+      ) : error ? (
+        <div className='w-full flex justify-center items-center h-140'>
+          <p className='text-lg text-red-600'>{error}</p>
         </div>
       ) : (
         <>
