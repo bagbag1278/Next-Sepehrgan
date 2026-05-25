@@ -16,7 +16,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
   const updatePage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', page.toString());
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`); // Keep as is for now, assuming this is correct for your routing
   };
 
   const handlePrevious = () => {
@@ -27,7 +27,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
     if (currentPage < totalPages) updatePage(currentPage + 1);
   };
 
-  const maxPagesToShow = 5;
+  const maxPagesToShow = 6;
   const pageNumbers = [];
 
   if (totalPages <= maxPagesToShow) {
@@ -52,32 +52,42 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages }) => {
 
   return (
     <div className="flex justify-center items-center gap-2 mt-6">
+      {/* Previous Button */}
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className={`px-4 py-2 ml-3 rounded-4xl border ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100'
+        className={`px-4 py-2 ml-3 rounded-full border shadow-md 
+          ${currentPage === 1
+            ? 'bg-white text-gray-400 cursor-not-allowed border-gray-300'
+            : 'bg-white text-gray-800 hover:bg-gray-100 border-gray-300'
           }`}
       >
         <ArrowPAgination />
       </button>
 
+      {/* Page numbers */}
       {pageNumbers.map((page) => (
         <button
           key={page}
           onClick={() => updatePage(page)}
-          className={`px-4 py-2 rounded-full border ${currentPage === page
-              ? 'bg-blue-500 text-white font-bold'
-              : 'bg-white text-black hover:bg-gray-100'
+          className={`px-4 py-2 rounded-full border shadow-md transition-colors duration-200
+            ${currentPage === page
+              ? 'bg-blue-500 text-white font-bold border-blue-500'
+              : 'bg-white text-black hover:bg-gray-100 border-gray-300'
             }`}
         >
           {page}
         </button>
       ))}
 
+      {/* Next Btton */}
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mr-3 rounded-4xl border ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-gray-100'
+        className={`px-4 py-2 mr-3 rounded-full border shadow-md
+          ${currentPage === totalPages
+            ? 'bg-white text-gray-400 cursor-not-allowed border-gray-300'
+            : 'bg-white text-gray-800 hover:bg-gray-100 border-gray-300'
           }`}
       >
         <div className='scale-x-[-1]'>

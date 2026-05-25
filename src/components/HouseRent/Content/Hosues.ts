@@ -1,17 +1,17 @@
+  // hosues types ============
 export interface House {
-  id: number;
-  title: string;
-  address: string;
-  price: string;
-  photos?: string[] | null;
-  tags?: string[];
+  id?: number | string; 
+  title?: string;    
+  address?: string;
   rooms?: number;
   bathrooms?: number;
   parking?: number;
   capacity?: number;
+  price?: number | string; 
+  imageUrl?: string;    
+ 
 }
 
 export interface Props {
-  houses: House[];
-  totalCount?: number;
+  houses: (House & { isInvalid?: boolean })[];
 }
