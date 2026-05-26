@@ -7,6 +7,7 @@ import LocationIcon from './Icon/LocationIcon';
 import HouseImage from './Icon/HouseImage';
 
 import { Props } from './Hosues';
+import Link from 'next/link';
 
 const HousesList = ({ houses }: Props) => {
   return (
@@ -19,42 +20,42 @@ const HousesList = ({ houses }: Props) => {
             shadow-2xl border-gray-500/20 rounded-4xl w-153 h-54 flex flex-wrap items-center my-2 justify-around transition-all duration-300 ease-in-out
             ${isInvalid
               ? 'opacity-50 cursor-not-allowed bg-gray-50 grayscale'
-              : 'hover:shadow-lg hover:scale-105 cursor-pointer' 
+              : 'hover:shadow-lg hover:scale-105 cursor-pointer'
             }
           `;
 
-            // handle klick for notfound Cart=============
-            
+          // handle klick for notfound Cart=============
+
           // const handleClick = () => {
           //   if (!isInvalid && house.id) {
-             
+
           //     console.log(`رفتن به جزئیات خانه با ID: ${house.id}`);
           //   } else {
           //     console.log("این خانه نامعتبر است و قابل کلیک نیست.");
           //   }
           // };
 
-          
+
           const viewButtonClasses = `
             w-25 h-8 cursor-pointer rounded-lg border
             ${isInvalid
-              ? 'border-gray-400 text-gray-400' 
-              : 'border-[#0887CA80]/50 text-[#0887CA80]' 
+              ? 'border-gray-400 text-gray-400'
+              : 'border-[#0887CA80]/50 text-[#0887CA80]'
             }
           `;
 
-          
+
           const priceClasses = `flex gap-1 text-[15px] font-bold
              ${isInvalid
-              ? 'text-red-400' 
-              : 'text-blue-300' 
+              ? 'text-red-400'
+              : 'text-blue-300'
             }`;
 
           return (
             <div
               className={cardClasses}
-              key={house.id || Math.random()} 
-              // onClick={handleClick}
+              key={house.id || Math.random()}
+            // onClick={handleClick}
             >
               <div className='w-61.25 h-50'>
                 {house.imageUrl ? (
@@ -78,7 +79,7 @@ const HousesList = ({ houses }: Props) => {
                 </div>
 
                 <div className="absolute bottom-0 w-full px-3 py-2">
-                    {/* feature Dynamic ======== */}
+                  {/* feature Dynamic ======== */}
                   <div className="flex justify-between text-[11px] text-gray-700 mb-2">
                     <div className="flex items-center gap-1">
                       <RoomIcon /> <span>{house.rooms || 0} خواب</span>
@@ -95,9 +96,12 @@ const HousesList = ({ houses }: Props) => {
                   </div>
 
                   <div className='w-full flex flex-row-reverse justify-between'>
-                    <button className={viewButtonClasses}>
+                    <Link
+                      href={`houserent/MortgageRentDetails/${house.id}`}
+                      className={viewButtonClasses}
+                    >
                       <p className='text-[13px]'>مشاهده ملک</p>
-                    </button>
+                    </Link>
                     <div className={priceClasses}>
                       {house.price ? (
                         <>
