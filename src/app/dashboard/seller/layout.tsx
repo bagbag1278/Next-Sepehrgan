@@ -42,7 +42,7 @@ const BuyerDashLayout: FC<IChildren> = ({ children }) => {
       </header>
 
       {/* Main */}
-      <main className="w-255 rounded-tr-sm rounded-bl-sm rounded-tl-[40px] rounded-br-[40px] shadow-[0_0_8px] shadow-blue-300/15">
+      <main className="w-255 rounded-tr-sm rounded-bl-sm rounded-tl-[40px] rounded-br-[40px] flex justify-center items-center shadow-[0_0_8px] shadow-blue-300/15">
         {children}
       </main>
     </div>
