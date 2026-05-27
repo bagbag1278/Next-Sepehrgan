@@ -17,12 +17,12 @@ const Header = () => {
   const pathname = usePathname();
   return (
     
-    <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center xl:block">
+    <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center">
       <div
         dir="rtl"
         className="flex justify-between  w-350  mt-6 dark:text-white"
       >
-        <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 z-20 hidden sm:hidden sm:flex sm:justify-end">
+        <div className="lg:flex xl:flex  items-center  whitespace-nowrap gap-5 z-20 hidden sm:flex sm:justify-end">
           {nav.map((item) => {
             let isActive =
               item.href === "/"

@@ -18,8 +18,9 @@ import PlaceholderIco from '../Icon/PlaceholderIco';
 
 import IncomeChartCard from './IncomeChartCard';
 import ProfileCompletion from './ProfileCompletion';
+import Link from 'next/link';
 
-const stats = [
+ const stats = [
     { label: 'کل املاک', value: '۵', icon: <ClickBoardIco /> },
     { label: 'رزرو های فعال', value: '۸', icon: <CalenderIco /> },
     { label: 'رزرو های انتظار', value: '۹', icon: <LoadingIco /> },
@@ -32,10 +33,10 @@ const MainPage = () => {
     return (
         <div className="w-full flex flex-nowrap gap-9 dark:bg-[#0f172a] transition-colors">
 
-            {/* LEFT SIDE */}
+            {/* left side */}
             <div className="flex flex-wrap w-156.5 gap-y-1 space-y-4">
 
-                {/* PAGE TITLE */}
+                {/* Page title */}
                 <div className="w-full h-14 flex gap-1">
                     <div className="w-6.75 h-6.5 flex gap-0.5 items-center flex-wrap-reverse scale-x-[-1]">
                         <CirclesIcon />
@@ -50,11 +51,19 @@ const MainPage = () => {
                     </div>
                 </div>
 
-                {/* STATS */}
+                {/* stats */}
                 <div className="flex flex-row-reverse gap-4.75">
 
-                    {/* VIEW ALL */}
-                    <div className="w-25 h-30 border border-blue-200 dark:border-slate-700 rounded-2xl flex flex-col items-center justify-center bg-gray-50 dark:bg-slate-800 text-blue-800 dark:text-white cursor-pointer hover:bg-blue-50 dark:hover:bg-slate-700 transition-all">
+                    {/* View All */}
+                    <Link 
+                        href={"/dashboard/seller/housemanegement"}
+                        className="w-25 h-30 border border-blue-200 
+                        dark:border-slate-700 rounded-2xl flex 
+                     flex-col items-center justify-center bg-gray-50 
+                     dark:bg-slate-800 text-blue-800 dark:text-white 
+                     cursor-pointer hover:bg-blue-50 
+                     dark:hover:bg-slate-700 transition-all"
+                    >
                         <span className="text-xl">↗</span>
 
                         <span className="text-xs mt-2 font-bold">
@@ -64,7 +73,7 @@ const MainPage = () => {
                         <span className="text-sm font-bold">
                             +۵۰
                         </span>
-                    </div>
+                    </Link>
 
                     {/* CARDS */}
                     {stats.map((item, idx) => (
@@ -90,7 +99,7 @@ const MainPage = () => {
                 {/* TABLE */}
                 <div className="w-full h-84 bg-gray-50/50 dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-700 transition-colors">
 
-                    {/* TABLE HEADER */}
+                    {/* TABLE header */}
                     <div className="flex justify-around bg-white dark:bg-slate-800 mx-2 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 px-6 py-4 text-gray-500 dark:text-gray-300 text-sm">
                         <span>نام اقامتگاه</span>
                         <span>تاریخ رزرو</span>
@@ -142,7 +151,7 @@ const MainPage = () => {
                                             {/* MODAL */}
                                             <div
                                                 onClick={(e) => e.stopPropagation()}
-                                                className="absolute left-0 top-6 z-50 w-[150px] rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl p-2 flex flex-col gap-2"
+                                                className="absolute left-0 top-6 z-50 w-37.5 rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-xl p-2 flex flex-col gap-2"
                                             >
 
                                                 <button className="w-full rounded-lg py-2 text-sm bg-green-100 text-green-700 hover:bg-green-200 transition">
