@@ -28,8 +28,8 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-         <div className="flex max-[1024]:right-80  max-[1024]:mt-10 max-[970]:right-70 max-[890]:right-65 max-[800]:right-54 max-[750]:right-44 max-[636]:right-0 justify-center  xl:h-188 h-206  relative  ">
-        <div className="">
+         <div className="flex  max-[1024]:right-80  max-[1024]:mt-10 max-[970]:right-70 max-[890]:right-65 max-[800]:right-54 max-[750]:right-44 max-[636]:right-0 justify-center  xl:h-188 h-206  relative  ">
+        <div className="transition-colors duration-500 absolute  left-5 top-138 max-[1224]:left-10 max-[780]:top-178 max-[780]:left-2 max-[400]:hidden z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
           </div>
         <div className="absolute top-118 left-1/2 -translate-x-1/2 flex justify-center z-10">
@@ -40,7 +40,7 @@ const HeroSction = () => {
             </div>
           </div>
         </div>
-        <div className="w-328.25 h-110.5  flex  ">
+        <div className="w-328.25 h-110.5 flex ">
           {/* Filter */}
           <div className="sm:block  relative   lg:hidden xl:hidden    -left-100 top-5 sm:top-[29px] sm:left-0 ">
             <ModalSearchRes />

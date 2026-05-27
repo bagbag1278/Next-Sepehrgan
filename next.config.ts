@@ -6,7 +6,9 @@ const nextConfig: NextConfig = {
       {
         source: '/api-proxy/:path*',
         destination: 'http://next.genzuni.website/api/:path*', 
+        
       },
+      
     ]
   },
 };
