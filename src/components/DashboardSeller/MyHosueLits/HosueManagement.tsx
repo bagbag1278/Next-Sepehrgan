@@ -5,6 +5,7 @@ import PlaceholderIco from '../Icon/PlaceholderIco';
 import LoadingIco from '../Icon/LoadingIco';
 import CalenderIco from '../Icon/CalenderIco';
 import ClickBoardIco from '../Icon/ClickBoardIco';
+import FilterSec from './FilterSec';
 
 const stats = [
     { label: 'کل املاک', value: '۵', icon: <ClickBoardIco /> },
@@ -35,10 +36,15 @@ const HosueManagement = () => {
                     </div>
                 </div>
 
-                {/* FILTER  */}
-                    <div className='fle justify-between items-center border w-full h-12 '>
+                {/* FILTER SECTION */}
+                    <div className='flex justify-between items-center w-full h-12 '>
                         {/* Title  */}
-                        <div className=''></div>
+                        <div className='flex gap-2 text-[14px] text-blue-400 dark:text-blue-500 '>
+                            <span> لیست املاک من </span>
+                            {/* house count */}
+                            <div className='text-gray-500 '> (28) </div>
+                             </div>
+                        <FilterSec />
                     </div>
 
 
@@ -143,12 +149,11 @@ const HosueManagement = () => {
                         ))}
                     </div>
                 </div>
+
+                        <div className='flex justify-end border w-full h-6  '>
+                            <div className='border w-20 h-full '></div>
+                        </div>
             </div>
-
-            {/* RIGHT SIDE */}
-
-
-            {/* DELETE MODAL */}
 
         </div>
     );
