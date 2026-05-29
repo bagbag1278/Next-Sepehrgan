@@ -2,7 +2,11 @@ import HosueManagement from "@/components/DashboardSeller/MyHosueLits/HosueManag
 import React from "react";
 
 const HouseManegePage = () => {
-  return <div> <HosueManagement /> </div>;
+  return (
+    <div>
+       <HosueManagement /> 
+    </div>
+  ) 
 };
 
 export default HouseManegePage;
