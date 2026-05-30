@@ -15,6 +15,8 @@ import {
     XCircle,
     Pencil,
     Trash2,
+    PlusCircleIcon,
+    PlusIcon,
 } from 'lucide-react'
 
 import CirclesIcon from '../Icon/CirclesIcon'
@@ -23,6 +25,7 @@ import LoadingIco from '../Icon/LoadingIco'
 import CalenderIco from '../Icon/CalenderIco'
 import ClickBoardIco from '../Icon/ClickBoardIco'
 import FilterSec from './FilterSec'
+import Link from 'next/link'
 
 const stats = [
     { label: 'کل املاک', value: '۵', icon: <ClickBoardIco /> },
@@ -33,11 +36,9 @@ const stats = [
 
 const HosueManagement = () => {
 
-    const [openMenu, setOpenMenu] =
-        useState<number | null>(null)
+    const [openMenu, setOpenMenu] = useState<number | null>(null)
 
-    const menuRef =
-        useRef<HTMLDivElement | null>(null)
+    const menuRef = useRef<HTMLDivElement | null>(null)
 
     // close modal on outside click
     useEffect(() => {
@@ -435,16 +436,24 @@ const HosueManagement = () => {
                 </div>
 
                 {/* pagination */}
-                <div
-                    className='flex justify-end
-                    border w-full h-6'
+                <Link
+                    href={'/dashboard/seller/housemanegement/CreateMyHosue'}
+                    className='flex justify-between  w-full h-10 '
                 >
+                    <div
+
+                        className='cursor-pointer flex justify-center items-center gap-1 text-blue-100 border border-blue-200 w-50 h-full rounded-xl '
+                    >
+                        <PlusIcon />
+                        <span >افزودن ملک </span>
+                    </div>
 
                     <div
                         className='border w-20 h-full'
                     />
 
-                </div>
+                </Link>
+
 
             </div>
 

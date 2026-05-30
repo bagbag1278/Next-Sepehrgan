@@ -17,9 +17,6 @@ import {
 // import MobileSidebar from "@/components/Admin/MobileSidebar";
 import SellersideBar from '../../../components/DashboardSeller/SellersideBar'
 
-import HeaderIcon from "@/components/DashboardSeller/Icon/HeaderIcon";
-import HeaderIconDark from "@/components/DashboardSeller/Icon/HeaderIconDark";
-
 interface IChildren {
   children: React.ReactNode;
 }

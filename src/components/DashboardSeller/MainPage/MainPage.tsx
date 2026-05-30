@@ -22,7 +22,7 @@ import PlaceholderIco from '../Icon/PlaceholderIco';
 import IncomeChartCard from './IncomeChartCard';
 import ProfileCompletion from './ProfileCompletion';
 import Link from 'next/link';
-
+import GetHousesUser, { IHouse } from '@/core/api/DashboardSeller/GetHousesUser';
 const stats = [
     {
         label: 'کل املاک',
@@ -48,14 +48,33 @@ const stats = [
 
 const MainPage = () => {
 
-    const [openMenu, setOpenMenu] =
-        useState<number | null>(null);
+    const [openMenu, setOpenMenu] = useState<number | null>(null);
 
-    const [deleteModal, setDeleteModal] =
-        useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const menuRef = useRef<HTMLDivElement | null>(null);
 
-    const menuRef =
-        useRef<HTMLDivElement | null>(null);
+    const [houses, setHouses] = useState<IHouse[]>([]);
+
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            try {
+                const data = await GetHousesUser();
+                console.log("DataFetching", data)
+                setHouses(data);
+            
+            } catch (err) {
+                console.log("fetvhing error", err);
+
+            }
+            console.log("DATAFETCHIG : ", setHouses) 
+        };
+
+        fetchData();
+    }, []);
+
 
     // close menu on outside click
     useEffect(() => {
@@ -100,6 +119,15 @@ const MainPage = () => {
             w-full flex flex-nowrap
             gap-9 transition-colors"
         >
+
+
+            {houses.map((house) => (
+                <div
+                    key={house.id}
+                >
+                    <div className='border-5 border-b-amber-900 '>{house.title} </div>
+                </div>
+            ))}
 
             {/* LEFT SIDE */}
             <div
@@ -294,16 +322,11 @@ const MainPage = () => {
                         overflow-hidden"
                     >
 
-                        {
-                            [
-                                1, 2, 3, 4,
-                                5, 6, 7, 8,
-                                9, 10, 11
-                            ].map((row) => (
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((row) => (
 
-                                <div
-                                    key={row}
-                                    className="
+                            <div
+                                key={row}
+                                className="
                                     flex items-center
                                     flex-row-reverse
                                     justify-between
@@ -321,39 +344,32 @@ const MainPage = () => {
                                     dark:hover:bg-slate-700/40
                                     hover:border-gray-200
                                     dark:hover:border-slate-600"
-                                >
+                            >
 
-                                    {/* ACTION MENU */}
-                                    <div className="relative">
+                                {/* ACTION MENU */}
+                                <div className="relative">
 
-                                        {/* BUTTON */}
-                                        <button
-                                            onClick={() =>
-                                                setOpenMenu(
-                                                    openMenu === row
-                                                        ? null
-                                                        : row
-                                                )
-                                            }
-                                        >
-
-                                            <MoreVertical
-                                                size={16}
-                                                className="
+                                    {/* BUTTON */}
+                                    <button
+                                        onClick={() => setOpenMenu(openMenu === row ? null : row)}
+                                    >
+                                        <MoreVertical
+                                            size={16}
+                                            className="
                                                 text-gray-400
                                                 dark:text-gray-300
                                                 cursor-pointer"
-                                            />
+                                        />
 
-                                        </button>
+                                    </button>
 
-                                        {/* DROPDOWN */}
-                                        {
-                                            openMenu === row && (
+                                    {/* DROPDOWN */}
+                                    {
+                                        openMenu === row && (
 
-                                                <div
-                                                    ref={menuRef}
-                                                    className="
+                                            <div
+                                                ref={menuRef}
+                                                className="
                                                     absolute
                                                     -top-6 mt-2
                                                     left-0
@@ -368,18 +384,18 @@ const MainPage = () => {
                                                     dark:bg-slate-800
                                                     shadow-[0_0_15px_rgba(0,0,0,0.08)]
                                                     p-4"
-                                                >
+                                            >
 
-                                                    <div
-                                                        className="
+                                                <div
+                                                    className="
                                                         flex flex-col
                                                         justify-between
                                                         h-full"
-                                                    >
+                                                >
 
-                                                        {/* ACTIVE */}
-                                                        <button
-                                                            className="
+                                                    {/* ACTIVE */}
+                                                    <button
+                                                        className="
                                                             w-full h-10
                                                             rounded-2xl
                                                             bg-blue-500
@@ -387,141 +403,140 @@ const MainPage = () => {
                                                             flex items-center
                                                             justify-center
                                                             gap-2 text-sm"
-                                                        >
-                                                            فعال کردن
-                                                        </button>
+                                                    >
+                                                        فعال کردن
+                                                    </button>
 
-                                                        {/* EDIT */}
-                                                        <button
-                                                            className="
+                                                    {/* EDIT */}
+                                                    <button
+                                                        className="
                                                             flex items-center
                                                             justify-center
                                                             gap-2 text-sm
                                                             text-[#1E1B4B]
                                                             dark:text-white"
-                                                        >
-                                                            ویرایش
-                                                        </button>
+                                                    >
+                                                        ویرایش
+                                                    </button>
 
-                                                        {/* DELETE */}
-                                                        <button
-                                                            onClick={() => {
+                                                    {/* DELETE */}
+                                                    <button
+                                                        onClick={() => {
 
-                                                                setDeleteModal(true);
-                                                                setOpenMenu(null);
+                                                            setDeleteModal(true);
+                                                            setOpenMenu(null);
 
-                                                            }}
-                                                            className="
+                                                        }}
+                                                        className="
                                                             flex items-center
                                                             justify-center
                                                             gap-2 text-sm
                                                             text-pink-500"
-                                                        >
-                                                            حذف
-                                                        </button>
-
-                                                    </div>
+                                                    >
+                                                        حذف
+                                                    </button>
 
                                                 </div>
 
-                                            )
-                                        }
+                                            </div>
 
-                                    </div>
+                                        )
+                                    }
 
-                                    {/* STATUS */}
-                                    <div className="text-green-500">
+                                </div>
 
-                                        {
-                                            row === 1 ? (
+                                {/* STATUS */}
+                                <div className="text-green-500">
 
-                                                <CheckCircle2 />
+                                    {
+                                        row === 1 ? (
 
-                                            ) : row === 2 ? (
+                                            <CheckCircle2 />
 
-                                                <MinusCircle
-                                                    className="text-orange-400"
-                                                />
+                                        ) : row === 2 ? (
 
-                                            ) : (
+                                            <MinusCircle
+                                                className="text-orange-400"
+                                            />
 
-                                                <XCircle
-                                                    className="text-red-500"
-                                                />
+                                        ) : (
 
-                                            )
-                                        }
+                                            <XCircle
+                                                className="text-red-500"
+                                            />
 
-                                    </div>
+                                        )
+                                    }
 
-                                    {/* PRICE */}
-                                    <span
-                                        className="
+                                </div>
+
+                                {/* PRICE */}
+                                <span
+                                    className="
                                         text-blue-800
                                         dark:text-blue-400
                                         font-medium text-sm"
-                                    >
-                                        ۱,۸۰۰,۰۰۰ تومان
-                                    </span>
+                                >
+                                    ۱,۸۰۰,۰۰۰ تومان
+                                </span>
 
-                                    {/* TIME */}
-                                    <span
-                                        className="
+                                {/* TIME */}
+                                <span
+                                    className="
                                         text-sm text-gray-600
                                         dark:text-gray-300"
-                                    >
-                                        ۱۲:۳۳
-                                    </span>
+                                >
+                                    ۱۲:۳۳
+                                </span>
 
-                                    {/* DATE */}
-                                    <span
-                                        className="
+                                {/* DATE */}
+                                <span
+                                    className="
                                         text-sm text-gray-600
                                         dark:text-gray-300"
-                                    >
-                                        ۱۲ مرداد ۱۴۰۱
-                                    </span>
+                                >
+                                    ۱۲ مرداد ۱۴۰۱
+                                </span>
 
-                                    {/* PROPERTY */}
+                                {/* PROPERTY */}
+                                <div
+                                    className="
+                                        flex items-center gap-2"
+                                >
+
                                     <div
                                         className="
-                                        flex items-center gap-2"
-                                    >
-
-                                        <div
-                                            className="
                                             w-10 h-10
                                             bg-gray-200
                                             dark:bg-slate-700
                                             rounded-lg
                                             overflow-hidden"
-                                        >
+                                    >
 
-                                            <img
-                                                src="/placeholder.jpg"
-                                                alt="property"
-                                                className="
+                                        <img
+                                            src="/placeholder.jpg"
+                                            alt="property"
+                                            className="
                                                 w-full h-full
                                                 object-cover"
-                                            />
-
-                                        </div>
-
-                                        <span
-                                            className="
-                                            text-sm
-                                            text-gray-800
-                                            dark:text-gray-200"
-                                        >
-                                            هتل سراوان را...
-                                        </span>
+                                        />
 
                                     </div>
 
+                                    <span
+                                        className="
+                                            text-sm
+                                            text-gray-800
+                                            dark:text-gray-200"
+                                    >
+                                        هتل سراوان را...
+                                    </span>
+
                                 </div>
 
-                            ))
-                        }
+                            </div>
+
+                        ))}
 
                     </div>
 

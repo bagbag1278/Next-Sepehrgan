@@ -11,6 +11,7 @@ import {
     FileText,
     Settings,
     LogOut,
+    PlusCircle,
 } from 'lucide-react'
 
 import HeaderIcon from '@/components/DashboardSeller/Icon/HeaderIcon'
@@ -35,6 +36,12 @@ const MenuItems = [
         label: 'مدیریت املاک',
         href: '/dashboard/seller/housemanegement',
     },
+    {
+       id: 9,
+       icon:  PlusCircle ,
+       label: ' افزودن ملک',
+       href: '/dashboard/seller/housemanegement/CreateMyHosue',
+   },
     {
         id: 5,
         icon: MessageSquare,
