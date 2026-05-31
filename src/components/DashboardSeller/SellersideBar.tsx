@@ -40,7 +40,7 @@ const MenuItems = [
        id: 9,
        icon:  PlusCircle ,
        label: ' افزودن ملک',
-       href: '/dashboard/seller/housemanegement/CreateMyHosue',
+       href: '/dashboard/seller/CreateMyHosue',
    },
     {
         id: 5,

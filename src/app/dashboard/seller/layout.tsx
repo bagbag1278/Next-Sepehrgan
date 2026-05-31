@@ -125,7 +125,7 @@ export default async function SellerLayout({
         </header>
 
         {/* محتوا */}
-        <main className="h-155 rounded-tl-[40px] rounded-br-[40px] shadow-[0_0_8px] shadow-blue-300/15 dark:shadow-blue-500/5 bg-white dark:bg-blue-400 p-4 sm:p-6">
+        <main className="w-255 h-155 rounded-tl-[40px] rounded-br-[40px] shadow-[0_0_8px] shadow-blue-300/15 dark:shadow-blue-500/5 bg-white dark:bg-blue-400 p-4 sm:p-6">
           {children}
         </main>
       </div>

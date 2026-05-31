@@ -6,15 +6,26 @@ import {
 } from "react";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import {
-    ArrowLeftFromLine
+    ArrowLeftFromLine,
+    BadgeCheck,
+    House,
+    ImagePlus,
+    LocationEdit,
+    MapPinned,
+    Sparkles
 } from "lucide-react";
 
 import CirclesIcon from "@/components/DashboardSeller/Icon/CirclesIcon";
 
 import StepOne from "./StepOne";
-import StepTwo from "./StepTwo";
+const StepTwo = dynamic(() => import("./StepTwo"),
+    {
+        ssr: false,
+    }
+);
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import StepFive from "./StepFive";
@@ -35,6 +46,12 @@ const AddHousePage = () => {
             region: "",
             description: "",
 
+            location: {
+                lat: null,
+                lng: null,
+                address: "",
+            },
+
         });
 
     const [errors, setErrors] =
@@ -42,11 +59,11 @@ const AddHousePage = () => {
 
     const stepItems = [
 
-        "مشخصات اولیه",
-        "آدرس",
-        "امکانات",
-        "تصاویر ملک",
-        "تایید نهایی",
+        { title: "گام اول", icon: House, },
+        { title: "آدرس", icon: MapPinned },
+        { title: "امکانات", icon: Sparkles },
+        { title: "تصاویر", icon: ImagePlus },
+        { title: "تایید نهایی", icon: BadgeCheck },
 
     ];
 
@@ -115,7 +132,7 @@ const AddHousePage = () => {
             if (!isValid) return;
         }
 
-        if (step < 5) { 
+        if (step < 5) {
             setStep((prev) => prev + 1);
         } else {
             console.log("ثبت آگهی");
@@ -152,7 +169,11 @@ const AddHousePage = () => {
                 );
 
             case 2:
-                return <StepTwo />;
+                return <StepTwo
+                    formData={formData}
+                    setFormData={setFormData}
+                />;
+
             case 3:
                 return <StepThree />;
             case 4:
@@ -255,42 +276,28 @@ const AddHousePage = () => {
             </div>
 
             {/* STEPPER */}
-            <div
-                className="flex items-center justify-center border mt-8"
-            >
-
+            <div className="flex items-center justify-center mt-8">
                 {
-                    stepItems.map((
-                        item,
-                        index
-                    ) => {
+                    stepItems.map((item, index) => {
 
-                        const stepNumber =
-                            index + 1;
+                        const stepNumber = index + 1;
 
-                        const active =
-                            step === stepNumber;
+                        const active = step === stepNumber;
 
-                        const completed =
-                            step > stepNumber;
+                        const completed = step > stepNumber;
 
                         return (
 
                             <div
-                                key={item}
-                                className="
-                                flex items-center"
+                                key={index}
+                                className=" w-full flex justify-between items-center"
                             >
 
-                                <div
-                                    className="
-                                    flex items-center
-                                    gap-3"
-                                >
+                                <div className=" flex items-center ">
 
                                     <div
                                         className={`
-                                            w-12 h-12
+                                            w-11 h-11
                                             rounded-2xl
                                             flex items-center
                                             justify-center
@@ -304,12 +311,12 @@ const AddHousePage = () => {
                                             }
                                         `}
                                     >
-                                        {stepNumber}
+                                       <item.icon size={16} />
                                     </div>
 
                                     <span
                                         className={`
-                                            text-sm
+                                            text-sm flex mr-1
 
                                             ${active
                                                 ? "text-[#1400B7]"
@@ -319,7 +326,7 @@ const AddHousePage = () => {
                                             }
                                         `}
                                     >
-                                        {item}
+                                        {item.title}
                                     </span>
 
                                 </div>
@@ -330,7 +337,7 @@ const AddHousePage = () => {
 
                                         <div
                                             className={`
-                                                w-28
+                                                w-16
                                                 border-t-2
                                                 border-dashed
                                                 mx-4
@@ -362,17 +369,7 @@ const AddHousePage = () => {
             </div>
 
             {/* ACTION BUTTONS */}
-            <div
-                className={`
-                    flex  border mt-4  gap-3
-
-                    ${step > 1
-                        ? "justify-start"
-                        : "justify-start"
-                    }
-                `}
-            >
-
+            <div className={`flex  mt-4  gap-3  ${step > 1 ? "justify-start" : "justify-start"}`} >
                 {
                     step > 1 && (
 
@@ -391,9 +388,7 @@ const AddHousePage = () => {
                     className="cursor-pointer w-52 h-14 rounded-2xl bg-[#1400B7] text-white"
                 >
                     {
-                        step === 5
-                            ? " ثبت آگهی"
-                            : "مرحله بعد"
+                        step === 5 ? " ثبت آگهی" : "مرحله بعد"
                     }
                 </button>
 
