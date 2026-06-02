@@ -41,7 +41,7 @@ const BuyAndSellSlider = () => {
     }
 
     return (
-        <div className='h-140 hidden xl:flex flex-wrap justify-center border'>
+        <div className='h-140 hidden xl:flex flex-wrap justify-center'>
             <div className='w-365 flex justify-center flex-wrap overflow-hidden'>
                 <div className='w-300 flex justify-center flex-wrap'>
                     {/* above the slider */}

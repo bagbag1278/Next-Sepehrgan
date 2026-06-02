@@ -43,7 +43,7 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
 
 
   return (
-    <div className="w-300 py-10 border relative">
+    <div className="w-300 py-10 relative">
       <div className="relative ">
         <Swiper
           modules={[Navigation, Pagination]}
