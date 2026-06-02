@@ -56,7 +56,7 @@ const FocusCarousel = () => {
         setLoading(true);
         setError(null);
 
-        const res = await fetch("http://next.genzuni.website/api/comments");
+        const res = await fetch("http://188.121.111.8:3003/api/comments");
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);

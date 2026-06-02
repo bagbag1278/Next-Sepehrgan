@@ -93,7 +93,7 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
                         <RoomIcon /> <span> خواب{house.rooms} </span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <MastersIcon /> <span>۱ حمام{house.bathrooms} </span>
+                        <MastersIcon /> <span> حمام{house.bathrooms} </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <CarIcon /> <span>پارکینگ{house.parking} </span>

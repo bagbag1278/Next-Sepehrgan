@@ -11,7 +11,7 @@ const BuyAndSellSlider = () => {
     useEffect(() => {
         const getHouses = async () => {
             try {
-                const res = await fetch("http://next.genzuni.website/api/houses");
+                const res = await fetch("http://188.121.111.8:3003/api/houses");
 
                 const data = await res.json();
                 setHouses(data.houses || [] );
