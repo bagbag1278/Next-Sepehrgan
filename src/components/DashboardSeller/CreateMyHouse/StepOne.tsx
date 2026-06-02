@@ -35,269 +35,215 @@ const StepOne = ({
         <div
             className="
             grid grid-cols-3
-            gap-6 mt-10"
+            gap-6 mt-10 mb-13"
         >
 
             {/* title */}
-            <div>
-
-                <input
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    placeholder="نام آپارتمان مورد نظر ..."
-                    className="
+            <input
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder={
+                    errors.title
+                        ? errors.title
+                        : "نام آپارتمان مورد نظر ..."
+                }
+                className={`
                     w-full h-12
                     rounded-2xl
-                    border border-[#4DB5FF]
-                    px-4 outline-none"
-                />
+                    px-4 outline-none
+                    transition-all
 
-                {
-                    errors.title && (
-
-                        <p
-                            className="
-                            text-red-500
-                            text-xs mt-1"
-                        >
-                            {errors.title}
-                        </p>
-
-                    )
-                }
-
-            </div>
+                    ${errors.title
+                        ? "border border-red-500 placeholder:text-red-500"
+                        : "border border-[#4DB5FF]"
+                    }
+                `}
+            />
 
             {/* capacity */}
-            <div>
-
-                <input
-                    name="capacity"
-                    value={formData.capacity}
-                    onChange={handleChange}
-                    placeholder="ظرفیت ( نفر )"
-                    className="
+            <input
+                name="capacity"
+                value={formData.capacity}
+                onChange={handleChange}
+                placeholder={
+                    errors.capacity
+                        ? errors.capacity
+                        : "ظرفیت ( نفر )"
+                }
+                className={`
                     w-full h-12
                     rounded-2xl
-                    border border-[#4DB5FF]
-                    px-4 outline-none"
-                />
+                    px-4 outline-none
+                    transition-all
 
-                {
-                    errors.capacity && (
-
-                        <p
-                            className="
-                            text-red-500
-                            text-xs mt-1"
-                        >
-                            {errors.capacity}
-                        </p>
-
-                    )
-                }
-
-            </div>
+                    ${errors.capacity
+                        ? "border border-red-500 placeholder:text-red-500"
+                        : "border border-[#4DB5FF]"
+                    }
+                `}
+            />
 
             {/* price */}
-            <div>
-
-                <input
-                    name="price"
-                    value={formData.price}
-                    onChange={handleChange}
-                    placeholder="قیمت ( ریال )"
-                    className="
+            <input
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                placeholder={
+                    errors.price
+                        ? errors.price
+                        : "قیمت ( ریال )"
+                }
+                className={`
                     w-full h-12
                     rounded-2xl
-                    border border-[#4DB5FF]
-                    px-4 outline-none"
-                />
+                    px-4 outline-none
+                    transition-all
 
-                {
-                    errors.price && (
-
-                        <p
-                            className="
-                            text-red-500
-                            text-xs mt-1"
-                        >
-                            {errors.price}
-                        </p>
-
-                    )
-                }
-
-            </div>
+                    ${errors.price
+                        ? "border border-red-500 placeholder:text-red-500"
+                        : "border border-[#4DB5FF]"
+                    }
+                `}
+            />
 
             {/* transaction type */}
-            <div>
-
-                <select
-                    name="transactionType"
-                    value={formData.transactionType}
-                    onChange={handleChange}
-                    className="
+            <select
+                name="transactionType"
+                value={formData.transactionType}
+                onChange={handleChange}
+                className={`
                     w-full h-12
                     rounded-2xl
-                    border border-[#4DB5FF]
-                    px-4 outline-none"
-                >
+                    px-4 outline-none
+                    transition-all
 
-                    <option value="">
-                        نوع معامله
-                    </option>
+                    ${errors.transactionType
+                        ? "border border-red-500 text-red-500"
+                        : "border border-[#4DB5FF]"
+                    }
+                `}
+            >
 
-                    <option value="sell">
-                        فروش
-                    </option>
+                <option value="">
+                    {
+                        errors.transactionType
+                            ? errors.transactionType
+                            : "نوع معامله"
+                    }
+                </option>
 
-                    <option value="rent">
-                        اجاره
-                    </option>
+                <option value="sell">
+                    فروش
+                </option>
 
-                </select>
+                <option value="rent">
+                    اجاره
+                </option>
 
-                {
-                    errors.transactionType && (
-
-                        <p
-                            className="
-                            text-red-500
-                            text-xs mt-1"
-                        >
-                            {errors.transactionType}
-                        </p>
-
-                    )
-                }
-
-            </div>
+            </select>
 
             {/* property type */}
-            <div>
-
-                <select
-                    name="propertyType"
-                    value={formData.propertyType}
-                    onChange={handleChange}
-                    className="
+            <select
+                name="propertyType"
+                value={formData.propertyType}
+                onChange={handleChange}
+                className={`
                     w-full h-12
                     rounded-2xl
-                    border border-[#4DB5FF]
-                    px-4 outline-none"
-                >
+                    px-4 outline-none
+                    transition-all
 
-                    <option value="">
-                        نوع ملک
-                    </option>
+                    ${errors.propertyType
+                        ? "border border-red-500 text-red-500"
+                        : "border border-[#4DB5FF]"
+                    }
+                `}
+            >
 
-                    <option value="villa">
-                        ویلا
-                    </option>
+                <option value="">
+                    {
+                        errors.propertyType
+                            ? errors.propertyType
+                            : "نوع ملک"
+                    }
+                </option>
 
-                    <option value="apartment">
-                        آپارتمان
-                    </option>
+                <option value="villa">
+                    ویلا
+                </option>
 
-                </select>
+                <option value="apartment">
+                    آپارتمان
+                </option>
 
-                {
-                    errors.propertyType && (
-
-                        <p
-                            className="
-                            text-red-500
-                            text-xs mt-1"
-                        >
-                            {errors.propertyType}
-                        </p>
-
-                    )
-                }
-
-            </div>
+            </select>
 
             {/* region */}
-            <div>
-
-                <select
-                    name="region"
-                    value={formData.region}
-                    onChange={handleChange}
-                    className="
+            <select
+                name="region"
+                value={formData.region}
+                onChange={handleChange}
+                className={`
                     w-full h-12
                     rounded-2xl
-                    border border-[#4DB5FF]
-                    px-4 outline-none"
-                >
+                    px-4 outline-none
+                    transition-all
 
-                    <option value="">
-                        ریزنوع ملک
-                    </option>
+                    ${errors.region
+                        ? "border border-red-500 text-red-500"
+                        : "border border-[#4DB5FF]"
+                    }
+                `}
+            >
 
-                    <option value="north">
-                        شمال
-                    </option>
+                <option value="">
+                    {
+                        errors.region
+                            ? errors.region
+                            : "ریزنوع ملک"
+                    }
+                </option>
 
-                    <option value="center">
-                        مرکز شهر
-                    </option>
+                <option value="north">
+                    شمال
+                </option>
 
-                </select>
+                <option value="center">
+                    مرکز شهر
+                </option>
 
-                {
-                    errors.region && (
-
-                        <p
-                            className="
-                            text-red-500
-                            text-xs mt-1"
-                        >
-                            {errors.region}
-                        </p>
-
-                    )
-                }
-
-            </div>
+            </select>
 
             {/* description */}
-            <div className="col-span-3">
-
-                <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="توضیحات ملک"
-                    className="
+            <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder={
+                    errors.description
+                        ? errors.description
+                        : "توضیحات ملک"
+                }
+                className={`
+                    col-span-3
                     w-full h-30
                     rounded-2xl
-                    border border-[#4DB5FF]
                     p-4 outline-none
-                    resize-none"
-                />
+                    resize-none
+                    transition-all
 
-                {
-                    errors.description && (
-
-                        <p
-                            className="
-                            text-red-500
-                            text-xs mt-1"
-                        >
-                            {errors.description}
-                        </p>
-
-                    )
-                }
-
-            </div>
+                    ${errors.description
+                        ? "border border-red-500 placeholder:text-red-500"
+                        : "border border-[#4DB5FF]"
+                    }
+                `}
+            />
 
         </div>
 
     );
+
 };
 
 export default StepOne;

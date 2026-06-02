@@ -437,7 +437,7 @@ const HosueManagement = () => {
 
                 {/* pagination */}
                 <Link
-                    href={'/dashboard/seller/housemanegement/CreateMyHosue'}
+                    href={'/dashboard/seller/CreateMyHosue'}
                     className='flex justify-between  w-full h-10 '
                 >
                     <div

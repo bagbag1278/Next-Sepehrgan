@@ -11,6 +11,7 @@ import MansionDarkIcon from '../../Icon/TopCategories/MansionDarkIcon'
 import FloodDarkIcon from '../../Icon/TopCategories/FloodDarkIcon'
 
 const TopCategories = () => {
+      console.log("BASE_URL:", process.env.BASE_URL);
     return (
         <div className='flex justify-between '>
             <div className='w-full flex justify-center b '>

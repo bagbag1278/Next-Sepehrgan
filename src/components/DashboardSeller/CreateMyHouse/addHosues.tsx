@@ -13,7 +13,6 @@ import {
     BadgeCheck,
     House,
     ImagePlus,
-    LocationEdit,
     MapPinned,
     Sparkles
 } from "lucide-react";
@@ -165,9 +164,7 @@ const AddHousePage = () => {
                         handleChange={handleChange}
                         errors={errors}
                     />
-
                 );
-
             case 2:
                 return <StepTwo
                     formData={formData}
@@ -311,7 +308,7 @@ const AddHousePage = () => {
                                             }
                                         `}
                                     >
-                                       <item.icon size={16} />
+                                        <item.icon size={16} />
                                     </div>
 
                                     <span

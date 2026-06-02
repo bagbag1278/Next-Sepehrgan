@@ -13,6 +13,7 @@ import {
   MessageSquare,
   Settings,
   LogOut,
+  SettingsIcon,
 } from "lucide-react";
 // import MobileSidebar from "@/components/Admin/MobileSidebar";
 import SellersideBar from '../../../components/DashboardSeller/SellersideBar'
@@ -72,7 +73,7 @@ export default async function SellerLayout({
     },
     {
       id: 8,
-      icon: Settings,
+      icon: SettingsIcon,
       label: "اعلان ها",
       href: "/dashboard/seller/notifications",
     },
