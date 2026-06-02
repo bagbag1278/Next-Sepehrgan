@@ -1,14 +1,14 @@
-import StepOneForm from '@/components/Auth/register/StepOneForm';
-import GoogleLogin from '@/components/common/GooleLogin/GoogleLogin';
-import React from 'react'
+import { cookies } from "next/headers";
+import MultiStepForm from "@/components/Auth/register/MultiStepForm";
 
-const RegisterPage = () => {
+export default async function RegisterPage() {
+  const cookieStore = await cookies();
+  const tempUserIdCookie = cookieStore.get("tempUserId")?.value;
+  const tempUserId = tempUserIdCookie ? Number(tempUserIdCookie) : null;
+
   return (
-    <div dir='rtl'>
-      <GoogleLogin/>
-      <StepOneForm/>
+    <div dir="rtl">
+      <MultiStepForm initialTempUserId={tempUserId} />
     </div>
-  )
+  );
 }
-
-export default RegisterPage;

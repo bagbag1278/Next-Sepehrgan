@@ -54,6 +54,7 @@ const CircularDropdown = () => {
 
   return (
     <div className="relative inline-block w-24 h-24 justify-center items-center">
+      
       {" "}
       <motion.button
         onClick={toggleMenu}
@@ -61,16 +62,22 @@ const CircularDropdown = () => {
         className="w-10 h-10 rounded-full bg-[#F5F5F5] drop-shadow backdrop-blur-xs drop-shadow-blue-100/35 flex justify-center items-center focus:outline-none"
         aria-haspopup="true"
         aria-expanded={isOpen}
+        
       >
         {isOpen ? (
+          
           <Image src={"/auth/exit.png"} width={8} height={8} alt="big" />
         ) : (
           <Image src={"/auth/big.svg"} width={16} height={12} alt="big" />
         )}
       </motion.button>
-      <AnimatePresence>
+      <AnimatePresence >
+        
         {isOpen && (
+          
           <motion.div
+            onClick={() => setIsOpen(false)}
+
             variants={menuVariants}
             initial="hidden"
             animate="visible"
