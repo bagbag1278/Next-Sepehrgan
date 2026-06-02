@@ -36,15 +36,6 @@ const HousesList = ({ houses }: Props) => {
           // };
 
 
-          const viewButtonClasses = `
-            w-25 h-8 cursor-pointer rounded-lg border
-            ${isInvalid
-              ? 'border-gray-400 text-gray-400'
-              : 'border-[#0887CA80]/50 text-[#0887CA80]'
-            }
-          `;
-
-
           const priceClasses = `flex gap-1 text-[15px] font-bold
              ${isInvalid
               ? 'text-red-400'
@@ -88,17 +79,19 @@ const HousesList = ({ houses }: Props) => {
                       <MasterIcon /> <span>{house.bathrooms || 0} حمام</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <CarIcon /> <span>{house.parking === undefined ? 'ندارد' : house.parking === 0 ? 'ندارد' : house.parking} پارکینگ</span>
+                      <CarIcon /> <span className='flex'>{house.parking === undefined ? 'ندارد' : house.parking === 0 ? 'ندارد' : house.parking} پارکینگ</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <TreeIcon /> <span>ظرفیت {house.capacity === undefined ? 'نامشخص' : house.capacity}</span>
                     </div>
                   </div>
 
-                  <div className='w-full flex flex-row-reverse justify-between'>
+                  <div className='w-full mt-2 flex items-center flex-row-reverse justify-between'>
                     <Link
                       href={`houserent/MortgageRentDetails/${house.id}`}
-                      className={viewButtonClasses}
+                      className='flex items-center justify-center rounded-lg border 
+                       border-[#0887CA80]/50  w-25 h-8 hover:border-blue-500/50
+                       text-[#0887CA80] hover:text-blue-500/50 '
                     >
                       <p className='text-[13px]'>مشاهده ملک</p>
                     </Link>

@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState, Suspense, useCallback } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { debounce } from 'lodash';
-
+import debounce from "lodash-es/debounce";
 import { House } from './Content/Hosues';
 import FiltersSection from './Filter/FiltersSection';
 import BreadCrumb from './AddressPage/BreadCrumb';
@@ -113,7 +112,7 @@ const HouseRentContent = () => {
       setError(null);
 
       const paramsString = buildQueryString(currentFilters, page);
-      const apiUrl = `http://next.genzuni.website/api/houses?${paramsString}`;
+      const apiUrl = `http://188.121.111.8:3003/api/houses?${paramsString}`;
 
       try {
         const res = await fetch(apiUrl);
@@ -130,7 +129,7 @@ const HouseRentContent = () => {
         const allHouses = data.houses || [];
 
         const processedHouses: ExtendedHouse[] = allHouses.map((house: House) => {
-          const isInvalid = !(house && house.id && house.title);
+          const isInvalid = !(house && house.id && house.title && house.price);
           return { ...house, isInvalid };
         });
 
