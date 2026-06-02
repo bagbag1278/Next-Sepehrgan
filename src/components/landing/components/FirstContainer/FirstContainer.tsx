@@ -14,7 +14,7 @@ import MiniImage4 from '../../Icon/FirstContainer/MiniImage4'
 
 const FirstContainer = () => {
     return (
-        <div className='w-full flex justify-center '>
+        <div className='w-full flex justify-cente'>
             <div className=' w-full hidden sm:flex justify-center '>
                 <div className='w-330.75  relative'>
                     {/* ///// */}
@@ -84,15 +84,15 @@ const FirstContainer = () => {
                                         <MainImage1 />
                                     </div>
                                     {/* /////point  */}
-                                    <div className='absolute right-3 top-2 flex gap-1 '>
+                                    <div className='absolute right-3 top-2 flex gap-1 text-white '>
                                         <StarIcon />
                                         <p>4.5</p>
                                     </div>
                                     {/* ////// view and title  */}
                                     <div className='absolute bottom-2 right-2/5  w-40.75 h-15 flex justify-center flex-wrap ' >
                                         <div className='text-[18px] text-white font-bold'>بلینگهام در لفور</div>
-                                        <div className=' flex gap-1 '>
-                                            <div className='text-[12px] text-white ' > ۲۸ بازدید</div>
+                                        <div className=' flex gap-1  text-white'>
+                                            <div className='text-[12px] text-white ' > ۲۷ بازدید</div>
                                             <EyeIcon />
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@ const FirstContainer = () => {
                                 <ManiImage4 />
                                 <div className=" w-80 h-full border border-white xl:mb-0 mb-3 rounded-2xl overflow-hidden bg-slate-700">
 
-                                    <div className='absolute right-3 top-2 flex gap-1 '>
+                                    <div className='absolute right-3 top-2 flex gap-1 text-white '>
                                         <StarIcon />
                                         <p className='text-white '>4.5</p>
                                     </div>

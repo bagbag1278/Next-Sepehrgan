@@ -4,6 +4,7 @@ import BlueImage from '../../Icon/secoundContainer/BlueImage'
 import Photograph from '../../Icon/secoundContainer/Photograph'
 import BlueHouse from '../../Icon/secoundContainer/BlueHouse'
 import Arrow from '../../Icon/secoundContainer/Arrow'
+import Link from 'next/link'
 
 const SecoundContainer = () => {
     return (
@@ -41,9 +42,12 @@ const SecoundContainer = () => {
                                     اطمینان، به دنیای گسترده‌ای از املاک دسترسی پیدا کنید و بتوانید ...
                                 </div>
                             </div>
-                            <button className='w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer '>
+                            <Link
+                            href={"/contactus"}
+                                 className='flex justify-center items-center w-30 h-10 hover:border-2 
+                                 rounded-xl border border-green-100 cursor-pointer '>
                                 <p className='text-green-100 text-[14px] '>بیشتر</p>
-                            </button>
+                            </Link>
                         </div>
                     </div>
 
