@@ -17,7 +17,7 @@ const HousesList = ({ houses }: Props) => {
           const isInvalid = house.isInvalid || false;
 
           const cardClasses = `
-            shadow-2xl border-gray-500/20 rounded-4xl w-153 h-54 flex flex-wrap items-center my-2 justify-around transition-all duration-300 ease-in-out
+            shadow-2xl border-gray-500/20 dark:border dark:border-gray-800 rounded-4xl w-153 h-54 flex flex-wrap items-center my-2 justify-around transition-all duration-300 ease-in-out
             ${isInvalid
               ? 'opacity-50 cursor-not-allowed bg-gray-50 grayscale'
               : 'hover:shadow-lg hover:scale-105 cursor-pointer'
@@ -58,7 +58,7 @@ const HousesList = ({ houses }: Props) => {
 
               <div className="relative w-79.5 h-39 gap-1">
                 <div className="w-full h-19 border-b border-[#adadad] px-3 pt-2">
-                  <div className={`text-[17px] mb-2 font-bold ${isInvalid ? 'text-gray-600' : 'text-blue-100'}`}>
+                  <div className={`text-[17px] mb-2 font-bold dark:text-gray-400 ${isInvalid ? 'text-gray-600' : 'text-blue-100'}`}>
                     {house.title || 'بدون عنوان'}
                   </div>
                   <div className="flex items-center gap-1 text-[13px]">
@@ -71,17 +71,17 @@ const HousesList = ({ houses }: Props) => {
 
                 <div className="absolute bottom-0 w-full px-3 py-2">
                   {/* feature Dynamic ======== */}
-                  <div className="flex justify-between text-[11px] text-gray-700 mb-2">
-                    <div className="flex items-center gap-1">
-                      <RoomIcon /> <span>{house.rooms || 0} خواب</span>
+                  <div className="flex justify-between text-[11px] text-gray-700 dark:text-gray-400 mb-2">
+                    <div className="flex items-center gap-1 dark:bg-blue-200 dark:rounded-2xl ">
+                      <RoomIcon /> <span>{house.rooms } خواب</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <MasterIcon /> <span>{house.bathrooms || 0} حمام</span>
+                    <div className="flex items-center gap-1 dark:bg-blue-200 dark:rounded-2xl ">
+                      <MasterIcon /> <span> {house.bathrooms} حمام</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <CarIcon /> <span className='flex'>{house.parking === undefined ? 'ندارد' : house.parking === 0 ? 'ندارد' : house.parking} پارکینگ</span>
+                    <div className="flex items-center gap-1 dark:bg-blue-200 dark:rounded-2xl ">
+                      <CarIcon /> <span className='flex'>{house.parking === undefined ? '0' : house.parking === 0 ? '0' : house.parking} پارکینگ</span>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 dark:bg-blue-200 dark:rounded-2xl ">
                       <TreeIcon /> <span>ظرفیت {house.capacity === undefined ? 'نامشخص' : house.capacity}</span>
                     </div>
                   </div>

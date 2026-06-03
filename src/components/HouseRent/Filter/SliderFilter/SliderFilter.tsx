@@ -32,7 +32,7 @@ const SliderFilter = () => {
                                 className="shrink-0 w-auto max-w-27.5 cursor-pointer group"
                             >
                                 <div className="flex flex-col items-center gap-2 py-2 transition-all">
-                                    <div >
+                                    <div className='p-1 dark:bg-gray-600 dark:rounded-2xl ' >
                                         {item.icon}
                                     </div>
                                     <span className="text-sm text-gray-70 dark:text-white text-center font-medium group-hover:text-gray-400 transition-colors">
