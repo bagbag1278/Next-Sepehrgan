@@ -5,7 +5,7 @@ import CarIcon from './Icon/CarIcon';
 import TreeIcon from './Icon/TreeIcon';
 import LocationIcon from './Icon/LocationIcon';
 import HouseImage from './Icon/HouseImage';
-
+import { addCommas } from "@persian-tools/persian-tools";
 import { Props } from './Hosues';
 import Link from 'next/link';
 
@@ -73,7 +73,7 @@ const HousesList = ({ houses }: Props) => {
                   {/* feature Dynamic ======== */}
                   <div className="flex justify-between text-[11px] text-gray-700 dark:text-gray-400 mb-2">
                     <div className="flex items-center gap-1 dark:bg-blue-200 dark:rounded-2xl ">
-                      <RoomIcon /> <span>{house.rooms } خواب</span>
+                      <RoomIcon /> <span>{house.rooms} خواب</span>
                     </div>
                     <div className="flex items-center gap-1 dark:bg-blue-200 dark:rounded-2xl ">
                       <MasterIcon /> <span> {house.bathrooms} حمام</span>
@@ -98,7 +98,7 @@ const HousesList = ({ houses }: Props) => {
                     <div className={priceClasses}>
                       {house.price ? (
                         <>
-                          {typeof house.price === 'number' ? house.price.toLocaleString() : house.price}
+                          {addCommas((house.price))}
                           <span>تومان</span>
                         </>
                       ) : (
