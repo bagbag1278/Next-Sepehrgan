@@ -1,34 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import { Plus, Trash, Trash2 } from "lucide-react";
-import React, { useState } from "react";
+import { Plus, Trash2 } from "lucide-react";
+import React, { useRef } from "react";
 
-const StepFour = () => {
+interface StepFourProps {
+  image: string | null;
+  setImage: (image: string | null) => void;
+}
 
-  const [preview, setPreview] =
-    useState<string | null>(null);
+const StepFour = ({ image, setImage }: StepFourProps) => {
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
 
-    const file =
-      e.target.files?.[0];
+    const file = e.target.files?.[0];
 
     if (!file) return;
 
-    const imageUrl =
-      URL.createObjectURL(file);
+    const imageUrl = URL.createObjectURL(file);
 
-    setPreview(imageUrl);
+    setImage(imageUrl);
 
   };
 
-  // remove ===
   const removeImage = () => {
 
-    setPreview(null);
+    setImage(null);
+
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
 
   };
 
@@ -68,10 +73,11 @@ const StepFour = () => {
         <label
           className="relative w-90 h-65.5 rounded-4xl
               border-2 border-dashed border-blue-400  flex flex-col items-center
-              justify-cente apg-4 cursor-pointer overflow-hidden transition-all hover:bg-blue-50"
+              justify-center cursor-pointer overflow-hidden transition-all hover:bg-blue-50"
         >
 
           <input
+            ref={inputRef}
             type="file"
             accept="image/*"
             onChange={handleImageChange}
@@ -79,12 +85,12 @@ const StepFour = () => {
           />
 
           {
-            preview ? (
+            image ? (
 
               <>
 
                 <Image
-                  src={preview}
+                  src={image}
                   alt="preview"
                   fill
                   className="object-cover"
@@ -100,16 +106,16 @@ const StepFour = () => {
 
                   }}
                   className="
-            absolute top-3 right-3
-            z-20
-            w-10 h-10
-            rounded-full
-            bg-red-500
-            text-white
-            flex items-center
-            justify-center
-            hover:bg-red-600
-            transition"
+                    absolute top-3 right-3
+                    z-20
+                    w-10 h-10
+                    rounded-full
+                    bg-red-500
+                    text-white
+                    flex items-center
+                    justify-center
+                    hover:bg-red-600
+                    transition"
                 >
 
                   <Trash2 size={18} />

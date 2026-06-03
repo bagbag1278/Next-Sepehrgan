@@ -25,7 +25,7 @@ const StepTwo = ({
 
       {/* INFO */}
       <div
-        className="col-span-4 border-5 w-78.75 rounded-4xl p-2 flex flex-col justify-between"
+        className="col-span-4  w-78.75 rounded-4xl p-2 flex flex-col justify-between"
       >
 
         <div>
@@ -47,7 +47,7 @@ const StepTwo = ({
 
           </div>
 
-          <p className="text-[14px] mt-8 text-blue-800 leading-10text-center">
+          <p className="text-[14px] mt-8 text-blue-800 dark:to-blue-300 leading-10text-center">
 
             با انتخاب موقعیت مکانی ملک خود از روی نقشه
             موقعیت ملک

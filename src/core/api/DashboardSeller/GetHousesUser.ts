@@ -6,12 +6,18 @@ export interface IHouse {
     price: string;
 }
 
-export default async function GetHousesUser(): Promise<IHouse[]> {
+export interface IGetHosuesRes {
+    housesProps: IHouse[];
+    totalCount: number;
+}
+
+export default async function GetHousesUser(): Promise<IGetHosuesRes> {
     try {
-        const res = await axios.get('http://188.121.111.8:3003/api/houses/seller/user')
-        const data = res.data
+        const res = await axios.get('http://188.121.111.8:3003/api/houses/seller/user', {withCredentials:true })
+        const data = await res.data
         return data
     } catch (err) {
-        throw new Error("Error in DataFetching")
-    }
+        console.log("dataFetching Error", err)
+        throw err
+    };
 }
