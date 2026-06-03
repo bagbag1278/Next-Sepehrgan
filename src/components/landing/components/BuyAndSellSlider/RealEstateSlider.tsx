@@ -56,7 +56,7 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
             <SwiperSlide key={house.id}>
               <div className="relative flex justify-center flex-wrap items-center w-82 h-94 border border-white overflow-hidden rounded-4xl bg-[#F5F5F5] shadow-lg transition-all scale-100">
 
-                {/* تصویر */}
+                {/* image */}
                 <div className="w-81 h-50 overflow-hidden rounded-2xl flex jus bg-[#ccc]">
                   {Array.isArray(house.photos) && house.photos.length > 0 && house.photos[0] ? (
                     <img
