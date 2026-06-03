@@ -1,6 +1,4 @@
-import { cookies } from "next/headers";
 import axios from "axios";
-import toast from "react-hot-toast";
 
 export interface IHouse {
     id: number;
@@ -8,20 +6,12 @@ export interface IHouse {
     price: string;
 }
 
-export default async function GetHousesUser(): Promise<IHouse[] | undefined> {
+export default async function GetHousesUser(): Promise<IHouse[]> {
     try {
-        const cookieStore = cookies();
-        const token = (await cookieStore).get("accessToken")?.value;
-
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-        const response = await axios.get<IHouse[]>(`${baseUrl}/api/houses`, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-
-        return response.data;
-    } catch (error) {
-        console.error("خطا در دریافت دیتا:", error);
-        toast.error("خطا در دریافت دیتا");
+        const res = await axios.get('http://188.121.111.8:3003/api/houses/seller/user')
+        const data = res.data
+        return data
+    } catch (err) {
+        throw new Error("Error in DataFetching")
     }
 }
