@@ -1,9 +1,11 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from "react";
 import AddComment from "./AddComment";
 import CommentCard from "./CommentCard";
 
 const CommentsSection = ({ houseId }: { houseId: any }) => {
+  const t = useTranslations('CommentsSection');
   const [comments, setComments] = useState<any[]>([]);
   const [totalCommentsCount, setTotalCommentsCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -19,13 +21,13 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
           id: c.id,
           name: c.user
             ? `${c.user.firstName} ${c.user.lastName}`
-            : c.title || "کاربر مهمان",
+            : c.title || t('guestUser'),
           title: c.title || "",
           date: c.created_at
             ? new Date(c.created_at).toLocaleDateString("fa-IR")
             : "۱۴۰۴/۰۱/۰۱",
           rate: c.rating?.toString() || null,
-          text: c.caption || "بدون متن",
+          text: c.caption || t('noText'),
           replies: buildTree(allComments, c.id),
         };
       })
@@ -36,9 +38,7 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
     if (!houseId) return;
     try {
       setLoading(true);
-      const response = await fetch(
-        `http://next.genzuni.website/api/comments?house_id=${houseId}`,
-      );
+      const response = await fetch(`/api/comments?house_id=${houseId}`);
       const result = await response.json();
       const rawList = result.comments || (Array.isArray(result) ? result : []);
       setTotalCommentsCount(rawList.length);
@@ -49,34 +49,30 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
     } finally {
       setLoading(false);
     }
-  }, [houseId]);
+  }, [houseId, t]);
 
   useEffect(() => {
     fetchComments();
   }, [fetchComments]);
 
   const mainComments = comments.filter(c => !c.parent_comment_id);
-
-  const showMore = () => {
-    setVisibleCount(prev => prev + 4);
-  };
-
+  const showMore = () => setVisibleCount(prev => prev + 4);
   const visibleComments = mainComments.slice(0, visibleCount);
   const hasMore = visibleCount < mainComments.length;
 
   return (
     <div className="w-full max-w-[850px] mx-auto p-6" dir="rtl">
-      <div className="flex justify-between items-center mb-10 px-2">
-        <h2 className="text-[#10088F] text-[18px] relative font-bold max-[844]:">
-          نظرات دیگر کاربران ({totalCommentsCount})
+      <div className="flex justify-between items-center mb-10 px-2 flex-wrap gap-4">
+        <h2 className="text-[#10088F] dark:text-blue-600 text-[18px] font-bold">
+          {t('userComments')} ({totalCommentsCount})
         </h2>
         <AddComment houseId={houseId} onReplySubmitted={fetchComments} />
       </div>
 
       <div className="flex flex-col">
         {loading ? (
-          <div className="text-center py-10 text-gray-400">
-            در حال بارگذاری...
+          <div className="text-center py-10 text-gray-400 dark:text-gray-500">
+            {t('loading')}
           </div>
         ) : (
           <>
@@ -93,9 +89,9 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
             {hasMore && (
               <button
                 onClick={showMore}
-                className="mt-6 mx-auto px-6 py-2 text-[14px] font-bold text-[#0887CA]  rounded-[12px] hover:border-[#0887CA]  hover:border transition-all duration-300"
+                className="mt-6 mx-auto px-6 py-2 text-[14px] font-bold text-[#0887CA] dark:text-blue-400 rounded-[12px] hover:border-[#0887CA] dark:hover:border-blue-500 hover:border transition-all duration-300"
               >
-               مشاهده نظرات بیشتر (+{mainComments.length - visibleCount})
+                {t('viewMore')} (+{mainComments.length - visibleCount})
               </button>
             )}
           </>

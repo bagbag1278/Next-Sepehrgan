@@ -1,17 +1,36 @@
 "use client";
 import React, { useState } from "react";
+import { useTranslations } from 'next-intl';
 import { toast } from "react-hot-toast";
+import dynamic from 'next/dynamic';
 import TallerFleshBlue from "./icon/FleshBlue/TallerFleshBlue";
 import FleshBlueLeft from "./icon/FleshBlue/FleshBlueLeft";
 import FleshBlueRight from "./icon/FleshBlue/FleshBlueRight";
 import LocationSlider from "./LocationSlider";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, Navigation, Star, Clock, Award } from "lucide-react";
 import TallerFleshGreen from "./icon/FleshGreen/TallerFleshGreen";
 import LeftFleshGreen from "./icon/FleshGreen/LeftFleshGreen";
 import RightFleshGreen from "./icon/FleshGreen/RightFleshGreen";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
+// بارگذاری داینامیک نقشه برای جلوگیری از خطای SSR
+const MapComponent = dynamic(
+  () => import('./MapComponent'),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center rounded-tl-[42px] rounded-br-[42px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0887CAB2] mx-auto mb-4"></div>
+          <p className="text-gray-500">در حال بارگذاری نقشه...</p>
+        </div>
+      </div>
+    )
+  }
+);
+
 const ContactPage = () => {
+  const t = useTranslations('ContactPage');
   const [formData, setFormData] = useState({
     title: "",
     message: "",
@@ -23,57 +42,67 @@ const ContactPage = () => {
     e.preventDefault();
 
     if (!formData.title || !formData.message) {
-      toast.error("لطفاً تمامی فیلدها را پر کنید");
+      toast.error(t('fillAllFields'));
       return;
     }
 
-    const loadingToast = toast.loading("در حال ارسال پیام...");
+    const loadingToast = toast.loading(t('sendingMessage'));
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "http://next.genzuni.website/api/contact-us",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: formData.title,
-            message: formData.message,
-          }),
+      const response = await fetch("/api/contact-us", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          title: formData.title,
+          message: formData.message,
+          email: formData.email,
+        }),
+      });
 
       if (response.ok) {
-        toast.success("پیام شما با موفقیت ثبت شد", { id: loadingToast });
+        toast.success(t('messageSent'), { id: loadingToast });
         setFormData({ title: "", message: "", email: "" });
       } else {
         const errorData = await response.json();
-        toast.error(errorData.message || "خطایی در سرور رخ داد", {
+        toast.error(errorData.message || t('serverError'), {
           id: loadingToast,
         });
       }
     } catch (error) {
       console.error("ارور در ارسال:", error);
-      toast.error("خطا در اتصال! اینترنت خود را چک کنید", { id: loadingToast });
+      toast.error(t('connectionError'), { id: loadingToast });
     } finally {
       setLoading(false);
     }
   };
 
+  // اطلاعات دفتر مرکزی در تهران
+  const officeInfo = {
+    name: "دفتر مرکزی رهن کده",
+    address: "تهران، خیابان ولیعصر، نبش خیابان ملاصدرا، پلاک ۱۲۳",
+    phone: "۰۲۱-۸۸۷۶۵۴۳۲",
+    mobile: "۰۹۱۲-۱۲۳-۴۵۶۷",
+    email: "info@rahnkadeh.com",
+    hours: "شنبه تا چهارشنبه ۹ صبح تا ۶ عصر",
+    rating: 4.8,
+    reviews: 127
+  };
+
   return (
-    <div className="w-full  min-h-screen pb-20 font-sans" dir="rtl">
+    <div className="w-full min-h-screen pb-20 font-sans" dir="rtl">
       <section className="text-center pt-16 pb-10 relative">
         <AdvancedScrollAnimation type="fade" delay={0.1}>
           <h1 className="text-2xl md:text-3xl font-black dark:text-white text-[rgb(6,4,37)]">
-            حس خوبت رو به ما بسپار ، ما کنارتیم!!
+            {t('heroTitle')}
           </h1>
         </AdvancedScrollAnimation>
         
         <div className="absolute right- pl-10 -top-10 max-[1390]:hidden ">
           <TallerFleshBlue />
-          <div className="right-148 bottom-23 relative  ">
+          <div className="right-148 bottom-23 relative">
             <div className="rotate-12">
               <div className="">
                 <FleshBlueLeft />
@@ -87,15 +116,14 @@ const ContactPage = () => {
         
         <AdvancedScrollAnimation type="slide-up" delay={0.2}>
           <p className="text-gray-500 text-sm mt-4 max-w-lg mx-auto leading-relaxed dark:text-white">
-            هر خونه ای یه حس خوب داره ، ما اینجا هستیم تا کمکت کنیم حس خوبت رو
-            پیدا کنی!! بیا با هم سفر جستجوی خونه ات رو شروع کنیم.
+            {t('heroSubtitle')}
           </p>
         </AdvancedScrollAnimation>
  
         <AdvancedScrollAnimation type="scale" delay={0.3}>
           <div className="mt-6 flex justify-center">
             <button className="bg-[#F5F5F5] shadow-[8px_0px_20px_rgba(8,135,202,0.30)] border-gray-200 w-35 h-12 text-blue-100 dark:text-[#28A5E6] font-bold cursor-pointer text-[18px] rounded-2xl">
-              ثبت نام
+              {t('registerButton')}
             </button>
           </div>
         </AdvancedScrollAnimation>
@@ -113,60 +141,59 @@ const ContactPage = () => {
 
       <AdvancedScrollAnimation type="fade" delay={0.2}>
         <h2 className="text-[16px] font-medium text-[rgb(6,4,37)] dark:text-white w-full justify-center flex relative top-10">
-          خانه مان را با هم میسازیم
+          {t('buildTogether')}
         </h2>
       </AdvancedScrollAnimation>
 
       <div className="flex flex-wrap justify-center gap-10 my-16 text-[rgb(6,4,37)]">
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="font-bold text-sm dark:text-white">آدرس ما</p>
-              <p className="text-xs text-gray-500 italic dark:text-white">
-                مازندران _ ساری _ دودانگه _ روستای بکر سنگده
-              </p>
-            </div>
-            <MapPin className="text-blue-600" size={24} />
+        <div className="flex items-center gap-3">
+          <div className="text-right">
+            <p className="font-bold text-sm dark:text-white">{t('addressTitle')}</p>
+            <p className="text-xs text-gray-500 italic dark:text-white">
+              {t('addressValue')}
+            </p>
           </div>
-        
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="font-bold text-sm">آدرس ایمیل</p>
-              <p className="text-xs text-gray-500 italic dark:text-white">
-                RahnKadeh@gmail.com
-              </p>
-            </div>
-            <Mail className="text-blue-600" size={24} />
-          </div>
-        
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="font-bold text-sm dark:text-white">تلفن ما</p>
-              <p className="text-xs text-gray-500 italic">
-                (۰۱۱) ۴۴۴-۷۳۸۹ و ۰۹۱۱-۵۶۴-۷۳۸۹
-              </p>
-            </div>
-            <Phone className="text-blue-600" size={24} />
-          </div>
-          
+          <MapPin className="text-blue-600" size={24} />
         </div>
+      
+        <div className="flex items-center gap-3">
+          <div className="text-right">
+            <p className="font-bold text-sm dark:text-white">{t('emailTitle')}</p>
+            <p className="text-xs text-gray-500 italic dark:text-white">
+              {t('emailValue')}
+            </p>
+          </div>
+          <Mail className="text-blue-600" size={24} />
+        </div>
+      
+        <div className="flex items-center gap-3">
+          <div className="text-right">
+            <p className="font-bold text-sm dark:text-white">{t('phoneTitle')}</p>
+            <p className="text-xs text-gray-500 italic dark:text-white">
+              {t('phoneValue')}
+            </p>
+          </div>
+          <Phone className="text-blue-600" size={24} />
+        </div>
+      </div>
 
       <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-40 max-[1300]:gap-20 px-6">
         <AdvancedScrollAnimation type="slide-right" delay={0.1} duration={0.6}>
           <div className="relative p-8 rounded-[40px] shadow-blue-100/50">
             <div className="mb-6 text-center">
               <p className="text-[rgb(6,4,37)] font-bold underline decoration-blue-200 underline-offset-8">
-                ما رو دریاب :)
+                {t('formTitle')}
               </p>
-              <div className="max-[1055]:hidden ">
-                <div className="absolute right-100 bottom-25 ">
+              <div className="max-[1055]:hidden">
+                <div className="absolute right-100 bottom-25">
                   <TallerFleshGreen />
                 </div>
                 <div className="absolute rotate-90 right-126 bottom-25">
-                  <div className="absolute -left-[25px] ">
+                  <div className="absolute -left-[25px]">
                     <LeftFleshGreen />
                   </div>
-                  <div className="rotate-180 absolute  ">
-                    <div className="absolute -bottom-0.5  ">
+                  <div className="rotate-180 absolute">
+                    <div className="absolute -bottom-0.5">
                       <RightFleshGreen />
                     </div>
                   </div>
@@ -174,14 +201,14 @@ const ContactPage = () => {
               </div>
 
               <h2 className="text-blue-700 font-black text-xl mt-2">
-                پیام بفرست تا کمکت کنیم!
+                {t('formSubtitle')}
               </h2>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
-                placeholder="نام و نام خانوادگی"
+                placeholder={t('namePlaceholder')}
                 value={formData.title}
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
@@ -190,7 +217,7 @@ const ContactPage = () => {
               />
               <input
                 type="email"
-                placeholder="ایمیل"
+                placeholder={t('emailPlaceholder')}
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -204,7 +231,7 @@ const ContactPage = () => {
 
               <textarea
                 rows={4}
-                placeholder="پیام شما"
+                placeholder={t('messagePlaceholder')}
                 value={formData.message}
                 onChange={(e) =>
                   setFormData({ ...formData, message: e.target.value })
@@ -217,7 +244,7 @@ const ContactPage = () => {
                 disabled={loading}
                 className="w-full py-4 bg-[rgb(16,8,143)] text-white rounded-2xl font-bold shadow-xl hover:bg-blue-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "در حال ارسال..." : "ارسال درخواست شما"}
+                {loading ? t('sending') : t('sendButton')}
               </button>
             </form>
 
@@ -230,16 +257,43 @@ const ContactPage = () => {
         </AdvancedScrollAnimation>
 
         <AdvancedScrollAnimation type="slide-left" delay={0.2} duration={0.6}>
-          <div className="rounded-tl-[42px] rounded-br-[42px] z-10 overflow-hidden shadow-lg border-8 border-white w-11/12 h-[487px]">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25917.79535207059!2d53.0477466!3d36.1187425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f92e1e8a5d1b5b5%3A0x0!2zMzZww7jQudCwINC1INC60LDQutC40YEg0LrRgNCw0L_QuyDQtNCw0L3QsNGBINC60YDRg9C_0L7QuQ!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s"
-              className="w-full h-full grayscale-[0.5]"
-              loading="lazy"
-              allowFullScreen
-            ></iframe>
+          <div className="rounded-tl-[42px] rounded-br-[42px] z-10 overflow-hidden shadow-lg border-8 border-white w-full h-[500px] bg-white dark:bg-gray-800">
+            <MapComponent officeInfo={officeInfo} />
           </div>
         </AdvancedScrollAnimation>
       </section>
+
+      {/* اطلاعات دفتر مرکزی */}
+      <AdvancedScrollAnimation type="fade" delay={0.3}>
+        <div className="max-w-7xl mx-auto mt-12 px-6">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-2xl p-6 border border-blue-100 dark:border-blue-800">
+            <div className="flex flex-wrap items-center justify-between gap-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center">
+                  <Award className="text-blue-600" size={24} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-800 dark:text-white">دفتر مرکزی رهن کده</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">تهران، خیابان ولیعصر</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Star className="text-yellow-500 fill-yellow-500" size={18} />
+                <span className="font-bold text-gray-800 dark:text-white">{officeInfo.rating}</span>
+                <span className="text-gray-500">({officeInfo.reviews} نظر)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock size={18} className="text-blue-600" />
+                <span className="text-sm text-gray-600 dark:text-gray-300">{officeInfo.hours}</span>
+              </div>
+              <button className="px-6 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all flex items-center gap-2">
+                <Navigation size={16} />
+                مسیریابی
+              </button>
+            </div>
+          </div>
+        </div>
+      </AdvancedScrollAnimation>
     </div>
   );
 };

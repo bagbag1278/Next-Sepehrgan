@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
@@ -13,13 +14,10 @@ import ClockIcon from "../../Icon/Comments/ClockIcon";
 import LikeIcon from "../../Icon/Comments/LikeIcon";
 import HugeArrow from "../../Icon/Comments/HugeArrow";
 
-// --- Type Definitions ---
-
 type ApiUser = {
   firstName?: string;
   lastName?: string;
   profilePicture?: string | null;
-
 };
 
 type ApiComment = {
@@ -39,12 +37,11 @@ type ItemType = {
   Profile: string;
   name: string;
   content: string;
-  date: string
+  date: string;
 };
 
-// --- Component ---
-
 const FocusCarousel = () => {
+  const t = useTranslations('FocusCarousel');
   const [items, setItems] = useState<ItemType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +53,7 @@ const FocusCarousel = () => {
         setLoading(true);
         setError(null);
 
-        const res = await fetch("http://next.genzuni.website/api/comments");
+        const res = await fetch("/api/comments");
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -67,25 +64,24 @@ const FocusCarousel = () => {
         const mappedItems: ItemType[] = (data.comments || []).map((comment) => {
           const fullName =
             `${comment.user?.firstName ?? ""} ${comment.user?.lastName ?? ""}`.trim() ||
-            "کاربر ناشناس";
+            t('unknownUser');
 
           const formattedDate = comment.created_at
             ? new Date(comment.created_at).toLocaleDateString("fa-IR")
-            : "بدون تاریخ";
+            : t('noDate');
 
           return {
             key: String(comment.id),
             Profile: "/placeHolder.jpeg",
             name: fullName,
-            content: comment.caption ?? comment.title ?? "بدون محتوا",
+            content: comment.caption ?? comment.title ?? t('noContent'),
             date: formattedDate,
           };
         });
 
         setItems(mappedItems);
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : "خطای ناشناخته در دریافت اطلاعات";
+        const message = err instanceof Error ? err.message : t('unknownError');
         setError(message);
       } finally {
         setLoading(false);
@@ -93,13 +89,11 @@ const FocusCarousel = () => {
     };
 
     fetchComments();
-  }, []);
+  }, [t]);
 
-  // --- Render Logic ---
   return (
     <div className="2xl:hidden flex">
       <div className="relative w-355 flex justify-between">
-        {/* Section 1: Header */}
         <div className="w-70 lg:w-82 h-88 hidden lg:flex items-center ml-4 lg:items-end">
           <div className="flex flex-wrap justify-center h-56 lg:h-77 w-90">
             <div className="flex flex-wrap justify-center h-14">
@@ -108,47 +102,43 @@ const FocusCarousel = () => {
                   <CommentsIcon />
                 </div>
                 <div className="dark:text-[#28A5E6] text-[13px] text-blue-200">
-                  برترین نظرات شما، صدای شما راهنمای ما
+                  {t('topCommentsText')}
                 </div>
                 <div className="w-6.75 h-6.5 flex gap-0.5 items-center flex-row-reverse">
                   <CommentsIcon />
                 </div>
               </div>
-
               <div className="dark:text-[#F5F5F5] text-[20px] font-bold text-blue-400">
-                نظرات بازدید کنندگان
+                {t('visitorsComments')}
               </div>
             </div>
-
             <div className="hidden lg:flex lg:w-82 lg:h-17 text-center text-blue-400 dark:text-[#F5F5F5D9]">
-              نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در انتخاب بهترین تجربیات سفر هستند!
+              {t('commentsDescription')}
             </div>
-
             <button className="w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer">
-              <p className="text-green-100 text-[14px]">مشاهده همه</p>
+              <p className="text-green-100 text-[14px]">{t('viewAll')}</p>
             </button>
           </div>
         </div>
-        {/* End Section 1 */}
 
         <div className="relative w-300 h-100 overflow-hidden">
           <div className="absolute right-0 top-0 w-76.25 h-93.75 bg-green-100 rounded-bl-[5px] rounded-tr-[5px] rounded-tl-[50px] rounded-br-[50px]" />
 
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center text-lg">
-              درحال بارگذاری...
+              {t('loading')}
             </div>
           )}
 
           {error && (
             <div className="absolute inset-0 flex items-center justify-center text-red-500">
-              خطا: {error}
+              {t('error')} {error}
             </div>
           )}
 
           {!loading && !error && items.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">
-              هیچ آیتمی یافت نشد.
+              {t('noItems')}
             </div>
           )}
 
@@ -189,11 +179,10 @@ const FocusCarousel = () => {
                             "rounded-2xl shadow-sm flex items-center justify-center transition-all duration-300",
                             focused
                               ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
-                              : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400", // <--- تغییر از dark:bg-black به dark:bg-blue-400
+                              : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400",
                           ].join(" ")}
                         >
                           {focused ? (
-                            // --- محتوای اسلاید فعال ---
                             <div className="flex flex-col items-center justify-between text-center w-full h-full p-5">
                               <div className="w-20 h-20 rounded-full p-0.75 border border-[#BAE9D3] bg-white flex items-center justify-center overflow-hidden relative">
                                 {item.Profile ? (
@@ -209,21 +198,17 @@ const FocusCarousel = () => {
                                   </span>
                                 )}
                               </div>
-
                               <p className="mt-3 text-lg font-bold text-[#0A1133] dark:text-black">
                                 {item.name}
                               </p>
-
                               <p className="mt-2 text-ellipsis line-clamp-4 w-66 h-27.75 text-center text-[14px] leading-7 text-[#1B1E36] px-2 dark:text-black">
                                 {item.content}
                               </p>
-
                               <div className="mt-auto w-full flex justify-between items-center px-2">
                                 <span className="text-[#A9A9A9] text-xs flex items-center gap-1">
                                   <ClockIcon />
                                   {item.date}
                                 </span>
-
                                 <div className="cursor-pointer">
                                   <LikeIcon />
                                 </div>
@@ -245,11 +230,9 @@ const FocusCarousel = () => {
                                   </span>
                                 )}
                               </div>
-
                               <p className="mt-4 text-base font-bold text-[#0A1133] dark:text-white">
                                 {item.name}
                               </p>
-
                               <p className="mt-2 text-sm leading-6 text-[#1B1E36] dark:text-white">
                                 {item.content.length > 45
                                   ? `${item.content.slice(0, 45)}...`
@@ -266,7 +249,6 @@ const FocusCarousel = () => {
             </Swiper>
           )}
 
-          {/* Navigation Buttons */}
           <div className="absolute right-0 top-38 z-50 mt-4 flex justify-end">
             <div className="flex flex-col gap-3">
               <button
@@ -276,7 +258,6 @@ const FocusCarousel = () => {
               >
                 ‹
               </button>
-
               <button
                 type="button"
                 className="carousel-next h-10 w-10 rounded-full border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-center"
@@ -288,7 +269,6 @@ const FocusCarousel = () => {
           </div>
         </div>
 
-        {/* Arrow */}
         <div className="hidden lg:flex absolute -bottom-7 left-0">
           <HugeArrow />
         </div>

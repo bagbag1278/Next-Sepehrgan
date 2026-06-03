@@ -18,6 +18,7 @@ import DeleteCommentModal from "@/app/admin/CommentsManagement/edit&delete/Delet
 import Pagination from "../Pagination/PaginationAdmin";
 import HeaderCardCommens from "./card/HeaderCardCommens";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://next.genzuni.website/api";
 
 interface Comment {
   id: number;
@@ -57,22 +58,34 @@ const CommentsManagement = () => {
           comments.reduce((sum, c) => sum + Number(c.rating), 0) /
           comments.length
         ).toFixed(1)
-      : 0;
+      : "0";
+
+  const getToken = () => localStorage.getItem("accessToken");
 
   const fetchComments = async () => {
+    setLoading(true);
     try {
-      const token = localStorage.getItem("accessToken");
-      const response = await axios.get(
-        "http://next.genzuni.website/api/admin/comments",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      const data = response.data?.data || [];
-      setComments(data);
-    } catch (error) {
+      const token = getToken();
+      if (!token) {
+        toast.error("لطفا وارد شوید");
+        return;
+      }
+
+      const response = await axios.get(`${API_BASE_URL}/admin/comments`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      const data = response.data?.data || response.data || [];
+      setComments(Array.isArray(data) ? data : []);
+    } catch (error: any) {
       console.error("خطا در دریافت کامنت‌ها:", error);
-      toast.error("خطا در دریافت کامنت‌ها");
+      const errorMessage = error.response?.data?.message || "خطا در دریافت کامنت‌ها";
+      toast.error(errorMessage);
+      
+      if (error.response?.status === 401) {
+        localStorage.removeItem("accessToken");
+        window.location.href = "/login";
+      }
     } finally {
       setLoading(false);
     }
@@ -96,20 +109,23 @@ const CommentsManagement = () => {
 
   const handleDelete = async () => {
     if (!commentToDelete) return;
+    
     setModalLoading(true);
     try {
-      const token = localStorage.getItem("accessToken");
-      await axios.delete(
-        `http://next.genzuni.website/api/admin/comments/${commentToDelete.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const token = getToken();
+      if (!token) throw new Error("توکن یافت نشد");
+
+      await axios.delete(`${API_BASE_URL}/admin/comments/${commentToDelete.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
       toast.success("کامنت با موفقیت حذف شد");
       await fetchComments();
       closeDeleteModal();
-    } catch (error) {
-      toast.error("خطا در حذف کامنت");
+    } catch (error: any) {
+      console.error("خطا در حذف کامنت:", error);
+      const errorMessage = error.response?.data?.message || "خطا در حذف کامنت";
+      toast.error(errorMessage);
     } finally {
       setModalLoading(false);
     }
@@ -131,42 +147,55 @@ const CommentsManagement = () => {
     rating: string;
   }) => {
     if (!editingComment) return;
+    
     setModalLoading(true);
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = getToken();
+      if (!token) throw new Error("توکن یافت نشد");
+
       await axios.put(
-        `http://next.genzuni.website/api/admin/comments/${editingComment.id}`,
+        `${API_BASE_URL}/admin/comments/${editingComment.id}`,
         {
           title: data.title,
           caption: data.caption,
-          rating: data.rating,
+          rating: Number(data.rating), 
         },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
+      
       toast.success("کامنت با موفقیت ویرایش شد");
       closeEditModal();
       await fetchComments();
-    } catch (error) {
-      toast.error("خطا در ویرایش کامنت");
+    } catch (error: any) {
+      console.error("خطا در ویرایش کامنت:", error);
+      const errorMessage = error.response?.data?.message || "خطا در ویرایش کامنت";
+      toast.error(errorMessage);
     } finally {
       setModalLoading(false);
     }
   };
 
   const filteredComments = comments.filter((comment) => {
-    const fullName = `${comment.user.firstName} ${comment.user.lastName}`;
-    const matchesSearch =
-      fullName.toLowerCase().includes(search.toLowerCase()) ||
-      comment.house.title.toLowerCase().includes(search.toLowerCase()) ||
-      comment.caption.toLowerCase().includes(search.toLowerCase());
-    return matchesSearch;
+    const fullName = `${comment.user?.firstName || ""} ${comment.user?.lastName || ""}`.trim();
+    const searchTerm = search.toLowerCase();
+    
+    return (
+      fullName.toLowerCase().includes(searchTerm) ||
+      comment.house?.title?.toLowerCase().includes(searchTerm) ||
+      comment.caption?.toLowerCase().includes(searchTerm) ||
+      comment.title?.toLowerCase().includes(searchTerm)
+    );
   });
 
   const totalPages = Math.ceil(filteredComments.length / itemsPerPage);
   const paginatedComments = filteredComments.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    currentPage * itemsPerPage
   );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
 
   const renderStars = (rating: string) => {
     const rate = Number(rating);
@@ -188,28 +217,27 @@ const CommentsManagement = () => {
   };
 
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString("fa-IR");
+    try {
+      return new Date(dateStr).toLocaleDateString("fa-IR");
+    } catch {
+      return "نامشخص";
+    }
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex justify-center items-center h-64 ">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#0887CAB2]"></div>
       </div>
     );
   }
 
   return (
-    <div
-      dir="rtl"
-      className="p-6 space-y-6  dark:bg-gray-900 min-h-screen overflow-hidden"
-    >
-      <AdvancedScrollAnimation type="fade" delay={0.1}>
-        <div className=" items-center">
-            <div className="bg-gradient-to-l rounded-tl-[42px] rounded-br-[42px] from-blue-700 via-blue-800 to-indigo-900 rounded-2xl p-6 text-white">
-        <h1 className="text-2xl font-bold"> مدیریت کامنت‌ها</h1>
-        <p className="text-blue-100 mt-1"> مشاهده و مدیریت نظرات کاربران</p>
-      </div>
+    <div dir="rtl" className="p-6 space-y-6   min-h-screen">
+      <AdvancedScrollAnimation type="slide-right" delay={0.1}>
+        <div className="bg-gradient-to-l from-blue-700 rounded-tl-[42px] rounded-br-[42px] via-blue-800 to-indigo-900 rounded-2xl p-6 text-white">
+          <h1 className="text-2xl font-bold">مدیریت کامنت‌ها</h1>
+          <p className="text-blue-100 mt-1">مشاهده و مدیریت نظرات کاربران</p>
         </div>
       </AdvancedScrollAnimation>
 
@@ -219,110 +247,118 @@ const CommentsManagement = () => {
         hotelsWithComments={new Set(comments.map((c) => c.house_id)).size}
       />
 
-      <AdvancedScrollAnimation type="slide-up" delay={0.4}>
+      <AdvancedScrollAnimation type="slide-up" delay={0.2}>
         <div className="relative w-full sm:w-80">
           <Search
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0887CA]"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0887CAB2]"
             size={18}
           />
           <input
             type="text"
-            placeholder="جستجو بر اساس ..."
+            placeholder="جستجو بر اساس نام کاربر، عنوان هتل یا متن کامنت..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pr-10 pl-4 py-2.5 border rounded-2xl border-[#0887CA] text-[#0887CA] bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+            className="w-full pr-10 pl-4 py-2.5 border rounded-2xl border-[#0887CAB2] text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#0887CAB2] transition-all duration-300"
           />
         </div>
       </AdvancedScrollAnimation>
 
       <div className="space-y-4">
-        {paginatedComments.map((comment, index) => {
-          const fullName = `${comment.user.firstName} ${comment.user.lastName}`;
-          return (
-            <AdvancedScrollAnimation
-              key={comment.id}
-              type="slide-up"
-              delay={0.1 + index * 0.05}
-              duration={0.4}
-            >
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 rounded-tl-[42px] rounded-br-[42px] shadow-[0_0_8px] shadow-blue-300/30 transition-all hover:shadow-[0_0_12px] hover:shadow-blue-300/40">
-                <div className="flex flex-col md:flex-row justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">
-                        {comment.user.firstName?.charAt(0) || "ک"}
+        {paginatedComments.length > 0 ? (
+          paginatedComments.map((comment, index) => {
+            const fullName = `${comment.user?.firstName || ""} ${comment.user?.lastName || ""}`.trim() || "کاربر ناشناس";
+            return (
+              <AdvancedScrollAnimation
+                key={comment.id}
+                type="slide-up"
+                delay={0.1 + index * 0.05}
+                duration={0.4}
+              >
+                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 rounded-tl-[42px] rounded-br-[42px] shadow-[0_0_8px] shadow-blue-300/30 transition-all hover:shadow-[0_0_12px] hover:shadow-blue-300/40">
+                  <div className="flex flex-col md:flex-row justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold">
+                          {comment.user?.firstName?.charAt(0) || "ک"}
+                        </div>
+                        <div>
+                          <p className="font-bold text-gray-800 dark:text-white">
+                            {fullName}
+                          </p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {formatDate(comment.created_at)}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-bold text-gray-800 dark:text-white">
-                          {fullName}
+                      
+                      <div className="mb-3">
+                        <div className="flex items-center gap-2">
+                          <Home size={14} className="text-blue-500" />
+                          <p className="text-sm font-medium text-blue-600 dark:text-blue-300">
+                            {comment.house?.title || "هتل نامشخص"}
+                          </p>
+                        </div>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          {comment.house?.address || "آدرس نامشخص"}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {formatDate(comment.created_at)}
+                      </div>
+                      
+                      <div className="mb-3">
+                        <p className="text-sm font-bold text-gray-700 dark:text-gray-300">
+                          {comment.title || "بدون عنوان"}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
+                          {comment.caption}
                         </p>
                       </div>
                     </div>
-                    <div className="mb-3">
-                      <p className="text-sm font-medium text-blue-600 dark:text-blue-300">
-                        {" "}
-                        {comment.house.title}
-                      </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                        {comment.house.address}
-                      </p>
-                    </div>
-                    <div className="mb-3">
-                      <p className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                        {" "}
-                        {comment.title}
-                      </p>
-                      <p className="text-sm  truncate text-gray-600 dark:text-gray-400 mt-1">
-                        {comment.caption}
-                      </p>
-                    </div>
-                  </div>
 
-                  <div className="flex flex-col items-end justify-between gap-3">
-                    <div className="flex items-center gap-4">
-                      {renderStars(comment.rating)}
-                      <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
-                        {comment.rating} / ۵
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => openEditModal(comment)}
-                        className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-300"
-                        title="ویرایش"
-                      >
-                        <Edit
-                          size={18}
-                          className="text-blue-500 "
-                        />
-                      </button>
-                      <button
-                        onClick={() => openDeleteModal(comment)}
-                        className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-300"
-                        title="حذف"
-                      >
-                        <Trash2
-                          size={18}
-                          className="text-red-500 dark:text-red-400"
-                        />
-                      </button>
+                    <div className="flex flex-col items-end justify-between gap-3">
+                      <div className="flex items-center gap-4">
+                        {renderStars(comment.rating)}
+                        <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
+                          {comment.rating} / ۵
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => openEditModal(comment)}
+                          className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all duration-300"
+                          title="ویرایش"
+                        >
+                          <Edit size={18} className="text-[#0887CAB2]" />
+                        </button>
+                        <button
+                          onClick={() => openDeleteModal(comment)}
+                          className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-300"
+                          title="حذف"
+                        >
+                          <Trash2 size={18} className="text-red-500 dark:text-red-400" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </AdvancedScrollAnimation>
-          );
-        })}
+              </AdvancedScrollAnimation>
+            );
+          })
+        ) : (
+          <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-2xl shadow-[0_0_8px] shadow-blue-300/30">
+            <MessageSquare size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
+            <p className="text-gray-500 dark:text-gray-400">
+              {search ? "نتیجه‌ای برای جستجوی شما یافت نشد" : "هیچ کامنتی یافت نشد"}
+            </p>
+          </div>
+        )}
       </div>
-
-      <AdvancedScrollAnimation type="fade" delay={0.5}>
-        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-          نمایش {paginatedComments.length} از {filteredComments.length} کامنت
-        </div>
-      </AdvancedScrollAnimation>
+      {/* آمار نمایش */}
+      {paginatedComments.length > 0 && (
+        <AdvancedScrollAnimation type="fade" delay={0.5}>
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+            نمایش {paginatedComments.length} از {filteredComments.length} کامنت
+          </div>
+        </AdvancedScrollAnimation>
+      )}
 
       {totalPages > 1 && (
         <AdvancedScrollAnimation type="slide-up" delay={0.6}>
@@ -332,20 +368,6 @@ const CommentsManagement = () => {
               totalPages={totalPages}
               onPageChange={(page) => setCurrentPage(page)}
             />
-          </div>
-        </AdvancedScrollAnimation>
-      )}
-
-      {filteredComments.length === 0 && (
-        <AdvancedScrollAnimation type="fade" delay={0.2}>
-          <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-2xl shadow-[0_0_8px] shadow-blue-300/30">
-            <MessageSquare
-              size={48}
-              className="mx-auto text-gray-300 dark:text-gray-600 mb-3"
-            />
-            <p className="text-gray-500 dark:text-gray-400">
-              هیچ کامنتی یافت نشد
-            </p>
           </div>
         </AdvancedScrollAnimation>
       )}

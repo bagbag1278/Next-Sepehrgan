@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import FastFilter from "./Filter/FastFilter";
 import { useState } from "react";
@@ -65,6 +66,7 @@ const FilterButton = ({
   onRemoveFromCompare,
   onClearCompare,
 }: FilterButtonProps) => {
+  const t = useTranslations('FilterButton');
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -84,7 +86,7 @@ const FilterButton = ({
                 strokeLinecap="round"
               />
             </svg>
-            فیلتر های بیشتر
+            {t('moreFilters')}
           </button>
         </DropdownMenu.Trigger>
 

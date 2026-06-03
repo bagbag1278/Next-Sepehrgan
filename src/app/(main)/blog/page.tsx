@@ -1,10 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 import { Search, Clock, Calendar, User, ArrowLeft, Filter, X } from "lucide-react";
 import { motion } from "framer-motion";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
 const Blog = () => {
+  const t = useTranslations('Blog');
   const [blogs, setBlogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,11 +18,11 @@ const Blog = () => {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://next.genzuni.website/api/blogs");
+      const response = await fetch("/api/blogs");
       const result = await response.json();
       setBlogs(result.data || []);
     } catch (error) {
-      console.error("خطا دریافت بلاگ");
+      console.error(t('errorFetching'));
     } finally {
       setLoading(false);
     }
@@ -31,15 +33,15 @@ const Blog = () => {
   }, []);
 
   const filteredBlogs = blogs.filter((blog) => {
-    const matchesSearch = blog.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = blog.title?.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === null || blog.category_id === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const categories = [
-    { id: 1, name: "اخبار ویلاها" },
-    { id: 2, name: "آپارتمان مدرن" },
-    { id: 3, name: "سرمایه‌گذاری مسکن" },
+    { id: 1, name: t('villaNews') },
+    { id: 2, name: t('modernApartment') },
+    { id: 3, name: t('housingInvestment') },
   ];
 
   const img = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJGK1u8iNK0_v9sU4GgbGYkeyZNZ75jZpuKg&s";
@@ -59,8 +61,8 @@ const Blog = () => {
       
       <AdvancedScrollAnimation type="fade" delay={0.1}>
         <div className="mb-10 px-2">
-          <h1 className="text-[#10088F] text-[24px] font-bold mb-2">مقالات و وبلاگ</h1>
-          <p className="text-gray-500 text-[14px]">آخرین تحلیل‌ها و آموزش‌های حوزه مسکن را اینجا بخوانید.</p>
+          <h1 className="text-[#10088F] text-[24px] font-bold mb-2">{t('title')}</h1>
+          <p className="text-gray-500 text-[14px]">{t('subtitle')}</p>
         </div>
       </AdvancedScrollAnimation>
 
@@ -72,12 +74,12 @@ const Blog = () => {
             <div className="w-full bg-[#F5F8FA] border border-[#E8EFF3] rounded-[20px] p-5 shadow-sm shadow-[4px_4px_15px_rgba(8,135,202,0.1)]">
               <h3 className="text-[#10088F] text-[15px] font-bold mb-3 flex items-center gap-2">
                 <Search size={18} className="text-[#0887CA]" />
-                جستجو در مقالات
+                {t('searchInArticles')}
               </h3>
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="جستجو بلاگ"
+                  placeholder={t('searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full h-[48px] rounded-[12px] border border-[#0887CA44] bg-white px-4 text-[13px] outline-none focus:border-[#0887CA] text-[#060425] font-medium"
@@ -88,7 +90,7 @@ const Blog = () => {
             <div className="w-full bg-[#F5F8FA] border border-[#E8EFF3] rounded-[20px] p-5 shadow-sm shadow-[4px_4px_15px_rgba(8,135,202,0.1)]">
               <h3 className="text-[#10088F] text-[15px] font-bold mb-4 flex items-center gap-2">
                 <Filter size={18} className="text-[#0887CA]" />
-                دسته‌بندی‌ها
+                {t('categories')}
               </h3>
               <div className="flex flex-col gap-2">
                 <button
@@ -99,7 +101,7 @@ const Blog = () => {
                       : "bg-white text-[#475569] hover:bg-gray-100"
                   }`}
                 >
-                  همه مقالات
+                  {t('allArticles')}
                 </button>
                 
                 {categories.map((cat, index) => (
@@ -129,11 +131,11 @@ const Blog = () => {
         <div className="lg:col-span-3">
           {loading ? (
             <AdvancedScrollAnimation type="fade" delay={0.2}>
-              <div className="text-center py-20 text-gray-400 font-bold">در حال دریافت مقالات...</div>
+              <div className="text-center py-20 text-gray-400 font-bold">{t('loading')}</div>
             </AdvancedScrollAnimation>
           ) : filteredBlogs.length === 0 ? (
             <AdvancedScrollAnimation type="fade" delay={0.2}>
-              <div className="text-center py-20 text-gray-400 font-bold">هیچ مقاله‌ای یافت نشد!</div>
+              <div className="text-center py-20 text-gray-400 font-bold">{t('noArticles')}</div>
             </AdvancedScrollAnimation>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -158,7 +160,7 @@ const Blog = () => {
                         />
                         <span className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-[#10088F] text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
                           <Clock size={12} className="text-[#0887CA]" />
-                          {blog.estimated_reading_time || "۵ دقیقه"}
+                          {blog.estimated_reading_time || t('defaultReadingTime')}
                         </span>
                       </div>
 
@@ -167,7 +169,7 @@ const Blog = () => {
                           <div className="flex gap-4 items-center text-[#94A3B8] text-[11px] mb-3 font-medium">
                             <span className="flex items-center gap-1">
                               <User size={13} className="text-[#0887CA]" />
-                              شناسه نویسنده: {blog.author_id}
+                              {t('authorId')} {blog.author_id}
                             </span>
                             <span className="flex items-center gap-1">
                               <Calendar size={13} className="text-[#0887CA]" />
@@ -183,7 +185,7 @@ const Blog = () => {
                         </div>
                         <div className="border-t border-gray-100 pt-4 flex justify-end">
                           <button className="flex items-center gap-1 text-[12px] text-[#0887CA] font-extrabold hover:text-[#10088F] transition-colors">
-                            <span>ادامه مطلب</span>
+                            <span>{t('readMore')}</span>
                             <ArrowLeft size={14} className="mt-0.5" />
                           </button>
                         </div>
@@ -241,7 +243,7 @@ const Blog = () => {
                 <div className="flex gap-6 items-center text-[#94A3B8] text-[12px] font-semibold border-b border-gray-200 pb-3 flex-wrap">
                   <span className="flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-100">
                     <User size={14} className="text-[#0887CA]" />
-                    نویسنده: {activeBlog.author_id}
+                    {t('author')} {activeBlog.author_id}
                   </span>
                   <span className="flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-100">
                     <Calendar size={14} className="text-[#0887CA]" />
@@ -249,7 +251,7 @@ const Blog = () => {
                   </span>
                   <span className="flex items-center gap-1 bg-white px-3 py-1 rounded-full border border-gray-100">
                     <Clock size={14} className="text-[#0887CA]" />
-                    زمان مطالعه: {activeBlog.estimated_reading_time || "۵ دقیقه"}
+                    {t('readingTime')} {activeBlog.estimated_reading_time || t('defaultReadingTime')}
                   </span>
                 </div>
 
@@ -266,7 +268,7 @@ const Blog = () => {
                     onClick={closeModal}
                     className="bg-[#10088F] text-white px-6 py-2.5 rounded-[12px] text-[13px] font-bold hover:bg-[#0887CA] transition-all shadow-md"
                   >
-                    بستن
+                    {t('close')}
                   </button>
                 </div>
               </motion.div>

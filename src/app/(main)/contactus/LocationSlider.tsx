@@ -21,7 +21,6 @@ const LocationSlider = () => {
   const swiperInstanceRef = useRef<any>(null);
 
   useEffect(() => {
-    // با تاخیر اسلایدر رو به موقعیت وسط ببر
     const timer = setTimeout(() => {
       if (swiperInstanceRef.current) {
         swiperInstanceRef.current.slideTo(2, 0);

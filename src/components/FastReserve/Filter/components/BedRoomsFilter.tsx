@@ -1,6 +1,8 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import { toPersianNum } from "@/components/utils/FarsiNum";
 import { FC } from "react";
+
 type BedRoomsFilterProps = {
   selectedRooms: number;
   setSelectedRooms: (value: number) => void;
@@ -11,6 +13,7 @@ type BedRoomsFilterProps = {
   selectedParking: number;
   setSelectedParking: (value: number) => void;
 };
+
 const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
   selectedRooms,
   setSelectedRooms,
@@ -21,7 +24,9 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
   selectedParking,
   setSelectedParking,
 }) => {
-  const renderButtons = (stateSetter: { (value: number): void; (value: number): void; (value: number): void; (value: number): void; (arg0: number): void; }, currentValue: number, maxCount: number) => {
+  const t = useTranslations('BedRoomsFilter');
+
+  const renderButtons = (stateSetter: (value: number) => void, currentValue: number, maxCount: number) => {
     const buttons = [];
 
     buttons.push(
@@ -61,7 +66,7 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
       {/* تعداد تخت */}
       <div className="mb-5">
         <label className="block text-gray-700 text-sm font-normal mb-2 opacity-70">
-          تعداد تخت
+          {t('beds')}
         </label>
         <div className="flex items-center space-x-2">
           {renderButtons(setSelectedRooms, selectedRooms, 5)}
@@ -71,7 +76,7 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
       {/* تعداد حمام */}
       <div className="mb-5">
         <label className="block text-gray-700 text-sm font-normal mb-2 opacity-70">
-          تعداد حمام
+          {t('bathrooms')}
         </label>
         <div className="flex items-center space-x-2">
           {renderButtons(setSelectedBathrooms, selectedBathrooms, 5)}
@@ -81,7 +86,7 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
       {/* تعداد دستشویی */}
       <div className="mb-5">
         <label className="block text-gray-700 text-sm font-normal mb-2 opacity-70">
-          تعداد دستشویی
+          {t('toilets')}
         </label>
         <div className="flex items-center space-x-2">
           {renderButtons(setSelectedToilets, selectedToilets, 5)}
@@ -91,7 +96,7 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
       {/* تعداد پارکینگ */}
       <div>
         <label className="block text-gray-700 text-sm font-normal mb-2 opacity-70">
-          تعداد پارکینگ
+          {t('parking')}
         </label>
         <div className="flex items-center space-x-2">
           {renderButtons(setSelectedParking, selectedParking, 5)}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 
 type Props = {
   value?: string;
@@ -6,6 +7,7 @@ type Props = {
 };
 
 const SearchForm = ({ value = "", onSearchChange }: Props) => {
+  const t = useTranslations('SearchForm');
   const [inputValue, setInputValue] = useState(value);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const SearchForm = ({ value = "", onSearchChange }: Props) => {
       <input
         type="search"
         name="house"
-        placeholder="مقصدت کجاست ...."
+        placeholder={t('placeholder')}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         className="w-126.25 h-12 text-sm border placeholder:text-blue-300/70 border-blue-300/70 dark:bg-white py-1 px-4 outline-0 text-blue-300 rounded-2xl"

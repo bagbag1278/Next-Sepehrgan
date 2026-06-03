@@ -1,9 +1,10 @@
 import React from 'react'
+import AdminDashboard from './AdminDashboard/page'
 
 function page() {
   return (
     <div>
-      
+      <AdminDashboard/>
     </div>
   )
 }

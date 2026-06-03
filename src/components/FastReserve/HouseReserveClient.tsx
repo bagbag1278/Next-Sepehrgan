@@ -79,7 +79,6 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
     toast.success("تمامی فیلترها پاک شد");
   };
 
-  // تبدیل House[] به IReserveHouse[]
   const convertToIReserveHouse = (houses: House[]): IReserveHouse[] => {
     return houses.map((house) => ({
       id: house.id,
@@ -172,14 +171,14 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
         />
 
         <div className="w-[43%] h-209 mt-6 rounded-tl-lg overflow-hidden rounded-br-lg rounded-bl-[42px] rounded-tr-[42px] drop-shadow-blue-300">
-          {/* <Map
+           <Map
             lat={userLat}
             lng={userLng}
             zoom={14}
             popupText="اینجا تهران است"
             height="100%"
             apiKey={neshanApiKey}
-          /> */}
+          /> 
         </div>
       </div>
 

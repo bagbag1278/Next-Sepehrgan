@@ -107,6 +107,7 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
               />
 
               <input
+                dir="rtl"
                 type="tel"
                 placeholder="شماره تماس"
                 value={form.phoneNumber}
