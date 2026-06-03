@@ -129,6 +129,8 @@ const MainPage = () => {
                 </div>
             ))}
 
+            
+
             {/* LEFT SIDE */}
             <div
                 className="

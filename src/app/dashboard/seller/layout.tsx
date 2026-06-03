@@ -2,7 +2,7 @@ import DashboardHeader from "@/components/Dashboard/header";
 import DarkModeHero from "@/components/landing/components/HeroSction/HeroFilter/DarkModeHero";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import {
   LayoutDashboard,
   Hotel,
@@ -15,7 +15,6 @@ import {
   LogOut,
   SettingsIcon,
 } from "lucide-react";
-// import MobileSidebar from "@/components/Admin/MobileSidebar";
 import SellersideBar from '../../../components/DashboardSeller/SellersideBar'
 
 interface IChildren {
@@ -23,61 +22,14 @@ interface IChildren {
 }
 
 
-export default async function SellerLayout({
-  children,
-}: IChildren) {
-  const cookieStore = await cookies();
+export default async function SellerLayout({children,}: IChildren) {
+  // const cookieStore = await cookies();
 
-  const token = cookieStore.get("accessToken");
+  // const token = cookieStore.get("accessToken");
 
-  if (!token) {
-    redirect("/login");
-  }
-
-  const MenuItems = [
-    {
-      id: 1,
-      icon: LayoutDashboard,
-      label: "داشبورد",
-      href: "/dashboard/seller",
-    },
-    {
-      id: 3,
-      icon: Users,
-      label: " اطلاعات کاربری",
-      href: "/dashboard/selle/UserInfo",
-    },
-    {
-      id: 4,
-      icon: CalendarCheck,
-      label: "مدیریت املاک",
-      href: "/dashboard/seller/housemanegement",
-    },
-    {
-      id: 5,
-      icon: MessageSquare,
-      label: "مدیریت رزروها",
-      href: "/dashboard/seller/reservemanagement",
-    },
-    {
-      id: 6,
-      icon: TicketPercent,
-      label: "مدیریت مالی",
-      href: "/dashboard/seller/Financialmanagement",
-    },
-    {
-      id: 7,
-      icon: FileText,
-      label: " مدیریت نظرات",
-      href: "/dashboard/seller/commentmanegement",
-    },
-    {
-      id: 8,
-      icon: SettingsIcon,
-      label: "اعلان ها",
-      href: "/dashboard/seller/notifications",
-    },
-  ];
+  // if (!token) {
+  //   redirect("/login");
+  // }
 
   return (
     <div

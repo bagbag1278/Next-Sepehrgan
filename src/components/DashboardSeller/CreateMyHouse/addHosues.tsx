@@ -29,11 +29,9 @@ import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import StepFive from "./StepFive";
 
-const AddHousePage = () => {
+const AddHousePage = () => {const [step, setStep] = useState(1);
 
-    const [step, setStep] =
-        useState(1);
-
+    const [image, setImage] = useState<string | null>(null);
     const [formData, setFormData] =
         useState({
 
@@ -53,8 +51,7 @@ const AddHousePage = () => {
 
         });
 
-    const [errors, setErrors] =
-        useState<Record<string, string>>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const stepItems = [
 
@@ -176,8 +173,7 @@ const AddHousePage = () => {
             case 4:
                 return <StepFour />;
             case 5:
-                return <StepFive />;
-
+                return <StepFive formData={formData} image={image} />;
             default:
 
                 return null;
