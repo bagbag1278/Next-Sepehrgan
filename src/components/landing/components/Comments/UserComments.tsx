@@ -97,7 +97,7 @@ const FocusCarousel = () => {
 
   // --- Render Logic ---
   return (
-    <div className="2xl:hidden flex">
+    <div className="2xl:hidden hidden sm:flex">
       <div className="relative w-355 flex justify-between">
         {/* Section 1: Header */}
         <div className="w-70 lg:w-82 h-88 hidden lg:flex items-center ml-4 lg:items-end">

@@ -14,7 +14,7 @@ import MiniImage4 from '../../Icon/FirstContainer/MiniImage4'
 
 const FirstContainer = () => {
     return (
-        <div className='w-full flex justify-cente'>
+        <div className='w-full flex justify-center '>
             <div className=' w-full hidden sm:flex justify-center '>
                 <div className='w-330.75  relative'>
                     {/* ///// */}

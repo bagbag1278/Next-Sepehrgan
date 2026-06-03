@@ -174,7 +174,10 @@ const ThirdContainer = () => {
                         </div>
 
                         <div className='relative w-62.5 h-25  bg-gray-500 rounded-4xl'>
+                         
+
                             <ImageMob4 />
+                           
                             <div className='absolute right-3 top-2 flex gap-1 z-50 text-white '>
                                 <StarIcon />
                                 <p>4.5</p>
