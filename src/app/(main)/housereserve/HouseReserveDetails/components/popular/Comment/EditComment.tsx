@@ -85,7 +85,7 @@ const EditComment = ({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="text-[11px] text-[#0887CA] dark:text-blue-400 font-bold hover:underline flex items-center gap-1"
+        className="text-[11px] text-[#0887CA] dark:text-blue-300 font-bold hover:underline flex items-center gap-1"
       >
         <Edit2 size={12} />
         {t('edit')}
@@ -96,7 +96,7 @@ const EditComment = ({
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
           <div className="relative bg-white dark:bg-gray-800 w-full max-w-[500px] max-h-[90vh] overflow-y-auto p-6 rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] shadow-2xl border border-gray-100 dark:border-gray-700">
             <div className="flex justify-between items-center border-b border-gray-100 dark:border-gray-700 pb-3 mb-4">
-              <h3 className="font-bold text-[16px] text-[#10088F] dark:text-blue-400">
+              <h3 className="font-bold text-[16px] text-[#10088F] ">
                 {isReply ? t('editReply') : t('editComment')}
               </h3>
               <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-gray-600">
@@ -111,7 +111,7 @@ const EditComment = ({
                   placeholder={t('titlePlaceholder')}
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full p-3 rounded-[12px] border border-[#E2E8F0] dark:border-gray-600 bg-white dark:bg-gray-700 outline-none text-[13px] focus:border-[#0887CA] transition-all"
+                  className="w-full p-3 rounded-[12px] border border-[#E2E8F0] dark:border-gray-600 text-[#0887CA] bg-white dark:bg-gray-700 outline-none text-[13px] focus:border-[#0887CA] transition-all"
                   required
                 />
               )}
@@ -120,7 +120,7 @@ const EditComment = ({
                 placeholder={isReply ? t('replyPlaceholder') : t('commentPlaceholder')}
                 value={caption}
                 onChange={(e) => setCaption(e.target.value)}
-                className="w-full p-3 rounded-[12px] border border-[#E2E8F0] dark:border-gray-600 bg-white dark:bg-gray-700 outline-none text-[13px] resize-none focus:border-[#0887CA] transition-all"
+                className="w-full p-3 rounded-[12px] border border-[#E2E8F0] text-[#0887CA] dark:border-gray-600 bg-white dark:bg-gray-700 outline-none text-[13px] resize-none focus:border-[#0887CA] transition-all"
                 rows={5}
                 required
               />

@@ -174,7 +174,7 @@ const fetchLocation = async () => {
           </div>
         </AdvancedScrollAnimation>
 
-        <div className="mt-20">
+        <div className="mt-24 max-[1300]:mt-14 max-[600]:mt-0 ">
           <AdvancedScrollAnimation type="slide-up" delay={0.1}>
             <div className="w-full max-w-7xl flex justify-between items-center flex-wrap gap-4">
               <div className="w-20 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-28 max-[600px]:top-15 ">
@@ -192,7 +192,7 @@ const fetchLocation = async () => {
               </div>
 
               <div
-                className="flex flex-col gap-4 -mt-8 pr-5 max-[1024px]:pr-16 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
+                className="flex flex-col gap-4 -mt-8 bottom-5 pr-5 max-[1024px]:pr-16 relative max-[1300px]:bottom-8 max-[1300px]:m-auto"
                 dir="rtl"
               >
                 <h2 className="text-2xl font-bold dark:text-white text-blue-400 flex gap-3 max-[1300px]:justify-center flex-wrap">
@@ -213,7 +213,7 @@ const fetchLocation = async () => {
             </div>
           </AdvancedScrollAnimation>
 
-          <div className="flex justify-between gap-4 max-[1300px]:flex-col mt-10">
+          <div className="flex justify-between gap-4 max-[1300px]:flex-col ">
             <div className="flex gap-10 flex-col items-center w-full lg:w-auto">
               <div className="w-107 h-150 justify-center flex p-8">
                 <Seller
@@ -237,17 +237,17 @@ const fetchLocation = async () => {
             <div className="flex-1 w-full max-w-200 max-[450]:w-90 h-auto rounded-2xl flex flex-col items-center gap-6 bg-white dark:bg-gray-800 shadow-lg p-6 mx-auto">
               <div className="flex flex-wrap gap-10 justify-center w-full">
                 <AdvancedScrollAnimation type="fade" delay={0.1}>
-                  <div className="w-full">
+                  <div className="w-full relative left-4">
                     <Popular data={data} />
                   </div>
                 </AdvancedScrollAnimation>
 
                 <AdvancedScrollAnimation type="slide-up" delay={0.2}>
                   <div
-                    className="w-full flex flex-col justify-start items-end gap-2 mt-16 top-7"
+                    className="w-full flex flex-col justify-start items-end gap-2"
                     dir="rtl"
                   >
-                    <div className="flex flex-col justify-start w-full relative top-10 max-[1024px]:pr-8">
+                    <div className="flex flex-col justify-start w-full relative  max-[1024px]:pr-8">
                       <h2 className="text-blue-100 dark:text-white font-bold text-[14px] ml-12 mb-4">
                         {t("about")} {data.title}
                       </h2>
@@ -265,8 +265,8 @@ const fetchLocation = async () => {
                 </AdvancedScrollAnimation>
 
                 <AdvancedScrollAnimation type="slide-up" delay={0.3}>
-                  <div className="w-full mt-10 flex flex-col gap-6" dir="rtl">
-                    <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-7 max-[1024px]:pr-12">
+                  <div className="w-full pl-3 mt-10 flex flex-col gap-6" dir="rtl">
+                    <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-2 max-[1024px]:pr-12">
                       {t("location")}
                     </h3>
 
@@ -281,12 +281,12 @@ const fetchLocation = async () => {
                     )}
 
                  
-                    <div className="w-full mt-2 max-[1024px]:pr-9">
+                    <div className="w-full mt-2 ">
                       <h4 className="text-[rgb(6,4,37)] dark:text-white font-bold text-[16px] mb-3 flex items-center gap-2">
                         <MapPin size={18} className="text-blue-500" />
                         {t("exactLocation")}
                       </h4>
-                      <p className="text-[#475569] dark:text-gray-400 text-[15px] leading-8 max-[1024px]:w-140 max-[688px]:w-90 text-justify">
+                      <p className="text-[#475569] dark:text-gray-400 text-[15px] leading-8 w-full text-justify">
                         {t("locationDescription")}
                       </p>
                     </div>
@@ -294,7 +294,7 @@ const fetchLocation = async () => {
                 </AdvancedScrollAnimation>
               </div>
               <AdvancedScrollAnimation type="slide-up" delay={0.4}>
-                <div className="w-full max-[1024px]:pr-8" dir="rtl">
+                <div className="w-full " dir="rtl">
                   <h3 className="font-bold text-[20px] mt-10 text-right dark:text-white">
                     {t("why")} {data.title}؟
                   </h3>
@@ -305,7 +305,7 @@ const fetchLocation = async () => {
               </AdvancedScrollAnimation>
 
               <AdvancedScrollAnimation type="slide-up" delay={0.5}>
-                <div className="w-full flex mt-8 relative max-[600px]:left-4">
+                <div className="w-full ">
                   {houseId && <CommentsSection houseId={houseId} />}
                 </div>
               </AdvancedScrollAnimation>

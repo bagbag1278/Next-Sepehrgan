@@ -1,6 +1,7 @@
 "use client";
 
 import { registerStepTwoClientAction } from "@/core/action/register.action";
+import { useTranslations } from 'next-intl';
 import React, { FC, useState } from "react";
 
 interface StepTwoFormProps {
@@ -10,6 +11,7 @@ interface StepTwoFormProps {
 }
 
 const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
+  const t = useTranslations('Register');
   const [userIdInput, setUserIdInput] = useState<string>(String(tempUserId));
   const [codeInput, setCodeInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +21,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
     e.preventDefault();
 
     if (!userIdInput || !codeInput) {
-      setError("لطفاً هر دو فیلد را پر کنید.");
+      setError(t('fillBothFields'));
       return;
     }
 
@@ -36,11 +38,11 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
       if (result.success) {
         onNext();
       } else {
-        setError(result.message || "اطلاعات وارد شده نامعتبر است.");
+        setError(result.message || t('invalidInfo'));
       }
     } catch (err) {
       console.error("Verification error:", err);
-      setError("خطای شبکه. لطفاً دوباره تلاش کنید.");
+      setError(t('networkError'));
     } finally {
       setLoading(false);
     }
@@ -57,17 +59,17 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
           name="tempUserId"
           value={userIdInput}
           onChange={(e) => setUserIdInput(e.target.value)}
-          className="peer w-full dark:text-black border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
+          className="peer w-full dark:text-white dark:bg-gray-800 border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white border-blue-300/50 dark:border-gray-600 outline-0 rounded-2xl transition-colors focus:border-blue-500 dark:focus:border-blue-400"
           placeholder=" "
         />
         <label
           htmlFor="tempUserId"
-          className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
+          className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 dark:text-gray-400 transition-all duration-200 ease-out
                peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm md:peer-placeholder-shown:text-base
-               peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
-               peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
+               peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 dark:peer-focus:text-blue-400 peer-not-placeholder-shown:-top-2
+               peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md dark:peer-not-placeholder-shown:bg-gray-800"
         >
-          شناسه موقت (ID)
+          {t('tempUserId')}
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
@@ -83,6 +85,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
               stroke="#0887CA"
               strokeOpacity="0.7"
               strokeWidth="1.5"
+              className="dark:stroke-gray-400"
             />
           </svg>
         </div>
@@ -94,17 +97,17 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
           name="verificationCode"
           value={codeInput}
           onChange={(e) => setCodeInput(e.target.value)}
-          className="peer w-full dark:text-black border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
+          className="peer w-full dark:text-white dark:bg-gray-800 border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 bg-white border-blue-300/50 dark:border-gray-600 outline-0 rounded-2xl transition-colors focus:border-blue-500 dark:focus:border-blue-400"
           placeholder=" "
         />
         <label
           htmlFor="verificationCode"
-          className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 transition-all duration-200 ease-out
+          className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 dark:text-gray-400 transition-all duration-200 ease-out
                peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm md:peer-placeholder-shown:text-base
-               peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 peer-not-placeholder-shown:-top-2
-               peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md"
+               peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 dark:peer-focus:text-blue-400 peer-not-placeholder-shown:-top-2
+               peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md dark:peer-not-placeholder-shown:bg-gray-800"
         >
-          کد تایید
+          {t('verifyCode')}
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
@@ -120,28 +123,29 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
               stroke="#0887CA"
               strokeOpacity="0.7"
               strokeWidth="1.5"
+              className="dark:stroke-gray-400"
             />
           </svg>
         </div>
       </div>
 
-      {error && <p className="text-red-500 text-xs md:text-sm text-center -mt-2">{error}</p>}
+      {error && <p className="text-red-500 dark:text-red-400 text-xs md:text-sm text-center -mt-2">{error}</p>}
 
       <button
         type="submit"
         disabled={loading}
         className={`h-11 md:h-12 w-full rounded-2xl text-white cursor-pointer transition-colors duration-300 ease-in-out text-sm md:text-base
-          ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-100 hover:bg-blue-200"}`}
+          ${loading ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed" : "bg-blue-100 dark:bg-blue-800 hover:bg-blue-200 dark:hover:bg-blue-700"}`}
       >
-        {loading ? "در حال بررسی..." : "تایید و ثبت‌نام"}
+        {loading ? t('verifying') : t('confirmAndRegister')}
       </button>
 
       <button
         type="button"
         onClick={onBack}
-        className="text-blue-100 h-11 md:h-12 cursor-pointer hover:bg-blue-50 font-bold border-2 border-blue-100 rounded-2xl dark:text-blue-300 text-[13px] md:text-[15px] transition-colors"
+        className="text-blue-100 dark:text-blue-200 h-11 md:h-12 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/30 font-bold border-2 border-blue-100 dark:border-blue-700 rounded-2xl text-[13px] md:text-[15px] transition-colors"
       >
-        مرحله قبل
+        {t('previousStep')}
       </button>
     </form>
   );

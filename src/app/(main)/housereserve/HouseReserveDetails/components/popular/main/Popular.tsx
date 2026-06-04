@@ -64,11 +64,7 @@ const Popular = ({ data }: PopularProps) => {
       label: `${t('rating')} ${data?.rate || 0} ${t('outOf5')}`,
       icon: <Sparkles size={24} />,
     },
-    {
-      id: "num_comments",
-      label: `${data?.num_comments || 0} ${t('comments')}`,
-      icon: <ChefHat size={24} />,
-    },
+    
   ];
 
   return (

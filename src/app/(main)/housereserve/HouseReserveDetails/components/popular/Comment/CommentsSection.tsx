@@ -61,20 +61,22 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
   const hasMore = visibleCount < mainComments.length;
 
   return (
-    <div className="w-full max-w-[850px] mx-auto p-6" dir="rtl">
-      <div className="flex justify-between items-center mb-10 px-2 flex-wrap gap-4">
-        <h2 className="text-[#10088F] dark:text-blue-600 text-[18px] font-bold">
+    <div className="w-full mx-auto p-3 sm:p-4 md:p-6" dir="rtl">
+      {/* هدر بخش نظرات */}
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 sm:mb-8 md:mb-10 px-2">
+        <h2 className="text-[#10088F] dark:text-blue-600 text-[16px] sm:text-[18px] font-bold text-center sm:text-right">
           {t('userComments')} ({totalCommentsCount})
         </h2>
         <AddComment houseId={houseId} onReplySubmitted={fetchComments} />
       </div>
 
-      <div className="flex flex-col">
+      {/* لیست نظرات */}
+      <div className="flex flex-col gap-4 sm:gap-5">
         {loading ? (
           <div className="text-center py-10 text-gray-400 dark:text-gray-500">
             {t('loading')}
           </div>
-        ) : (
+        ) : visibleComments.length > 0 ? (
           <>
             {visibleComments.map((comment) => (
               <CommentCard
@@ -89,12 +91,16 @@ const CommentsSection = ({ houseId }: { houseId: any }) => {
             {hasMore && (
               <button
                 onClick={showMore}
-                className="mt-6 mx-auto px-6 py-2 text-[14px] font-bold text-[#0887CA] dark:text-blue-400 rounded-[12px] hover:border-[#0887CA] dark:hover:border-blue-500 hover:border transition-all duration-300"
+                className="mt-4 sm:mt-6 mx-auto px-4 sm:px-6 py-2 text-[12px] sm:text-[14px] font-bold text-[#0887CA] dark:text-blue-400 rounded-xl hover:border-[#0887CA] dark:hover:border-blue-500 hover:border transition-all duration-300 bg-transparent hover:bg-blue-50 dark:hover:bg-blue-900/20"
               >
                 {t('viewMore')} (+{mainComments.length - visibleCount})
               </button>
             )}
           </>
+        ) : (
+          <div className="text-center py-10 text-gray-400 dark:text-gray-500">
+            <p>{t('noComments') || 'هیچ نظری ثبت نشده است'}</p>
+          </div>
         )}
       </div>
     </div>

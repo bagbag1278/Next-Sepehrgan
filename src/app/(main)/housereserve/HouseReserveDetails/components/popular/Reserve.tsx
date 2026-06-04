@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { Calendar, Users, ChevronDown, ChevronLeft, Moon, Sun } from "lucide-react";
+import { Calendar, Users, ChevronDown, ChevronLeft } from "lucide-react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -168,7 +168,7 @@ const Reserve = ({ price, discountedPrice, maxCapacity }: ReserveProps) => {
           </h3>
           
           <div className="flex items-center gap-4 w-full border-b border-gray-100 dark:border-gray-700 pb-4 mb-4">
-            <div className="flex-1 relative right-5 max-[600px]:right-0">
+            <div className="flex-1 relative right-17">
               <DatePicker
                 value={checkIn}
                 onChange={handleCheckInChange}
@@ -222,7 +222,7 @@ const Reserve = ({ price, discountedPrice, maxCapacity }: ReserveProps) => {
             >
               <div className="flex flex-col gap-1">
                 <span className="text-[#94A3B8] dark:text-gray-500 text-[11px]">{t('guests')}</span>
-                <div className="flex items-center gap-2 text-[#475569] dark:text-gray-300 font-bold group-hover:text-[#0887CA] transition-colors">
+                <div className="flex items-start gap-2 text-[#475569] dark:text-gray-300 font-bold group-hover:text-[#0887CA] transition-colors">
                   <Users size={18} className="text-[#94A3B8] dark:text-gray-500" />
                   <span>{guests} {t('people')}</span>
                 </div>
@@ -234,20 +234,22 @@ const Reserve = ({ price, discountedPrice, maxCapacity }: ReserveProps) => {
             </div>
 
             {isOpen && (
-              <div className="absolute top-full left-0 w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 mt-2 max-h-48 overflow-y-auto">
-                {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((num) => (
-                  <button
-                    key={num}
-                    onClick={() => handleGuestsSelect(num)}
-                    className={`w-full text-right px-6 py-3 text-sm transition-all hover:bg-gray-50 dark:hover:bg-gray-700 ${
-                      guests === num 
-                        ? "text-[#0887CA] font-bold bg-blue-50 dark:bg-blue-900/20" 
-                        : "text-[#475569] dark:text-gray-400"
-                    }`}
-                  >
-                    {num} {t('people')}
-                  </button>
-                ))}
+              <div className="absolute top-full left-0 right-0 w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 mt-2 max-h-48 overflow-y-auto">
+                <div className="flex flex-col">
+                  {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((num) => (
+                    <button
+                      key={num}
+                      onClick={() => handleGuestsSelect(num)}
+                      className={`w-full text-center px-6 py-3 text-sm transition-all hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                        guests === num 
+                          ? "text-[#0887CA] font-bold bg-blue-50 dark:bg-blue-900/20" 
+                          : "text-[#475569] dark:text-gray-400"
+                      }`}
+                    >
+                      {num} {t('people')}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -287,7 +289,7 @@ const Reserve = ({ price, discountedPrice, maxCapacity }: ReserveProps) => {
           </div>
           
           <div className="flex justify-between items-center mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
-            <span className="text-[#10088F] dark:text-blue-900 text-[14px] font-bold flex items-center gap-2">
+            <span className="text-[#10088F] dark:text-blue-400 text-[14px] font-bold flex items-center gap-2">
               <span className="w-2 h-2 bg-gradient-to-r from-[#10088F] to-[#0887CA] rounded-full"></span>
               {t('finalPrice')}
             </span>

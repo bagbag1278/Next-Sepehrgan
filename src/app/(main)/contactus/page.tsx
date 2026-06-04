@@ -13,7 +13,6 @@ import LeftFleshGreen from "./icon/FleshGreen/LeftFleshGreen";
 import RightFleshGreen from "./icon/FleshGreen/RightFleshGreen";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
-// بارگذاری داینامیک نقشه برای جلوگیری از خطای SSR
 const MapComponent = dynamic(
   () => import('./MapComponent'),
   { 
@@ -79,7 +78,6 @@ const ContactPage = () => {
     }
   };
 
-  // اطلاعات دفتر مرکزی در تهران
   const officeInfo = {
     name: "دفتر مرکزی رهن کده",
     address: "تهران، خیابان ولیعصر، نبش خیابان ملاصدرا، پلاک ۱۲۳",
@@ -95,7 +93,7 @@ const ContactPage = () => {
     <div className="w-full min-h-screen pb-20 font-sans" dir="rtl">
       <section className="text-center pt-16 pb-10 relative">
         <AdvancedScrollAnimation type="fade" delay={0.1}>
-          <h1 className="text-2xl md:text-3xl font-black dark:text-white text-[rgb(6,4,37)]">
+          <h1 className="text-2xl md:text-3xl font-black dark:text-white text-[rgb(6,4,37)] ">
             {t('heroTitle')}
           </h1>
         </AdvancedScrollAnimation>
@@ -181,7 +179,7 @@ const ContactPage = () => {
         <AdvancedScrollAnimation type="slide-right" delay={0.1} duration={0.6}>
           <div className="relative p-8 rounded-[40px] shadow-blue-100/50">
             <div className="mb-6 text-center">
-              <p className="text-[rgb(6,4,37)] font-bold underline decoration-blue-200 underline-offset-8">
+              <p className="text-[rgb(6,4,37)] dark:text-blue-200 font-bold underline decoration-blue-200 underline-offset-8">
                 {t('formTitle')}
               </p>
               <div className="max-[1055]:hidden">
@@ -236,7 +234,7 @@ const ContactPage = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, message: e.target.value })
                 }
-                className="w-full p-4 bg-white rounded-2xl outline-none border border-[#0887CA80] text-[#0887CAB2]"
+                className="w-full p-4  rounded-2xl outline-none border border-[#0887CA80] text-[#0887CAB2]"
               ></textarea>
 
               <button 

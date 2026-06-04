@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useTranslations } from 'next-intl';
 import BookingSummaryTwo from "../components/BookingSummaryTwo";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import TallerFlash from "./icon/flesh/TallerFlash";
@@ -23,6 +24,7 @@ const BookingStepThree = ({
   finalTotal,
   bookingPrices,
 }: any) => {
+  const t = useTranslations('BookingStepThree');
   const [coupon, setCoupon] = useState("");
   const [isOpenn, setIsOpenn] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
@@ -33,11 +35,11 @@ const BookingStepThree = ({
     if (coupon === "SAVE10") {
       setDiscountAmount(10);
       setCouponApplied(true);
-      alert("کد تخفیف با موفقیت اعمال شد!");
+      alert(t('couponSuccess'));
     } else if (coupon === "") {
-      alert("لطفاً کد تخفیف را وارد کنید");
+      alert(t('couponEmpty'));
     } else {
-      alert("کد تخفیف نامعتبر است");
+      alert(t('couponInvalid'));
     }
   };
 
@@ -79,15 +81,14 @@ const BookingStepThree = ({
                   <div className="">
                     <button
                       onClick={() => setIsOpenn(!isOpenn)}
-                      className="w-full max-[888]:hidden flex flex-col items-center p-4 mt-20 "
+                      className="w-full max-[888]:hidden flex flex-col items-center p-4 mt-20"
                     >
-                      <div className="flex items-center  relative left- max-[888]:left-0 gap-2 mb-4">
+                      <div className="flex items-center relative gap-2 mb-4">
                         <h3 className="font-bold text-lg w-full whitespace-nowrap">
-                          اطلاع رسانی سفر
+                          {t('travelNotification')}
                         </h3>
                         <p className="text-gray-500 whitespace-nowrap text-[12px]">
-                          (اطلاعات بلیط و اطلاع رسانی بعدی به این آدرس ارسال می
-                          شود)
+                          {t('notificationInfo')}
                         </p>
                         <div className="flex items-center gap-1">
                           {isOpenn ? (
@@ -99,13 +100,13 @@ const BookingStepThree = ({
                       </div>
 
                       {isOpenn && (
-                        <div className="flex flex-col gap-4 w-full ">
+                        <div className="flex flex-col gap-4 w-full">
                           <div className="flex justify-between items-center">
-                            <span className="text-gray-400">ایمیل:</span>
+                            <span className="text-gray-400">{t('email')}:</span>
                             <span>{extraEmail || "example@gmail.com"}</span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-gray-400">موبایل:</span>
+                            <span className="text-gray-400">{t('mobile')}:</span>
                             <span>{extraPhone || "09114456598"}</span>
                           </div>
                         </div>
@@ -113,23 +114,23 @@ const BookingStepThree = ({
                     </button>
                   </div>
 
-                  <div className="w-full  ">
+                  <div className="w-full">
                     <button
                       onClick={() => setIsOpen(!isOpen)}
                       className="flex items-center justify-between w-full text-sm"
                     >
-                      <span className="font-bold">کد تخفیف</span>
+                      <span className="font-bold">{t('discountCode')}</span>
                       {isOpen ? (
-                        <span className="text-red-500">بستن</span>
+                        <span className="text-red-500">{t('close')}</span>
                       ) : (
-                        <span className="text-green-500">باز کردن</span>
+                        <span className="text-green-500">{t('open')}</span>
                       )}
                     </button>
                     {isOpen && (
                       <div className="mt-4 flex flex-col gap-4">
                         <input
                           type="text"
-                          placeholder="کد تخفیف"
+                          placeholder={t('discountCodePlaceholder')}
                           value={coupon}
                           onChange={(e) => setCoupon(e.target.value)}
                           className="flex-1 border border-[#0887CAB2] text-[#0887CAB2] p-4 rounded-2xl outline-none"
@@ -138,7 +139,7 @@ const BookingStepThree = ({
                           onClick={handleApplyCoupon}
                           className="w-full h-12 bg-[hsl(168,76%,34%)] text-white px-8 rounded-2xl font-bold"
                         >
-                          اعمال کد تخفیف
+                          {t('applyCoupon')}
                         </button>
                       </div>
                     )}
@@ -150,28 +151,30 @@ const BookingStepThree = ({
                 <div className="rounded-[40px] p-8 relative bottom-10">
                   <div className="flex justify-between items-center mb-6">
                     <span className="text-[rgb(0,94,164)] font-bold">
-                      قیمت هتل
+                      {t('hotelPrice')}
                     </span>
                     <span className="text-blue-900 font-black text-2xl">
                       {bookingPrices?.discountedTotal.toLocaleString() ||
                         finalTotal}{" "}
-                      تومان
+                      {t('toman')}
                     </span>
                   </div>
 
                   {couponApplied && (
                     <div className="flex justify-between items-center mb-4 text-green-600">
                       <span className="font-bold">
-                        تخفیف ({discountAmount}%)
+                        {t('discount')} ({discountAmount}%)
                       </span>
                       <span className="font-bold">- {discountAmount}%</span>
                     </div>
                   )}
 
                   <div className="flex justify-between items-center pt-4 border-t border-gray-200 mb-6">
-                    <span className="font-bold text-gray-700">قیمت نهایی</span>
+                    <span className="font-bold text-gray-700">
+                      {t('finalPrice')}
+                    </span>
                     <span className="text-[#15977D] font-black text-2xl">
-                      {discountedTotal()} تومان
+                      {discountedTotal()} {t('toman')}
                     </span>
                   </div>
 
@@ -184,19 +187,19 @@ const BookingStepThree = ({
                         : "bg-gray-300 text-gray-500"
                     }`}
                   >
-                    {loading ? "در حال ثبت..." : "پرداخت آنلاین"}
+                    {loading ? t('processing') : t('onlinePayment')}
                   </button>
 
                   <button
                     onClick={() => setStep(2)}
                     className="w-full border-2 border-blue-900 text-blue-900 mt-3 py-4 rounded-3xl font-bold"
                   >
-                    مرحله قبل
+                    {t('previousStep')}
                   </button>
                 </div>
               </div>
 
-              <div className="w-full  relative mt-26 flex  justify-center">
+              <div className="w-full relative mt-26 flex justify-center">
                 <AdvancedScrollAnimation type="slide-up" delay={0.2}>
                   <BookingSummaryTwo
                     finalTotal={finalTotal}
@@ -208,7 +211,6 @@ const BookingStepThree = ({
                     showExtraCost={true}
                   />
                 </AdvancedScrollAnimation>
-                
               </div>
             </div>
           </div>

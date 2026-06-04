@@ -8,7 +8,7 @@ import { X, MessageCircle, Star, Sparkles } from "lucide-react";
 interface AddCommentProps {
   houseId: any;
   parentCommentId?: any;
-onReplySubmitted: () => void,
+  onReplySubmitted: () => void;
   isReply?: boolean;
 }
 
@@ -136,7 +136,7 @@ const AddComment = ({
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="text-[11px] text-[#0887CA] dark:text-blue-400 whitespace-nowrap font-bold hover:underline transition-all duration-300 flex items-center gap-1"
+        className="text-[11px] text-[#0887CA] dark:text-blue-300   whitespace-nowrap font-bold hover:underline transition-all duration-300 flex items-center gap-1"
       >
         <MessageCircle size={12} />
         {t('reply')}
@@ -146,8 +146,16 @@ const AddComment = ({
 
   const formContent = (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full">
-      <div className="flex justify-between items-center  pb-3">
-       
+      {/* عنوان پاسخ */}
+      <div className="flex justify-between items-center pb-2 border-b border-gray-100 dark:border-gray-700">
+        {isReply && (
+          <div className="flex items-center gap-2">
+            <MessageCircle size={16} className="text-[#0887CA] dark:text-blue-300" />
+            <h4 className="font-bold text-[14px] text-[#10088F] dark:text-white">
+              {t('replyToComment')}
+            </h4>
+          </div>
+        )}
         {isReply && (
           <button
             type="button"
@@ -166,7 +174,7 @@ const AddComment = ({
             placeholder={t('titlePlaceholder')}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-3 rounded-xl text-gray-700 dark:text-white border border-[#0887CAB2] dark:border-blue-500 bg-white dark:bg-gray-800 outline-none text-[13px] focus:border-[#0887CA] focus:ring-2 focus:ring-[#0887CA]/30 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500"
+            className="w-full p-3 rounded-2xl border border-[#0887CAB2] dark:border-blue-500 bg-white dark:bg-gray-800 outline-none text-[13px] text-[rgb(8,135,202)] focus:border-[#0887CA] focus:ring-2 focus:ring-[#0887CA]/30 transition-all "
           />
         </div>
       )}
@@ -259,7 +267,7 @@ const AddComment = ({
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="flex items-center gap-2 px-4 py-2.5 text-[#005EA4] dark:text-blue-600 border border-[#10088F] dark:border-blue-500 text-[13px] font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all shadow-md hover:shadow-lg"
+        className="flex items-center gap-2 px-4 py-2.5 text-[#005EA4]  border border-[#10088F] dark:border-blue-500 text-[13px] font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all shadow-md hover:shadow-lg"
       >
         <Sparkles size={16} />
         {t('addComment')}

@@ -53,7 +53,7 @@ const RequestForm: FC<StepOneFormProps> = ({ onNext }) => {
           type="email"
           name="email"
           disabled={isPending || showCodeSection} // ورودی ایمیل غیرفعال می‌شود وقتی در حال ارسال است یا کد نمایش داده شده
-          className={`peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500 ${
+          className={`peer w-full dark:text-black border text-[13px] pt-1 px-4 h-12 bg-white dark:bg-gray-800 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500 ${
             (isPending || showCodeSection) && "opacity-50 cursor-not-allowed"
           }`}
           placeholder=""
@@ -95,7 +95,6 @@ const RequestForm: FC<StepOneFormProps> = ({ onNext }) => {
           {isPending ? "در حال ارسال..." : "ارسال کد"}
         </button>
       ) : (
-        // بخش نمایش کد بازیابی
         <div className="bg-gray-100 p-4 rounded-2xl flex flex-col items-center gap-3">
           <p className="text-lg font-semibold text-gray-800">کد بازیابی شما:</p>
           <p className="text-2xl font-bold text-blue-600 tracking-widest">

@@ -2,6 +2,7 @@ import Loaction from "@/components/HouseDetails/icon/icon/Loaction";
 import { Star, ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
 
 const ImageFallback =
@@ -44,6 +45,7 @@ const BookingSummaryTwo = ({
   description,
   showExtraCost = false, 
 }: Props) => {
+  const t = useTranslations('BookingSummaryTwo');
   const [isOpen, setIsOpen] = useState(true);
 
   const pricePerNight = hotelData?.discounted_price || hotelData?.price || 0;
@@ -85,17 +87,17 @@ const BookingSummaryTwo = ({
         {/* اطلاعات تاریخ و قیمت */}
         <div className="space-y-3 sm:space-y-4 border-t border-gray-100 dark:border-gray-700 pt-4 sm:pt-6">
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-sm font-bold">
-            <span className="text-gray-900 dark:text-white">تاریخ ورود به هتل</span>
+            <span className="text-gray-900 dark:text-white">{t('checkInDate')}</span>
             <span className="text-gray-500 dark:text-gray-400 text-sm">{checkInDate}</span>
           </div>
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-sm font-bold">
-            <span className="text-gray-900 dark:text-white">تاریخ خروج از هتل</span>
+            <span className="text-gray-900 dark:text-white">{t('checkOutDate')}</span>
             <span className="text-gray-500 dark:text-gray-400">{checkOutDate}</span>
           </div>
           
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
             <span className="text-gray-500 text-sm font-bold dark:text-gray-400">
-              قیمت نهایی
+              {t('finalPrice')}
             </span>
             <div className="text-left w-full sm:w-auto">
               {hotelData?.price && hotelData?.discounted_price && (
@@ -110,18 +112,19 @@ const BookingSummaryTwo = ({
               )}
               <div className="text-[#15977D] font-black text-lg sm:text-xl">
                 {finalTotal}
-                <span className="text-xs mr-1">تومان</span>
+                <span className="text-xs mr-1">{t('toman')}</span>
               </div>
             </div>
           </div>
         </div>
+        
         <div className="mt-6 sm:mt-8 dark:border-gray-700 pt-4 sm:pt-6">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="w-full flex justify-between items-center text-[#060425] dark:text-white mb-4"
           >
             <span className="font-black text-sm">
-              مشخصات مسافران ({passengers?.length || 0} مسافر)
+              {t('passengerInfo')} ({passengers?.length || 0} {t('passenger')})
             </span>
             {isOpen ? (
               <ChevronUp size={20} />
@@ -138,29 +141,29 @@ const BookingSummaryTwo = ({
                   className="text-xs sm:text-sm space-y-2 sm:space-y-3 bg-gray-50 dark:bg-gray-800/50 p-3 sm:p-4 rounded-xl sm:rounded-2xl"
                 >
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">بازه سنی</span>
-                    <span className="font-bold">بزرگسال</span>
+                    <span className="text-gray-500">{t('ageRange')}</span>
+                    <span className="font-bold">{t('adult')}</span>
                   </div>
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">نام و نام خانوادگی</span>
+                    <span className="text-gray-500">{t('fullName')}</span>
                     <span className="font-bold break-words max-w-[200px] sm:max-w-none">
                       {p.fullName || "---"}
                     </span>
                   </div>
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">جنسیت</span>
+                    <span className="text-gray-500">{t('gender')}</span>
                     <span className="font-bold">
-                      {p.gender === "male" ? "مرد" : p.gender === "female" ? "زن" : "---"}
+                      {p.gender === "male" ? t('male') : p.gender === "female" ? t('female') : "---"}
                     </span>
                   </div>
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">کد ملی / شماره پاسپورت</span>
+                    <span className="text-gray-500">{t('nationalCode')}</span>
                     <span className="font-bold text-[#15977D]">
                       {p.nationalCode || "---"}
                     </span>
                   </div>
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">تاریخ تولد</span>
+                    <span className="text-gray-500">{t('birthDate')}</span>
                     <span className="font-bold">{p.birthDate || "---"}</span>
                   </div>
                 </div>
@@ -170,7 +173,7 @@ const BookingSummaryTwo = ({
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="w-full h-11 sm:h-12 py-2 sm:py-3 bg-[rgb(16,8,143)] text-white rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm hover:bg-blue-800 transition-colors"
               >
-                ویرایش مسافران
+                {t('editPassengers')}
               </button>
             </div>
           )}
@@ -178,7 +181,7 @@ const BookingSummaryTwo = ({
 
         {bookingResult?.id && (
           <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700 text-center">
-            <p className="text-gray-500 text-xs">شماره رزرو</p>
+            <p className="text-gray-500 text-xs">{t('bookingId')}</p>
             <p className="text-[#15977D] font-bold text-base sm:text-lg">{bookingResult.id}</p>
           </div>
         )}
@@ -189,7 +192,7 @@ const BookingSummaryTwo = ({
           <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
           <div>
             <h3 className="font-bold text-[14px] md:text-[16px] text-[rgb(0,94,164)] dark:text-blue-400">
-              هزینه جانبی
+              {t('extraCost')}
             </h3>
             <p className="font-normal text-[12px] md:text-[14px] text-[rgba(6,4,37,0.5)] dark:text-gray-400 mt-2 leading-6 md:leading-7">
               {description}

@@ -31,7 +31,7 @@ const LocationSlider = () => {
 
   return (
     <div className="w-full relative py-10 overflow-hidden">
-      <h2 className="text-center text-[#060425] font-bold text-xl mb-8">
+      <h2 className="text-center text-[#060425] dark:text-blue-200 font-bold text-xl mb-8">
         املاکی های ما در سراسر جهان
       </h2>
 
@@ -87,12 +87,12 @@ const LocationSlider = () => {
       </div>
     <div className="relative bottom-36 left-26  ">
             <div className="w-full   justify-center flex absolute">
-              <div className="z-20  h-9 bg-white p-2 rounded-full shadow-md hover:bg-white transition-all">
+              <div className="z-20  h-9 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:bg-white transition-all">
                    <button className="next-btn ">
             <ChevronRight size={20} className="text-blue-900" />
           </button>
               </div>
-          <div className=" relative top-10 left-9 z-20 bg-white p-2 h-9 rounded-full shadow-md hover:bg-white transition-all">
+          <div className=" relative top-10 left-9 z-20 bg-white dark:bg-gray-800 p-2 h-9 rounded-full shadow-md hover:bg-white transition-all">
               <button className="prev-btn ">
             <ChevronLeft size={20} className="text-blue-900" />
           </button>
