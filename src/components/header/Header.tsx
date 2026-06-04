@@ -6,6 +6,13 @@ import HeaderIcon3 from "./Icon/HeaderIcon3";
 import { usePathname } from "next/navigation";
 import LanguageSwitcher from "../LanguageSwitcher";
 import { useTranslations } from 'next-intl';
+const nav = [
+  { title: "صفحه اصلی", href: "/" },
+  { title: "رزرو سریع", href: "/housereserve" },
+  { title: " رهن اجاره", href: "/houserent" },
+  { title: "وبلاگ", href: "/blog" },
+  { title: "درباره ما", href: "/contactus" },
+];
 
 const Header = () => {
   const pathname = usePathname();
@@ -15,7 +22,7 @@ const Header = () => {
   const nav = [
     { title: t('home'), href: "/" },
     { title: t('quickReserve'), href: "/housereserve" },
-    { title: t('mortgage'), href: "/mortgage" },
+    { title: t('mortgage'), href: "/houserent" },
     { title: t('blog'), href: "/blog" },
     { title: t('aboutUs'), href: "/contactus" },
   ];

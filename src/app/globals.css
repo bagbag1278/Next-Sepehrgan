@@ -121,3 +121,20 @@ input[type="range"]::-moz-range-track {
   height: 8px;
   border-radius: 5px;
 }
+
+
+.hover-3d {
+  transition: transform 0.3s ease-out;
+  display: inline-block;
+  pointer-events: auto;
+}
+
+.hover-3d:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px);
+}
+
+.hover-3d a {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 20;
+}
