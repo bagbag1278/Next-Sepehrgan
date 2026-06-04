@@ -3,24 +3,27 @@
 import { useTranslations } from 'next-intl';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import Image from "next/image";
 import { useRef } from "react";
 import MountainsSun from "../../Icon/ThirdContainer/mountainsSun";
 import StarIcon from "../../Icon/FirstContainer/StarIcon";
+import Imagevilla from "../../Icon/VillasSlider/Imagevilla";
+import Image2 from "../../Icon/VillasSlider/Image2";
+import Image4 from "../../Icon/VillasSlider/Image4";
+
 
 function VillaSlider() {
   const t = useTranslations('VillaSlider');
   const swiperRef = useRef<any>(null);
 
   const items = [
-    { img: "/v1.jpg", point: "4.5", place: t('villaMashhad') },
-    { img: "/v2.jpg", point: "4.6", place: t('villaIsfahan') },
-    { img: "/v3.jpg", point: "4.12", place: t('villaGahrdasht') },
-    { img: "/v4.jpg", point: "4.6", place: t('villaSari') },
-    { img: "/v5.jpg", point: "4.9", place: t('villaMashhad') },
-    { img: "/v3.jpg", point: "4.2", place: t('villaTehran') },
-    { img: "/v4.jpg", point: "4.1", place: t('villaMashhad') },
-    { img: "/v5.jpg", point: "4.3", place: t('villaIsfahan') },
+    { img: <Imagevilla />, ponit: "5", place: "ویلای مشهد" },
+    { img: <Image2 />, ponit: "4.5", place: "ویلای اصفهان" },
+    { img: < Imagevilla />, ponit: "4.2", place: "ویلای گهردشت" },
+    { img: <Image4 />, ponit: "4.6", place: "ویلای ساری" },
+    { img: <Image2 />, ponit: "2.5", place: "ویلای مشهد" },
+    { img: <Imagevilla />, ponit: "4.2", place: "ویلای تهران" },
+    { img: <Image2 />, ponit: "4.5", place: "ویلای مشهد" },
+    { img: <Image4 />, ponit: "3.5", place: "ویلای اصفهان" },
   ];
 
   return (
@@ -71,24 +74,32 @@ function VillaSlider() {
             className="villa-swiper overflow-x-hidden"
           >
             {items.map((item, idx) => (
-              <SwiperSlide key={idx} className="group flex items-center justify-center transition-all duration-300">
-                <div className="relative rounded-2xl border border-white overflow-hidden shadow-2xl">
-                  <Image
-                    src={item.img}
-                    alt={item.place}
-                    width={420}
-                    height={260}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="absolute bottom-2 w-full flex justify-center gap-4">
-                    <div className="flex gap-0.5 text-white text-[14px]">
-                      <div>{item.place}</div>
-                    </div>
-                    <div className="opacity-0 transition-all duration-300 group-[.swiper-slide-active]:opacity-100 flex gap-0.5 items-center">
-                      <div className="text-white text-[13px]">{item.point}</div>
-                      <StarIcon />
-                    </div>
+              <SwiperSlide
+                key={idx}
+                className="group flex items-center justify-cente transition-all duration-300"
+              >
+
+                <div className="relative flex justify-center rounded-2xl overflow-hidden shadow-2xl">
+                  {/* Image  */}
+                  <div
+                    className="h-65 w-107.5 "
+                  >
+                    {item.img}
+
+
                   </div>
+                      <div className="absolute bottom-6 w-full flex justify-center  gap-4 ">
+                        <div className=" flex gap-0.5 text-white text-[14px] group-[.swiper-slide-active]: ">
+                          <div>{item.place} </div>
+                        </div>
+                        {/* Star and point  */}
+                        <div className="opacity-0 transition-all w-0 duration-300 group-[.swiper-slide-active]:w-auto group-[.swiper-slide-active]:opacity-100 flex gap-0.5 items-center">
+                          <div className="text-white text-[13px]">
+                            {item.ponit}
+                          </div>
+                          <StarIcon />
+                        </div>
+                      </div>
                 </div>
               </SwiperSlide>
             ))}

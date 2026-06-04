@@ -2,9 +2,9 @@ import React from 'react'
 
 const Image2 = () => {
     return (
-        <svg width="186" height="216" viewBox="0 0 186 216" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+        <svg width="full" height="full" viewBox="0 0 186 216" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <g filter="url(#filter0_d_553_4170)">
-                <rect x="8" y="8" width="170" height="200" rx="16" fill="url(#pattern0_553_4170)" shape-rendering="crispEdges" />
+                <rect x="8" y="8" width="170" height="200" rx="16" fill="url(#pattern0_553_4170)" shapeRendering="crispEdges" />
             </g>
             <defs>
                 <filter id="filter0_d_553_4170" x="0" y="0" width="186" height="216" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">

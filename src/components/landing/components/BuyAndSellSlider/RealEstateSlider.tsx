@@ -40,12 +40,11 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
     swiperRef.current = swiper;
   };
 
-  const PlaceHolderImage = ""
-
+  const PlaceHolderImage = " بدون عکس";
 
   return (
-    <div className="w-300 py-10">
-      <div className="relative">
+    <div className="w-300 py-10 relative">
+      <div className="relative ">
         <Swiper
           modules={[Navigation, Pagination]}
           slidesPerView={3.5}
@@ -56,10 +55,11 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
           {houses.map((house) => (
             <SwiperSlide key={house.id}>
               <div className="relative flex justify-center flex-wrap items-center w-82 h-94 border border-white overflow-hidden rounded-4xl bg-[#F5F5F5] shadow-lg transition-all scale-100">
-
-                {/* تصویر */}
+                {/* image */}
                 <div className="w-81 h-50 overflow-hidden rounded-2xl flex jus bg-[#ccc]">
-                  {Array.isArray(house.photos) && house.photos.length > 0 && house.photos[0] ? (
+                  {Array.isArray(house.photos) &&
+                  house.photos.length > 0 &&
+                  house.photos[0] ? (
                     <img
                       src={house.photos[1]}
                       alt={house.title || "House image"}
@@ -71,11 +71,12 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
                     />
                   ) : (
                     <Image
-                      src={"/placeholder.png"} width={324} height={200} alt=""
+                      src={"/placeholder.png"}
+                      width={324}
+                      height={200}
+                      alt=""
                     />
                   )}
-
-
                 </div>
 
                 <div className="relative w-79.5 h-39 gap-1">
@@ -96,13 +97,13 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
                         <RoomIcon /> <span> خواب{house.rooms} </span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <MastersIcon /> <span>۱ حمام{house.bathrooms} </span>
+                        <MastersIcon /> <span> حمام{house.bathrooms} </span>
                       </div>
                       <div className="flex items-center gap-1">
                         <CarIcon /> <span>پارکینگ{house.parking} </span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <TreeIcon /> <span>کنجایش </span>
+                        <TreeIcon /> <span>کنجایش {house.capacity} </span>
                       </div>
                     </div>
 
@@ -116,7 +117,7 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
           ))}
         </Swiper>
 
-          {/* button ****** */}
+        {/* button ****** */}
         <div className="absolute right-0 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-3">
           <button
             type="button"
@@ -135,6 +136,9 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
           </button>
         </div>
       </div>
+
+      {/* responsive ========== */}
+      <div></div>
     </div>
   );
 };

@@ -53,7 +53,7 @@ const FocusCarousel = () => {
         setLoading(true);
         setError(null);
 
-        const res = await fetch("/api/comments");
+        const res = await fetch("http://188.121.111.8:3003/api/comments");
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -92,7 +92,7 @@ const FocusCarousel = () => {
   }, [t]);
 
   return (
-    <div className="2xl:hidden flex">
+    <div className="2xl:hidden hidden sm:flex">
       <div className="relative w-355 flex justify-between">
         <div className="w-70 lg:w-82 h-88 hidden lg:flex items-center ml-4 lg:items-end">
           <div className="flex flex-wrap justify-center h-56 lg:h-77 w-90">
@@ -176,7 +176,7 @@ const FocusCarousel = () => {
                       >
                         <div
                           className={[
-                            "rounded-2xl shadow-sm flex items-center justify-center transition-all duration-300",
+                            "rounded-2xl shadow-sm flex items-center justify-center transition-all duration-300 overflow-hidden",
                             focused
                               ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
                               : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400",
