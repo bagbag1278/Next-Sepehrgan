@@ -8,6 +8,41 @@
     "login": "تسجيل دخول",
     "register": "تسجيل"
   },
+  "common": {
+  "loading": "جاري التحميل...",
+  "error": "خطأ",
+  "success": "نجاح",
+  "save": "حفظ",
+  "cancel": "إلغاء",
+  "delete": "حذف",
+  "edit": "تعديل",
+  "back": "رجوع",
+  "next": "التالي",
+  "submit": "إرسال",
+  "search": "بحث",
+  "filter": "تصفية",
+  "all": "الكل",
+  "none": "لا شيء",
+  "yes": "نعم",
+  "no": "لا",
+  "close": "إغلاق",
+  "open": "فتح",
+  "viewMore": "عرض المزيد",
+  "viewLess": "عرض أقل",
+  "noData": "لا توجد بيانات",
+  "noResult": "لا توجد نتائج",
+  "tryAgain": "حاول مرة أخرى",
+  "required": "إجباري",
+  "optional": "اختياري",
+  "details": "تفاصيل",
+  "moreInfo": "مزيد من المعلومات",
+  "home": "الرئيسية",
+  "profile": "الملف الشخصي",
+  "settings": "الإعدادات",
+  "logout": "تسجيل خروج",
+  "login": "تسجيل دخول",
+  "register": "تسجيل"
+},
   "Footer": {
     "popularAreas": "المناطق الشعبية",
     "mostSearched": "الأكثر بحثاً",
@@ -29,14 +64,20 @@
     "buyAndSellRealEstate": "بيع وشراء العقارات",
     "specialOffers": "عروض خاصة",
     "lowestPrices": "أقل الأسعار",
-    "viewAll": "عرض الكل"
+    "viewAll": "عرض الكل",
+    "loading": "جاري التحميل...",
+    "errorMessage": "عذراً، هذا القسم غير متوفر حالياً. يرجى المحاولة مرة أخرى لاحقاً."
   },
   "RealEstate": {
     "rooms": "غرف",
     "bathrooms": "حمامات",
     "parking": "موقف سيارات",
     "capacity": "سعة",
-    "currency": "تومان"
+    "currency": "تومان",
+    "noProperties": "لم يتم العثور على عقارات",
+    "noImage": "بدون صورة",
+    "defaultTitle": "عقار",
+    "viewDetails": "عرض التفاصيل"
   },
   "FocusCarousel": {
     "topCommentsText": "أفضل تعليقاتكم، صوتكم يوجهنا",
@@ -94,7 +135,12 @@
   },
   "ThirdContainer": {
     "discoverWithUs": "اكتشف الأحدث معنا واستمتع",
-    "popularVillaAreas": "مناطق الفيلا الشعبية"
+    "popularVillaAreas": "مناطق الفيلا الشعبية",
+    "items": "عناصر",
+    "property1": "نيويورك في خوزستان",
+    "property2": "روكي في سنغدة",
+    "property3": "نيويورك في خوزستان",
+    "property4": "نيويورك في خوزستان"
   },
   "TopCategories": {
     "lookingFor": "ما نوع المنزل الذي تبحث عنه؟ مهما تريد، لدينا",
@@ -526,10 +572,10 @@
     "step4": "الدفع",
     "step5": "التذكرة"
   },
-
   "Auth": {
     "welcome": "مرحباً بك :)",
     "loginTitle": "تسجيل الدخول إلى الحساب",
+    "registerTitle": "إنشاء حساب",
     "forgotPasswordTitle": "نسيان كلمة المرور",
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
@@ -544,9 +590,8 @@
     "heroTitle": "ادخل إلى رهن كده واعثر على منزلك!!!",
     "heroSubtitle": "سجل الدخول وبخطوة بسيطة، انطلق نحو المنزل الذي طالما حلمت به!",
     "heroFooter": "صفاء! حب! مودة!",
-    "loginWithGoogle": "الدخول بحساب جوجل", 
+    "loginWithGoogle": "الدخول بحساب جوجل",
     "or": "أو"
-
   },
   "ForgetPassword": {
     "request": "البريد الإلكتروني",
@@ -561,7 +606,6 @@
     "back": "رجوع",
     "next": "التالي"
   },
-
   "Register": {
     "step1": "البريد الإلكتروني",
     "step2": "رمز التحقق",

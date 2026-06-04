@@ -8,6 +8,41 @@
     "login": "ورود",
     "register": "ثبت نام"
   },
+  "common": {
+  "loading": "در حال بارگذاری...",
+  "error": "خطا",
+  "success": "موفقیت",
+  "save": "ذخیره",
+  "cancel": "انصراف",
+  "delete": "حذف",
+  "edit": "ویرایش",
+  "back": "بازگشت",
+  "next": "بعدی",
+  "submit": "ارسال",
+  "search": "جستجو",
+  "filter": "فیلتر",
+  "all": "همه",
+  "none": "هیچ",
+  "yes": "بله",
+  "no": "خیر",
+  "close": "بستن",
+  "open": "باز کردن",
+  "viewMore": "مشاهده بیشتر",
+  "viewLess": "مشاهده کمتر",
+  "noData": "اطلاعاتی یافت نشد",
+  "noResult": "نتیجه‌ای یافت نشد",
+  "tryAgain": "دوباره تلاش کنید",
+  "required": "اجباری",
+  "optional": "اختیاری",
+  "details": "جزئیات",
+  "moreInfo": "اطلاعات بیشتر",
+  "home": "خانه",
+  "profile": "پروفایل",
+  "settings": "تنظیمات",
+  "logout": "خروج",
+  "login": "ورود",
+  "register": "ثبت نام"
+},
   "Footer": {
     "popularAreas": "محلات محبوب",
     "mostSearched": "بیشترین جستجو",
@@ -29,14 +64,20 @@
     "buyAndSellRealEstate": "خرید و فروش ملک",
     "specialOffers": "پیشنهادات ویژه",
     "lowestPrices": "پایین ترین قیمت ها",
-    "viewAll": "مشاهده همه"
+    "viewAll": "مشاهده همه",
+    "loading": "در حال بارگذاری...",
+    "errorMessage": "متأسفانه این بخش در حال حاضر در دسترس نیست. لطفاً بعداً دوباره امتحان کنید."
   },
   "RealEstate": {
     "rooms": "خواب",
     "bathrooms": "حمام",
     "parking": "پارکینگ",
-    "capacity": "کنجایش",
-    "currency": "تومان"
+    "capacity": "ظرفیت",
+    "currency": "تومان",
+    "noProperties": "هیچ ملکی یافت نشد",
+    "noImage": "بدون تصویر",
+    "defaultTitle": "ملک",
+    "viewDetails": "مشاهده جزئیات"
   },
   "FocusCarousel": {
     "topCommentsText": "برترین نظرات شما، صدای شما راهنمای ما",
@@ -94,7 +135,12 @@
   },
   "ThirdContainer": {
     "discoverWithUs": "جدید ترین ها را با ما کشف کنید لذت ببرید",
-    "popularVillaAreas": "مناطق محبوب ویلایی"
+    "popularVillaAreas": "مناطق محبوب ویلایی",
+    "items": "مورد",
+    "property1": "نیویورک در خوزستان",
+    "property2": "راکی در سنگده",
+    "property3": "نیویورک در خوزستان",
+    "property4": "نیویورک در خوزستان"
   },
   "TopCategories": {
     "lookingFor": "به دنبال چه نوع خونه ای هستی هر چی بخوای ما داریم",
@@ -526,8 +572,7 @@
     "step4": "پرداخت",
     "step5": "بلیط"
   },
-  
- "Auth": {
+  "Auth": {
     "welcome": "خوش آمدید :)",
     "loginTitle": "ورود به حساب کاربری",
     "registerTitle": "ایجاد حساب کاربری",
@@ -594,4 +639,4 @@
     "registering": "در حال ثبت...",
     "register": "ثبت نام"
   }
-  }
+}

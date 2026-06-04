@@ -8,6 +8,41 @@
     "login": "Login",
     "register": "Register"
   },
+  "common": {
+  "loading": "Loading...",
+  "error": "Error",
+  "success": "Success",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "back": "Back",
+  "next": "Next",
+  "submit": "Submit",
+  "search": "Search",
+  "filter": "Filter",
+  "all": "All",
+  "none": "None",
+  "yes": "Yes",
+  "no": "No",
+  "close": "Close",
+  "open": "Open",
+  "viewMore": "View More",
+  "viewLess": "View Less",
+  "noData": "No data found",
+  "noResult": "No result found",
+  "tryAgain": "Try again",
+  "required": "Required",
+  "optional": "Optional",
+  "details": "Details",
+  "moreInfo": "More info",
+  "home": "Home",
+  "profile": "Profile",
+  "settings": "Settings",
+  "logout": "Logout",
+  "login": "Login",
+  "register": "Register"
+},
   "Footer": {
     "popularAreas": "Popular Areas",
     "mostSearched": "Most Searched",
@@ -29,14 +64,20 @@
     "buyAndSellRealEstate": "Buy and Sell Real Estate",
     "specialOffers": "Special Offers",
     "lowestPrices": "Lowest Prices",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "loading": "Loading...",
+    "errorMessage": "Unfortunately, this section is currently unavailable. Please try again later."
   },
   "RealEstate": {
     "rooms": "Rooms",
     "bathrooms": "Bathrooms",
     "parking": "Parking",
     "capacity": "Capacity",
-    "currency": "Toman"
+    "currency": "Toman",
+    "noProperties": "No properties found",
+    "noImage": "No image",
+    "defaultTitle": "Property",
+    "viewDetails": "View Details"
   },
   "FocusCarousel": {
     "topCommentsText": "Your top comments, your voice guides us",
@@ -94,7 +135,12 @@
   },
   "ThirdContainer": {
     "discoverWithUs": "Discover the latest with us and enjoy",
-    "popularVillaAreas": "Popular Villa Areas"
+    "popularVillaAreas": "Popular Villa Areas",
+    "items": "Items",
+    "property1": "New York in Khuzestan",
+    "property2": "Rocky in Sangdeh",
+    "property3": "New York in Khuzestan",
+    "property4": "New York in Khuzestan"
   },
   "TopCategories": {
     "lookingFor": "What type of house are you looking for? Whatever you want, we have",
@@ -529,6 +575,7 @@
   "Auth": {
     "welcome": "Welcome :)",
     "loginTitle": "Login to Account",
+    "registerTitle": "Create Account",
     "forgotPasswordTitle": "Forgot Password",
     "email": "Email",
     "password": "Password",
@@ -542,7 +589,9 @@
     "rememberMe": "Remember me",
     "heroTitle": "Join RahnKadeh and find your home!!!",
     "heroSubtitle": "Login and take a simple step towards the home you've always dreamed of!",
-    "heroFooter": "Purity! Love! Affection!"
+    "heroFooter": "Purity! Love! Affection!",
+    "loginWithGoogle": "Login with Google",
+    "or": "or"
   },
   "ForgetPassword": {
     "request": "Email",
@@ -588,9 +637,6 @@
     "registerError": "Error completing registration",
     "unexpectedError": "An unexpected error occurred",
     "registering": "Registering...",
-    "register": "Register",
-    "loginWithGoogle": "Login with Google",
-    "or": "or"
+    "register": "Register"
   }
-    
 }
