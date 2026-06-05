@@ -11,7 +11,7 @@ const BuyAndSellSlider = () => {
         const getHouses = async () => {
             try {
                 const res = await fetch(
-                   "http://next.genzuni.website/api/houses"
+                   "http://188.121.111.8:3003/api/houses"
                    
                 );
 
