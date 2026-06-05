@@ -16,7 +16,7 @@ import {
   SettingsIcon,
 } from "lucide-react";
 import SellersideBar from '../../../components/DashboardSeller/SellersideBar'
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 interface IChildren {
   children: React.ReactNode;
@@ -24,13 +24,13 @@ interface IChildren {
 
 
 export default async function SellerLayout({children,}: IChildren) {
-  // const cookieStore = await cookies();
+  const cookieStore = await cookies();
 
-  // const token = cookieStore.get("accessToken");
+  const token = cookieStore.get("accessToken");
 
-  // if (!token) {
-  //   redirect("/login");
-  // }
+  if (!token) {
+    redirect("/login");
+  }
 
   return (
     <div
