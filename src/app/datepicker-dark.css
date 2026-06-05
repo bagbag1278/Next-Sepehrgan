@@ -1,0 +1,37 @@
+/* datepicker-dark.css */
+.rmdp-wrapper.dark\:rmdp-dark,
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-calendar,
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-week-day,
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-day span {
+  background-color: #1f2937 !important;
+  color: #e5e7eb !important;
+  border-color: #374151 !important;
+}
+
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-header,
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-header span {
+  background-color: #111827 !important;
+  color: #f3f4f6 !important;
+}
+
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-day.rmdp-selected span {
+  background-color: #3b82f6 !important;
+  color: white !important;
+}
+
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-day.rmdp-today span {
+  background-color: #374151 !important;
+  border-color: #3b82f6 !important;
+}
+
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-arrow {
+  border-color: #9ca3af !important;
+}
+
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-arrow:hover {
+  border-color: #3b82f6 !important;
+}
+
+.rmdp-wrapper.dark\:rmdp-dark .rmdp-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+}

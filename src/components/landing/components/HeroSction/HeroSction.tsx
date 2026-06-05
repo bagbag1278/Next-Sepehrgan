@@ -31,14 +31,14 @@ const HeroSction = () => {
   return (
     <>
       {/* TitelText */}
-         <div className="flex max-[1024]:right-80  max-[1024]:mt-10 max-[970]:right-70 max-[890]:right-65 max-[800]:right-54 max-[750]:right-44 max-[636]:right-0 justify-center  xl:h-188 h-206  relative  ">
+         <div className="flex max-[1024]:right-80  max-[1024]:mt-10 max-[970]:right-70 max-[890]:right-65 max-[800]:right-54 max-[750]:right-44 max-[636]:right-0 justify-center  xl:h-160 lg:h-160 h-210  relative  ">
         <div       className="transition-colors duration-500 absolute  left-5 top-138 max-[1224]:left-10 max-[780]:top-178 max-[780]:left-2 max-[400]:hidden z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer"
 >
           <DarkModeHero />
         </div>
 
         <div className="absolute top-118 left-1/2 -translate-x-1/2 flex justify-center z-10">
-          <div className="w-255 h-35 bg-[#F5F5F5] rounded-tr-[50px] rounded-bl-[50px] max-[1024]:hidden rounded-xl relative gap-5.5 flex z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] lg:block xl:block">
+          <div className="w-255 h-35 bg-[#F5F5F5] dark:bg-gray-900 rounded-tr-[50px] rounded-bl-[50px] max-[1024]:hidden rounded-xl relative gap-5.5 flex z-500 shadow-[8px_0px_20px_rgba(8,135,202,0.30)] lg:block xl:block">
             <div className="flex justify-center w-full items-start">
               <HeroSctionFilter />
             </div>
@@ -90,8 +90,8 @@ const HeroSction = () => {
             </div>
 
             {/* comprof */}
-            <div className="w-71.5 h-29 max-[640]:right-80 xl:relative  relative -left-110 -top-12 sm:left-10 max-[500]:right-86 sm:-top-4">
-              <div className="w-14 h-14 rounded-4xl absolute top-1 bg-center">
+            <div className="w-71.5 h-29 max-[640]:right-80 max-[640]:top-4 xl:relative  relative -left-110 -top-12 sm:left-10 max-[500]:right-86 sm:-top-4">
+              <div className="w-14 h-14  rounded-4xl absolute top-1 bg-center">
                 <Profiles />
               </div>
               <div className="w-8 h-8 max-[500]:-right-4 max-[500]:top-16 max-[500]:absolute rounded-4xl absolute top-[40px] right-[75px]">
@@ -102,27 +102,10 @@ const HeroSction = () => {
               </div>
             </div>
 
-            <div className="hidden lg:block xl:block sm:hidden">
-              <div className="absolute flex -bottom-30 -right-78 items-center gap-3 rotate-90 whitespace-nowrap">
-                <span className="text-[12px] font-medium text-[#15977D80]">
-                  {t('scrollText')}
-                </span>
-                <div className="relative left-1 bottom-2">
-                  <div className="-rotate-90 -left-5 bottom-4 relative">
-                    <FleshRight />
-                  </div>
-                  <div className="-rotate-90 absolute top-16">
-                    <FleshRght2 />
-                  </div>
-                  <div className="-rotate-90 absolute top-9">
-                    <FleshRight3 />
-                  </div>
-                </div>
-              </div>
-            </div>
+          
 
             {/* Number */}
-            <div className="flex w-full justify-end relative top-65 right-10 xl:-right-10 lg:-right-125 xl:flex xl:w-full xl:justify-end xl:relative gap-10 sm:hidden hidden lg:block xl:block">
+            <div className="flex w-full justify-end relative top-65 right-10 xl:-right-10 lg:-right-125 xl:flex xl:w-full xl:justify-end xl:relative gap-10 sm:hidden hidden lg:block xl:block max-[1420]:mr-20 ">
               <div className="w-[522px] h-[79px] dark:text-white flex flex-wrap gap-35 absolute font-bold items-center text-3xl">
                 <div>
                   {toPersianNum("2625")}
@@ -131,10 +114,10 @@ const HeroSction = () => {
                 <div>
                   {toPersianNum("266")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-78 bottom-11 text-[21px]">+</span>
-                  <span className="text-[14px] top-15 left-95 absolute font-medium whitespace-nowrap">{t('propertiesForRent')}</span>
+                  <span className="text-[14px] top-15 left-105 absolute font-medium whitespace-nowrap">{t('propertiesForRent')}</span>
                   <span className="text-[16px] top-15 left-54 absolute font-medium">{t('areasForReservation')}</span>
                 </div>
-                <div>
+                <div >
                   {toPersianNum("6595")}
                   <span className="text-blue-100 dark:text-[#28A5E6] absolute left-30 bottom-11 text-[21px]">+</span>
                   <span className="text-[16px] top-15 left-2 absolute font-medium">{t('customerSatisfaction')}</span>
@@ -151,7 +134,7 @@ const HeroSction = () => {
             <div className="">
               <SwiperComponent />
             </div>
-            <div className="relative left-[15px] top-[162px] block max-[1225]:hidden">
+            <div className="relative left-[20px] max-[1300px]:right-5 top-[162px] block max-[1225]:hidden ">
               <div className="absolute left-15 bottom-70 dark:hidden">
                 <Profile1 />
               </div>

@@ -42,12 +42,65 @@ const ThirdContainer = () => {
                     </div>
 
                     {/* نسخه دسکتاپ */}
-                    <div className='relative hidden lg:flex sm:flex w-full flex-col lg:h-104.75 h-51 gap-3 lg:flex-row justify-center'>
+                    <div className='relative hidden lg:flex sm:flex w-full flex-col lg:h-104.75  h-51  lg:flex-row justify-center'>
                         
-                        {/* تصویر بزرگ سمت چپ */}
-                        <div className='hidden lg:block cursor-pointer relative w-135 h-full bg-amber-400 rounded-4xl overflow-hidden'>
+                  
+
+                       
+
+                        {/* تصاویر سمت راست (دو تا) */}
+                        <div className='flex lg:flex-col lg:right-4 relative flex-row justify-center gap-4 h-full'>
+                            <div className='cursor-pointer relative w-full h-50.25 rounded-4xl overflow-hidden'>
+                                <ImageDef2 />
+                                <div className='absolute right-22 top-2 flex gap-1 z-50 text-white'>
+                                    <StarIcon size={16} />
+                                    <p>4.5</p>
+                                </div>
+                                <div className='absolute bottom-1 right-32 h-15 flex items-center justify-center flex-nowrap'>
+                                    <div className='flex gap-1 h-5'>
+                                        <div className='flex text-[12px] text-white/70'>
+                                            {t('items')} <p>26</p>
+                                        </div>
+                                    </div>
+                                    <div className='text-[18px] font-bold text-white mr-2'>{t('property3')}</div>
+                                </div>
+                            </div>
+                            <div className='cursor-pointer relative w-full   h-50.25 rounded-4xl overflow-hidden'>
+                                <ImageDef3 />
+                                <div className='absolute right-22 top-2 flex gap-1 z-50 text-white'>
+                                    <StarIcon size={16} />
+                                    <p>4.5</p>
+                                </div>
+                                <div className='absolute bottom-1 right-34 h-15 flex items-center justify-center flex-nowrap'>
+                                    <div className='flex gap-1 h-5'>
+                                        <div className='flex text-[12px] text-white/70'>
+                                            {t('items')} <p>26</p>
+                                        </div>
+                                    </div>
+                                    <div className='text-[18px] font-bold text-white mr-2'>{t('property4')}</div>
+                                </div>
+                            </div>
+                        </div>
+                         {/* تصویر وسط */}
+                        <div className='cursor-pointer relative hidden lg:block w-220  h-full rounded-4xl  overflow-hidden'>
+                            <ImageDef1 />
+                            <div className='absolute right-18 top-3 flex gap-1 z-50 text-white'>
+                                <StarIcon size={16} />
+                                <p>4.5</p>
+                            </div>
+                            <div className='absolute bottom-1 right-25 h-15 flex items-center justify-center flex-nowrap'>
+                                <div className='flex gap-1 h-5'>
+                                    <div className='flex text-[12px] text-white/70'>
+                                        {t('items')} <p>26</p>
+                                    </div>
+                                </div>
+                                <div className='text-[18px] font-bold text-white mr-2'>{t('property2')}</div>
+                            </div>
+                        </div>
+                              {/* تصویر بزرگ سمت چپ */}
+                        <div className='hidden lg:block cursor-pointer relative w-full h-full rounded-4xl overflow-hidden'>
                             <ImageDef />
-                            <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
+                            <div className='absolute right-18 top-4 flex  z-50 text-white'>
                                 <StarIcon size={16} />
                                 <p>4.5</p>
                             </div>
@@ -60,103 +113,54 @@ const ThirdContainer = () => {
                                 <div className='text-[18px] font-bold text-white mr-2'>{t('property1')}</div>
                             </div>
                         </div>
-
-                        {/* تصویر وسط */}
-                        <div className='cursor-pointer relative hidden lg:block w-72.5 h-full rounded-4xl bg-amber-400 overflow-hidden'>
-                            <ImageDef1 />
-                            <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
-                                <StarIcon size={16} />
-                                <p>4.5</p>
-                            </div>
-                            <div className='absolute bottom-1 right-1/5 h-15 flex items-center justify-center flex-nowrap'>
-                                <div className='flex gap-1 h-5'>
-                                    <div className='flex text-[12px] text-white/70'>
-                                        {t('items')} <p>26</p>
-                                    </div>
-                                </div>
-                                <div className='text-[18px] font-bold text-white mr-2'>{t('property2')}</div>
-                            </div>
-                        </div>
-
-                        {/* تصاویر سمت راست (دو تا) */}
-                        <div className='flex lg:flex-col flex-row justify-center gap-4 h-full'>
-                            <div className='cursor-pointer relative w-96.25 h-50.25 rounded-4xl overflow-hidden'>
-                                <ImageDef2 />
-                                <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
-                                    <StarIcon size={16} />
-                                    <p>4.5</p>
-                                </div>
-                                <div className='absolute bottom-1 right-2/9 h-15 flex items-center justify-center flex-nowrap'>
-                                    <div className='flex gap-1 h-5'>
-                                        <div className='flex text-[12px] text-white/70'>
-                                            {t('items')} <p>26</p>
-                                        </div>
-                                    </div>
-                                    <div className='text-[18px] font-bold text-white mr-2'>{t('property3')}</div>
-                                </div>
-                            </div>
-                            <div className='cursor-pointer relative w-96.25 h-50.25 rounded-4xl overflow-hidden'>
-                                <ImageDef3 />
-                                <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
-                                    <StarIcon size={16} />
-                                    <p>4.5</p>
-                                </div>
-                                <div className='absolute bottom-1 right-2/9 h-15 flex items-center justify-center flex-nowrap'>
-                                    <div className='flex gap-1 h-5'>
-                                        <div className='flex text-[12px] text-white/70'>
-                                            {t('items')} <p>26</p>
-                                        </div>
-                                    </div>
-                                    <div className='text-[18px] font-bold text-white mr-2'>{t('property4')}</div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     {/* نسخه موبایل */}
-                    <div className='w-62.5 sm:hidden flex flex-col gap-y-4'>
+                    <div className='w-90  sm:hidden flex flex-col gap-y-4 '>
                         
-                        <div className='relative w-62.5 h-55.75 bg-gray-500 rounded-4xl lg:mb-0'>
+                        <div className='relative w-62.5 h-55.75 rounded-4xl lg:mb-0'>
                             <ImageMob1 />
-                            <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
-                                <StarIcon size={14} />
+                                <div className='absolute right-18 top-3 flex gap-1 z-50 text-white'>
+                                <StarIcon className='relative top-1' size={14} />
                                 <p>4.5</p>
                             </div>
-                            <div className='absolute bottom-2 right-2/10 h-15 flex items-center justify-center flex-nowrap'>
-                                <div className='flex gap-1 h-5'>
-                                    <div className='flex text-[11px] text-white/70'>
+                            <div className='absolute bottom-2 right-20 whitespace-nowrap h-15 flex items-center justify-center flex-nowrap'>
+                                <div className='flex gap-1 h-6 relative top-1'>
+                                    <div className='flex text-[11px]  text-white/70'>
                                         {t('items')} <p>26</p>
                                     </div>
                                 </div>
                                 <div className='text-[15px] font-bold text-white mr-1'>{t('property1')}</div>
                             </div>
                         </div>
-
-                        <div className='relative w-62.5 h-100.75 overflow-hidden rounded-4xl bg-gray-500 lg:mb-0'>
+                        <div className='flex justify-center w-full'>
+                                    <div className='relative w-full h-100.75 overflow-hidden rounded-4xl  lg:mb-0'>
                             <ImageMob2 />
-                            <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
-                                <StarIcon size={14} />
+                            <div className='absolute right-18 top-3 flex gap-1 z-50 text-white'>
+                                <StarIcon className='relative top-1' size={14} />
                                 <p>4.5</p>
                             </div>
-                            <div className='absolute bottom-2 right-2/10 h-15 flex items-center justify-center flex-nowrap'>
+                            <div className='absolute bottom-0.5 right-25 whitespace-nowrap h-15 flex items-center justify-center flex-nowrap'>
                                 <div className='flex gap-1 h-5'>
-                                    <div className='flex text-[11px] text-white/70'>
+                                    <div className='flex text-[11px] text-white/70 mt-0.5'>
                                         {t('items')} <p>26</p>
                                     </div>
                                 </div>
                                 <div className='text-[15px] font-bold text-white mr-1'>{t('property2')}</div>
                             </div>
                         </div>
+                        </div>
+                
 
-                        <div className='relative w-62.5 h-25 bg-gray-500 rounded-4xl'>
+                        <div className='relative w-62.5 h-25  rounded-4xl'>
                             <ImageMob3 />
-                            <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
-                                <StarIcon size={14} />
+                            <div className='absolute right-18 top-3 flex gap-1 z-50 text-white'>
+                                <StarIcon className='relative top-1' size={14} />
                                 <p>4.5</p>
                             </div>
-                            <div className='absolute bottom-0.5 right-2/10 h-15 flex items-center justify-center flex-nowrap'>
+                            <div className='absolute bottom-0.5 right-21 whitespace-nowrap h-15 flex items-center justify-center flex-nowrap'>
                                 <div className='flex gap-1 h-5'>
-                                    <div className='flex text-[11px] text-white/70'>
+                                    <div className='flex text-[11px] text-white/70 mt-0.5'>
                                         {t('items')} <p>26</p>
                                     </div>
                                 </div>
@@ -164,15 +168,15 @@ const ThirdContainer = () => {
                             </div>
                         </div>
 
-                        <div className='relative w-62.5 h-25 bg-gray-500 rounded-4xl'>
+                        <div className='relative w-62.5 h-25  rounded-4xl'>
                             <ImageMob4 />
-                            <div className='absolute right-3 top-2 flex gap-1 z-50 text-white'>
-                                <StarIcon size={14} />
+                            <div className='absolute right-18 top-3 flex gap-1 z-50 text-white'>
+                                <StarIcon className='relative top-1' size={14} />
                                 <p>4.5</p>
                             </div>
-                            <div className='absolute bottom-0.5 right-2/10 h-15 flex items-center justify-center flex-nowrap'>
+                            <div className='absolute bottom-0.5 right-21 whitespace-nowrap h-15 flex items-center justify-center flex-nowrap'>
                                 <div className='flex gap-1 h-5'>
-                                    <div className='flex text-[11px] text-white/70'>
+                                    <div className='flex text-[11px] mt-0.5 text-white/70'>
                                         {t('items')} <p>26</p>
                                     </div>
                                 </div>

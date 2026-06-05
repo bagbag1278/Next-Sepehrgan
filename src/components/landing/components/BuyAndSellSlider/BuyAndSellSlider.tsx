@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import RealEstateSlider from './RealEstateSlider';
 import Link from 'next/link';
 
 const BuyAndSellSlider = () => {
+    const t = useTranslations('BuyAndSellSlider');
     const [houses, setHouses] = useState([]);
     const [error, setError] = useState("");
 
@@ -12,17 +14,15 @@ const BuyAndSellSlider = () => {
         const getHouses = async () => {
             try {
                 const res = await fetch("http://188.121.111.8:3003/api/houses");
-
                 const data = await res.json();
-                setHouses(data.houses || [] );
+                setHouses(data.houses || []);
             } catch (err) {
                 console.error("Fetch Error:", err);
-
-                setError("متأسفانه این بخش در حال حاضر در دسترس نیست. لطفاً بعداً دوباره امتحان کنید.");
+                setError(t("errorMessage"));
             }
         };
         getHouses();
-    }, []);
+    }, [t]);
 
     if (error) {
         return (
@@ -35,7 +35,7 @@ const BuyAndSellSlider = () => {
     if (houses.length === 0) {
         return (
             <div className='w-full flex justify-center items-center h-140'>
-                <p>در حال بارگذاری...</p>
+                <p>{t("loading")}</p>
             </div>
         );
     }
@@ -47,7 +47,9 @@ const BuyAndSellSlider = () => {
                     {/* above the slider */}
                     <div className='w-full h-6.25'>
                         <div className='w-146.5' dir='ltr'>
-                            <div className='text-blue-200 dark:text-[#28A5E6]'>!خرید و فروش هوشمند، با بهترین پیشنهادات و قیمت‌های بی‌نظیر</div>
+                            <div className='text-blue-200 dark:text-[#28A5E6]'>
+                                {t("slogan")}
+                            </div>
                         </div>
                     </div>
                     {/* above the slider &&& secound */}
@@ -55,18 +57,26 @@ const BuyAndSellSlider = () => {
                         <div className='w-151 h-10.25 flex justify-end gap-9 items-center'>
                             {/* ***** Title and line Image ***** */}
                             <div className='border-white'>
-                                <div className='text-[20px] font-bold text-blue-400 dark:text-[#F5F5F5]'>خرید و فروش ملک</div>
+                                <div className='text-[20px] font-bold text-blue-400 dark:text-[#F5F5F5]'>
+                                    {t("title")}
+                                </div>
                             </div>
-                            <div className='text-[15px] dark:text-[#adadad] text-[#111111]'>پیشنهادات ویژه</div>
-                            <div className='text-[15px] dark:text-[#adadad] text-[#111111]'>پایین ترین قیمت ها</div>
+                            <div className='text-[15px] dark:text-[#adadad] text-[#111111]'>
+                                {t("specialOffers")}
+                            </div>
+                            <div className='text-[15px] dark:text-[#adadad] text-[#111111]'>
+                                {t("lowestPrices")}
+                            </div>
                         </div>
                         {/* *** view more button  *** */}
                         <div className='w-60'>
                             <Link 
-                            href={"/houserent"} 
-                            className='flex justify-center items-center w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer'
+                                href={"/houserent"} 
+                                className='flex justify-center items-center w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer'
                             >
-                                <p className='text-green-100 text-[14px]'>مشاهده همه</p>
+                                <p className='text-green-100 text-[14px]'>
+                                    {t("viewAll")}
+                                </p>
                             </Link>
                         </div>
                     </div>
