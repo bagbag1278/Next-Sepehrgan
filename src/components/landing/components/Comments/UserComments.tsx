@@ -101,7 +101,7 @@ const FocusCarousel = () => {
                 <div className="w-6.75 h-6.5 flex gap-0.5 items-center flex-wrap-reverse scale-x-[-1]">
                   <CommentsIcon />
                 </div>
-                <div className="dark:text-[#28A5E6] text-[13px] text-blue-200">
+                <div className="dark:text-[#28A5E6] text-[13px] whitespace-nowrap text-blue-200">
                   {t('topCommentsText')}
                 </div>
                 <div className="w-6.75 h-6.5 flex gap-0.5 items-center flex-row-reverse">

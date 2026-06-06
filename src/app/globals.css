@@ -138,3 +138,23 @@ input[type="range"]::-moz-range-track {
   position: relative;
   z-index: 20;
 }
+
+
+
+@keyframes grid {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+.animate-grid {
+  animation: grid 25s linear infinite;
+}
+
+@keyframes slow-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-slow-rotate {
+  animation: slow-rotate 120s linear infinite;
+}

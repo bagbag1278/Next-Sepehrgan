@@ -61,7 +61,7 @@ const SortFilter = ({
         {sortOptions.map((option) => (
           <span
             key={option.value}
-            className="text-blue-100 text-[13px] hover:bg-gray-100 rounded-md pr-1 py-1 cursor-pointer"
+            className="text-blue-100 dark:text-blue-300 text-[13px] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md pr-1 py-1 cursor-pointer"
             onClick={() => handleSelectSort(option.value)}
           >
             {option.label}

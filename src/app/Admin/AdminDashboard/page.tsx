@@ -5,19 +5,10 @@ import {
   Home,
   CalendarCheck,
   Star,
-  Eye,
-  TrendingUp,
   Search,
   Clock,
   Calendar,
-  AlertCircle,
-  DollarSign,
   Building2,
-  CheckCircle,
-  XCircle,
-  ArrowUpRight,
-  ArrowDownRight,
-  Activity,
   User,
 } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
@@ -79,8 +70,6 @@ const AdminDashboard = () => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [editingHouseTitle, setEditingHouseTitle] = useState("");
-  const [editingHousePrice, setEditingHousePrice] = useState(0);
 
   const getToken = () => localStorage.getItem("accessToken");
 
@@ -200,10 +189,8 @@ const AdminDashboard = () => {
       case "success":
         return <Succsess />;
       case "pending":
-      case "reservingIcon":
         return <ReservingIcon />;
       case "cancelled":
-      case "NotActive":
         return <NotActive />;
       default:
         return <ReservingIcon />;
@@ -232,18 +219,8 @@ const AdminDashboard = () => {
     setIsDetailOpen(true);
   };
 
-  const handleEdit = async (booking: Booking) => {
+  const handleEdit = (booking: Booking) => {
     setSelectedBooking(booking);
-    const houseId = booking.houseId;
-    const house = houses[houseId];
-    
-    if (house) {
-      setEditingHouseTitle(house.title);
-      setEditingHousePrice(house.price);
-    } else {
-      setEditingHouseTitle(`ملک شماره ${houseId}`);
-      setEditingHousePrice(0);
-    }
     setIsEditOpen(true);
   };
 
@@ -251,38 +228,95 @@ const AdminDashboard = () => {
     setSelectedBooking(booking);
     setIsDeleteOpen(true);
   };
-
-  const confirmEdit = async (data: any) => {
-    if (!selectedBooking) return;
-    
-    const loadingToast = toast.loading("در حال ویرایش...");
-    
-    try {
-      const token = getToken();
-      const response = await fetch(`${API_BASE_URL}/admin/bookings/${selectedBooking.id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reservedDates: data.reservedDates,
-          status: data.status,
-        }),
-      });
-
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      
-      toast.success("رزرو با موفقیت ویرایش شد", { id: loadingToast });
-      await fetchBookings();
-      setIsEditOpen(false);
-      setSelectedBooking(null);
-    } catch (error) {
-      console.error(error);
-      toast.error("خطا در ویرایش رزرو", { id: loadingToast });
+const confirmEdit = async (data: any) => {
+  if (!selectedBooking) return;
+  
+  console.log(" شروع ادیت", selectedBooking.id);
+  console.log("Data received:", data);
+  
+  const loadingToast = toast.loading("در حال ویرایش...");
+  
+  try {
+    const token = getToken();
+    if (!token) {
+      toast.error("لطفاً مجدداً وارد شوید", { id: loadingToast });
+      return;
     }
-  };
+    
+    const updateData: any = {};
+    
+    if (data.status) updateData.status = data.status;
+    if (data.price !== undefined && data.price !== null) {
+      updateData.total_price = Number(data.price);
+    }
+    if (data.reservedDates && Array.isArray(data.reservedDates)) {
+      updateData.reservedDates = data.reservedDates;
+    }
+    if (data.rserveName && data.rserveName !== houses[selectedBooking.houseId]?.title) {
+      updateData.house_title = data.rserveName;
+    }
+    
+    console.log(" Sending to API:", updateData);
+    
+    const response = await fetch(`${API_BASE_URL}/admin/bookings/${selectedBooking.id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateData),
+    });
 
+    console.log(" Response status:", response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(" Error response:", errorText);
+      throw new Error(`HTTP ${response.status}: ${errorText}`);
+    }
+    
+    const responseData = await response.json();
+    console.log(" Response:", responseData);
+    
+    toast.success("رزرو با موفقیت ویرایش شد", { id: loadingToast });
+    
+
+    await fetchBookings();
+    
+    await fetchStats();
+    
+    setBookings(prevBookings => 
+      prevBookings.map(booking => 
+        booking.id === selectedBooking.id 
+          ? { 
+              ...booking, 
+              status: data.status || booking.status,
+              total_price: data.price !== undefined ? Number(data.price) : booking.total_price,
+              reservedDates: data.reservedDates || booking.reservedDates
+            }
+          : booking
+      )
+    );
+    
+    if (data.rserveName && data.rserveName !== houses[selectedBooking.houseId]?.title) {
+      setHouses(prevHouses => ({
+        ...prevHouses,
+        [selectedBooking.houseId]: {
+          ...prevHouses[selectedBooking.houseId],
+          title: data.rserveName,
+          price: data.price !== undefined ? Number(data.price) : prevHouses[selectedBooking.houseId]?.price
+        }
+      }));
+    }
+    
+    setIsEditOpen(false);
+    setSelectedBooking(null);
+    
+  } catch (error) {
+    console.error("❌ Error in confirmEdit:", error);
+    toast.error("خطا در ویرایش رزرو", { id: loadingToast });
+  }
+};
   const confirmDelete = async () => {
     if (!selectedBooking) return;
     
@@ -311,7 +345,7 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="flex items-center justify-center min-h-screen ">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0887CAB2] mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">در حال بارگذاری...</p>
@@ -357,15 +391,21 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div dir="rtl" className="min-h-screen ">
+    <div dir="rtl" className="min-h-screen">
       <div className="px-4 sm:p-6 lg:px-8 py-6 space-y-6">
+        {/* Header */}
         <AdvancedScrollAnimation type="slide-right" delay={0.1}>
-          <div className="bg-gradient-to-l from-blue-700 rounded-tl-[42px] rounded-br-[42px] via-blue-800 to-indigo-900 rounded-2xl p-6 text-white">
-            <h1 className="text-2xl font-bold">داشبورد مدیریت</h1>
-            <p className="text-blue-100 mt-1">به پنل مدیریت خوش آمدید</p>
-          </div>
+        <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
+                dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 
+                rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 
+                shadow-lg shadow-gray-200/70 dark:shadow-none
+                border border-gray-200 dark:border-gray-700/50">
+  <h1 className="text-3xl font-bold text-gray-900 dark:text-white"> مدیریت پنل ادمین</h1>
+  <p className="text-gray-500 dark:text-gray-400 mt-2">به  مدیریت پنل ادمین خوش آمدید</p>
+</div>
         </AdvancedScrollAnimation>
 
+        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {statsCards.map((item, idx) => (
             <AdvancedScrollAnimation key={item.id} type="fade" delay={0.1 + idx * 0.05}>
@@ -387,6 +427,7 @@ const AdminDashboard = () => {
           ))}
         </div>
 
+        {/* Bookings Table */}
         <AdvancedScrollAnimation type="slide-up" delay={0.6}>
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden">
             <div className="p-6">
@@ -404,7 +445,7 @@ const AdminDashboard = () => {
                     placeholder="جستجو..." 
                     value={searchTerm} 
                     onChange={(e) => setSearchTerm(e.target.value)} 
-                    className="pr-9 pl-4 py-3 border border-[#0887CAB2] text-[#0887CAB2]   rounded-2xl text-sm w-full sm:w-64 bg-white dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0887CAB2]" 
+                    className="pr-9 pl-4 py-3 border border-[#0887CAB2] text-[#0887CAB2] rounded-2xl text-sm w-full sm:w-64 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#0887CAB2]" 
                   />
                 </div>
               </div>
@@ -472,9 +513,9 @@ const AdminDashboard = () => {
                           <span className="truncate text-gray-600 dark:text-gray-400">{userName}</span>
                         </div>
                         <div className="w-[14%] text-gray-500">{bookingDate}</div>
-                        <div className="w-[12%] text-gray-500">{bookingTime}</div>
+                        <div className="w-[10%] text-gray-500">{bookingTime}</div>
                         <div className="w-[16%] font-bold text-[#0887CAB2] relative left-8">{formattedPrice} تومان</div>
-                        <div className="w-[10%] flex items-center gap-4">
+                        <div className="w-[14%] flex items-center gap-4">
                           {getStatusIconComponent(booking.status)}
                           <ActionMenu 
                             onView={() => handleViewDetails(booking)} 
@@ -527,8 +568,8 @@ const AdminDashboard = () => {
         onClose={() => setIsEditOpen(false)} 
         onSave={confirmEdit} 
         booking={selectedBooking} 
-        houseTitle={editingHouseTitle} 
-        housePrice={editingHousePrice} 
+        houseTitle={selectedBooking ? houses[selectedBooking.houseId]?.title || "" : ""} 
+        housePrice={selectedBooking ? houses[selectedBooking.houseId]?.price || 0 : 0} 
       />
       
       <DeleteBookingModal 

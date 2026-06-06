@@ -33,10 +33,10 @@ const SearchForm = ({ value = "", onSearchChange }: Props) => {
         placeholder={t('placeholder')}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className="w-126.25 h-12 text-sm border placeholder:text-blue-300/70 border-blue-300/70 dark:bg-white py-1 px-4 outline-0 text-blue-300 rounded-2xl"
+        className="w-126.25 h-12 text-sm border placeholder:text-blue-300/70 border-blue-300/70 dark:bg-gray-800 py-1 px-4 outline-0 text-blue-300 rounded-2xl"
       />
 
-      <div className="absolute top-3.5 left-4 bg-white pointer-events-none">
+      <div className="absolute top-3.5 left-4  pointer-events-none">
         <svg
           width="19"
           height="19"

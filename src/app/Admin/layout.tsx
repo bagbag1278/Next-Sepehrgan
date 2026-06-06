@@ -237,7 +237,7 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
       id: 1,
       icon: LayoutDashboard,
       label: "پنل ادمین",
-      href: "/admin/AdminDashboard",
+      href: "/admin",
     },
     {
       id: 2,
@@ -306,8 +306,7 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-      {/* مودال خروج */}
+    <div dir="rtl" className="min-h-screen  p-6">
       <LogoutModal 
         isOpen={showLogoutModal}
         onClose={handleLogoutCancel}
@@ -347,63 +346,63 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
           
           <div className="relative">
             <div className="flex justify-center w-full mb-10">
-              <div className="flex flex-col justify-center bg-[#0886ca32] w-[202px] h-[160px] rounded-2xl">
-                <div className="w-full justify-center flex">
-                  <div className="items-center w-[64px] h-[64px] mb-10 flex justify-center border-4 border-[#05ED6A80] rounded-full">
-                    <RezaBakhshian />
-                  </div>
-                  <ChevronDown
-                    size={16}
-                    className={`transition-transform duration-200 absolute ml-17 mt-23 ${
-                      profileAside ? "rotate-180" : ""
-                    } text-[#005EA4]`}
-                  />
-                  <div className="flex justify-center w-full flex-col absolute mt-17">
-                    <p className="text-[12px] font-normal flex justify-center items-center text-gray-500 dark:text-gray-400">
-                      {userData?.role === "admin" ? "ادمین سیستم" : "کاربر"}
-                    </p>
-                    <h1
-                      onClick={() => setProfileAside(!profileAside)}
-                      className="text-[18px] text-blue-600 flex justify-center items-center font-bold cursor-pointer"
-                    >
-                      {userData?.name || "کاربر"}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-              {profileAside && (
-                <div className="w-[200px] h-[130px] absolute top-43 flex flex-col rounded-2xl bg-[#F5F5F5] shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10">
-                  <div className="pr-4 pt-2 relative">
-                    <div className="items-center w-[48px] h-[47px] border-4 border-[#05ED6A80] rounded-full">
-                      <MiniRezaBakhshian />
-                    </div>
-                    <div className="mr-14 bottom-0 absolute">
-                      <p className="font-medium text-[16px] text-[#060425] ml-7">
-                        {userData?.name || "کاربر"}
-                      </p>
-                      <p className="text-[12px] font-normal text-gray-400">
-                        {formatPhoneNumber(userData?.phone || "")}
-                      </p>
-                    </div>
-                    <div className="absolute mt-2 mr-8 flex flex-col gap-2">
-                      <p className="text-[14px] text-[#060425]">
-                        موجودی قابل برداشت
-                        <Wallet className="absolute left-35 bottom-8" size={18} />
-                      </p>
-                      <div className="relative left-5">
-                        <button
-                          onClick={handleLogoutClick}
-                          className="text-[14px] text-[#060425]  items-start hover:text-red-600 transition-colors"
-                        >
-                          <div className="relative right-5">خروج از حساب</div>
-                          <LogOut className="absolute bottom-0 right-0" size={18} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+  <div className="flex flex-col justify-center bg-[#0886ca32] dark:bg-[#0886ca15] w-[202px] h-[160px] rounded-2xl">
+    <div className="w-full justify-center flex">
+      <div className="items-center w-[64px] h-[64px] mb-10 flex justify-center border-4 border-[#05ED6A80] rounded-full">
+        <RezaBakhshian />
+      </div>
+      <ChevronDown
+        size={16}
+        className={`transition-transform duration-200 absolute ml-17 mt-23 ${
+          profileAside ? "rotate-180" : ""
+        } text-[#005EA4] dark:text-[#005EA4]`}
+      />
+      <div className="flex justify-center w-full flex-col absolute mt-17">
+        <p className="text-[12px] font-normal flex justify-center items-center text-gray-500 dark:text-gray-400">
+          {userData?.role === "admin" ? "ادمین سیستم" : "کاربر"}
+        </p>
+        <h1
+          onClick={() => setProfileAside(!profileAside)}
+          className="text-[18px] text-blue-600 dark:text-blue-300 flex justify-center items-center font-bold cursor-pointer"
+        >
+          {userData?.name || "کاربر"}
+        </h1>
+      </div>
+    </div>
+  </div>
+  {profileAside && (
+    <div className="w-[200px] h-[130px] absolute top-43 flex flex-col rounded-2xl bg-[#F5F5F5] dark:bg-gray-800 shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10">
+      <div className="pr-4 pt-2 relative">
+        <div className="items-center w-[48px] h-[47px] border-4 border-[#05ED6A80] rounded-full">
+          <MiniRezaBakhshian />
+        </div>
+        <div className="mr-14 bottom-0 absolute">
+          <p className="font-medium text-[16px] text-[#060425] dark:text-white ml-7">
+            {userData?.name || "کاربر"}
+          </p>
+          <p className="text-[12px] font-normal text-gray-400 dark:text-gray-500">
+            {formatPhoneNumber(userData?.phone || "")}
+          </p>
+        </div>
+        <div className="absolute mt-2 mr-8 flex flex-col gap-2">
+          <p className="text-[14px] text-[#060425] dark:text-gray-300">
+            موجودی قابل برداشت
+            <Wallet className="absolute left-35 bottom-8" size={18} />
+          </p>
+          <div className="relative left-5">
+            <button
+              onClick={handleLogoutClick}
+              className="text-[14px] text-[#060425] dark:text-gray-300 items-start hover:text-red-600 dark:hover:text-red-500 transition-colors"
+            >
+              <div className="relative right-5">خروج از حساب</div>
+              <LogOut className="absolute bottom-0 right-0" size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
           </div>
         </aside>
 

@@ -12,17 +12,17 @@ interface EditPaymentModalProps {
 }
 
 const statusOptions: { value: PaymentStatus; label: string }[] = [
-  { value: "pending",   label: "در انتظار" },
+  { value: "pending", label: "در انتظار" },
   { value: "completed", label: "پرداخت شده" },
-  { value: "failed",    label: "ناموفق" },
+  { value: "failed", label: "ناموفق" },
 ];
 
 const EditPaymentModal = ({ isOpen, payment, onClose, onSave }: EditPaymentModalProps) => {
-  const [amount, setAmount]               = useState("");
-  const [status, setStatus]               = useState<PaymentStatus>("pending");
-  const [description, setDescription]     = useState("");
+  const [amount, setAmount] = useState("");
+  const [status, setStatus] = useState<PaymentStatus>("pending");
+  const [description, setDescription] = useState("");
   const [transactionId, setTransactionId] = useState("");
-  const [submitting, setSubmitting]       = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (payment) {
@@ -51,34 +51,54 @@ const EditPaymentModal = ({ isOpen, payment, onClose, onSave }: EditPaymentModal
       });
       toast.success("پرداخت با موفقیت ویرایش شد");
       onClose();
-    } catch {
+    } catch (error) {
+      toast.error("خطا در ویرایش پرداخت");
     } finally {
       setSubmitting(false);
     }
   };
 
+  // کلاس مشترک برای ورودی‌ها با پشتیبانی کامل دارک مود
   const inputClass = `
-    w-full px-4 py-3 border border-[#0887CAB2] rounded-2xl
-    bg-white  text-[#0887CAB2] 
- focus:outline-none focus:ring-2 focus:ring-[#0887CAB2]
+    w-full px-5 py-3.5 bg-gray-50 dark:bg-gray-800 
+    border border-gray-200 dark:border-gray-700 
+    rounded-2xl text-gray-800 dark:text-gray-100
+    focus:outline-none focus:border-[#0887CA] focus:ring-1 focus:ring-[#0887CA]
+    transition-all placeholder:text-gray-400 dark:placeholder:text-gray-500
   `;
 
   return (
     <>
-      <div className="fixed h-full inset-0 z-50 bg-black/50 " onClick={onClose} />
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-2xl z-50 p-6">
+      {/* Overlay */}
+      <div 
+        className="fixed inset-0 h-full bg-black/70 backdrop-blur-md z-50" 
+        onClick={onClose} 
+      />
 
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white">ویرایش پرداخت</h2>
-          <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-            <X size={20} />
+      {/* Modal */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white dark:bg-gray-900 rounded-3xl shadow-2xl z-[60] overflow-hidden border border-gray-100 dark:border-gray-700">
+        
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-5 border-b border-gray-100 dark:border-gray-800">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">ویرایش پرداخت</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">شناسه: #{payment.id}</p>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-2xl transition-all active:scale-95"
+          >
+            <X size={22} className="text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          
           {/* مبلغ */}
           <div>
-            <label className="block text-sm font-medium text-[#0887CAB2] mb-1">مبلغ (تومان)</label>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              مبلغ (تومان)
+            </label>
             <input
               type="number"
               value={amount}
@@ -86,23 +106,24 @@ const EditPaymentModal = ({ isOpen, payment, onClose, onSave }: EditPaymentModal
               className={inputClass}
               placeholder="مبلغ را وارد کنید"
               required
-              
             />
           </div>
 
           {/* وضعیت */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">وضعیت</label>
-            <div className="flex gap-2">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+              وضعیت پرداخت
+            </label>
+            <div className="grid grid-cols-3 gap-3">
               {statusOptions.map((opt) => (
                 <button
                   key={opt.value}
                   type="button"
                   onClick={() => setStatus(opt.value)}
-                  className={`flex-1 py-3 rounded-xl text-sm font-medium border transition-all ${
+                  className={`py-3.5 px-4 rounded-2xl text-sm font-medium border transition-all duration-200 ${
                     status === opt.value
-                      ? "bg-[#0887CAB2] text-white border-[#0887CAB2]"
-                      : "bg-white dark:bg-gray-700 text-[#0887CAB2] border-[#0887CAB2] hover:bg-[#0887CA]/10"
+                      ? "bg-[#0887CA] text-white border-[#0887CA] shadow-md"
+                      : "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300"
                   }`}
                 >
                   {opt.label}
@@ -113,7 +134,9 @@ const EditPaymentModal = ({ isOpen, payment, onClose, onSave }: EditPaymentModal
 
           {/* کد تراکنش */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">کد تراکنش</label>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              کد تراکنش
+            </label>
             <input
               type="text"
               value={transactionId}
@@ -125,31 +148,36 @@ const EditPaymentModal = ({ isOpen, payment, onClose, onSave }: EditPaymentModal
 
           {/* توضیحات */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">توضیحات</label>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              توضیحات
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-              className={inputClass}
-              placeholder="توضیحات را وارد کنید"
+              rows={4}
+              className={`${inputClass} resize-y min-h-[100px]`}
+              placeholder="توضیحات پرداخت را وارد کنید"
             />
           </div>
 
           {/* دکمه‌ها */}
-          <div className="flex gap-3 pt-2">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="flex-1 py-3 rounded-xl bg-[#0887CAB2] text-white hover:bg-[#0887CA]/90 transition-all disabled:opacity-50 flex items-center justify-center"
-            >
-              {submitting ? <Loader2 size={18} className="animate-spin" /> : "ذخیره تغییرات"}
-            </button>
+          <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+              disabled={submitting}
+              className="flex-1 py-3.5 rounded-2xl border border-gray-300 dark:border-gray-700 font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all active:scale-[0.985] disabled:opacity-50"
             >
               انصراف
+            </button>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="flex-1 py-3.5 rounded-2xl bg-[#0887CA] hover:bg-[#0778B3] text-white font-medium flex items-center justify-center gap-2 transition-all active:scale-[0.985] disabled:opacity-70 shadow-lg shadow-[#0887CA]/30"
+            >
+              {submitting && <Loader2 size={20} className="animate-spin" />}
+              {submitting ? "در حال ذخیره..." : "ذخیره تغییرات"}
             </button>
           </div>
         </form>

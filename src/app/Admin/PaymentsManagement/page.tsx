@@ -236,10 +236,14 @@ const getStatusIcon = (status: string) => {
     >
       {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
-        <div className="bg-gradient-to-l from-blue-700 rounded-tl-[42px] rounded-br-[42px] via-blue-800 to-indigo-900 rounded-2xl p-6 text-white">
-          <h1 className="text-2xl font-bold">مدیریت پرداخت‌ها</h1>
-          <p className="text-blue-100 mt-1">مشاهده و مدیریت تراکنش‌های مالی</p>
-        </div>
+                        <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
+                dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 
+                rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 
+                shadow-lg shadow-gray-200/70 dark:shadow-none
+                border border-gray-200 dark:border-gray-700/50">
+  <h1 className="text-3xl font-bold text-gray-900 dark:text-white">   مدریت تراکنش های مالی  </h1>
+  <p className="text-gray-500 dark:text-gray-400 mt-2">  به مدیریت و مشاهده پرداخت ها خوش امدید</p>
+</div>
       </AdvancedScrollAnimation>
 
       {/* Stats Cards */}
@@ -490,10 +494,10 @@ const getStatusIcon = (status: string) => {
                   <div className="w-[15%] text-gray-800 dark:text-white truncate">
                     {userName}
                   </div>
-                  <div className="w-[12%] truncate font-bold text-[#0887CAB2]">
+                  <div dir="ltr" className="w-[11%] left-8 relative truncate font-bold text-[#0887CAB2]">
                     {parseFloat(payment.amount).toLocaleString()} تومان
                   </div>
-                  <div className="w-[12%]">
+                  <div className="w-[14%]">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium ${status.bg} ${status.color}`}
                     >

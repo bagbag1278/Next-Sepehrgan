@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { Search, Clock, Calendar, User, ArrowLeft, Filter, X } from "lucide-react";
 import { motion } from "framer-motion";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
+import VoiceInput from "@/components/common/voice/VoiceInput";
 
 const Blog = () => {
   const t = useTranslations('Blog');
@@ -31,6 +32,11 @@ const Blog = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  // تابع برای دریافت متن از ورودی صوتی
+  const handleVoiceInput = (text: string) => {
+    setSearchQuery(text);
+  };
 
   const filteredBlogs = blogs.filter((blog) => {
     const matchesSearch = blog.title?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -76,15 +82,14 @@ const Blog = () => {
                 <Search size={18} className="text-[#0887CA] dark:text-white" />
                 {t('searchInArticles')}
               </h3>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder={t('searchPlaceholder')}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-[48px] rounded-[12px] border border-[#0887CA44] dark:border-gray-600 bg-white dark:bg-gray-800 px-4 text-[13px] outline-none focus:border-[#0887CA] dark:focus:border-white text-[#060425] dark:text-white font-medium placeholder:text-gray-400 dark:placeholder:text-gray-500"
-                />
-              </div>
+              <VoiceInput
+                onTranscript={handleVoiceInput}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t('searchPlaceholder')}
+                lang="fa"
+                className="w-full h-[48px] rounded-[12px] border border-[#0887CA44] dark:border-gray-600 bg-white dark:bg-gray-800 px-4 text-[13px] outline-none focus:border-[#0887CA] dark:focus:border-white text-[#060425] dark:text-white font-medium placeholder:text-gray-400 dark:placeholder:text-gray-500"
+              />
             </div>
 
             <div className="w-full bg-[#F5F8FA] dark:bg-gray-800/50 border border-[#E8EFF3] dark:border-gray-700 rounded-[20px] p-5 shadow-sm shadow-[4px_4px_15px_rgba(8,135,202,0.1)] dark:shadow-none">

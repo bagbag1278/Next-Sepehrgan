@@ -37,7 +37,7 @@ export async function fetchHouses(
 ): Promise<House[]> {
   const { limit = 10, order = "DESC", sort = "last_updated" } = options || {};
 
-  const apiUrl = new URL("http://next.genzuni.website/api/houses");
+  const apiUrl = new URL("http://188.121.111.8:3003/api/houses");
   apiUrl.searchParams.append("limit", limit.toString());
   apiUrl.searchParams.append("order", order);
   apiUrl.searchParams.append("sort", sort);

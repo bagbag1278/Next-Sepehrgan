@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
-import axios from "axios";
 import { toast } from "react-hot-toast";
-import { X, Edit } from "lucide-react";
+import { X, Edit, Shield, UserCog, Store, User as UserIcon } from "lucide-react";
 
 interface User {
   id: number;
@@ -18,48 +17,101 @@ interface EditUserProps {
   trigger?: React.ReactNode;
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+
 export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
-    fullName: user.fullName,
-    email: user.email,
+    fullName: user.fullName || "",
+    email: user.email || "",
     phoneNumber: user.phoneNumber || "",
+    role: user.role,
   });
   const [loading, setLoading] = useState(false);
+
+  const getToken = () => localStorage.getItem("accessToken");
+
+  const handleRoleChange = (newRole: "buyer" | "seller" | "admin") => {
+    setForm({ ...form, role: newRole });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
     try {
-      const token = localStorage.getItem("accessToken");
+      const token = getToken();
+      if (!token) {
+        toast.error("توکن یافت نشد");
+        setLoading(false);
+        return;
+      }
+
+      // 1. اول اطلاعات اصلی کاربر را آپدیت کن (بدون نقش)
+      const userUpdateData = {
+        fullName: form.fullName,
+        email: form.email,
+        phoneNumber: form.phoneNumber,
+      };
+
+      console.log("📤 ارسال داده کاربر:", userUpdateData);
       
-      const response = await axios.put(
-        `http://next.genzuni.website/api/admin/users/${user.id}`,
-        {
-          full_name: form.fullName,
-          email: form.email,
-          phone: form.phoneNumber,
+      const userResponse = await fetch(`${API_BASE_URL}/admin/users/${user.id}`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        body: JSON.stringify(userUpdateData),
+      });
 
-      console.log("پاسخ سرور:", response.data);
+      console.log("📥 وضعیت پاسخ کاربر:", userResponse.status);
 
-      const updatedData = response.data?.data || response.data;
+      if (!userResponse.ok) {
+        const errorText = await userResponse.text();
+        throw new Error(`خطا در ویرایش کاربر: ${errorText}`);
+      }
+
+      // 2. اگر نقش تغییر کرده بود، آن را با آدرس جداگانه آپدیت کن
+      if (form.role !== user.role) {
+        console.log("📤 ارسال داده نقش:", { role: form.role });
+        
+        const roleResponse = await fetch(`${API_BASE_URL}/admin/users/${user.id}/role`, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ role: form.role }),
+        });
+
+        console.log("📥 وضعیت پاسخ نقش:", roleResponse.status);
+
+        if (!roleResponse.ok) {
+          const errorText = await roleResponse.text();
+          console.warn("خطا در تغییر نقش:", errorText);
+          toast.warning("اطلاعات کاربر ذخیره شد، اما نقش تغییر نکرد");
+        } else {
+          toast.success("نقش کاربری با موفقیت تغییر کرد");
+        }
+      }
+
+      toast.success("اطلاعات کاربر با موفقیت به‌روز شد");
       
       const updatedUser: User = {
         ...user,
-        fullName: updatedData.full_name || updatedData.fullName || form.fullName,
-        email: updatedData.email || form.email,
-        phoneNumber: updatedData.phone || updatedData.phoneNumber || form.phoneNumber,
+        fullName: form.fullName,
+        email: form.email,
+        phoneNumber: form.phoneNumber,
+        role: form.role,
       };
-
-      toast.success("اطلاعات کاربر با موفقیت به‌روز شد");
+      
       onEdit(updatedUser);
       setOpen(false);
+      
     } catch (err: any) {
-      console.error("خطا:", err.response?.data);
-      toast.error(err.response?.data?.message || "خطا در ویرایش");
+      console.error("❌ خطا:", err);
+      toast.error(err.message || "خطا در ویرایش کاربر");
     } finally {
       setLoading(false);
     }
@@ -67,18 +119,24 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
 
   return (
     <>
-      <span onClick={() => setOpen(true)} className="cursor-pointer">
+      <span onClick={() => setOpen(true)} className="cursor-pointer inline-flex items-center justify-center p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
         {trigger || <Edit size={16} className="text-blue-500" />}
       </span>
 
       {open && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+        <div 
+          className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"
+          onClick={() => setOpen(false)}
+        >
           <div 
-            className="bg-white dark:bg-gray-900 rounded-2xl max-w-md w-full mx-4 shadow-lg transition-all"
-            style={{ boxShadow: "0 4px 12px #0887CA4D" }}
+            className="bg-white dark:bg-gray-900 rounded-2xl max-w-md w-full mx-auto shadow-xl transition-all"
+            style={{ boxShadow: "0 4px 20px rgba(8, 135, 202, 0.3)" }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center p-5 border-b border-gray-100 dark:border-gray-800">
-              <h3 className="text-lg font-bold text-gray-800 dark:text-white">ویرایش کاربر</h3>
+              <h3 className="text-lg font-bold text-gray-800 dark:text-white">
+                ویرایش کاربر
+              </h3>
               <button
                 onClick={() => setOpen(false)}
                 className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -88,32 +146,91 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
             </div>
 
             <form onSubmit={handleSubmit} className="p-5 space-y-4">
-              <input
-                type="text"
-                placeholder="نام کامل"
-                value={form.fullName}
-                onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                required
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                  نام کامل
+                </label>
+                <input
+                  type="text"
+                  placeholder="نام کامل"
+                  value={form.fullName}
+                  onChange={(e) => setForm({ ...form, fullName: e.target.value })}
+                  className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  required
+                />
+              </div>
 
-              <input
-                type="email"
-                placeholder="ایمیل"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                required
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                  ایمیل
+                </label>
+                <input
+                  type="email"
+                  placeholder="ایمیل"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                  required
+                />
+              </div>
 
-              <input
-                dir="rtl"
-                type="tel"
-                placeholder="شماره تماس"
-                value={form.phoneNumber}
-                onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
-                className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                  شماره تماس
+                </label>
+                <input
+                  dir="rtl"
+                  type="tel"
+                  placeholder="شماره تماس"
+                  value={form.phoneNumber}
+                  onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
+                  className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  نقش کاربری
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleRoleChange("buyer")}
+                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border transition-all ${
+                      form.role === "buyer"
+                        ? "bg-green-50 dark:bg-green-900/30 border-green-500 text-green-600 dark:text-green-400"
+                        : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    }`}
+                  >
+                    <UserIcon size={16} />
+                    <span className="text-sm">کاربر عادی</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleRoleChange("seller")}
+                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border transition-all ${
+                      form.role === "seller"
+                        ? "bg-blue-50 dark:bg-blue-900/30 border-blue-500 text-blue-600 "
+                        : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    }`}
+                  >
+                    <Store size={16} />
+                    <span className="text-sm">فروشنده</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleRoleChange("admin")}
+                    className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border transition-all ${
+                      form.role === "admin"
+                        ? "bg-purple-50 dark:bg-purple-900/30 border-purple-500 text-purple-600 dark:text-purple-400"
+                        : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    }`}
+                  >
+                    <UserCog size={16} />
+                    <span className="text-sm">ادمین</span>
+                  </button>
+                </div>
+              </div>
 
               <div className="flex justify-end gap-3 pt-4">
                 <button
@@ -126,8 +243,11 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
+                  {loading && (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  )}
                   {loading ? "در حال ذخیره..." : "ذخیره"}
                 </button>
               </div>

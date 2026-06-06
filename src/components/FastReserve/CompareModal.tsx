@@ -1,8 +1,22 @@
 "use client";
-import { useTranslations } from 'next-intl';
-import { X, Bed, Bath, Car, Maximize, Heart, Share2, TrendingUp, Ruler, Home, MapPin, DollarSign } from "lucide-react";
+import { useTranslations } from "next-intl";
+import {
+  X,
+  Bed,
+  Bath,
+  Car,
+  Maximize,
+  Heart,
+  Share2,
+  TrendingUp,
+  Ruler,
+  Home,
+  MapPin,
+  DollarSign,
+} from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface CompareItem {
   id: number;
@@ -23,16 +37,29 @@ interface CompareModalProps {
   onClearAll: () => void;
 }
 
-const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProps) => {
-  const t = useTranslations('CompareModal');
+const CompareModal = ({
+  items,
+  onRemove,
+  onClose,
+  onClearAll,
+}: CompareModalProps) => {
+  const t = useTranslations("CompareModal");
 
   if (!items.length) return null;
 
   const getWinner = () => {
     if (items.length !== 2) return null;
     const [item1, item2] = items;
-    const score1 = (item1.rooms * 2) + (item1.bathrooms * 1.5) + (item1.parking * 1.8) + (item1.area * 0.5);
-    const score2 = (item2.rooms * 2) + (item2.bathrooms * 1.5) + (item2.parking * 1.8) + (item2.area * 0.5);
+    const score1 =
+      item1.rooms * 2 +
+      item1.bathrooms * 1.5 +
+      item1.parking * 1.8 +
+      item1.area * 0.5;
+    const score2 =
+      item2.rooms * 2 +
+      item2.bathrooms * 1.5 +
+      item2.parking * 1.8 +
+      item2.area * 0.5;
     return score1 > score2 ? item1 : score2 > score1 ? item2 : null;
   };
 
@@ -51,10 +78,10 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
           <div className="sticky top-0 bg-white/95 dark:bg-[#060425]/95 backdrop-blur-sm p-6 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center rounded-t-3xl z-10">
             <div>
               <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                {t('title')}
+                {t("title")}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                {t('subtitle')}
+                {t("subtitle")}
               </p>
             </div>
             <div className="flex gap-2">
@@ -63,7 +90,7 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                   onClick={onClearAll}
                   className="px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
                 >
-                  {t('clearAll')}
+                  {t("clearAll")}
                 </button>
               )}
               <button
@@ -88,7 +115,7 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                     <div className="flex items-center justify-center gap-2">
                       <TrendingUp className="text-yellow-600" size={20} />
                       <span className="text-yellow-800 dark:text-yellow-400 font-bold">
-                        {t('winner')}
+                        {t("winner")}
                       </span>
                       <span className="text-yellow-800 dark:text-yellow-400 font-bold">
                         {winner.title}
@@ -106,7 +133,9 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                       className={`relative bg-white dark:bg-gray-800/50 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 ${
-                        winner?.id === item.id ? 'ring-2 ring-yellow-500 shadow-yellow-500/20' : ''
+                        winner?.id === item.id
+                          ? "ring-2 ring-yellow-500 shadow-yellow-500/20"
+                          : ""
                       }`}
                     >
                       {/* Remove Button */}
@@ -126,26 +155,22 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
 
                       {/* Image Section */}
                       <div className="relative h-56 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 overflow-hidden group">
-                        {item.image ? (
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            fill
-                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Home
+                            size={64}
+                            className="text-gray-300 dark:text-gray-600"
                           />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Home size={64} className="text-gray-300 dark:text-gray-600" />
-                          </div>
-                        )}
+                        </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        
+
                         {/* Price Badge */}
                         <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm rounded-xl px-4 py-2">
                           <span className="text-white font-bold text-lg">
                             {item.price.toLocaleString("fa-IR")}
                           </span>
-                          <span className="text-gray-300 text-xs mr-1">{t('currency')}</span>
+                          <span className="text-gray-300 text-xs mr-1">
+                            {t("currency")}
+                          </span>
                         </div>
                       </div>
 
@@ -166,8 +191,12 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                               <Bed size={16} className="text-blue-600" />
                             </div>
                             <div>
-                              <p className="text-gray-500 text-xs">{t('rooms')}</p>
-                              <p className="font-bold text-gray-800 dark:text-white">{item.rooms}</p>
+                              <p className="text-gray-500 text-xs">
+                                {t("rooms")}
+                              </p>
+                              <p className="font-bold text-gray-800 dark:text-white">
+                                {item.rooms}
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3 text-sm">
@@ -175,8 +204,12 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                               <Bath size={16} className="text-blue-600" />
                             </div>
                             <div>
-                              <p className="text-gray-500 text-xs">{t('bathrooms')}</p>
-                              <p className="font-bold text-gray-800 dark:text-white">{item.bathrooms}</p>
+                              <p className="text-gray-500 text-xs">
+                                {t("bathrooms")}
+                              </p>
+                              <p className="font-bold text-gray-800 dark:text-white">
+                                {item.bathrooms}
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3 text-sm">
@@ -184,8 +217,12 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                               <Car size={16} className="text-blue-600" />
                             </div>
                             <div>
-                              <p className="text-gray-500 text-xs">{t('parking')}</p>
-                              <p className="font-bold text-gray-800 dark:text-white">{item.parking}</p>
+                              <p className="text-gray-500 text-xs">
+                                {t("parking")}
+                              </p>
+                              <p className="font-bold text-gray-800 dark:text-white">
+                                {item.parking}
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-3 text-sm">
@@ -193,19 +230,31 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                               <Ruler size={16} className="text-blue-600" />
                             </div>
                             <div>
-                              <p className="text-gray-500 text-xs">{t('area')}</p>
-                              <p className="font-bold text-gray-800 dark:text-white">{item.area} m²</p>
+                              <p className="text-gray-500 text-xs">
+                                {t("area")}
+                              </p>
+                              <p className="font-bold text-gray-800 dark:text-white">
+                                {item.area} m²
+                              </p>
                             </div>
                           </div>
                         </div>
 
                         {/* Action Buttons */}
                         <div className="flex gap-3 mt-5 pt-4 border-t border-gray-100 dark:border-gray-700">
-                          <button className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium hover:shadow-lg transition-all">
-                            {t('viewDetails')}
-                          </button>
+                          <Link
+                            href={`/houserent/MortgageRentDetails/${item.id}`}
+                            className="w-full"
+                          >
+                            <button className="flex-1 w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium hover:shadow-lg transition-all">
+                              {t("viewDetails")}
+                            </button>
+                          </Link>
                           <button className="p-2.5 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
-                            <Heart size={18} className="text-gray-500 group-hover:text-red-500 transition-colors" />
+                            <Heart
+                              size={18}
+                              className="text-gray-500 group-hover:text-red-500 transition-colors"
+                            />
                           </button>
                           <button className="p-2.5 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <Share2 size={18} className="text-gray-500" />
@@ -226,10 +275,10 @@ const CompareModal = ({ items, onRemove, onClose, onClearAll }: CompareModalProp
                   <Home size={48} className="text-gray-400" />
                 </div>
                 <p className="text-gray-500 dark:text-gray-400 text-lg font-medium">
-                  {t('notEnoughItems')}
+                  {t("notEnoughItems")}
                 </p>
                 <p className="text-gray-400 text-sm mt-2">
-                  {t('selectTwoProperties')}
+                  {t("selectTwoProperties")}
                 </p>
               </motion.div>
             )}

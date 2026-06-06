@@ -80,7 +80,7 @@ const LanguageSwitcher = () => {
 
       {isOpen && (
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
+          <div className="fixed inset-0 z-40 ml-10" onClick={() => setIsOpen(false)} />
           <div className="absolute left-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
             {languages.map((lang) => (
               <button

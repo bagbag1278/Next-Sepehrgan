@@ -309,10 +309,14 @@ const ChatsManagement = () => {
   return (
     <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6 min-h-screen">
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
-        <div className="bg-gradient-to-l from-blue-700 rounded-tl-[42px] rounded-br-[42px] via-blue-800 to-indigo-900 rounded-2xl p-6 text-white">
-          <h1 className="text-2xl font-bold">مدیریت چت‌ها</h1>
-          <p className="text-blue-100 mt-1">مشاهده و مدیریت گفتگوهای کاربران</p>
-        </div>
+          <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
+                dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 
+                rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 
+                shadow-lg shadow-gray-200/70 dark:shadow-none
+                border border-gray-200 dark:border-gray-700/50">
+  <h1 className="text-3xl font-bold text-gray-900 dark:text-white">گفتگو ها مدیریت</h1>
+  <p className="text-gray-500 dark:text-gray-400 mt-2">به مدیریت گفتگوها خوش آمدید</p>
+</div>
       </AdvancedScrollAnimation>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

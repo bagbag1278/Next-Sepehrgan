@@ -51,18 +51,18 @@ const SwiperComponent = () => {
           </SwiperSlide>
         </Swiper>
         
-        <div className="absolute bottom-75 left-7 flex gap-1 z-20 flex-col">
-          <div className="z-20 h-9 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-all cursor-pointer">
-            <button ref={nextRef} className="next-btn"> 
-              <ChevronRight size={20} className="text-blue-900" />
-            </button>
-          </div>
-          <div className="z-20 h-9 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-all cursor-pointer">
-            <button ref={prevRef} className="prev-btn"> 
-              <ChevronLeft size={20} className="text-blue-900" />
-            </button>
-          </div>
-        </div>
+     <div className="absolute bottom-75 left-7 flex gap-1 z-20 flex-col">
+  <div className="z-20 h-9 bg-white dark:bg-gray-800 opacity-80 p-2 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all cursor-pointer">
+    <button ref={nextRef} className="next-btn"> 
+      <ChevronRight size={20} className="text-blue-900 dark:text-blue-300" />
+    </button>
+  </div>
+  <div className="z-20 h-9 bg-white dark:bg-gray-800 opacity-80 p-2 rounded-full shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all cursor-pointer">
+    <button ref={prevRef} className="prev-btn"> 
+      <ChevronLeft size={20} className="text-blue-900 dark:text-blue-300" />
+    </button>
+  </div>
+</div>
       </div>
     </div>
   );

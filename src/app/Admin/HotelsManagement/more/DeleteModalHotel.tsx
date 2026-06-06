@@ -25,7 +25,6 @@ const DeleteModalHotel = ({
 
   const handleConfirm = () => {
     onConfirm();
-    // توجه: onClose رو داخل onConfirm صدا نزن، چون اونجا خودش manage میکنه
   };
 
   return (

@@ -144,46 +144,47 @@ const HotelsManagement = () => {
     setHasBookings(hasExistingBookings);
     setIsDeleteOpen(true);
   };
-
-  const confirmEdit = async (data: any) => {
-    if (!selectedHotel) return;
+const confirmEdit = async (data: any) => {
+  if (!selectedHotel) return;
+  
+  setEditLoading(true);
+  const loadingToast = toast.loading("در حال ویرایش...");
+  
+  try {
+    const token = getToken();
     
-    setEditLoading(true);
-    const loadingToast = toast.loading("در حال ویرایش...");
+    const updateData: any = {};
+    if (data.title !== undefined) updateData.title = data.title;
+    if (data.address !== undefined) updateData.address = data.address;
+    if (data.price !== undefined) updateData.price = Number(data.price);
+    if (data.discounted_price !== undefined) updateData.discounted_price = data.discounted_price ? Number(data.discounted_price) : null;
+    if (data.rate !== undefined) updateData.rate = Number(data.rate); 
+    console.log("Updating hotel with data:", updateData);
     
-    try {
-      const token = getToken();
-      
-      const updateData: any = {};
-      if (data.title !== undefined) updateData.title = data.title;
-      if (data.address !== undefined) updateData.address = data.address;
-      if (data.price !== undefined) updateData.price = Number(data.price);
-      if (data.discounted_price !== undefined) updateData.discounted_price = data.discounted_price ? Number(data.discounted_price) : null;
-      
-      console.log("Updating hotel with data:", updateData);
-      
-      const response = await axios.patch(
-        `${API_BASE_URL}/admin/houses/${selectedHotel.id}`,
-        updateData,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      
-      if (response.status === 200 || response.status === 201) {
-        toast.success("هتل با موفقیت ویرایش شد", { id: loadingToast });
-        await fetchHotels();
-        setIsEditOpen(false);
-        setSelectedHotel(null);
-      } else {
-        throw new Error("خطا در ویرایش هتل");
-      }
-    } catch (error: any) {
-      console.error("Error editing hotel:", error);
-      const errorMessage = error.response?.data?.message || error.response?.data?.error || "خطا در ویرایش هتل";
-      toast.error(errorMessage, { id: loadingToast });
-    } finally {
-      setEditLoading(false);
+    const response = await axios.put(
+      `${API_BASE_URL}/admin/houses/${selectedHotel.id}`,
+      updateData,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    
+    if (response.status === 200 || response.status === 201) {
+      toast.success("هتل با موفقیت ویرایش شد", { id: loadingToast });
+      await fetchHotels();
+      setIsEditOpen(false);
+      setSelectedHotel(null);
+    } else {
+      throw new Error("خطا در ویرایش هتل");
     }
-  };
+  } catch (error: any) {
+    console.error("Error editing hotel:", error);
+    const errorMessage = error.response?.data?.message || 
+                        error.response?.data?.error || 
+                        "خطا در ویرایش هتل";
+    toast.error(errorMessage, { id: loadingToast });
+  } finally {
+    setEditLoading(false);
+  }
+};
 
   const confirmDelete = async () => {
     if (!selectedHotel) return;
@@ -263,7 +264,7 @@ const HotelsManagement = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="flex items-center justify-center min-h-screen ">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0887CAB2] mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">در حال بارگذاری...</p>
@@ -273,12 +274,16 @@ const HotelsManagement = () => {
   }
 
   return (
-    <div dir="rtl" className="p-4 sm:p-6 space-y-4 sm:space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div dir="rtl" className="p-4 sm:p-6 space-y-4 sm:space-y-6  min-h-screen">
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
-        <div className="bg-gradient-to-l from-blue-700 rounded-tl-[42px] rounded-br-[42px] via-blue-800 to-indigo-900 rounded-2xl p-6 text-white">
-          <h1 className="text-2xl font-bold">مدیریت هتل‌ها</h1>
-          <p className="text-blue-100 mt-1">مشاهده و مدیریت هتل‌های ثبت شده</p>
-        </div>
+                    <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
+                dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 
+                rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 
+                shadow-lg shadow-gray-200/70 dark:shadow-none
+                border border-gray-200 dark:border-gray-700/50">
+  <h1 className="text-3xl font-bold text-gray-900 dark:text-white"> مشاهده و مدریت هتل ها  </h1>
+  <p className="text-gray-500 dark:text-gray-400 mt-2">   به مدیریت هتل ها خوش امدید</p>
+</div>
       </AdvancedScrollAnimation>
 
       <AdvancedScrollAnimation type="slide-up" delay={0.2}>

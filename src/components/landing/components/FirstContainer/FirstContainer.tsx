@@ -80,67 +80,96 @@ const FirstContainer = () => {
                             </div>
                         </div>
 
-                        {/* بخش تصاویر */}
+                        {/* بخش تصاویر دسکتاپ با hover سه بعدی */}
                         <div className="flex gap-4 justify-start items-center flex-row-reverse">
                             <div className="flex flex-col gap-4">
-                                <div className="relative hidden xl:flex w-164 h-52.75 rounded-2xl overflow-hidden bg-slate-700">
-                                    <div className='w-full h-full'><MainImage1 /></div>
-                                    <div className='absolute right-3 top-2 flex gap-1 text-white'>
-                                        <StarIcon />
-                                        <p>4.5</p>
-                                    </div>
-                                    <div className='absolute bottom-2 right-2/5 w-40.75 h-15 flex justify-center flex-wrap'>
-                                        <div className='text-[18px] text-white font-bold'>{t('norwayInIsfahan')}</div>
-                                        <div className='flex gap-1 text-white'>
-                                            <div className='text-[12px] text-white'>27 {t('views')}</div>
-                                            <EyeIcon />
+                                {/* تصویر بزرگ */}
+                                <div className="hover-3d group">
+                                    <div className="relative hidden xl:flex w-164 h-52.75 rounded-2xl overflow-hidden bg-slate-700 cursor-pointer">
+                                        <div className='w-full h-full transition-transform duration-500 group-hover:scale-110'><MainImage1 /></div>
+                                        <div className='absolute right-3 top-2 flex gap-1 text-white bg-black/30 px-2 py-0.5 rounded-full z-10'>
+                                            <StarIcon />
+                                            <p>4.5</p>
+                                        </div>
+                                        <div className='absolute bottom-2 right-3 left-3 bg-gradient-to-t from-black/70 to-transparent pt-8 pb-2 px-3 rounded-b-2xl'>
+                                            <div className='flex items-center justify-between'>
+                                                <div className='text-[18px] text-white font-bold'>{t('norwayInIsfahan')}</div>
+                                                <div className='flex gap-1 text-[12px] text-white/80'>
+                                                    <span>27 {t('views')}</span>
+                                                    <EyeIcon />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div></div><div></div><div></div><div></div>
+                                    <div></div><div></div><div></div><div></div>
                                 </div>
+
+                                {/* دو تصویر پایین */}
                                 <div className="flex h-full gap-3 flex-col xl:flex-row">
-                                    <div className="relative w-75 xl:h-55.75 xl:w-85 h-53 xl:mb-0 mb-3 rounded-2xl overflow-hidden">
-                                        <MainImage2 />
-                                        <div className='absolute right-3 top-2 flex gap-1 text-white'>
-                                            <StarIcon />
-                                            <p>4.5</p>
-                                        </div>
-                                        <div className='absolute bottom-2 right-2/8 w-40.75 h-15 flex justify-center flex-wrap'>
-                                            <div className='text-[18px] font-bold text-white'>{t('norwayInIsfahan')}</div>
-                                            <div className='flex gap-1'>
-                                                <div className='text-[12px] text-white'>28 {t('views')}</div>
-                                                <EyeIcon />
+                                    <div className="hover-3d group">
+                                        <div className="relative w-75 xl:h-55.75 xl:w-85 h-53 xl:mb-0 mb-3 rounded-2xl overflow-hidden cursor-pointer">
+                                            <div className='w-full h-full transition-transform duration-500 group-hover:scale-110'><MainImage2 /></div>
+                                            <div className='absolute right-3 top-2 flex gap-1 text-white bg-black/30 px-2 py-0.5 rounded-full z-10'>
+                                                <StarIcon />
+                                                <p>4.5</p>
+                                            </div>
+                                            <div className='absolute bottom-2 right-3 left-3 bg-gradient-to-t from-black/70 to-transparent pt-6 pb-2 px-3 rounded-b-2xl'>
+                                                <div className='flex items-center justify-between'>
+                                                    <div className='text-[16px] font-bold text-white'>{t('norwayInIsfahan')}</div>
+                                                    <div className='flex gap-1 text-[11px] text-white/80'>
+                                                        <span>28 {t('views')}</span>
+                                                        <EyeIcon />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div></div><div></div><div></div><div></div>
+                                        <div></div><div></div><div></div><div></div>
                                     </div>
-                                    <div className="relative w-75 h-55.75 xl:mb-0 mb-3 rounded-2xl">
-                                        <MainImage3 />
-                                        <div className='absolute right-3 top-2 flex gap-1 text-white'>
-                                            <StarIcon />
-                                            <p>4.5</p>
-                                        </div>
-                                        <div className='absolute bottom-2 right-2/8 w-40.75 h-15 flex justify-center flex-wrap'>
-                                            <div className='text-[18px] font-bold text-white'>{t('norwayInIsfahan')}</div>
-                                            <div className='flex gap-1'>
-                                                <div className='text-[12px] text-white'>28 {t('views')}</div>
-                                                <EyeIcon />
+                                    <div className="hover-3d group">
+                                        <div className="relative w-75 h-55.75 xl:mb-0 mb-3 rounded-2xl overflow-hidden cursor-pointer">
+                                            <div className='w-full h-full transition-transform duration-500 group-hover:scale-110'><MainImage3 /></div>
+                                            <div className='absolute right-3 top-2 flex gap-1 text-white bg-black/30 px-2 py-0.5 rounded-full z-10'>
+                                                <StarIcon />
+                                                <p>4.5</p>
+                                            </div>
+                                            <div className='absolute bottom-2 right-3 left-3 bg-gradient-to-t from-black/70 to-transparent pt-6 pb-2 px-3 rounded-b-2xl'>
+                                                <div className='flex items-center justify-between'>
+                                                    <div className='text-[16px] font-bold text-white'>{t('norwayInIsfahan')}</div>
+                                                    <div className='flex gap-1 text-[11px] text-white/80'>
+                                                        <span>28 {t('views')}</span>
+                                                        <EyeIcon />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div></div><div></div><div></div><div></div>
+                                        <div></div><div></div><div></div><div></div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="relative w-60 h-113.5 rounded-2xl overflow-hidden bg-slate-700 z-50">
-                                <ManiImage4 />
-                                <div className='absolute right-3 top-2 flex gap-1 text-white'>
-                                    <StarIcon />
-                                    <p className='text-white'>4.5</p>
-                                </div>
-                                <div className='absolute bottom-2 right-2/11 w-40.75 h-15 flex justify-center flex-wrap'>
-                                    <div className='text-[18px] font-bold text-white'>{t('norwayInIsfahan')}</div>
-                                    <div className='flex gap-1'>
-                                        <div className='text-[12px] text-white'>28 {t('views')}</div>
-                                        <EyeIcon />
+
+                            {/* تصویر عمودی سمت راست */}
+                            <div className="hover-3d group">
+                                <div className="relative w-60 h-113.5 rounded-2xl overflow-hidden bg-slate-700 z-50 cursor-pointer">
+                                    <div className='w-full h-full transition-transform duration-500 group-hover:scale-110'><ManiImage4 /></div>
+                                    <div className='absolute right-3 top-2 flex gap-1 text-white bg-black/30 px-2 py-0.5 rounded-full z-10'>
+                                        <StarIcon />
+                                        <p className='text-white'>4.5</p>
+                                    </div>
+                                    <div className='absolute bottom-2 right-3 left-3 bg-gradient-to-t from-black/70 to-transparent pt-8 pb-2 px-3 rounded-b-2xl'>
+                                        <div className='flex items-center justify-between'>
+                                            <div className='text-[18px] font-bold text-white'>{t('norwayInIsfahan')}</div>
+                                            <div className='flex gap-1 text-[12px] text-white/80'>
+                                                <span>28 {t('views')}</span>
+                                                <EyeIcon />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div></div><div></div><div></div><div></div>
+                                <div></div><div></div><div></div><div></div>
                             </div>
                         </div>
                     </div>
@@ -151,92 +180,84 @@ const FirstContainer = () => {
                 </div>
             </div>
 
-            {/* نسخه موبایل - ریسپانسیو */}
+            {/* نسخه موبایل با hover سه بعدی */}
             <div className='w-62.5 relative sm:hidden flex flex-col gap-10 justify-center'>
-                <div className='w-60 h-12.75 flex flex-wrap'>
-                    <div className='flex flex-wrap justify-center h-14'>
-                        <div className='flex w-62 h-7 gap-1'>
-                            <div className='w-6.75 h-6.5 flex gap-0.5 items-center flex-wrap-reverse'>
-                                <div className='w-2 h-6.25 text-blue-200 text-[16px]'>؟</div>
-                                <div className='w-1.5 h-4.75 text-blue-200 text-[12px]'>؟</div>
-                                <div className='w-1 h-3.25 text-blue-200 text-[8px]'>؟</div>
-                            </div>
-                            <div className='h-5.5 dark:text-[#28A5E6] text-[12px] text-blue-200'>
-                                {t('modernEcotourism')}
-                            </div>
-                            <div className='w-2.75 h-6.5 flex gap-0.5 items-center justify-end mr-1 flex-row-reverse'>
-                                <div className='w-2 h-6.25 text-blue-200 text-[16px]'>؟</div>
-                                <div className='w-1.5 h-4.75 text-blue-200 text-[12px]'>؟</div>
-                                <div className='w-1 h-3.25 text-blue-200 text-[8px]'>؟</div>
-                            </div>
-                        </div>
-                        <div className='dark:text-[#F5F5F5] text-[17px] font-bold text-blue-400'>
-                            {t('latestEcotourism')}
-                        </div>
-                    </div>
-                </div>
-
-                <div className='w-62.5 flex flex-col gap-1.5'>
-                    <div className='relative w-62.5 h-55.75'>
+                {/* ... کد موبایل با hover سه بعدی ... */}
+                <div className='hover-3d group'>
+                    <div className='relative w-62.5 h-55.75 cursor-pointer'>
                         <MiniImage1 />
-                        <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-29 h-10.5'>
+                        <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-29 h-10.5 bg-gradient-to-t from-black/70 to-transparent pt-4 pb-1'>
                             <div className='text-white'>{t('norwayInIsfahan')}</div>
                             <div className='w-full flex'>
                                 <div className='mr-6'><EyeIcon /></div>
                                 <div className='text-[13px] text-white mr-2'>{t('views')}</div>
                             </div>
                         </div>
-                        <div className='absolute top-2 right-2 w-11 h-5 flex items-center gap-0.5'>
+                        <div className='absolute top-2 right-2 w-11 h-5 flex items-center gap-0.5 bg-black/30 rounded-full px-1'>
                             <div className='text-[11px] text-white'>4.5</div>
                             <StarIcon />
                         </div>
                     </div>
+                    <div></div><div></div><div></div><div></div>
+                    <div></div><div></div><div></div><div></div>
+                </div>
 
-                    <div className='w-62.5 h-55.75 flex justify-between'>
-                        <div className='relative w-30 h-full'>
+                <div className='w-62.5 h-55.75 flex justify-between gap-2'>
+                    <div className='hover-3d group w-30'>
+                        <div className='relative w-full h-full cursor-pointer'>
                             <MiniImage2 />
-                            <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-29 h-10.5'>
+                            <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent pt-4 pb-1'>
                                 <div className='text-white'>{t('norwayInIsfahan')}</div>
-                                <div className='w-full flex'>
-                                    <div className='mr-6'><EyeIcon /></div>
-                                    <div className='text-[13px] text-white mr-2'>{t('views')}</div>
+                                <div className='w-full flex justify-center'>
+                                    <EyeIcon />
+                                    <div className='text-[13px] text-white mr-1'>{t('views')}</div>
                                 </div>
                             </div>
-                            <div className='absolute top-2 right-2 w-11 h-5 flex items-center gap-0.5'>
+                            <div className='absolute top-2 right-2 flex gap-0.5 bg-black/30 rounded-full px-1'>
                                 <div className='text-[11px] text-white'>4.5</div>
                                 <StarIcon />
                             </div>
                         </div>
-                        <div className='relative w-30 h-full'>
-                            <MiniImage3 />
-                            <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-29 h-10.5'>
-                                <div className='text-white'>{t('norwayInIsfahan')}</div>
-                                <div className='w-full flex'>
-                                    <div className='mr-6'><EyeIcon /></div>
-                                    <div className='text-[13px] text-white mr-2'>{t('views')}</div>
-                                </div>
-                            </div>
-                            <div className='absolute top-2 right-2 w-11 h-5 flex items-center gap-0.5'>
-                                <div className='text-[11px] text-white'>4.5</div>
-                                <StarIcon />
-                            </div>
-                        </div>
+                        <div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div>
                     </div>
+                    <div className='hover-3d group w-30'>
+                        <div className='relative w-full h-full cursor-pointer'>
+                            <MiniImage3 />
+                            <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent pt-4 pb-1'>
+                                <div className='text-white'>{t('norwayInIsfahan')}</div>
+                                <div className='w-full flex justify-center'>
+                                    <EyeIcon />
+                                    <div className='text-[13px] text-white mr-1'>{t('views')}</div>
+                                </div>
+                            </div>
+                            <div className='absolute top-2 right-2 flex gap-0.5 bg-black/30 rounded-full px-1'>
+                                <div className='text-[11px] text-white'>4.5</div>
+                                <StarIcon />
+                            </div>
+                        </div>
+                        <div></div><div></div><div></div><div></div>
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                </div>
 
-                    <div className='relative w-62.5 h-115.5 z-50'>
+                <div className='hover-3d group'>
+                    <div className='relative w-62.5 h-115.5 z-50 cursor-pointer'>
                         <MiniImage4 />
-                        <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-29 h-10.5'>
+                        <div className='absolute flex justify-center flex-wrap text-[12px] bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent pt-4 pb-1'>
                             <div className='text-white'>{t('norwayInIsfahan')}</div>
-                            <div className='w-full flex'>
-                                <div className='mr-6'><EyeIcon /></div>
+                            <div className='w-full flex justify-center'>
+                                <EyeIcon />
                                 <div className='text-[13px] mr-2 text-white'>{t('views')}</div>
                             </div>
                         </div>
-                        <div className='absolute top-2 right-2 w-11 h-5 flex items-center gap-0.5'>
+                        <div className='absolute top-2 right-2 flex gap-0.5 bg-black/30 rounded-full px-1'>
                             <div className='text-[11px] text-white'>4.5</div>
                             <StarIcon />
                         </div>
                     </div>
+                    <div></div><div></div><div></div><div></div>
+                    <div></div><div></div><div></div><div></div>
                 </div>
 
                 <div className='w-full h-28 flex flex-wrap justify-center gap-2.5'>

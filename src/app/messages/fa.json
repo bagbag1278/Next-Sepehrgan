@@ -8,7 +8,7 @@
     "login": "ورود",
     "register": "ثبت نام"
   },
-  "common": {
+"common": {
   "loading": "در حال بارگذاری...",
   "error": "خطا",
   "success": "موفقیت",
@@ -41,7 +41,10 @@
   "settings": "تنظیمات",
   "logout": "خروج",
   "login": "ورود",
-  "register": "ثبت نام"
+  "register": "ثبت نام",
+
+  "welcome": "خوش آمدید",
+  "welcomeMessage": "به رهن‌کده خوش آمدید"
 },
   "Footer": {
     "popularAreas": "محلات محبوب",
@@ -638,5 +641,96 @@
     "unexpectedError": "خطای غیرمنتظره رخ داد",
     "registering": "در حال ثبت...",
     "register": "ثبت نام"
-  }
+  },
+  
+  "Landing": {
+    "scrollText": "اسکرول کنید"
+  },
+
+  "BuyAndSellSlider": {
+    "errorMessage": "متأسفانه این بخش در حال حاضر در دسترس نیست. لطفاً بعداً دوباره امتحان کنید.",
+    "loading": "در حال بارگذاری...",
+    "slogan": "!خرید و فروش هوشمند، با بهترین پیشنهادات و قیمت‌های بی‌نظیر",
+    "title": "خرید و فروش ملک",
+    "specialOffers": "پیشنهادات ویژه",
+    "lowestPrices": "پایین ترین قیمت ها",
+    "viewAll": "مشاهده همه"
+  },
+
+  "SecoundContainer": {
+    "title": "چرا ما را انتخاب کنید؟",
+    "subtitle": "با اطمینان خاطر ملک خود را بخرید و بفروشید",
+    "reason1": "پشتیبانی ۲۴ ساعته",
+    "reason2": "مشاوران حرفه‌ای",
+    "reason3": "قیمت‌های منصفانه",
+    "reason4": "سرعت در انجام کارها"
+  },
+
+  "UserComments": {
+    "title": "نظرات کاربران",
+    "subtitle": "آنچه مشتریان ما می‌گویند",
+    "comment1": "تجربه عالی داشتم، سریع و حرفه‌ای",
+    "comment2": "مشاوران بسیار دانا و خوش برخورد",
+    "comment3": "قیمت‌ها منصفانه و فرآیند شفاف",
+    "name1": "علی رضایی",
+    "name2": "مریم حسینی",
+    "name3": "رضا کریمی"
+  },  
+  
+
+  "FilterInputs": {
+    "buy": "خرید",
+    "sell": "فروش",
+    "rent": "اجاره",
+    "mortgage": "رهن",
+    "daily": "روزانه",
+    "tehran": "تهران",
+    "mashhad": "مشهد",
+    "isfahan": "اصفهان",
+    "shiraz": "شیراز",
+    "tabriz": "تبریز",
+    "karaj": "کرج",
+    "rasht": "رشت",
+    "kish": "کیش",
+    "newest": "جدیدترین",
+    "oldest": "قدیمی‌ترین",
+    "cheapest": "ارزان‌ترین",
+    "mostExpensive": "گران‌ترین",
+    "transactionType": "نوع معامله",
+    "location": "موقعیت مکانی",
+    "sortBy": "مرتب‌سازی بر اساس",
+    "searchPlaceholder": "جستجوی ملک..."
+  },
+
+  "Pagination": {
+    "previous": "قبلی",
+    "next": "بعدی",
+    "page": "صفحه",
+    "of": "از",
+    "first": "اولین",
+    "last": "آخرین",
+    "goToPage": "برو به صفحه"
+  },
+  
+  "Categories": {
+    "store": "فروشگاه",
+    "villa": "ویلا",
+    "office": "دفتر کار",
+    "restArea": "استراحتگاه",
+    "withPool": "دارای استخر",
+    "school": "مدرسه",
+    "apartment": "آپارتمان"
+  },
+
+"Search": {
+  "searchPlaceholder": "جستجوی خانه ...",
+  "loading": "در حال جستجو...",
+  "noResults": "نتیجه‌ای یافت نشد",
+  "viewAllResults": "مشاهده همه نتایج",
+  "resultsCount": "{count} نتیجه",
+  "currency": "تومان"
+}
+  
+
+
 }

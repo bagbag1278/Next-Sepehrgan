@@ -80,7 +80,7 @@
     "viewDetails": "View Details"
   },
   "FocusCarousel": {
-    "topCommentsText": "Your top comments, your voice guides us",
+    "topCommentsText": "Your top comments, your voice guides ",
     "visitorsComments": "Visitor Comments",
     "commentsDescription": "Your comments are not only our voice, but also a guide for others in choosing the best travel experiences!",
     "viewAll": "View All",
@@ -93,7 +93,7 @@
     "noItems": "No items found"
   },
   "FirstContainer": {
-    "modernEcotourism": "Modern Ecotourism, Eternal Memories",
+    "modernEcotourism": "Modern Ecotourism, Eternal ",
     "latestEcotourism": "Latest Ecotourism",
     "description": "The best ecotourism experiences await you; let's travel together to the green world and enjoy the beauty of nature!",
     "viewAll": "View All",
@@ -638,5 +638,76 @@
     "unexpectedError": "An unexpected error occurred",
     "registering": "Registering...",
     "register": "Register"
+  },
+  
+  "Landing": {
+    "scrollText": "Scroll"
+  },
+
+  "BuyAndSellSlider": {
+    "errorMessage": "Unfortunately, this section is currently unavailable. Please try again later.",
+    "loading": "Loading...",
+    "slogan": "Smart buying and selling, with the best offers and unbeatable prices!",
+    "title": "Real Estate Buying & Selling",
+    "specialOffers": "Special Offers",
+    "lowestPrices": "Lowest Prices",
+    "viewAll": "View All"
+  },
+
+  "SecoundContainer": {
+    "title": "Why Choose Us?",
+    "subtitle": "Buy and sell your property with confidence",
+    "reason1": "24/7 Support",
+    "reason2": "Professional Consultants",
+    "reason3": "Fair Prices",
+    "reason4": "Fast Processing"
+  },
+
+  "UserComments": {
+    "title": "User Reviews",
+    "subtitle": "What our customers say",
+    "comment1": "Great experience, fast and professional",
+    "comment2": "Very knowledgeable and polite consultants",
+    "comment3": "Fair prices and transparent process",
+    "name1": "Ali Rezaei",
+    "name2": "Maryam Hosseini",
+    "name3": "Reza Karimi"
+  },
+  "FilterInputs": {
+    "buy": "Buy",
+    "sell": "Sell",
+    "rent": "Rent",
+    "mortgage": "Mortgage",
+    "daily": "Daily",
+    "tehran": "Tehran",
+    "mashhad": "Mashhad",
+    "isfahan": "Isfahan",
+    "shiraz": "Shiraz",
+    "tabriz": "Tabriz",
+    "karaj": "Karaj",
+    "rasht": "Rasht",
+    "kish": "Kish",
+    "newest": "Newest",
+    "oldest": "Oldest",
+    "cheapest": "Cheapest",
+    "mostExpensive": "Most Expensive",
+    "transactionType": "Transaction Type",
+    "location": "Location",
+    "sortBy": "Sort By",
+    "searchPlaceholder": "Search property..."
+  },
+
+  
+  "Categories": {
+    "store": "Store",
+    "villa": "Villa",
+    "office": "Office",
+    "restArea": "Rest Area",
+    "withPool": "With Pool",
+    "school": "School",
+    "apartment": "Apartment"
   }
+
+
+
 }

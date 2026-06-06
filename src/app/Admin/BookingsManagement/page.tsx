@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import {
   Search,
-  Download,
   Calendar,
   Clock,
   Home,
@@ -10,6 +9,8 @@ import {
   Filter,
   X,
   Building2,
+  DollarSign,
+  Hash,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Succsess from "../Icon/Succsess";
@@ -419,6 +420,18 @@ const BookingsManagement = () => {
     }
   };
 
+  // فرمت تاریخ رزرو (تاریخ‌های رزرو شده)
+  const formatReservedDates = (dates?: string[]) => {
+    if (!dates || dates.length === 0) return "—";
+    return dates.map(date => {
+      try {
+        return new Date(date).toLocaleDateString("fa-IR");
+      } catch {
+        return date;
+      }
+    }).join("، ");
+  };
+
   const handleViewDetails = (b: Booking) => {
     setSelectedBooking(b);
     setIsDetailModalOpen(true);
@@ -472,7 +485,7 @@ const BookingsManagement = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-[#0887CAB2] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">در حال بارگذاری...</p>
@@ -483,7 +496,7 @@ const BookingsManagement = () => {
   
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="text-red-500 text-5xl mb-4">هیچ رزروی یافت نشد</div>
           <p className="text-red-600 dark:text-red-400">{error}</p>
@@ -499,13 +512,17 @@ const BookingsManagement = () => {
   }
 
   return (
-    <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6  min-h-screen">
+    <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6 min-h-screen">
       {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
-        <div className="bg-gradient-to-l from-blue-700 rounded-tl-[42px] rounded-br-[42px] via-blue-800 to-indigo-900 rounded-2xl p-6 text-white">
-          <h1 className="text-2xl font-bold">مدیریت رزروها</h1>
-          <p className="text-blue-100 mt-1">مشاهده و مدیریت همه رزروها</p>
-        </div>
+             <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
+                dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 
+                rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 
+                shadow-lg shadow-gray-200/70 dark:shadow-none
+                border border-gray-200 dark:border-gray-700/50">
+  <h1 className="text-3xl font-bold text-gray-900 dark:text-white">رزرو مدیریت</h1>
+  <p className="text-gray-500 dark:text-gray-400 mt-2">به مشاهده و مدریت همه رزرو ها خوش امدید </p>
+</div>
       </AdvancedScrollAnimation>
 
       {/* Stats Cards */}
@@ -562,9 +579,11 @@ const BookingsManagement = () => {
       {/* Table Header Desktop */}
       <AdvancedScrollAnimation type="fade" delay={0.3}>
         <div className="hidden md:flex items-center justify-between h-16 rounded-xl px-5 font-bold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 shadow-[0_0_8px] shadow-blue-300/30">
-          <div className="w-[30%]">نام ملک</div>
-          <div className="w-[18%]">نام کاربر</div>
+          <div className="w-[20%]">نام ملک</div>
+          <div className="w-[14%]">نام کاربر</div>
           <div className="w-[12%]">تاریخ رزرو</div>
+          <div className="w-[12%]">زمان رزرو</div>
+          <div className="w-[12%]">تاریخ‌های اقامت</div>
           <div className="w-[10%]">مبلغ</div>
           <div className="w-[8%]">وضعیت</div>
         </div>
@@ -578,30 +597,18 @@ const BookingsManagement = () => {
           const price = getHousePrice(booking.houseId);
           const userName = getUserName(booking.user_id, booking);
           const houseTitle = getHouseTitle(booking.houseId);
+          const reservedDates = formatReservedDates(booking.reservedDates);
 
           return (
             <AdvancedScrollAnimation key={booking.id} type="slide-up" delay={0.4 + idx * 0.05} duration={0.4}>
-              <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-all shadow-[0_0_8px] shadow-blue-300/20">
+              <div className=" rounded-2xl p-4 border border-gray-100 dark:border-gray-700 dark:bg-gray-800 hover:shadow-lg transition-all shadow-[0_0_8px] shadow-blue-300/20">
                 {/* Mobile View */}
                 <div className="flex flex-col gap-3 md:hidden">
-                  <div className="flex items-center gap-2">
-                    <Building2 size={16} className="text-gray-400" />
-                    <span className="font-medium text-gray-800 dark:text-white">{houseTitle}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <User size={16} className="text-gray-400" />
-                    <span className="text-gray-600 dark:text-gray-400">{userName}</span>
-                  </div>
-                  <div className="flex justify-between flex-wrap gap-2">
-                    <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                      <Calendar size={14} /> {date}
-                    </span>
-                    <span className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
-                      <Clock size={14} /> {time}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#0887CAB2] font-bold">{price.toLocaleString()} تومان</span>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Hash size={14} className="text-gray-400" />
+                      <span className="text-xs text-gray-500">#{booking.id}</span>
+                    </div>
                     <div className="flex items-center gap-2">
                       <StatusIcon status={booking.status} />
                       <ActionMenu
@@ -611,20 +618,47 @@ const BookingsManagement = () => {
                       />
                     </div>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <Building2 size={16} className="text-gray-400" />
+                    <span className="font-medium text-gray-800 dark:text-white text-sm">{houseTitle}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <User size={16} className="text-gray-400" />
+                    <span className="text-gray-600 dark:text-gray-400 text-sm">{userName}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-xs">
+                      <Calendar size={12} /> {date}
+                    </div>
+                    <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-xs">
+                      <Clock size={12} /> {time}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-xs">
+                    <Calendar size={12} />
+                    <span className="truncate">اقامت: {reservedDates}</span>
+                  </div>
+                  <div className="flex justify-between items-center mt-1">
+                    <span className="text-[#0887CAB2] font-bold text-sm">{price.toLocaleString()} تومان</span>
+                  </div>
                 </div>
 
                 {/* Desktop View */}
                 <div className="hidden md:flex md:items-center justify-between">
-                  <div className="w-[30%] flex items-center gap-2">
-                    <Building2 size={16} className="text-gray-400" />
-                    <span className="text-gray-800 dark:text-white truncate">{houseTitle}</span>
+                  <div className="w-[20%] flex items-center gap-2">
+                    <Building2 size={16} className="text-gray-400 flex-shrink-0" />
+                    <span className="text-gray-800 dark:text-white truncate text-sm">{houseTitle}</span>
                   </div>
-                  <div className="w-[18%] flex items-center gap-2">
-                    <User size={16} className="text-gray-400" />
-                    <span className="text-gray-600 dark:text-gray-400 truncate">{userName}</span>
+                  <div className="w-[14%] flex items-center gap-2">
+                    <User size={16} className="text-gray-400 flex-shrink-0" />
+                    <span className="text-gray-600 dark:text-gray-400 truncate text-sm">{userName}</span>
                   </div>
-                  <div className="w-[12%] text-gray-500 dark:text-gray-400">{date}</div>
-                  <div className="w-[10%] font-bold text-[#0887CAB2]">{price.toLocaleString()} تومان</div>
+                  <div className="w-[12%] text-gray-500 dark:text-gray-400 text-sm">{date}</div>
+                  <div className="w-[12%] text-gray-500 dark:text-gray-400 text-sm">{time}</div>
+                  <div className="w-[12%] text-gray-500 dark:text-gray-400 text-xs truncate" title={reservedDates}>
+                    {reservedDates}
+                  </div>
+                  <div className="w-[10%] font-bold text-[#0887CAB2] text-sm">{price.toLocaleString()} تومان</div>
                   <div className="w-[8%] flex items-center gap-3">
                     <StatusIcon status={booking.status} />
                     <ActionMenu

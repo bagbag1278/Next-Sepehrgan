@@ -93,7 +93,7 @@
     "noItems": "لا توجد عناصر"
   },
   "FirstContainer": {
-    "modernEcotourism": "السياحة البيئية الحديثة، ذكريات خالدة",
+    "modernEcotourism": "السياحة البيئية الحديثة، ذكريات ",
     "latestEcotourism": "أحدث السياحة البيئية",
     "description": "أفضل تجارب السياحة البيئية في انتظارك؛ دعنا نسافر معًا إلى العالم الأخضر ونستمتع بجمال الطبيعة!",
     "viewAll": "عرض الكل",
@@ -638,5 +638,77 @@
     "unexpectedError": "حدث خطأ غير متوقع",
     "registering": "جاري التسجيل...",
     "register": "تسجيل"
+  },
+  
+  "Landing": {
+    "scrollText": "مرر"
+  },
+
+  "BuyAndSellSlider": {
+    "errorMessage": "عذراً، هذا القسم غير متوفر حالياً. يرجى المحاولة مرة أخرى لاحقاً.",
+    "loading": "جاري التحميل...",
+    "slogan": "!بيع وشراء ذكي، مع أفضل العروض والأسعار التي لا تضاهى",
+    "title": "بيع وشراء العقارات",
+    "specialOffers": "عروض خاصة",
+    "lowestPrices": "أقل الأسعار",
+    "viewAll": "عرض الكل"
+  },
+
+  "SecoundContainer": {
+    "title": "لماذا تختارنا؟",
+    "subtitle": "اشترِ وبيع عقارك بثقة تامة",
+    "reason1": "دعم على مدار الساعة",
+    "reason2": "مستشارون محترفون",
+    "reason3": "أسعار عادلة",
+    "reason4": "السرعة في الإنجاز"
+  },
+
+  "UserComments": {
+    "title": "آراء المستخدمين",
+    "subtitle": "ماذا يقول عملاؤنا",
+    "comment1": "تجربة رائعة، سريعة ومهنية",
+    "comment2": "مستشارون ذوو معرفة ومهذبون للغاية",
+    "comment3": "أسعار عادلة وعملية شفافة",
+    "name1": "علي رضائي",
+    "name2": "مريم حسيني",
+    "name3": "رضا كريمي"
+  },
+
+  "FilterInputs": {
+    "buy": "شراء",
+    "sell": "بيع",
+    "rent": "إيجار",
+    "mortgage": "رهن",
+    "daily": "يومي",
+    "tehran": "طهران",
+    "mashhad": "مشهد",
+    "isfahan": "أصفهان",
+    "shiraz": "شيراز",
+    "tabriz": "تبريز",
+    "karaj": "كرج",
+    "rasht": "رشت",
+    "kish": "كيش",
+    "newest": "الأحدث",
+    "oldest": "الأقدم",
+    "cheapest": "الأرخص",
+    "mostExpensive": "الأغلى",
+    "transactionType": "نوع المعاملة",
+    "location": "الموقع",
+    "sortBy": "ترتيب حسب",
+    "searchPlaceholder": "بحث عن عقار..."
+  },
+
+  
+  "Categories": {
+    "store": "متجر",
+    "villa": "فيلا",
+    "office": "مكتب",
+    "restArea": "منطقة استراحة",
+    "withPool": "مع مسبح",
+    "school": "مدرسة",
+    "apartment": "شقة"
   }
+
+
+
 }

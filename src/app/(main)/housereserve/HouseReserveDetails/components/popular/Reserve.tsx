@@ -159,7 +159,7 @@ const Reserve = ({ price, discountedPrice, maxCapacity }: ReserveProps) => {
 
   return (
     <div className="w-full max-w-md mx-auto" dir="rtl">
-      <div className="bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+      <div className="bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700">
         <div className="p-6">
           <h3 className="text-[#0887CA] text-[16px] font-black mb-8 text-center flex items-center justify-center gap-2">
             <span className="w-8 h-px bg-gradient-to-r from-transparent to-[#0887CA]"></span>
