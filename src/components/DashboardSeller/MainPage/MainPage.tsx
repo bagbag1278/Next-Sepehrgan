@@ -511,13 +511,13 @@ const MainPage = () => {
                                             overflow-hidden"
                                     >
 
-                                        <img
+                                        {/* <img
                                             src="/placeholder.jpg"
                                             alt="property"
                                             className="
                                                 w-full h-full
                                                 object-cover"
-                                        />
+                                        /> */}
 
                                     </div>
 
@@ -527,7 +527,7 @@ const MainPage = () => {
                                             text-gray-800
                                             dark:text-gray-200"
                                     >
-                                        هتل سراوان را...
+                                       {}
                                     </span>
 
                                 </div>
