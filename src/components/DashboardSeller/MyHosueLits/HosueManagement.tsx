@@ -81,7 +81,6 @@ const HosueManagement = () => {
         <div
             className='w-full flex justify-center
             flex-nowrap gap-9
-            dark:bg-[#0f172a]
             transition-colors'
         >
 
@@ -408,12 +407,7 @@ const HosueManagement = () => {
                                             rounded-lg overflow-hidden'
                                         >
 
-                                            <img
-                                                src='/placeholder.jpg'
-                                                alt='property'
-                                                className='w-full h-full object-cover'
-                                            />
-
+                                           
                                         </div>
 
                                         <span
@@ -442,7 +436,7 @@ const HosueManagement = () => {
                 >
                     <div
 
-                        className='cursor-pointer flex justify-center items-center gap-1 text-blue-100 border border-blue-200 w-50 h-full rounded-xl '
+                        className='cursor-pointer flex justify-center items-center gap-1 dark:text-blue-300 text-blue-100 border border-blue-200 w-50 h-full rounded-xl '
                     >
                         <PlusIcon />
                         <span >افزودن ملک </span>

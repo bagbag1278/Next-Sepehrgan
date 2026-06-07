@@ -22,7 +22,7 @@ import PlaceholderIco from '../Icon/PlaceholderIco';
 import IncomeChartCard from './IncomeChartCard';
 import ProfileCompletion from './ProfileCompletion';
 import Link from 'next/link';
-import GetHousesUser, {IHouse} from '@/core/api/DashboardSeller/GetHousesUser';
+import GetHousesUser, { IHouse } from '@/core/api/DashboardSeller/GetHousesUser';
 const stats = [
     {
         label: 'کل املاک',
@@ -55,22 +55,19 @@ const MainPage = () => {
 
     const [houses, setHouses] = useState<IHouse[]>([]);
 
-
     useEffect(() => {
 
         const fetchData = async () => {
-
             try {
                 const data = await GetHousesUser();
-                console.log("DataFetching", data)
-                setHouses(data.housesProps);
-            
-            } catch (err) {
-                console.log("fetvhing error", err);
+                // console.log("FULL DATA => ", data);
+                // console.log("HOUSES => ", data.houses);
+                setHouses(data.houses);
 
+            } catch (err) {
+                console.log(err);
             }
         };
-
         fetchData();
     }, []);
 
@@ -121,14 +118,14 @@ const MainPage = () => {
 
 
             {houses.map((house) => (
-                <div
-                    key={house.id}
-                >
-                    <div className='border-5 border-b-amber-900 '>{house.title} </div>
+
+                <div key={house.id}>
+                    <div>{house.title}</div>
                 </div>
+
             ))}
 
-            
+
 
             {/* LEFT SIDE */}
             <div

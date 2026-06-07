@@ -42,7 +42,7 @@ export default function ProfileCompletion() {
             </div>
 
             {/* Button */}
-            <button className="mt-auto h-[58px] rounded-2xl border border-[#1294db] text-[#1294db] dark:text-blue-400 text-[17px] font-medium hover:bg-[#1294db] hover:text-white transition">
+            <button className="mt-auto h-14.5 rounded-2xl border border-[#1294db] text-[#1294db] dark:text-blue-400 text-[17px] font-medium hover:bg-[#1294db] hover:text-white transition">
                 ویرایش پروفایل
             </button>
         </div>

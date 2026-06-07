@@ -13,11 +13,14 @@ import {
   Hash,
 } from "lucide-react";
 
+
+import CreateHouse from "@/core/api/DashboardSeller/CreateHouse";
+
 interface Amenities {
   rooms: string;
   bathrooms: string;
   parking: string;
-  yardType: string;
+  yard_type: string;
   tags: string[];
 }
 
@@ -26,10 +29,10 @@ interface StepFiveProps {
     title: string;
     capacity: string;
     price: string;
-    transactionType: string;
+    transaction_type: string;
     propertyType: string;
     region: string;
-    description: string;
+    caption: string;
     location: {
       lat: number | null;
       lng: number | null;
@@ -41,8 +44,10 @@ interface StepFiveProps {
 }
 
 const transactionTypeLabel: Record<string, string> = {
-  sell: "فروش",
-  rent: "اجاره",
+  direct_purchase: "فروش",
+  rental: "اجاره",
+  reservation: "رزرو",
+  mortgage: "رهن",
 };
 
 const propertyTypeLabel: Record<string, string> = {
@@ -61,6 +66,7 @@ const yardTypeLabel: Record<string, string> = {
 };
 
 const StepFive = ({ formData, amenities, image }: StepFiveProps) => {
+
   return (
     <div className="flex flex-wrap gap-1 w-243 h-79">
 
@@ -103,10 +109,10 @@ const StepFive = ({ formData, amenities, image }: StepFiveProps) => {
 
           {/* description */}
           <div className="w-full">
-            {formData.description && (
+            {formData.caption && (
               <div className="flex flex-col gap-1">
-                <p className="text-[14px] text-[#06042580]/80 leading-7 rounded-2xl">
-                  {formData.description}
+                <p className="text-[14px] text-[#06042580]/80 dark:text-gray-600 leading-7 rounded-2xl">
+                  {formData.caption}
                 </p>
               </div>
             )}
@@ -130,7 +136,7 @@ const StepFive = ({ formData, amenities, image }: StepFiveProps) => {
                 <div className="flex gap-1 h-8 border border-gray-100 rounded-2xl p-3">
                   <div className="flex items-center gap-1 text-[#1E1B4B] dark:text-blue-300 font-semibold">
                     <Tag size={14} className="text-black dark:text-blue-300" />
-                    <span>{transactionTypeLabel[formData.transactionType] || "—"}</span>
+                    <span>{transactionTypeLabel[formData.transaction_type] || "—"}</span>
                   </div>
                 </div>
 
@@ -170,7 +176,7 @@ const StepFive = ({ formData, amenities, image }: StepFiveProps) => {
                   {/* <span className="text-xs text-gray-400">حمام</span> */}
                   <div className="flex items-center gap-1 text-[#1E1B4B] dark:text-blue-300 font-semibold">
                     <Bath size={14} className="text-black dark:text-blue-300" />
-                    <div className="flex gap-1 ">{amenities.bathrooms} 
+                    <div className="flex gap-1 ">{amenities.bathrooms}
                       <div>حمام</div>
                     </div>
                   </div>
@@ -190,12 +196,12 @@ const StepFive = ({ formData, amenities, image }: StepFiveProps) => {
                 </div>
               )}
 
-              {amenities.yardType && (
+              {amenities.yard_type && (
                 <div className="flex gap-1 h-8 border border-gray-100 rounded-2xl p-3">
                   <div className="flex items-center gap-1 text-[#1E1B4B] dark:text-blue-300 font-semibold">
                     <Trees size={14} className="text-black dark:text-blue-300" />
-                  <span className="text-xs text-gray-400 dark:text-blue-300">حیاط</span>
-                    <span>{yardTypeLabel[amenities.yardType] || "—"}</span>
+                    <span className="text-xs text-gray-400 dark:text-blue-300">حیاط</span>
+                    <span>{yardTypeLabel[amenities.yard_type] || "—"}</span>
                   </div>
                 </div>
               )}

@@ -6,10 +6,10 @@ interface StepOneProps {
         title: string;
         capacity: string;
         price: string;
-        transactionType: string;
+        transaction_type: string;
         propertyType: string;
         region: string;
-        description: string;
+        caption: string;
     };
 
     handleChange: (
@@ -24,11 +24,7 @@ interface StepOneProps {
 
 }
 
-const StepOne = ({
-    formData,
-    handleChange,
-    errors
-}: StepOneProps) => {
+const StepOne = ({ formData, handleChange, errors }: StepOneProps) => {
 
     return (
 
@@ -109,8 +105,8 @@ const StepOne = ({
 
             {/* transaction type */}
             <select
-                name="transactionType"
-                value={formData.transactionType}
+                name="transaction_type"
+                value={formData.transaction_type}
                 onChange={handleChange}
                 className={`
                     w-full h-12
@@ -118,7 +114,7 @@ const StepOne = ({
                     px-4 outline-none
                     transition-all
 
-                    ${errors.transactionType
+                    ${errors.transaction_type
                         ? "border border-red-500 text-red-500"
                         : "border border-[#4DB5FF]"
                     }
@@ -127,18 +123,22 @@ const StepOne = ({
 
                 <option value="">
                     {
-                        errors.transactionType
-                            ? errors.transactionType
+                        errors.transaction_type
+                            ? errors.transaction_type
                             : "نوع معامله"
                     }
                 </option>
 
-                <option value="sell">
-                    فروش
+                <option value="rental">
+                    اجاره
                 </option>
 
-                <option value="rent">
-                    اجاره
+                <option value="reservation">
+                    رزرو
+                </option>
+
+                <option value="mortgage">
+                    رهن
                 </option>
 
             </select>
@@ -154,7 +154,7 @@ const StepOne = ({
                     px-4 outline-none
                     transition-all
 
-                    ${errors.propertyType
+                    ${errors.property_type
                         ? "border border-red-500 text-red-500"
                         : "border border-[#4DB5FF]"
                     }
@@ -217,12 +217,12 @@ const StepOne = ({
 
             {/* description */}
             <textarea
-                name="description"
-                value={formData.description}
+                name="caption"
+                value={formData.caption}
                 onChange={handleChange}
                 placeholder={
-                    errors.description
-                        ? errors.description
+                    errors.caption
+                        ? errors.caption
                         : "توضیحات ملک"
                 }
                 className={`
@@ -233,7 +233,7 @@ const StepOne = ({
                     resize-none
                     transition-all
 
-                    ${errors.description
+                    ${errors.caption
                         ? "border border-red-500 placeholder:text-red-500"
                         : "border border-[#4DB5FF]"
                     }

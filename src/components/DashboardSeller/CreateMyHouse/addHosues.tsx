@@ -5,6 +5,8 @@ import { useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
+import CreateHouse from "@/core/api/DashboardSeller/CreateHouse";
+
 import {
     ArrowLeftFromLine,
     BadgeCheck,
@@ -21,6 +23,7 @@ const StepTwo = dynamic(() => import("./StepTwo"), { ssr: false });
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import StepFive from "./StepFive";
+import axios from "axios";
 
 const AddHousePage = () => {
 
@@ -32,10 +35,10 @@ const AddHousePage = () => {
         title: "",
         capacity: "",
         price: "",
-        transactionType: "",
+        transaction_type: "",
         propertyType: "",
         region: "",
-        description: "",
+        caption: "",
         location: {
             lat: null,
             lng: null,
@@ -47,7 +50,7 @@ const AddHousePage = () => {
         rooms: "",
         bathrooms: "",
         parking: "",
-        yardType: "",
+        yard_type: "",
         tags: [] as string[],
     });
 
@@ -82,10 +85,10 @@ const AddHousePage = () => {
             "title",
             "capacity",
             "price",
-            "transactionType",
+            "transaction_type",
             "propertyType",
             "region",
-            "description",
+            "caption",
         ];
 
         fieldsToValidate.forEach((field) => {
@@ -100,21 +103,74 @@ const AddHousePage = () => {
 
     };
 
-    const nextStep = () => {
+    const handleSubmit = async () => {
 
-        if (step === 1) {
-            const isValid = validateStepOne();
-            if (!isValid) return;
-        }
+        const body = {
+            title: formData.title,
+            address: formData.location.address,
+            price: Number(formData.price),
+            tags: amenities.tags,
+            capacity: Number(formData.capacity),
 
-        if (step < 5) {
-            setStep((prev) => prev + 1);
-        } else {
-            console.log("ثبت آگهی");
-            // submit ======
+            location: {
+                lat: formData.location.lat,
+                lng: formData.location.lng,
+            },
+
+            categories: {
+                name: formData.propertyType,
+            },
+
+            bathrooms: Number(amenities.bathrooms),
+            parking: Number(amenities.parking),
+            rooms: Number(amenities.rooms),
+
+            yard_type: amenities.yard_type,
+
+            transaction_type: formData.transaction_type,
+
+            caption: formData.caption,
+        };
+
+        console.log("BODY =>", body);
+
+        try {
+
+            const data = await CreateHouse(body);
+
+            console.log("SUCCESS =>", data);
+
+        } catch (err) {
+
+            console.log("ERROR =>", err);
+
         }
 
     };
+
+
+    const nextStep = async () => {
+
+        if (step === 1) {
+
+            const isValid = validateStepOne();
+
+            if (!isValid) return;
+
+        }
+
+        if (step < 5) {
+
+            setStep((prev) => prev + 1);
+
+        } else {
+
+            await handleSubmit();
+
+        }
+
+    };
+
 
     const prevStep = () => {
         if (step > 1) {

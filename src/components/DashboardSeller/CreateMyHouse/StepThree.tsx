@@ -6,7 +6,7 @@ interface Amenities {
     rooms: string;
     bathrooms: string;
     parking: string;
-    yardType: string;
+    yard_type: string;
     tags: string[];
 }
 
@@ -93,8 +93,8 @@ const StepThree = ({ amenities, setAmenities }: StepThreeProps) => {
             {/* yard type */}
             <div className="h-12 w-77 rounded-2xl border border-[#4DB5FF] px-4">
                 <select
-                    value={amenities.yardType}
-                    onChange={(e) => handleChange("yardType", e.target.value)}
+                    value={amenities.yard_type}
+                    onChange={(e) => handleChange("yard_type", e.target.value)}
                     className="w-full h-full outline-none bg-transparent text-[#4DB5FF]"
                 >
                     <option value="">نوع حیاط</option>
