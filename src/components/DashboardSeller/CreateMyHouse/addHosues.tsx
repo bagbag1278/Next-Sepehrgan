@@ -23,7 +23,7 @@ const StepTwo = dynamic(() => import("./StepTwo"), { ssr: false });
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import StepFive from "./StepFive";
-import axios from "axios";
+import ToEnglishNumber from "@/components/Untils/ToEnglishNumber";
 
 const AddHousePage = () => {
 
@@ -108,9 +108,9 @@ const AddHousePage = () => {
         const body = {
             title: formData.title,
             address: formData.location.address,
-            price: Number(formData.price),
+            price: ToEnglishNumber(formData.price),
             tags: amenities.tags,
-            capacity: Number(formData.capacity),
+            capacity: ToEnglishNumber(formData.capacity),
 
             location: {
                 lat: formData.location.lat,
