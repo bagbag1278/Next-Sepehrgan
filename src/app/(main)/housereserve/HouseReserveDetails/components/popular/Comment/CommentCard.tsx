@@ -62,11 +62,11 @@ const CommentCard = ({
               </div>
             </div>
           </div>
-          <p className="text-[#475569] dark:text-gray-300 text-[13px] leading-[22px] text-right relative bottom-6 mr-14 px-2">
+          <p className="text-[#475569] dark:text-gray-300 text-[13px] leading-[22px] text-right relative bottom-8 mr-14 px-2">
             {text}
           </p>
 
-          <div className="flex justify-start gap-4 items-center border-t border-gray-100 dark:border-gray-700 pt-4 relative bottom-6">
+          <div className="flex justify-start gap-4 items-center border-t border-gray-100 dark:border-gray-700 pt-2 relative bottom-6">
             {replies.length > 0 && (
               <button
                 onClick={() => setShowReplies(!showReplies)}

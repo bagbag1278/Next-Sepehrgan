@@ -9,40 +9,42 @@
     "register": "Register"
   },
   "common": {
-  "loading": "Loading...",
-  "error": "Error",
-  "success": "Success",
-  "save": "Save",
-  "cancel": "Cancel",
-  "delete": "Delete",
-  "edit": "Edit",
-  "back": "Back",
-  "next": "Next",
-  "submit": "Submit",
-  "search": "Search",
-  "filter": "Filter",
-  "all": "All",
-  "none": "None",
-  "yes": "Yes",
-  "no": "No",
-  "close": "Close",
-  "open": "Open",
-  "viewMore": "View More",
-  "viewLess": "View Less",
-  "noData": "No data found",
-  "noResult": "No result found",
-  "tryAgain": "Try again",
-  "required": "Required",
-  "optional": "Optional",
-  "details": "Details",
-  "moreInfo": "More info",
-  "home": "Home",
-  "profile": "Profile",
-  "settings": "Settings",
-  "logout": "Logout",
-  "login": "Login",
-  "register": "Register"
-},
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "close": "Close",
+    "open": "Open",
+    "viewMore": "View More",
+    "viewLess": "View Less",
+    "noData": "No data found",
+    "noResult": "No result found",
+    "tryAgain": "Try again",
+    "required": "Required",
+    "optional": "Optional",
+    "details": "Details",
+    "moreInfo": "More info",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register",
+    "welcome": "Welcome",
+    "welcomeMessage": "Welcome to RahnKadeh"
+  },
   "Footer": {
     "popularAreas": "Popular Areas",
     "mostSearched": "Most Searched",
@@ -80,7 +82,7 @@
     "viewDetails": "View Details"
   },
   "FocusCarousel": {
-    "topCommentsText": "Your top comments, your voice guides ",
+    "topCommentsText": "Your top comments, your voice guides us",
     "visitorsComments": "Visitor Comments",
     "commentsDescription": "Your comments are not only our voice, but also a guide for others in choosing the best travel experiences!",
     "viewAll": "View All",
@@ -93,7 +95,7 @@
     "noItems": "No items found"
   },
   "FirstContainer": {
-    "modernEcotourism": "Modern Ecotourism, Eternal ",
+    "modernEcotourism": "Modern Ecotourism, Eternal Memories",
     "latestEcotourism": "Latest Ecotourism",
     "description": "The best ecotourism experiences await you; let's travel together to the green world and enjoy the beauty of nature!",
     "viewAll": "View All",
@@ -214,7 +216,8 @@
     "sari": "Sari",
     "babolsar": "Babolsar",
     "nowshahr": "Nowshahr",
-    "ramsar": "Ramsar"
+    "ramsar": "Ramsar",
+    "removeFilter": "Remove filter {label}"
   },
   "FilterButton": {
     "moreFilters": "More Filters"
@@ -358,7 +361,8 @@
     "guestUser": "Guest User",
     "noText": "No text",
     "loading": "Loading...",
-    "viewMore": "View More Comments"
+    "viewMore": "View More Comments",
+    "noComments": "No comments yet"
   },
   "DeleteComment": {
     "loginRequired": "Please login to your account first",
@@ -464,7 +468,7 @@
     "alreadyExists": "This property has already been added to favorites"
   },
   "SearchForm": {
-    "placeholder": "Where is your destination ...."
+    "placeholder": "Where is your destination?"
   },
   "Booking": {
     "hotelReserve": "Hotel Reservation",
@@ -639,35 +643,31 @@
     "registering": "Registering...",
     "register": "Register"
   },
-  
   "Landing": {
-    "scrollText": "Scroll"
+    "scrollText": "Scroll down"
   },
-
   "BuyAndSellSlider": {
     "errorMessage": "Unfortunately, this section is currently unavailable. Please try again later.",
     "loading": "Loading...",
     "slogan": "Smart buying and selling, with the best offers and unbeatable prices!",
-    "title": "Real Estate Buying & Selling",
+    "title": "Buy and Sell Real Estate",
     "specialOffers": "Special Offers",
     "lowestPrices": "Lowest Prices",
     "viewAll": "View All"
   },
-
   "SecoundContainer": {
-    "title": "Why Choose Us?",
+    "title": "Why choose us?",
     "subtitle": "Buy and sell your property with confidence",
     "reason1": "24/7 Support",
     "reason2": "Professional Consultants",
     "reason3": "Fair Prices",
     "reason4": "Fast Processing"
   },
-
   "UserComments": {
-    "title": "User Reviews",
+    "title": "User Comments",
     "subtitle": "What our customers say",
     "comment1": "Great experience, fast and professional",
-    "comment2": "Very knowledgeable and polite consultants",
+    "comment2": "Very knowledgeable and friendly consultants",
     "comment3": "Fair prices and transparent process",
     "name1": "Ali Rezaei",
     "name2": "Maryam Hosseini",
@@ -693,11 +693,18 @@
     "mostExpensive": "Most Expensive",
     "transactionType": "Transaction Type",
     "location": "Location",
-    "sortBy": "Sort By",
-    "searchPlaceholder": "Search property..."
+    "sortBy": "Sort by",
+    "searchPlaceholder": "Search properties..."
   },
-
-  
+  "Pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "first": "First",
+    "last": "Last",
+    "goToPage": "Go to page"
+  },
   "Categories": {
     "store": "Store",
     "villa": "Villa",
@@ -706,8 +713,103 @@
     "withPool": "With Pool",
     "school": "School",
     "apartment": "Apartment"
-  }
-
-
-
+  },
+  "Search": {
+    "searchPlaceholder": "Search houses...",
+    "loading": "Searching...",
+    "noResults": "No results found",
+    "viewAllResults": "View all results",
+    "resultsCount": "{count} results",
+    "currency": "Toman"
+  },
+  "OfficeInfo": {
+    "reviewsLabel": "reviews",
+    "navigation": "Navigation",
+    "neshan": "Neshan",
+    "neshanDesc": "Navigate with Iranian map",
+    "balad": "Balad",
+    "baladDesc": "Navigate with Balad",
+    "googleMaps": "Google Maps",
+    "googleMapsDesc": "Navigate with Google Maps",
+    "share": "Share",
+    "shareDesc": "Send address to others",
+    "addressCopied": "Address copied!"
+  },
+  "MapComponent": {
+    "officeName": "RahnKadeh Head Office",
+    "officeAddress": "Tehran, Valiasr Street",
+    "officePhone": "021-88765432",
+    "officeEmail": "info@rahnkadeh.com",
+    "navigateToLocation": "Navigate to this location"
+  },
+  "VoiceInput": {
+    "startListening": "Start voice recording",
+    "stopListening": "Stop recording",
+    "listening": "Listening...",
+    "noSupport": "Your browser does not support voice input",
+    "noSpeech": "No speech detected, please try again",
+    "notAllowed": "Microphone access not allowed",
+    "networkError": "Network connection issue",
+    "microphoneError": "Error starting microphone"
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist or has been removed.",
+    "goBack": "Go Back",
+    "goHome": "Home Page",
+    "browserTab": "Page Not Found",
+    "footer": "Page Not Found"
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "noNotifications": "No new notifications",
+    "markAllRead": "Mark all as read",
+    "deleteAll": "Delete all",
+    "newOffer": "New special offer",
+    "priceDrop": "Price drop on your favorite property",
+    "bookingConfirmed": "Your booking has been confirmed"
+  },
+  "Payment": {
+    "paymentGateway": "Payment Gateway",
+    "paymentMethod": "Payment Method",
+    "onlinePayment": "Online Payment",
+    "cashPayment": "Cash on Delivery",
+    "cardNumber": "Card Number",
+    "expiryDate": "Expiry Date",
+    "cvv2": "CVV2",
+    "payAmount": "Pay {amount} Toman",
+    "paymentSuccess": "Payment successful",
+    "paymentFailed": "Payment failed",
+    "paymentCanceled": "Payment canceled"
+  },
+  "Validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "passwordMismatch": "Passwords do not match",
+    "minLength": "Enter at least {length} characters",
+    "maxLength": "Maximum {length} characters allowed",
+    "invalidNationalCode": "Invalid national code"
+  },
+  "Errors": {
+    "networkError": "Network connection error",
+    "serverError": "Internal server error",
+    "notFound": "Requested information not found",
+    "accessDenied": "Access denied",
+    "sessionExpired": "Your session has expired",
+    "tryAgain": "Please try again"
+  },
+  "LocationSlider": {
+  "title": "Our Properties Around the World",
+  "property1": "Ghazal Banu Estate",
+  "property2": "Modern Caspian Villa",
+  "property3": "Royal Mansion",
+  "property4": "Treehouse Cottage",
+  "property5": "Treehouse Cottage",
+  "location1": "Mazandaran, Sari, Dodangeh...",
+  "location2": "Gilan, Rasht, Anzali...",
+  "location3": "Tehran, Lavasan...",
+  "location4": "Savadkuh, Mazandaran...",
+  "location5": "Savadkuh, Mazandaran..."
+}
 }

@@ -80,40 +80,42 @@ const HouseReserveDetails = () => {
 
         <div className="mt-14 max-[1300]:mt-1 whitespace-nowrap ">
           <AdvancedScrollAnimation type="slide-up" delay={0.1}>
-  <AdvancedScrollAnimation type="slide-up" delay={0.1}>
-    <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-4">
-      {/* دکمه‌ها */}
-      <div className="flex gap-2 order-2 md:order-1 max-[1024]:w-full max-[1024]:justify-center">
-        <div className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 rounded-lg flex items-center justify-center border border-blue-400 dark:border-gray-500">
-          <Link />
-        </div>
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-blue-400 dark:border-gray-500 bg-[#F5F5F5] dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer">
-          <Foarward />
-        </div>
-      </div>
+            <AdvancedScrollAnimation type="slide-up" delay={0.1}>
+              <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-4">
+                {/* دکمه‌ها */}
+                <div className="flex gap-2 order-2 md:order-1 max-[1024]:w-full max-[1024]:justify-center">
+                  <div className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 rounded-lg flex items-center justify-center border border-blue-400 dark:border-gray-500">
+                    <Link />
+                  </div>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center border border-blue-400 dark:border-gray-500 bg-[#F5F5F5] dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer">
+                    <Foarward />
+                  </div>
+                </div>
 
-      {/* عنوان و آدرس */}
-      <div className="flex flex-col gap-2 w-full md:w-auto order-1 md:order-2" dir="rtl">
-        <h2 className="text-xl sm:text-2xl font-bold dark:text-white text-blue-400 flex flex-wrap items-center justify-center md:justify-start gap-2">
-          {data.title}
-          <div className="text-[12px] sm:text-[14px] font-bold text-gray-600 dark:text-gray-400 flex items-center gap-1">
-            <div className="relative w-4 h-4">
-              <Star />
-            </div>
-            {data.rate}
-          </div>
-        </h2>
+                {/* عنوان و آدرس */}
+                <div
+                  className="flex flex-col gap-2 w-full md:w-auto order-1 md:order-2"
+                  dir="rtl"
+                >
+                  <h2 className="text-xl sm:text-2xl font-bold dark:text-white text-blue-400 flex flex-wrap items-center justify-center md:justify-start gap-2">
+                    {data.title}
+                    <div className="text-[12px] sm:text-[14px] font-bold text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                      <div className="relative w-4 h-4">
+                        <Star />
+                      </div>
+                      {data.rate}
+                    </div>
+                  </h2>
 
-        <div className="flex items-center justify-center md:justify-start gap-2 text-gray-500 dark:text-gray-400">
-          <MapPin size={16} className="text-blue-500 sm:w-[18px]" />
-          <span className="text-[12px] sm:text-[14px] font-bold break-words text-center md:text-right">
-            {data.address}
-          </span>
-
-        </div>
-      </div>
-    </div>
-  </AdvancedScrollAnimation>
+                  <div className="flex items-center justify-center md:justify-start gap-2 text-gray-500 dark:text-gray-400">
+                    <MapPin size={16} className="text-blue-500 sm:w-[18px]" />
+                    <span className="text-[12px] sm:text-[14px] font-bold break-words text-center md:text-right">
+                      {data.address}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </AdvancedScrollAnimation>
           </AdvancedScrollAnimation>
 
           <div className="flex justify-between gap-4 max-[1300px]:flex-col mt-10">
@@ -140,22 +142,23 @@ const HouseReserveDetails = () => {
 
               <AdvancedScrollAnimation type="slide-up" delay={0.2}>
                 <div
-                  className="w-full flex flex-col justify-start items-end gap-2 mt-4 top-7"
+                  className="w-full flex flex-col justify-start items-end gap-2"
                   dir="rtl"
                 >
-                  <div className="flex flex-col justify-start w-full relative top-10 max-[1024px]:pr-4">
-                    <h2 className="text-blue-600 dark:text-white font-bold text-[14px] ml-12 mb-4">
+                  <div className="flex flex-col justify-start w-full relative  max-[1024px]:pr-8">
+                    <h2 className="text-blue-100 dark:text-white font-bold text-[14px] ml-12 mb-4">
                       {t("about")} {data.title}
                     </h2>
-                    <p className="text-[16px] text-[#475569] dark:text-gray-600 font-black mb-4">
-                      {data.caption}
-                    </p>
+                  
+               <div className="w-full max-w-180">
+  <p className="leading-8 text-justify text-gray-600 dark:text-gray-400 whitespace-pre-line break-words">
+    {data.caption}
+  </p>
+</div>
                   </div>
 
                   <div className="w-full max-w-180">
-                    <p className="leading-8 text-justify text-gray-600 dark:text-gray-400">
-                      {data.description}
-                    </p>
+                  
                   </div>
                 </div>
               </AdvancedScrollAnimation>
@@ -181,20 +184,16 @@ const HouseReserveDetails = () => {
               </div>
 
               <AdvancedScrollAnimation type="slide-up" delay={0.4}>
-                <div className="flex justify-end w-full">
-                  <h3 className="font-bold text-[20px] mt-10">
-                    {t("why")} {data.title}
+                <div className="w-full" dir="rtl">
+                  <h3 className="font-bold text-[20px] mt-10 text-right dark:text-white">
+                    {t("why")} {data.title}؟
                   </h3>
+                  <p className="font-medium text-[16px] text-gray-600 dark:text-gray-400 mt-5 text-right leading-loose whitespace-pre-line break-words">
+                    {data.whydescription ||
+                      data.caption ||
+                      "توضیحاتی موجود نیست"}
+                  </p>
                 </div>
-              </AdvancedScrollAnimation>
-
-              <AdvancedScrollAnimation type="fade" delay={0.5}>
-                <p
-                  dir="rtl"
-                  className="font-medium w-full relative   bottom-6 text-[16px] text-gray-600 mt-5"
-                >
-                  {data.caption}
-                </p>
               </AdvancedScrollAnimation>
 
               <AdvancedScrollAnimation type="slide-up" delay={0.6}>

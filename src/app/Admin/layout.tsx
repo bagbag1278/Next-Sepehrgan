@@ -23,6 +23,8 @@ import {
   ChevronDown,
   Mail,
   AlertTriangle,
+  Bell,
+  MessageCircleMore
 } from "lucide-react";
 import HeaderIcon1Mini from "@/components/header/Icon/HeaderIcon1Mini";
 import HeaderIcon2Mini from "@/components/header/Icon/HeaderIcon2Mini";
@@ -43,7 +45,15 @@ interface UserData {
   exp?: number;
 }
 
-const LogoutModal = ({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose: () => void; onConfirm: () => void }) => {
+const LogoutModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -56,15 +66,16 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose:
               <AlertTriangle size={32} className="text-red-300" />
             </div>
           </div>
-          
+
           <h3 className="text-xl font-bold text-center text-gray-800 dark:text-white mb-2">
             خروج از حساب
           </h3>
-          
+
           <p className="text-center text-gray-500 dark:text-gray-400 mb-6">
-            آیا از خروج خود اطمینان دارید؟ برای ورود مجدد باید اطلاعات خود را وارد کنید.
+            آیا از خروج خود اطمینان دارید؟ برای ورود مجدد باید اطلاعات خود را
+            وارد کنید.
           </p>
-          
+
           <div className="flex gap-3">
             <button
               onClick={onConfirm}
@@ -96,15 +107,15 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
 
   const decodeJWT = (token: string): UserData | null => {
     try {
-      const parts = token.split('.');
+      const parts = token.split(".");
       if (parts.length !== 3) {
-        throw new Error('Invalid token format');
+        throw new Error("Invalid token format");
       }
-      
+
       const payload = parts[1];
-      const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+      const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
       const parsed = JSON.parse(decoded);
-      
+
       return {
         id: parsed.id || parsed.userId || parsed.sub,
         name: parsed.name || parsed.fullName || parsed.username || "ادمین",
@@ -123,7 +134,7 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
     try {
       const userData = decodeJWT(token);
       if (!userData || !userData.exp) return true;
-      
+
       const currentTime = Math.floor(Date.now() / 1000);
       return userData.exp < currentTime;
     } catch {
@@ -135,12 +146,12 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
     try {
       const token = localStorage.getItem("accessToken");
       const storedUser = localStorage.getItem("user");
-      
+
       if (!token) {
         router.push("/login");
         return null;
       }
-      
+
       if (isTokenExpired(token)) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("user");
@@ -148,7 +159,7 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
         router.push("/login");
         return null;
       }
-      
+
       if (storedUser) {
         try {
           const parsed = JSON.parse(storedUser);
@@ -159,13 +170,13 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
           console.error("Error parsing stored user:", e);
         }
       }
-      
+
       const decodedUser = decodeJWT(token);
       if (decodedUser) {
         localStorage.setItem("user", JSON.stringify(decodedUser));
         return decodedUser;
       }
-      
+
       return null;
     } catch (error) {
       console.error("Error getting user info:", error);
@@ -176,25 +187,29 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
   const fetchUserFromAPI = async (userId: number) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
-      
+      const API_BASE_URL =
+        process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+
       const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       if (response.ok) {
         const result = await response.json();
         const user = result.data || result;
         const fullUserData = {
           id: user.id,
-          name: `${user.firstName || ""} ${user.lastName || ""}`.trim() || user.email?.split("@")[0] || "ادمین",
+          name:
+            `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
+            user.email?.split("@")[0] ||
+            "ادمین",
           email: user.email || "",
           phone: user.mobile || user.phone || "",
           role: user.role || "admin",
         };
-        
+
         localStorage.setItem("user", JSON.stringify(fullUserData));
         setUserData(fullUserData);
         return fullUserData;
@@ -211,7 +226,7 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
       router.push("/login");
       return;
     }
-    
+
     if (isTokenExpired(token)) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
@@ -219,11 +234,11 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
       router.push("/login");
       return;
     }
-    
+
     const user = getUserInfo();
     if (user) {
       setUserData(user);
-      
+
       if ((!user.phone || !user.name || user.name === "ادمین") && user.id) {
         fetchUserFromAPI(user.id);
       }
@@ -271,9 +286,15 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
     },
     {
       id: 7,
-      icon: MessageSquare,
+      icon: MessageCircleMore,
       label: "مدیریت چت",
       href: "/admin/ChatsManagement",
+    },
+    {
+      id: 8,
+      icon: Bell,
+      label: "مدیریت اعلان ها",
+      href: "/admin/AdminNotifications",
     },
   ];
 
@@ -307,7 +328,7 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
 
   return (
     <div dir="rtl" className="min-h-screen  p-6">
-      <LogoutModal 
+      <LogoutModal
         isOpen={showLogoutModal}
         onClose={handleLogoutCancel}
         onConfirm={handleLogoutConfirm}
@@ -343,66 +364,72 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
               );
             })}
           </nav>
-          
+
           <div className="relative">
-            <div className="flex justify-center w-full mb-10">
-  <div className="flex flex-col justify-center bg-[#0886ca32] dark:bg-[#0886ca15] w-[202px] h-[160px] rounded-2xl">
-    <div className="w-full justify-center flex">
-      <div className="items-center w-[64px] h-[64px] mb-10 flex justify-center border-4 border-[#05ED6A80] rounded-full">
-        <RezaBakhshian />
-      </div>
-      <ChevronDown
-        size={16}
-        className={`transition-transform duration-200 absolute ml-17 mt-23 ${
-          profileAside ? "rotate-180" : ""
-        } text-[#005EA4] dark:text-[#005EA4]`}
-      />
-      <div className="flex justify-center w-full flex-col absolute mt-17">
-        <p className="text-[12px] font-normal flex justify-center items-center text-gray-500 dark:text-gray-400">
-          {userData?.role === "admin" ? "ادمین سیستم" : "کاربر"}
-        </p>
-        <h1
-          onClick={() => setProfileAside(!profileAside)}
-          className="text-[18px] text-blue-600 dark:text-blue-300 flex justify-center items-center font-bold cursor-pointer"
-        >
-          {userData?.name || "کاربر"}
-        </h1>
-      </div>
-    </div>
-  </div>
-  {profileAside && (
-    <div className="w-[200px] h-[130px] absolute top-43 flex flex-col rounded-2xl bg-[#F5F5F5] dark:bg-gray-800 shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10">
-      <div className="pr-4 pt-2 relative">
-        <div className="items-center w-[48px] h-[47px] border-4 border-[#05ED6A80] rounded-full">
-          <MiniRezaBakhshian />
-        </div>
-        <div className="mr-14 bottom-0 absolute">
-          <p className="font-medium text-[16px] text-[#060425] dark:text-white ml-7">
-            {userData?.name || "کاربر"}
-          </p>
-          <p className="text-[12px] font-normal text-gray-400 dark:text-gray-500">
-            {formatPhoneNumber(userData?.phone || "")}
-          </p>
-        </div>
-        <div className="absolute mt-2 mr-8 flex flex-col gap-2">
-          <p className="text-[14px] text-[#060425] dark:text-gray-300">
-            موجودی قابل برداشت
-            <Wallet className="absolute left-35 bottom-8" size={18} />
-          </p>
-          <div className="relative left-5">
-            <button
-              onClick={handleLogoutClick}
-              className="text-[14px] text-[#060425] dark:text-gray-300 items-start hover:text-red-600 dark:hover:text-red-500 transition-colors"
-            >
-              <div className="relative right-5">خروج از حساب</div>
-              <LogOut className="absolute bottom-0 right-0" size={18} />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )}
-</div>
+            <div className="flex justify-center w-full mb-2">
+              <div className="flex flex-col justify-center bg-[#0886ca32] dark:bg-[#0886ca15] w-[202px] h-[160px] rounded-2xl">
+                <div className="w-full justify-center flex">
+                  <div className="items-center w-[64px] h-[64px] mb-10 flex justify-center border-4 border-[#05ED6A80] rounded-full">
+                    <RezaBakhshian />
+                  </div>
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-200 absolute ml-17 mt-23 ${
+                      profileAside ? "rotate-180" : ""
+                    } text-[#005EA4] dark:text-[#005EA4]`}
+                  />
+                  <div className="flex justify-center w-full flex-col absolute mt-17">
+                    <p className="text-[12px] font-normal flex justify-center items-center text-gray-500 dark:text-gray-400">
+                      {userData?.role === "admin" ? "ادمین سیستم" : "کاربر"}
+                    </p>
+                    <h1
+                      onClick={() => setProfileAside(!profileAside)}
+                      className="text-[18px] text-blue-600 dark:text-blue-300 flex justify-center items-center font-bold cursor-pointer"
+                    >
+                      {userData?.name || "کاربر"}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              {profileAside && (
+                <div className="w-[200px] h-[130px] absolute top-43 flex flex-col rounded-2xl bg-[#F5F5F5] dark:bg-gray-800 shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10">
+                  <div className="pr-4 pt-2 relative">
+                    <div className="items-center w-[48px] h-[47px] border-4 border-[#05ED6A80] rounded-full">
+                      <MiniRezaBakhshian />
+                    </div>
+                    <div className="mr-14 bottom-0 absolute">
+                      <p className="font-medium text-[16px] text-[#060425] dark:text-white ml-7">
+                        {userData?.name || "کاربر"}
+                      </p>
+                      <p className="text-[12px] font-normal text-gray-400 dark:text-gray-500">
+                        {formatPhoneNumber(userData?.phone || "")}
+                      </p>
+                    </div>
+                    <div className="absolute mt-2 mr-8 flex flex-col gap-2">
+                      <p className="text-[14px] text-[#060425] dark:text-gray-300">
+                        موجودی قابل برداشت
+                        <Wallet
+                          className="absolute left-35 bottom-8"
+                          size={18}
+                        />
+                      </p>
+                      <div className="relative left-5">
+                        <button
+                          onClick={handleLogoutClick}
+                          className="text-[14px] text-[#060425] dark:text-gray-300 items-start hover:text-red-600 dark:hover:text-red-500 transition-colors"
+                        >
+                          <div className="relative right-5">خروج از حساب</div>
+                          <LogOut
+                            className="absolute bottom-0 right-0"
+                            size={18}
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </aside>
 
@@ -420,7 +447,10 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                   className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                 >
                   <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
-                    <User size={16} className="text-blue-600 dark:text-blue-400" />
+                    <User
+                      size={16}
+                      className="text-blue-600 dark:text-blue-400"
+                    />
                   </div>
                   <ChevronDown
                     size={16}
@@ -443,9 +473,13 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                             <RezaBakhshian />
                           </div>
                           <div>
-                            <p className="font-bold text-lg">{userData?.name || "ادمین"}</p>
+                            <p className="font-bold text-lg">
+                              {userData?.name || "ادمین"}
+                            </p>
                             <p className="text-xs text-blue-100">
-                              {userData?.role === "admin" ? "ادمین سیستم" : "کاربر"}
+                              {userData?.role === "admin"
+                                ? "ادمین سیستم"
+                                : "کاربر"}
                             </p>
                           </div>
                         </div>
@@ -454,7 +488,9 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                       <div className="p-4 space-y-3">
                         <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                           <Phone size={16} className="text-gray-400" />
-                          <span className="text-sm">{formatPhoneNumber(userData?.phone || "")}</span>
+                          <span className="text-sm">
+                            {formatPhoneNumber(userData?.phone || "")}
+                          </span>
                         </div>
                         {userData?.email && (
                           <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
@@ -464,7 +500,9 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                         )}
                         <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                           <Wallet size={16} className="text-gray-400" />
-                          <span className="text-sm font-medium">موجودی قابل برداشت</span>
+                          <span className="text-sm font-medium">
+                            موجودی قابل برداشت
+                          </span>
                         </div>
                       </div>
 
@@ -475,7 +513,9 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                         className="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
                       >
                         <LogOut size={18} />
-                        <span className="text-sm font-medium">خروج از حساب</span>
+                        <span className="text-sm font-medium">
+                          خروج از حساب
+                        </span>
                       </button>
                     </div>
                   </>
@@ -500,7 +540,10 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                 className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               >
                 <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
-                  <User size={16} className="text-blue-600 dark:text-blue-400" />
+                  <User
+                    size={16}
+                    className="text-blue-600 dark:text-blue-400"
+                  />
                 </div>
                 <ChevronDown
                   size={16}
@@ -523,9 +566,13 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                           <RezaBakhshian />
                         </div>
                         <div>
-                          <p className="font-bold text-lg">{userData?.name || "ادمین"}</p>
+                          <p className="font-bold text-lg">
+                            {userData?.name || "ادمین"}
+                          </p>
                           <p className="text-xs text-blue-100">
-                            {userData?.role === "admin" ? "ادمین سیستم" : "کاربر"}
+                            {userData?.role === "admin"
+                              ? "ادمین سیستم"
+                              : "کاربر"}
                           </p>
                         </div>
                       </div>
@@ -534,7 +581,9 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                     <div className="p-4 space-y-3">
                       <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                         <Phone size={16} className="text-gray-400" />
-                        <span className="text-sm">{formatPhoneNumber(userData?.phone || "")}</span>
+                        <span className="text-sm">
+                          {formatPhoneNumber(userData?.phone || "")}
+                        </span>
                       </div>
                       {userData?.email && (
                         <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
@@ -544,7 +593,9 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
                       )}
                       <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
                         <Wallet size={16} className="text-gray-400" />
-                        <span className="text-sm font-medium">موجودی قابل برداشت</span>
+                        <span className="text-sm font-medium">
+                          موجودی قابل برداشت
+                        </span>
                       </div>
                     </div>
 

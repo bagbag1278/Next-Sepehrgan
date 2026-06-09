@@ -1,9 +1,7 @@
 import Loaction from "@/components/HouseDetails/icon/icon/Loaction";
 import { Star, ChevronDown, ChevronUp } from "lucide-react";
-import Link from "next/link";
 import React, { useState } from "react";
 import { useTranslations } from 'next-intl';
-import Image from "next/image";
 
 const ImageFallback =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWpuJf7I24w6edIXo-v3-bsSiwFJssmCby3A&s";
@@ -32,7 +30,9 @@ interface Props {
   finalTotal: string;
   bookingResult?: any;
   description?: string;
-  showExtraCost?: boolean; 
+  showExtraCost?: boolean;
+  extraEmail?: string;
+  extraPhone?: string;
 }
 
 const BookingSummaryTwo = ({
@@ -43,17 +43,12 @@ const BookingSummaryTwo = ({
   finalTotal,
   bookingResult,
   description,
-  showExtraCost = false, 
+  showExtraCost = false,
+  extraEmail,
+  extraPhone,
 }: Props) => {
   const t = useTranslations('BookingSummaryTwo');
   const [isOpen, setIsOpen] = useState(true);
-
-  const pricePerNight = hotelData?.discounted_price || hotelData?.price || 0;
-  
-  const calculateNights = () => {
-    if (!checkInDate || !checkOutDate) return 1;
-    return 1;
-  };
 
   return (
     <div className="w-full mx-auto lg:mx-0 top-10 px-4 sm:px-0">
@@ -118,6 +113,7 @@ const BookingSummaryTwo = ({
           </div>
         </div>
         
+        {/* اطلاعات مسافران + ایمیل و تلفن */}
         <div className="mt-6 sm:mt-8 dark:border-gray-700 pt-4 sm:pt-6">
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -135,6 +131,38 @@ const BookingSummaryTwo = ({
 
           {isOpen && (
             <div className="space-y-3 sm:space-y-4 animate-in fade-in duration-300">
+              {/* اطلاعات تماس */}
+              {(extraEmail || extraPhone) && (
+                <div className="text-xs sm:text-sm space-y-2 sm:space-y-3 bg-blue-50 dark:bg-blue-900/20 p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-blue-200 dark:border-blue-800">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1 h-4 bg-blue-500 rounded-full"></div>
+                    <h4 className="font-bold text-blue-700 dark:text-blue-300">
+                      {t('contactInfo') || "اطلاعات تماس"}
+                    </h4>
+                  </div>
+                  {extraEmail && (
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                      <span className="text-gray-500 dark:text-gray-400">
+                        {t('email') || "ایمیل"}:
+                      </span>
+                      <span className="font-medium text-gray-800 dark:text-gray-200 break-all">
+                        {extraEmail}
+                      </span>
+                    </div>
+                  )}
+                  {extraPhone && (
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                      <span className="text-gray-500 dark:text-gray-400">
+                        {t('phone') || "تلفن"}:
+                      </span>
+                      <span className="font-medium text-gray-800 dark:text-gray-200 dir-ltr">
+                        {extraPhone}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {passengers?.map((p, index) => (
                 <div
                   key={index}

@@ -1,4 +1,4 @@
-// components/VoiceInput.tsx
+// components/common/voice/VoiceInput.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -12,6 +12,8 @@ interface VoiceInputProps {
   className?: string;
   lang?: "fa" | "en" | "ar";
   onError?: (error: string) => void;
+  icon?: React.ReactNode;
+  dir?: "rtl" | "ltr";
 }
 
 export default function VoiceInput({
@@ -22,6 +24,8 @@ export default function VoiceInput({
   className = "",
   lang = "fa",
   onError,
+  icon,
+  dir = "rtl",
 }: VoiceInputProps) {
   const [isListening, setIsListening] = useState(false);
   const [isSupported, setIsSupported] = useState(true);
@@ -31,7 +35,6 @@ export default function VoiceInput({
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    // بررسی پشتیبانی مرورگر
     if (!("webkitSpeechRecognition" in window) && !("SpeechRecognition" in window)) {
       setIsSupported(false);
       setErrorMessage("مرورگر شما از ورودی صوتی پشتیبانی نمی‌کند");
@@ -86,12 +89,8 @@ export default function VoiceInput({
     };
 
     recognitionInstance.onerror = (event: any) => {
-      console.log("Speech recognition event:", event.error);
-      
-      // مدیریت انواع خطاها
       switch (event.error) {
         case "no-speech":
-          // این خطا طبیعی است - کاربر صحبت نکرده
           setErrorMessage("صدایی تشخیص داده نشد، لطفاً دوباره تلاش کنید");
           if (onError) onError("no-speech");
           break;
@@ -103,18 +102,13 @@ export default function VoiceInput({
           setErrorMessage("مشکل در اتصال شبکه");
           if (onError) onError("network");
           break;
-        case "aborted":
-          // کاربر ضبط را متوقف کرده
-          break;
         default:
-          setErrorMessage("خطا در تشخیص صدا");
           if (onError) onError(event.error);
       }
       
       setIsListening(false);
       setIsLoading(false);
       
-      // پس از 3 ثانیه خطا را پاک کن
       setTimeout(() => {
         setErrorMessage("");
       }, 3000);
@@ -155,17 +149,23 @@ export default function VoiceInput({
 
   if (!isSupported) {
     return (
-      <div className="relative">
+      <div className="relative w-full">
         <input
           type="text"
           value={value}
           onChange={onChange}
           placeholder={placeholder}
           className={className}
+          dir={dir}
         />
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-not-allowed" title="مرورگر شما از ورودی صوتی پشتیبانی نمی‌کند">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-not-allowed">
           <MicOff size={18} />
         </div>
+        {icon && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            {icon}
+          </div>
+        )}
       </div>
     );
   }
@@ -179,37 +179,37 @@ export default function VoiceInput({
         value={displayValue}
         onChange={onChange}
         placeholder={isListening ? "در حال گوش دادن..." : placeholder}
-        className={`${className} ${isListening ? "border-red-400 ring-2 ring-red-200 dark:ring-red-800" : ""}`}
+        className={className}
         readOnly={isListening}
+        dir={dir}
       />
       <button
         type="button"
         onClick={isListening ? stopListening : startListening}
-        className={`absolute left-3 top-1/2 -translate-y-1/2 transition-all duration-200 focus:outline-none ${
-          isListening
-            ? "text-red-500"
-            : isLoading
-            ? "text-yellow-500"
-            : "text-gray-400 hover:text-blue-500"
-        }`}
+        className="absolute top-1/2 -translate-y-1/2 transition-all duration-200 focus:outline-none z-10 left-2"
         disabled={isLoading}
         title={isListening ? "توقف ضبط" : "شروع ضبط صدا"}
       >
         {isLoading ? (
-          <Loader2 size={18} className="animate-spin" />
+          <Loader2 size={18} className="animate-spin text-gray-400" />
         ) : isListening ? (
           <div className="relative">
-            <Mic size={18} className="animate-pulse" />
+            <Mic size={18} className="animate-pulse text-red-500" />
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full animate-ping" />
           </div>
         ) : (
-          <Mic size={18} />
+          <Mic size={18} className="text-gray-400 hover:text-blue-500" />
         )}
       </button>
       
-      {/* نمایش پیام خطا */}
+      {icon && (
+        <div className="absolute top-1/2 -translate-y-1/2 right-2 z-10 text-gray-400 dark:text-gray-500">
+          {icon}
+        </div>
+      )}
+      
       {errorMessage && (
-        <div className="absolute top-full left-0 right-0 mt-1 text-xs text-red-500 dark:text-red-400 text-center">
+        <div className="absolute top-full left-0 right-0 mt-1 text-xs text-red-500 dark:text-red-400 text-center z-10">
           {errorMessage}
         </div>
       )}

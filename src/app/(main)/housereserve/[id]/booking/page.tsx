@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import Bread from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Header/Bread";
 import BookingSummary from "../components/BookingSummary";
 import Stepper from "../components/Stepper";
@@ -10,9 +10,12 @@ import BookingStepFour from "./BookingStepFour";
 import { toast } from "react-hot-toast";
 import { ChevronDown } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
+import PaymentStep from "./PaymentComponent";
+import PaymentPage from "./PaymentComponent";
+import PaymentComponent from "./PaymentComponent";
 
 const BookingPage = () => {
-  const t = useTranslations('Booking');
+  const t = useTranslations("Booking");
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -34,7 +37,7 @@ const BookingPage = () => {
       id: Math.random(),
       fullName: "",
       nationalCode: "",
-      gender: t('selectGender'),
+      gender: t("selectGender"),
       birthDate: "",
       number: "",
     })),
@@ -98,7 +101,7 @@ const BookingPage = () => {
     const token = localStorage.getItem("accessToken");
 
     if (!token) {
-      toast.error(t('loginRequired'));
+      toast.error(t("loginRequired"));
       router.push("/login");
       return;
     }
@@ -112,22 +115,22 @@ const BookingPage = () => {
       const lastName = nameParts.slice(1).join(" ") || "";
 
       if (!firstName) {
-        toast.error(t('firstNameRequired', { number: i + 1 }));
+        toast.error(t("firstNameRequired", { number: i + 1 }));
         return;
       }
 
       if (!p.nationalCode || p.nationalCode.length !== 10) {
-        toast.error(t('nationalCodeRequired', { number: i + 1 }));
+        toast.error(t("nationalCodeRequired", { number: i + 1 }));
         return;
       }
 
-      if (!p.gender || p.gender === t('selectGender')) {
-        toast.error(t('genderRequired', { number: i + 1 }));
+      if (!p.gender || p.gender === t("selectGender")) {
+        toast.error(t("genderRequired", { number: i + 1 }));
         return;
       }
 
       if (!p.birthDate) {
-        toast.error(t('birthDateRequired', { number: i + 1 }));
+        toast.error(t("birthDateRequired", { number: i + 1 }));
         return;
       }
 
@@ -136,7 +139,7 @@ const BookingPage = () => {
       traveler_details.push({
         firstName: firstName,
         lastName: lastName || firstName,
-        gender: p.gender === t('male') ? "male" : "female",
+        gender: p.gender === t("male") ? "male" : "female",
         birthDate: formattedBirthDate,
         nationalId: p.nationalCode,
       });
@@ -185,10 +188,10 @@ const BookingPage = () => {
 
       setBookingResult(result.booking);
       setStep(5);
-      toast.success(t('bookingSuccess', { id: result.booking?.id }));
+      toast.success(t("bookingSuccess", { id: result.booking?.id }));
     } catch (error: any) {
       console.error("خطا:", error);
-      toast.error(error.message || t('bookingFailed'));
+      toast.error(error.message || t("bookingFailed"));
     } finally {
       setLoading(false);
     }
@@ -236,7 +239,7 @@ const BookingPage = () => {
       return (
         firstName.length > 0 &&
         p.nationalCode.length === 10 &&
-        p.gender !== t('selectGender') &&
+        p.gender !== t("selectGender") &&
         p.birthDate.length > 0
       );
     });
@@ -249,7 +252,7 @@ const BookingPage = () => {
         id: Date.now(),
         fullName: "",
         nationalCode: "",
-        gender: t('selectGender'),
+        gender: t("selectGender"),
         birthDate: "",
         number: "",
       },
@@ -299,7 +302,7 @@ const BookingPage = () => {
         const response = await fetch(`/api/houses/${params.id}`);
 
         if (response.status === 401) {
-          toast.error(t('sessionExpired'));
+          toast.error(t("sessionExpired"));
           localStorage.removeItem("accessToken");
           localStorage.removeItem("user");
           router.push("/login");
@@ -334,14 +337,14 @@ const BookingPage = () => {
   if (loading)
     return (
       <div className="text-center mt-20 font-bold dark:text-white">
-        {t('loadingHotel')}
+        {t("loadingHotel")}
       </div>
     );
 
   if (!hotelData)
     return (
       <div className="text-center mt-20 font-bold dark:text-white">
-        {t('hotelNotFound')}
+        {t("hotelNotFound")}
       </div>
     );
 
@@ -352,7 +355,7 @@ const BookingPage = () => {
           <div className="pt-10 z-20">
             <Bread
               items={[
-                { title: t('hotelReserve'), href: "/housereserve" },
+                { title: t("hotelReserve"), href: "/housereserve" },
                 { title: hotelData?.title },
               ]}
             />
@@ -380,11 +383,11 @@ const BookingPage = () => {
                     <div className="rounded-[40px] p-10 ">
                       <div className="rounded-[40px]">
                         <h3 className="font-bold text-gray-800 dark:text-white whitespace-nowrap text-lg mb-20">
-                          {t('selectedPassengers')} ({passengers.length})
+                          {t("selectedPassengers")} ({passengers.length})
                         </h3>
                       </div>
                       <h2 className="text-xl font-black mb-10 whitespace-nowrap text-[hsl(244,80%,8%)] dark:text-white">
-                        {t('passengerInfo')}
+                        {t("passengerInfo")}
                       </h2>
                       <div className="space-y-12">
                         {passengers.map((passenger, index) => (
@@ -399,15 +402,17 @@ const BookingPage = () => {
                                 <div className="flex items-center gap-2">
                                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
                                   <span className="font-bold text-gray-700 dark:text-gray-300">
-                                    {t('passengerNumber')} {index + 1}
+                                    {t("passengerNumber")} {index + 1}
                                   </span>
                                 </div>
                                 {passengers.length > 1 && (
                                   <button
-                                    onClick={() => removePassenger(passenger.id)}
+                                    onClick={() =>
+                                      removePassenger(passenger.id)
+                                    }
                                     className="text-red-500 text-xs font-bold hover:underline"
                                   >
-                                    {t('removePassenger')} ×
+                                    {t("removePassenger")} ×
                                   </button>
                                 )}
                               </div>
@@ -416,20 +421,28 @@ const BookingPage = () => {
                                   name="fullName"
                                   required
                                   type="text"
-                                  placeholder={t('fullName')}
+                                  placeholder={t("fullName")}
                                   value={passenger.fullName}
                                   onChange={(e) =>
-                                    updatePassenger(index, "fullName", e.target.value)
+                                    updatePassenger(
+                                      index,
+                                      "fullName",
+                                      e.target.value,
+                                    )
                                   }
                                   className="text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                 />
                                 <input
                                   type="text"
                                   inputMode="numeric"
-                                  placeholder={t('nationalCode')}
+                                  placeholder={t("nationalCode")}
                                   value={passenger.nationalCode}
                                   onChange={(e) =>
-                                    updatePassenger(index, "nationalCode", e.target.value)
+                                    updatePassenger(
+                                      index,
+                                      "nationalCode",
+                                      e.target.value,
+                                    )
                                   }
                                   className="text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                 />
@@ -438,22 +451,26 @@ const BookingPage = () => {
                                     type="button"
                                     onClick={() =>
                                       setOpenGenderIndex(
-                                        openGenderIndex === index ? null : index
+                                        openGenderIndex === index
+                                          ? null
+                                          : index,
                                       )
                                     }
                                     className="w-full text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl flex items-center justify-between bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                                   >
                                     <span>
-                                      {passenger.gender === t('male')
-                                        ? t('male')
-                                        : passenger.gender === t('female')
-                                        ? t('female')
-                                        : t('selectGender')}
+                                      {passenger.gender === t("male")
+                                        ? t("male")
+                                        : passenger.gender === t("female")
+                                          ? t("female")
+                                          : t("selectGender")}
                                     </span>
                                     <ChevronDown
                                       size={18}
                                       className={`transition-transform text-gray-500 dark:text-gray-400 ${
-                                        openGenderIndex === index ? "rotate-180" : ""
+                                        openGenderIndex === index
+                                          ? "rotate-180"
+                                          : ""
                                       }`}
                                     />
                                   </button>
@@ -462,31 +479,43 @@ const BookingPage = () => {
                                     <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden z-20 shadow-lg">
                                       <button
                                         onClick={() => {
-                                          updatePassenger(index, "gender", t('male'));
+                                          updatePassenger(
+                                            index,
+                                            "gender",
+                                            t("male"),
+                                          );
                                           setOpenGenderIndex(null);
                                         }}
                                         className="w-full text-right p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-white"
                                       >
-                                        {t('male')}
+                                        {t("male")}
                                       </button>
                                       <button
                                         onClick={() => {
-                                          updatePassenger(index, "gender", t('female'));
+                                          updatePassenger(
+                                            index,
+                                            "gender",
+                                            t("female"),
+                                          );
                                           setOpenGenderIndex(null);
                                         }}
                                         className="w-full text-right p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-white"
                                       >
-                                        {t('female')}
+                                        {t("female")}
                                       </button>
                                     </div>
                                   )}
                                 </div>
                                 <input
                                   type="text"
-                                  placeholder={t('birthDate')}
+                                  placeholder={t("birthDate")}
                                   value={passenger.birthDate}
                                   onChange={(e) =>
-                                    updatePassenger(index, "birthDate", e.target.value)
+                                    updatePassenger(
+                                      index,
+                                      "birthDate",
+                                      e.target.value,
+                                    )
                                   }
                                   className="text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                 />
@@ -501,19 +530,19 @@ const BookingPage = () => {
                           onClick={addPassenger}
                           className="w-full py-5 mt-10 whitespace-nowrap border-2 border-dashed border-blue-200 dark:border-gray-600 rounded-3xl text-blue-700 dark:text-blue-300 font-black hover:bg-blue-50 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
                         >
-                          + {t('addPassenger')}
+                          + {t("addPassenger")}
                         </button>
                       </AdvancedScrollAnimation>
 
                       <AdvancedScrollAnimation type="fade" delay={0.2}>
                         <div className="rounded-[40px] p-10 ">
                           <h3 className="font-bold text-gray-800 dark:text-white whitespace-nowrap mb-8 text-lg">
-                            {t('sendTicketToOthers')}
+                            {t("sendTicketToOthers")}
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <input
                               type="email"
-                              placeholder={t('email')}
+                              placeholder={t("email")}
                               value={extraEmail}
                               onChange={(e) => {
                                 const val = e.target.value
@@ -530,12 +559,15 @@ const BookingPage = () => {
                             />
                             <input
                               type="text"
-                              placeholder={t('phone')}
+                              placeholder={t("phone")}
                               value={extraPhone}
                               inputMode="numeric"
                               maxLength={11}
                               onChange={(e) => {
-                                const val = e.target.value.replace(/[^0-9]/g, "");
+                                const val = e.target.value.replace(
+                                  /[^0-9]/g,
+                                  "",
+                                );
                                 setExtraPhone(val);
                               }}
                               className={`bg-gray-50 dark:bg-gray-900 border p-4 rounded-2xl outline-none transition-all text-gray-700 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 ${
@@ -560,16 +592,17 @@ const BookingPage = () => {
                                 : "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
                             }`}
                           >
-                            {t('saveInfo')}
+                            {t("saveInfo")}
                           </button>
 
                           <div className="mt-12 pt-6 border-t border-gray-100 dark:border-gray-700">
                             <div className="flex justify-between max-[888px]:flex-col items-center mb-6">
                               <span className="text-gray-500 dark:text-gray-400 text-xs font-black">
-                                {t('finalPrice')}
+                                {t("finalPrice")}
                               </span>
                               <span className="font-black whitespace-nowrap max-[888px]:mt-4 text-blue-700 dark:text-blue-300 text-xl">
-                                {bookingPrices.discountedTotal.toLocaleString()} {t('toman')}
+                                {bookingPrices.discountedTotal.toLocaleString()}{" "}
+                                {t("toman")}
                               </span>
                             </div>
 
@@ -587,7 +620,7 @@ const BookingPage = () => {
                                   : "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
                               }`}
                             >
-                              {t('confirmAndContinue')}
+                              {t("confirmAndContinue")}
                             </button>
                           </div>
                         </div>
@@ -617,7 +650,9 @@ const BookingPage = () => {
                     setExtraPhone={setExtraPhone}
                     description={description}
                     handelFinalBooking={() => {
-                      console.log(" handelFinalBooking از BookingStepThree فراخوانی شد");
+                      console.log(
+                        " handelFinalBooking از BookingStepThree فراخوانی شد",
+                      );
                       handelFinalBooking();
                     }}
                     isAllFormsValid={isAllFormsValid}
@@ -628,6 +663,18 @@ const BookingPage = () => {
                 </div>
               </AdvancedScrollAnimation>
             )}
+
+{step === 4 && (
+  <AdvancedScrollAnimation type="fade" delay={0.1}>
+       <PaymentComponent
+        bookingId={bookingId}
+        amount={Number(amount)}
+        description={description}
+        onBack={() => router.back()}
+        onSuccess={() => router.push("/dashboard/bookings")}
+      />
+  </AdvancedScrollAnimation>
+)}
 
             {step === 5 && (
               <AdvancedScrollAnimation type="scale" delay={0.1}>

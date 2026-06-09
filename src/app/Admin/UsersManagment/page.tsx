@@ -160,7 +160,7 @@ const UsersManagement = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="flex items-center justify-center min-h-screen ">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0887CAB2] mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">در حال بارگذاری...</p>
@@ -170,7 +170,7 @@ const UsersManagement = () => {
   }
 
   return (
-    <div dir="rtl" className="p-4 sm:p-6 space-y-4 sm:space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div dir="rtl" className="p-4 sm:p-6 space-y-4 sm:space-y-6 min-h-screen">
       {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
                        <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
@@ -364,7 +364,7 @@ const UsersManagement = () => {
                       <Mail size={16} className="text-gray-400" />
                       <span className="text-gray-600 dark:text-gray-400 truncate">{user.email}</span>
                     </div>
-                    <div className="w-[15%] flex items-center gap-2">
+                    <div className="w-[11%] flex items-center gap-2">
                       <Phone size={16} className="text-gray-400" />
                       <span className="text-gray-600 dark:text-gray-400">{user.phoneNumber || "—"}</span>
                     </div>

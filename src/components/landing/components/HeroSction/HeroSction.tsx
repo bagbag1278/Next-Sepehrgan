@@ -90,7 +90,7 @@ const HeroSction = () => {
             </div>
 
             {/* comprof */}
-            <div className="w-71.5 h-29 max-[640]:right-80 max-[640]:top-4 xl:relative  relative -left-110 -top-12 sm:left-10 max-[500]:right-86 sm:-top-4">
+            <div className="w-71.5 h-29 max-[640]:right-86 max-[640]:top-8 xl:relative  relative -left-110 -top-12 sm:left-10 max-[500]:right-86 sm:-top-4">
               <div className="w-14 h-14  rounded-4xl absolute top-1 bg-center">
                 <Profiles />
               </div>

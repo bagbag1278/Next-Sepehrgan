@@ -1,10 +1,10 @@
-// components/MapComponent.tsx
 "use client";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useTheme } from 'next-themes';
+import { useTranslations } from 'next-intl';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Fix für Leaflet Icons
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -23,25 +23,41 @@ interface MapComponentProps {
 }
 
 const MapComponent = ({ officeInfo }: MapComponentProps) => {
+  const t = useTranslations('MapComponent');
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  // مختصات دفتر مرکزی در تهران (Tehran Grand Bazaar area)
   const tehranOfficeCoords: [number, number] = [35.6892, 51.3890];
 
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
+    setMounted(true);
+  }, []);
 
-    // ایجاد نقشه
-    mapInstanceRef.current = L.map(mapRef.current).setView(tehranOfficeCoords, 14);
+  useEffect(() => {
+    if (!mapRef.current || !mounted) return;
 
-    // اضافه کردن لایه نقشه (Tile Layer)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove();
+      mapInstanceRef.current = null;
+    }
+
+    const tileUrl = resolvedTheme === 'dark'
+      ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+      : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    
+    const attribution = resolvedTheme === 'dark'
+      ? '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+    mapInstanceRef.current = L.map(mapRef.current).setView(tehranOfficeCoords, 13);
+
+    L.tileLayer(tileUrl, {
+      attribution: attribution,
       maxZoom: 19,
     }).addTo(mapInstanceRef.current);
 
-    // نشانگر مخصوص دفتر مرکزی
     const customIcon = L.divIcon({
       className: 'custom-marker',
       html: `
@@ -59,27 +75,39 @@ const MapComponent = ({ officeInfo }: MapComponentProps) => {
       popupAnchor: [0, -24],
     });
 
-    // نشانگر عادی برای مناطق اطراف
+    const popupBgColor = resolvedTheme === 'dark' ? '#1f2937' : '#ffffff';
+    const popupTextColor = resolvedTheme === 'dark' ? '#f3f4f6' : '#1f2937';
+    const borderColor = resolvedTheme === 'dark' ? '#374151' : '#e5e7eb';
+
     const marker = L.marker(tehranOfficeCoords, { icon: customIcon })
       .addTo(mapInstanceRef.current)
       .bindPopup(`
-        <div class="text-right p-2 min-w-[200px]">
-          <h3 class="font-bold text-blue-600 mb-1">🏢 ${officeInfo?.name || 'دفتر مرکزی رهن کده'}</h3>
-          <p class="text-sm text-gray-600 mb-1">📍 ${officeInfo?.address || 'تهران، خیابان ولیعصر'}</p>
-          <p class="text-sm text-gray-600 mb-1">📞 ${officeInfo?.phone || '۰۲۱-۸۸۷۶۵۴۳۲'}</p>
-          <p class="text-sm text-gray-600">✉️ ${officeInfo?.email || 'info@rahnkadeh.com'}</p>
-          <div class="mt-2 pt-2 border-t border-gray-200">
+        <div style="
+          direction: rtl;
+          padding: 12px;
+          min-width: 220px;
+          background-color: ${popupBgColor};
+          color: ${popupTextColor};
+          border-radius: 12px;
+          font-family: system-ui, sans-serif;
+        ">
+          <h3 style="font-weight: bold; color: #0887CA; margin-bottom: 8px; font-size: 16px;">
+            🏢 ${officeInfo?.name || t('officeName')}
+          </h3>
+          <p style="margin-bottom: 6px; font-size: 13px;">📍 ${officeInfo?.address || t('officeAddress')}</p>
+          <p style="margin-bottom: 6px; font-size: 13px;">📞 ${officeInfo?.phone || t('officePhone')}</p>
+          <p style="margin-bottom: 10px; font-size: 13px;">✉️ ${officeInfo?.email || t('officeEmail')}</p>
+          <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid ${borderColor}">
             <a href="https://www.google.com/maps/dir/?api=1&destination=${tehranOfficeCoords[0]},${tehranOfficeCoords[1]}" 
                target="_blank" 
-               class="text-blue-500 text-sm font-bold hover:underline">
-              🚗 مسیریابی به این مکان
+               style="color: #3b82f6; font-size: 13px; font-weight: bold; text-decoration: none; display: flex; align-items: center; gap: 4px; justify-content: center;">
+              🚗 ${t('navigateToLocation')}
             </a>
           </div>
         </div>
       `)
       .openPopup();
 
-    // اضافه کردن دایره اطراف دفتر مرکزی
     L.circle(tehranOfficeCoords, {
       color: '#0887CA',
       fillColor: '#0887CA',
@@ -88,24 +116,7 @@ const MapComponent = ({ officeInfo }: MapComponentProps) => {
       weight: 2,
     }).addTo(mapInstanceRef.current);
 
-    // اضافه کردن بعضی نقاط دیدنی تهران
-    const pointsOfInterest = [
-      { name: 'برج میلاد', coords: [35.7447, 51.3753] },
-      { name: 'برج آزادی', coords: [35.6995, 51.3376] },
-      { name: 'پل طبیعت', coords: [35.7543, 51.4166] },
-    ];
-
-    pointsOfInterest.forEach(poi => {
-      const poiIcon = L.divIcon({
-        className: 'poi-marker',
-        html: `<div class="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">⭐</div>`,
-        iconSize: [24, 24],
-      });
-      
-      L.marker(poi.coords as [number, number], { icon: poiIcon })
-        .addTo(mapInstanceRef.current!)
-        .bindPopup(`<div class="text-center"><strong>${poi.name}</strong><br>نقطه دیدنی تهران</div>`);
-    });
+  L.control.scale({ metric: true, imperial: false, position: 'bottomleft' }).addTo(mapInstanceRef.current);
 
     return () => {
       if (mapInstanceRef.current) {
@@ -113,12 +124,17 @@ const MapComponent = ({ officeInfo }: MapComponentProps) => {
         mapInstanceRef.current = null;
       }
     };
-  }, []);
+  }, [mounted, resolvedTheme, officeInfo, t]);
+
+  if (!mounted) {
+    return <div className="w-full h-full min-h-[400px] bg-gray-100 dark:bg-gray-800 rounded-tl-[42px] rounded-br-[42px] animate-pulse" />;
+  }
 
   return (
     <div className="relative w-full h-full">
       <div ref={mapRef} className="w-full h-full rounded-tl-[42px] rounded-br-[42px]" style={{ minHeight: '400px' }} />
-      <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 text-xs text-gray-500">
+      
+      <div className="absolute bottom-4 right-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg p-1 px-2 text-[10px] text-gray-500 dark:text-gray-400">
         <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
           © OpenStreetMap
         </a>

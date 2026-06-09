@@ -429,7 +429,7 @@ const confirmEdit = async (data: any) => {
 
         {/* Bookings Table */}
         <AdvancedScrollAnimation type="slide-up" delay={0.6}>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden">
+          <div className=" rounded-2xl shadow-md overflow-hidden">
             <div className="p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>

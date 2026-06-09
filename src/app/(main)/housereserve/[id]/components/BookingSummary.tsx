@@ -1,8 +1,9 @@
 import Loaction from "@/components/HouseDetails/icon/icon/Loaction";
 import { Star } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslations } from 'next-intl';
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const ImageFallback =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWpuJf7I24w6edIXo-v3-bsSiwFJssmCby3A&s";
@@ -27,6 +28,8 @@ interface Props {
   checkOutDate: string;
   guestsCount: number;
   prices: PricesProps;
+  extraEmail?: string;
+  extraPhone?: string;
 }
 
 const BookingSummary = ({
@@ -35,8 +38,11 @@ const BookingSummary = ({
   checkOutDate,
   guestsCount,
   prices,
+  extraEmail,
+  extraPhone,
 }: Props) => {
   const t = useTranslations('BookingSummary');
+  const [isContactOpen, setIsContactOpen] = useState(false);
   
   const {
     originalPricePerNight,
@@ -72,6 +78,42 @@ const BookingSummary = ({
           <span>{hotelData?.address}</span>
         </div>
       </div>
+
+      {/* اطلاعات تماس */}
+      {(extraEmail || extraPhone) && (
+        <div className="mt-4 border-t border-gray-100 dark:border-gray-800 pt-4">
+          <button
+            onClick={() => setIsContactOpen(!isContactOpen)}
+            className="w-full flex justify-between items-center text-[#060425] dark:text-white mb-3"
+          >
+            <span className="font-black text-sm">
+              {t('contactInfo') || "اطلاعات تماس"}
+            </span>
+            {isContactOpen ? (
+              <ChevronUp size={18} />
+            ) : (
+              <ChevronDown size={18} />
+            )}
+          </button>
+
+          {isContactOpen && (
+            <div className="space-y-2 text-sm bg-gray-50 dark:bg-gray-800 p-3 rounded-xl">
+              {extraEmail && (
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500">{t('email') || "ایمیل"}:</span>
+                  <span className="text-gray-800 dark:text-gray-300">{extraEmail}</span>
+                </div>
+              )}
+              {extraPhone && (
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500">{t('phone') || "تلفن"}:</span>
+                  <span className="text-gray-800 dark:text-gray-300">{extraPhone}</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="space-y-4 border-t border-gray-100 dark:border-gray-800 pt-6 mt-4">
         <div className="flex justify-between text-sm font-bold">

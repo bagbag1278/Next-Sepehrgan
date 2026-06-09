@@ -298,7 +298,7 @@ const fetchLocation = async () => {
                   <h3 className="font-bold text-[20px] mt-10 text-right dark:text-white">
                     {t("why")} {data.title}؟
                   </h3>
-                  <p className="font-medium text-[16px] text-gray-600 dark:text-gray-400 mt-5 text-right leading-8">
+                  <p className=" font-medium text-[16px] text-gray-600 dark:text-gray-400 mt-5 text-right leading-8">
                     {data.whydescription || data.caption}
                   </p>
                 </div>

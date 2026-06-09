@@ -263,7 +263,7 @@ const HouseRentContent = () => {
 
       {activeFiltersToDisplay.length > 0 && (
         <ActiveFilters
-          activeFilters={activeFiltersToDisplay}
+          activeFilters={activeFiltersToDisplay}  
           onRemoveFilter={removeFilterHandler}
           onResetFilters={resetFiltersHandler}
           filterCount={activeFilterCount}
