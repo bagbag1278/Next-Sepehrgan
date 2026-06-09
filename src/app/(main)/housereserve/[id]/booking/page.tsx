@@ -10,9 +10,7 @@ import BookingStepFour from "./BookingStepFour";
 import { toast } from "react-hot-toast";
 import { ChevronDown } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
-import PaymentStep from "./PaymentComponent";
-import PaymentPage from "./PaymentComponent";
-import PaymentComponent from "./PaymentComponent";
+
 
 const BookingPage = () => {
   const t = useTranslations("Booking");
@@ -664,17 +662,6 @@ const BookingPage = () => {
               </AdvancedScrollAnimation>
             )}
 
-{step === 4 && (
-  <AdvancedScrollAnimation type="fade" delay={0.1}>
-       <PaymentComponent
-        bookingId={bookingId}
-        amount={Number(amount)}
-        description={description}
-        onBack={() => router.back()}
-        onSuccess={() => router.push("/dashboard/bookings")}
-      />
-  </AdvancedScrollAnimation>
-)}
 
             {step === 5 && (
               <AdvancedScrollAnimation type="scale" delay={0.1}>
