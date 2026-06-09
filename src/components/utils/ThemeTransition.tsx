@@ -1,26 +1,41 @@
 // components/ThemeTransition.tsx
-"use client"; // این کامپوننت باید client-side باشد
+"use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface ThemeTransitionProps {
   isTransitioning: boolean;
-  theme: "light" | "dark" | null; // تم نهایی که صفحه به آن تغییر می‌کند
-  animationDuration?: number; // مدت زمان انیمیشن بر حسب میلی‌ثانیه
-  origin?: { x: string; y: string }; // نقطه شروع انیمیشن (مثلا 'top left')
+  theme: "light" | "dark" | null;
+  animationDuration?: number;
+  origin?: { x: string; y: string };
 }
 
 const ThemeTransition: React.FC<ThemeTransitionProps> = ({
   isTransitioning,
   theme,
-  animationDuration = 600, // پیش‌فرض 600 میلی‌ثانیه
-  origin = { x: "0%", y: "0%" }, // پیش‌فرض گوشه بالا سمت چپ
+  animationDuration = 600,
+  origin = { x: "0%", y: "0%" },
 }) => {
-  // رنگ دایره بر اساس تم نهایی تعیین می‌شود
-  // اگر داریم به دارک مود می‌رویم، دایره سیاه می‌شود. اگر به لایت، سفید.
-  const overlayColor = theme === "dark" ? "#000000" : "#ffffff"; // رنگ سیاه برای دارک مود، سفید برای لایت مود
+  const [mounted, setMounted] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<"light" | "dark" | null>(null);
 
-  // استایل‌ها برای افکت دایره‌ای
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (theme) {
+      setCurrentTheme(theme);
+    }
+  }, [theme]);
+
+  // قبل از mount شدن در کلاینت، چیزی رندر نکن
+  if (!mounted) {
+    return null;
+  }
+
+  const overlayColor = currentTheme === "dark" ? "#000000" : "#ffffff";
+
   const overlayStyle: React.CSSProperties = {
     position: "fixed",
     top: 0,
@@ -29,12 +44,12 @@ const ThemeTransition: React.FC<ThemeTransitionProps> = ({
     height: "100%",
     backgroundColor: overlayColor,
     borderRadius: "50%",
-    transform: isTransitioning ? "scale(200)" : "scale(0)", // بزرگ شدن از 0 به 200 (یا بیشتر)
-    transformOrigin: `${origin.y} ${origin.x}`, // نقطه شروع انیمیشن
-    opacity: isTransitioning ? 1 : 0, // نمایش یا عدم نمایش
+    transform: isTransitioning ? "scale(200)" : "scale(0)",
+    transformOrigin: `${origin.y} ${origin.x}`,
+    opacity: isTransitioning ? 1 : 0,
     transition: `transform ${animationDuration}ms ease-out, opacity ${animationDuration}ms ease-out, background-color ${animationDuration}ms ease-out`,
-    pointerEvents: isTransitioning ? "auto" : "none", // در حین انیمیشن، رویدادها را دریافت کند
-    zIndex: 9999, // اطمینان از اینکه روی همه چیز قرار می‌گیرد
+    pointerEvents: isTransitioning ? "auto" : "none",
+    zIndex: 9999,
   };
 
   return <div style={overlayStyle}></div>;

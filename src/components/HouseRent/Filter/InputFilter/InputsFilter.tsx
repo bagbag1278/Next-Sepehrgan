@@ -1,151 +1,225 @@
-'use client';
+// ./Filter/InputsFilter.tsx
+"use client";
 
-import { ChevronDownIcon } from '@radix-ui/themes';
-import { useState, useRef, useEffect } from 'react';
-import SearchIcon from '../../Icon/SearchIcon';
+import React, { useEffect, useRef, useState, useMemo } from "react";
+import { ChevronDownIcon } from "@radix-ui/themes";
+import { useTranslations } from "next-intl";
 
-const transactionTypes = [
-    'خرید', 'فروش', 'اجاره', 'رزرو هتل', 'تور', 'سرمایه‌گذاری',
-    'مشارکت', 'پیش‌فروش', 'تهاتر', 'اجاره روزانه', 'اجاره ماهانه',
-    'خرید اقساطی', 'فروش اقساطی', 'لیزینگ', 'واگذاری', 'مزایده',
-    'مناقصه', 'Swap', 'زمان‌دار', 'کوتاه مدت'
-];
+import SearchIcon from "../../Icon/SearchIcon";
+import { debounce } from "lodash";
+import VoiceInput from "@/components/common/voice/VoiceInput";
 
-const locations = [
-    'تهران', 'مشهد', 'اصفهان', 'شیراز', 'تبریز', 'کیش',
-    'مازندران', 'گیلان', 'بوشهر', 'بندرعباس', 'رامسر', 'چالوس',
-    'کرج', 'قم', 'یزد', 'اهواز', 'سنندج', 'ارومیه', 'زاهدان', 'گرگان',
-    'ساری', 'قزوین', 'همدان', 'اردبیل'
-];
+type Filters = {
+  transactionType?: string;
+  location?: string;
+  sort?: string;
+  search?: string;
+};
 
-const sortOptions = [
-    'جدیدترین', 'ارزان‌ترین', 'گران‌ترین', 'بالاترین امتیاز',
-    'محبوب‌ترین', 'نزدیک‌ترین', 'بیشترین تخفیف', 'کمترین قیمت',
-    'بیشترین ستاره', 'بیشترین نظر', 'نزدیک به ساحل', 'نزدیک مرکز شهر',
-    'با صبحانه', 'با استخر', 'لوکس', 'اقتصادی', 'خانوادگی', 'رومانتیک',
-    'تخفیف‌دار', 'پرامکانات'
-];
+type Props = {
+  filters: Filters;
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+};
 
-export default function FilterBar() {
-    const [selected1, setSelected1] = useState('نوع معامله');
-    const [selected2, setSelected2] = useState('محل مورد نظر');
-    const [selected3, setSelected3] = useState('مرتب سازی بر اساس');
-    const [searchValue, setSearchValue] = useState('');
+export default function InputsFilter({ filters, setFilters }: Props) {
+  const t = useTranslations("FilterInputs");
 
-    const [open1, setOpen1] = useState(false);
-    const [open2, setOpen2] = useState(false);
-    const [open3, setOpen3] = useState(false);
+  const transactionTypes = [
+    t("buy"),
+    t("sell"),
+    t("rent"),
+    t("mortgage"),
+    t("daily"),
+  ];
 
-    const dropdownRef1 = useRef<HTMLDivElement>(null);
-    const dropdownRef2 = useRef<HTMLDivElement>(null);
-    const dropdownRef3 = useRef<HTMLDivElement>(null);
+  const locations = [
+    t("tehran"),
+    t("mashhad"),
+    t("isfahan"),
+    t("shiraz"),
+    t("tabriz"),
+    t("karaj"),
+    t("rasht"),
+    t("kish"),
+  ];
 
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (!dropdownRef1.current?.contains(event.target as Node)) setOpen1(false);
-            if (!dropdownRef2.current?.contains(event.target as Node)) setOpen2(false);
-            if (!dropdownRef3.current?.contains(event.target as Node)) setOpen3(false);
-        };
+  const sortOptions = [
+    t("newest"),
+    t("oldest"),
+    t("cheapest"),
+    t("mostExpensive"),
+  ];
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
 
-    const Dropdown = ({
-        options,
-        selected,
-        setSelected,
-        isOpen,
-        setIsOpen,
-        dropdownRef
-    }: any) => (
-        <div className="relative " ref={dropdownRef}>
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="cursor-pointer flex items-center justify-between gap-3 px-5 py-3 border border-[#0887CAB2] rounded-2xl hover:border-blue-500 active:scale-[0.985] transition-all w-full group"
-                dir='rtl'
+  const [searchValue, setSearchValue] = useState(filters.search || "");
+
+  const dropdownRef1 = useRef<HTMLDivElement>(null);
+  const dropdownRef2 = useRef<HTMLDivElement>(null);
+  const dropdownRef3 = useRef<HTMLDivElement>(null);
+
+  const debouncedUpdateSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setFilters((prev) => ({
+          ...prev,
+          search: value,
+        }));
+      }, 500),
+    [setFilters],
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedUpdateSearch.cancel();
+    };
+  }, [debouncedUpdateSearch]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (dropdownRef1.current && !dropdownRef1.current.contains(target)) {
+        setOpen1(false);
+      }
+      if (dropdownRef2.current && !dropdownRef2.current.contains(target)) {
+        setOpen2(false);
+      }
+      if (dropdownRef3.current && !dropdownRef3.current.contains(target)) {
+        setOpen3(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    debouncedUpdateSearch(value);
+  };
+
+  const handleVoiceInput = (text: string) => {
+    setSearchValue(text);
+    debouncedUpdateSearch(text);
+  };
+
+  const Dropdown = ({
+    options,
+    selected,
+    onSelect,
+    isOpen,
+    setIsOpen,
+    dropdownRef,
+  }: {
+    options: string[];
+    selected: string;
+    onSelect: (item: string) => void;
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    dropdownRef: React.RefObject<HTMLDivElement | null>;
+  }) => (
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="cursor-pointer flex items-center justify-between gap-3 px-5 py-3 border border-[#0887CAB2] dark:border-[#0887CA]/50 rounded-2xl hover:border-blue-500 dark:hover:border-blue-400 active:scale-[0.985] transition-all w-full group bg-white dark:bg-gray-800"
+        dir="rtl"
+      >
+        <span className="text-[#0887CAB2] dark:text-[#0887CA]/70 text-sm font-medium truncate">
+          {selected}
+        </span>
+        <ChevronDownIcon
+          className={`w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-all ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {isOpen && (
+        <div className="absolute mt-2 w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 py-2 z-50 max-h-56 overflow-y-auto">
+          {options.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                onSelect(item);
+                setIsOpen(false);
+              }}
+              className="px-5 py-3 hover:bg-blue-50 dark:hover:bg-gray-700 cursor-pointer text-sm text-gray-700 dark:text-gray-300 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
             >
-                <span className="text-[#0887CAB2] text-sm font-medium truncate">
-                    {selected}
-                </span>
-                <ChevronDownIcon
-                    className={`w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-all ${isOpen ? 'rotate-180' : ''
-                        }`}
-                />
-            </button>
-
-            {isOpen && (
-                <div className="absolute mt-2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 max-h-56 overflow-y-auto">
-                    {options.map((item: string, index: number) => (
-                        <div
-                            key={index}
-                            onClick={() => {
-                                setSelected(item);
-                                setIsOpen(false);
-                            }}
-                            className="px-5 py-3 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 transition-colors first:rounded-t-2xl last:rounded-b-2xl"
-                        >
-                            {item}
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-
-    return (
-        <div className="w-full p-4 flex justify-center" dir="ltr">
-            <div className="w-full max-w-7xl p-4 flex flex-col lg:flex-row lg:flex-nowrap gap-4">
-
-
-                
-                <div className="flex flex-col gap-3 lg:w-135 w-full lg:flex-row lg:shrink-0">
-
-                    <Dropdown
-                        options={transactionTypes}
-                        selected={selected1}
-                        setSelected={setSelected1}
-                        isOpen={open1}
-                        setIsOpen={setOpen1}
-                        dropdownRef={dropdownRef1}
-                    />
-
-                    <Dropdown
-                        options={locations}
-                        selected={selected2}
-                        setSelected={setSelected2}
-                        isOpen={open2}
-                        setIsOpen={setOpen2}
-                        dropdownRef={dropdownRef2}
-                    />
-
-                    <Dropdown
-                        options={sortOptions}
-                        selected={selected3}
-                        setSelected={setSelected3}
-                        isOpen={open3}
-                        setIsOpen={setOpen3}
-                        dropdownRef={dropdownRef3}
-                    />
-
-                </div>
-
-                {/* ورودی جستجو */}
-                <div className="relative w-full">
-                    <input
-                        dir="rtl"
-                        type="text"
-                        value={searchValue}
-                        onChange={(e) => setSearchValue(e.target.value)}
-                        placeholder="نام هتل، منطقه یا آدرس مورد نظر ..."
-                        className="w-full outline-none border border-[#0887CAB2] rounded-2xl py-3 pl-5 pr-10 text-sm placeholder:text-[#0887CAB2]"
-                    />
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                        <SearchIcon />
-                    </div>
-                </div>
-
+              {item}
             </div>
+          ))}
         </div>
-    );
+      )}
+    </div>
+  );
+
+  return (
+    <div className="w-full p-4 flex justify-center" dir="ltr">
+      <div className="w-full max-w-7xl p-4 flex flex-col lg:flex-row lg:flex-nowrap gap-4">
+        <div className="flex flex-col gap-3 lg:w-135 w-full lg:flex-row lg:shrink-0">
+          <Dropdown
+            options={transactionTypes}
+            selected={filters.transactionType || t("transactionType")}
+            onSelect={(item) =>
+              setFilters((prev) => ({
+                ...prev,
+                transactionType: item,
+              }))
+            }
+            isOpen={open1}
+            setIsOpen={setOpen1}
+            dropdownRef={dropdownRef1}
+          />
+
+          <Dropdown
+            options={locations}
+            selected={filters.location || t("location")}
+            onSelect={(item) =>
+              setFilters((prev) => ({
+                ...prev,
+                location: item,
+              }))
+            }
+            isOpen={open2}
+            setIsOpen={setOpen2}
+            dropdownRef={dropdownRef2}
+          />
+
+          <Dropdown
+            options={sortOptions}
+            selected={filters.sort || t("sortBy")}
+            onSelect={(item) =>
+              setFilters((prev) => ({
+                ...prev,
+                sort: item,
+              }))
+            }
+            isOpen={open3}
+            setIsOpen={setOpen3}
+            dropdownRef={dropdownRef3}
+          />
+        </div>
+
+        {/* search section with debounce and voice input */}
+        <div className="relative w-full">
+          <VoiceInput
+            onTranscript={handleVoiceInput}
+            value={searchValue}
+            onChange={handleSearchChange}
+            placeholder={t("searchPlaceholder")}
+            lang="fa"
+            dir="rtl"
+            icon={<SearchIcon />}
+            className="w-full outline-none border border-[#0887CAB2] dark:border-[#0887CA]/50 rounded-2xl py-3 pr-10 pl-10 text-sm placeholder:text-[#0887CAB2] dark:placeholder:text-[#0887CA]/50 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          />
+         
+        </div>
+      </div>
+    </div>
+  );
 }

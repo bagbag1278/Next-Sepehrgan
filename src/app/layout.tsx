@@ -3,10 +3,12 @@ import Header from "@/components/header/Header";
 import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
 import ThemeManager from "@/components/utils/ThemeManager";
 import { ThemeProvider } from "next-themes";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
+import VoiceCommand from "@/components/VoiceCommand";
 import "./globals.css";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,25 +26,29 @@ const iran = LocalFont({
   display: "swap",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const messages = await getMessages();
+
   return (
     <html lang="fa" suppressHydrationWarning>
       <body
         className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
       >
-  
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <ThemeManager>
-            <NeshanMapLoader />
-            <main className="w-full">{children}</main>
-          </ThemeManager>
-          <Footer />
-        </ThemeProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Header />
+            <ThemeManager>
+              <NeshanMapLoader />
+              <main className="w-full">{children}</main>
+            </ThemeManager>
+            <Footer />
+            <VoiceCommand />
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

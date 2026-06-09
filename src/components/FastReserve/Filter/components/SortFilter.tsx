@@ -1,27 +1,16 @@
 "use client";
 import React, { useState } from "react";
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
-
-// فرض می‌کنیم این نوع در جای دیگری تعریف شده و قابل دسترسی است
-// type SortByType = "--" | "last_updated" | "price" | "newest";
 
 interface SortOption {
   label: string;
-  value: string; // value باید با مقدار مورد انتظار در SortByType مطابقت داشته باشد
+  value: string;
 }
 
-const sortOptions: SortOption[] = [
-  { label: "جدیدترین", value: "newest" },
-  { label: "گرانترین", value: "price" },
-  // اگر نیاز به مرتب‌سازی بر اساس تاریخ آپدیت دارید:
-  // { label: "آخرین بروزرسانی", value: "last_updated" },
-];
-
-// تعریف propهای کامپوننت
 interface SortFilterProps {
-  sortBy: string; // یا نوع دقیق‌تر SortByType
-  setSortBy: (value: string) => void; // یا (value: SortByType) => void
-  // اگر لازم است وضعیت باز/بسته بودن dropdown را والد مدیریت کند
+  sortBy: string;
+  setSortBy: (value: string) => void;
   isOpen?: boolean;
   onToggle?: () => void;
 }
@@ -32,24 +21,29 @@ const SortFilter = ({
   isOpen,
   onToggle,
 }: SortFilterProps) => {
-  // پیدا کردن لیبل گزینه انتخاب شده بر اساس sortBy دریافتی
+  const t = useTranslations('SortFilter');
+
+  const sortOptions: SortOption[] = [
+    { label: t('newest'), value: "newest" },
+    { label: t('mostExpensive'), value: "price" },
+  ];
+
   const selectedSortLabel =
     sortOptions.find((option) => option.value === sortBy)?.label ||
-    "مرتب سازی براساس ...";
+    t('defaultLabel');
 
   const handleSelectSort = (optionValue: string) => {
     setSortBy(optionValue);
-    // اگر والد وضعیت isOpen را مدیریت می‌کند، آن را ببندد
     if (onToggle) {
-      onToggle(); // بستن dropdown
+      onToggle();
     }
   };
 
   return (
     <details
       className="group w-full transition-all duration-150 max-w-sm rounded-2xl border border-blue-300 p-3"
-      open={isOpen} // استفاده از وضعیت isOpen دریافتی
-      onChange={onToggle} // فراخوانی تابع والد برای تغییر وضعیت
+      open={isOpen}
+      onChange={onToggle}
     >
       <summary className="flex cursor-pointer list-none items-center text-sm justify-between font-medium text-blue-300/70">
         {selectedSortLabel}
@@ -67,8 +61,8 @@ const SortFilter = ({
         {sortOptions.map((option) => (
           <span
             key={option.value}
-            className="text-blue-100 text-[13px] hover:bg-gray-100 rounded-md pr-1 py-1 cursor-pointer"
-            onClick={() => handleSelectSort(option.value)} // پاس دادن value به جای کل option
+            className="text-blue-100 dark:text-blue-300 text-[13px] hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md pr-1 py-1 cursor-pointer"
+            onClick={() => handleSelectSort(option.value)}
           >
             {option.label}
           </span>

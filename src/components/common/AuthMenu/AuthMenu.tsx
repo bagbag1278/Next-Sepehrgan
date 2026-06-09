@@ -53,13 +53,13 @@ const CircularDropdown = () => {
   };
 
   return (
-    <div className="relative inline-block w-24 h-24 justify-center items-center">
+    <div className="relative  inline-block w-24 h-24 justify-center items-center">
       
       {" "}
       <motion.button
         onClick={toggleMenu}
         whileTap={{ scale: 1.1 }}
-        className="w-10 h-10 rounded-full bg-[#F5F5F5] drop-shadow backdrop-blur-xs drop-shadow-blue-100/35 flex justify-center items-center focus:outline-none"
+        className="w-10 h-10 rounded-full bg-[#F5F5F5]  relative right-2 top-6 drop-shadow backdrop-blur-xs drop-shadow-blue-100/35 flex justify-center items-center focus:outline-none"
         aria-haspopup="true"
         aria-expanded={isOpen}
         
@@ -82,7 +82,7 @@ const CircularDropdown = () => {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="absolute top-12 rounded-[100px] flex flex-col gap-2 bg-blue-300/20 p-2"
+            className="absolute top-18 mr-0.5 rounded-[100px] flex flex-col gap-2 bg-blue-300/20 p-2"
             role="menu"
           >
             <MenuItem>

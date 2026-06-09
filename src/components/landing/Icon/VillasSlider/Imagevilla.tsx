@@ -2,7 +2,7 @@ import React from 'react'
 
 const Imagevilla = () => {
     return (
-        <svg width="266" height="316" viewBox="0 0 266 316" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+        <svg width="full" height="full" viewBox="0 0 266 316" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
             <g filter="url(#filter0_d_553_4159)">
                 <rect x="8" y="6" width="250" height="300" rx="16" fill="url(#pattern0_553_4159)" shapeRendering="crispEdges" />
             </g>

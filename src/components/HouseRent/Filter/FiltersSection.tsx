@@ -1,18 +1,28 @@
-import React from 'react'
-import InputsFilter from './InputFilter/InputsFilter'
-import SliderFilter from './SliderFilter/SliderFilter'
-import DropDownFilter from './DropDownFilter/DropDownFil'
+// ./Filter/FiltersSection.tsx
+'use client';
 
-const FiltersSection = () => {
-    
+import React from 'react';
+import InputsFilter from './InputFilter/InputsFilter';
+import SliderFilter from './SliderFilter/SliderFilter';
 
+type Filters = {
+  transactionType?: string;
+  location?: string;
+  sort?: string;
+  search?: string;
+};
+
+type Props = {
+  filters: Filters;
+  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+};
+
+export default function FiltersSection({ filters, setFilters }: Props) {
   return (
-   <div className='w-full flex flex-wrap justify-center gap-6 '>
-        <InputsFilter />
-        <SliderFilter />
-        <DropDownFilter />
-   </div>
-  )
+    <div className='w-full'>
+      <InputsFilter filters={filters} setFilters={setFilters} />
+      <SliderFilter />
+          
+    </div>
+  );
 }
-
-export default FiltersSection

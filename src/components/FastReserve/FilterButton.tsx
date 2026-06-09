@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from 'next-intl';
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import FastFilter from "./Filter/FastFilter";
 import { useState } from "react";
@@ -65,6 +66,7 @@ const FilterButton = ({
   onRemoveFromCompare,
   onClearCompare,
 }: FilterButtonProps) => {
+  const t = useTranslations('FilterButton');
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -72,7 +74,7 @@ const FilterButton = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button
-            className="w-37 border outline-0 border-blue-300/70 dark:bg-white rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 flex justify-center gap-1 items-center text-sm p-2"
+            className="w-37 border outline-0 border-blue-300/70 dark:bg-gray-800  rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 flex justify-center gap-1 items-center text-sm p-2"
             type="button"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -84,12 +86,12 @@ const FilterButton = ({
                 strokeLinecap="round"
               />
             </svg>
-            فیلتر های بیشتر
+            {t('moreFilters')}
           </button>
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal>
-          <DropdownMenu.Content className="z-50 w-76 rounded-tl-2xl rounded-bl-2xl border border-blue-300/40 bg-white dark:bg-white/90 px-5 py-6 shadow-lg">
+          <DropdownMenu.Content className="z-50 w-76 rounded-tl-2xl rounded-bl-2xl border border-blue-300/40 bg-gray-800   px-5 py-6 shadow-lg">
             <FastFilter
               query={query}
               setQuery={setQuery}

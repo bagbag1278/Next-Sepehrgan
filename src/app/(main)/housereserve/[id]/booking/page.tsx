@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useMemo, useEffect } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Bread from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Header/Bread";
 import BookingSummary from "../components/BookingSummary";
 import Stepper from "../components/Stepper";
@@ -10,7 +11,9 @@ import { toast } from "react-hot-toast";
 import { ChevronDown } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
+
 const BookingPage = () => {
+  const t = useTranslations("Booking");
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -32,7 +35,7 @@ const BookingPage = () => {
       id: Math.random(),
       fullName: "",
       nationalCode: "",
-      gender: "جنسیت",
+      gender: t("selectGender"),
       birthDate: "",
       number: "",
     })),
@@ -96,12 +99,11 @@ const BookingPage = () => {
     const token = localStorage.getItem("accessToken");
 
     if (!token) {
-      toast.error("لطفاً ابتدا وارد حساب کاربری خود شوید");
+      toast.error(t("loginRequired"));
       router.push("/login");
       return;
     }
 
-    // ساخت traveler_details
     const traveler_details = [];
     for (let i = 0; i < passengers.length; i++) {
       const p = passengers[i];
@@ -111,22 +113,22 @@ const BookingPage = () => {
       const lastName = nameParts.slice(1).join(" ") || "";
 
       if (!firstName) {
-        toast.error(`لطفاً نام مسافر شماره ${i + 1} را وارد کنید`);
+        toast.error(t("firstNameRequired", { number: i + 1 }));
         return;
       }
 
       if (!p.nationalCode || p.nationalCode.length !== 10) {
-        toast.error(`لطفاً کد ملی مسافر شماره ${i + 1} را به درستی وارد کنید`);
+        toast.error(t("nationalCodeRequired", { number: i + 1 }));
         return;
       }
 
-      if (!p.gender || p.gender === "جنسیت") {
-        toast.error(`لطفاً جنسیت مسافر شماره ${i + 1} را انتخاب کنید`);
+      if (!p.gender || p.gender === t("selectGender")) {
+        toast.error(t("genderRequired", { number: i + 1 }));
         return;
       }
 
       if (!p.birthDate) {
-        toast.error(`لطفاً تاریخ تولد مسافر شماره ${i + 1} را وارد کنید`);
+        toast.error(t("birthDateRequired", { number: i + 1 }));
         return;
       }
 
@@ -135,7 +137,7 @@ const BookingPage = () => {
       traveler_details.push({
         firstName: firstName,
         lastName: lastName || firstName,
-        gender: p.gender === "male" ? "male" : "female",
+        gender: p.gender === t("male") ? "male" : "female",
         birthDate: formattedBirthDate,
         nationalId: p.nationalCode,
       });
@@ -155,14 +157,7 @@ const BookingPage = () => {
         sharedMobile: extraPhone || undefined,
       };
 
-      console.log(
-        "🔵 Payload اصلاح شده:",
-        JSON.stringify(bookingPayload, null, 2),
-      );
-
-      console.log("🔵 Payload:", JSON.stringify(bookingPayload, null, 2));
-
-      const response = await fetch(`http://next.genzuni.website/api/bookings`, {
+      const response = await fetch(`/api/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -191,10 +186,10 @@ const BookingPage = () => {
 
       setBookingResult(result.booking);
       setStep(5);
-      toast.success(`رزرو با موفقیت ثبت شد! شماره رزرو: ${result.booking?.id}`);
+      toast.success(t("bookingSuccess", { id: result.booking?.id }));
     } catch (error: any) {
       console.error("خطا:", error);
-      toast.error(error.message || "متاسفانه رزرو ثبت نشد. دوباره تلاش کنید.");
+      toast.error(error.message || t("bookingFailed"));
     } finally {
       setLoading(false);
     }
@@ -242,11 +237,11 @@ const BookingPage = () => {
       return (
         firstName.length > 0 &&
         p.nationalCode.length === 10 &&
-        p.gender !== "جنسیت" &&
+        p.gender !== t("selectGender") &&
         p.birthDate.length > 0
       );
     });
-  }, [passengers]);
+  }, [passengers, t]);
 
   const addPassenger = () => {
     setPassengers([
@@ -255,7 +250,7 @@ const BookingPage = () => {
         id: Date.now(),
         fullName: "",
         nationalCode: "",
-        gender: "جنسیت",
+        gender: t("selectGender"),
         birthDate: "",
         number: "",
       },
@@ -302,12 +297,10 @@ const BookingPage = () => {
       try {
         setLoading(true);
 
-        const response = await fetch(
-          `http://next.genzuni.website/api/houses/${params.id}`,
-        );
+        const response = await fetch(`/api/houses/${params.id}`);
 
         if (response.status === 401) {
-          toast.error("نشست شما منقضی شده است. لطفاً مجدداً وارد شوید");
+          toast.error(t("sessionExpired"));
           localStorage.removeItem("accessToken");
           localStorage.removeItem("user");
           router.push("/login");
@@ -341,14 +334,16 @@ const BookingPage = () => {
 
   if (loading)
     return (
-      <div className="text-center mt-20 font-bold">
-        در حال بارگذاری اطلاعات هتل...
+      <div className="text-center mt-20 font-bold dark:text-white">
+        {t("loadingHotel")}
       </div>
     );
 
   if (!hotelData)
     return (
-      <div className="text-center mt-20 font-bold">اطلاعات هتل یافت نشد.</div>
+      <div className="text-center mt-20 font-bold dark:text-white">
+        {t("hotelNotFound")}
+      </div>
     );
 
   return (
@@ -358,18 +353,18 @@ const BookingPage = () => {
           <div className="pt-10 z-20">
             <Bread
               items={[
-                { title: "رزرو هتل", href: "/housereserve" },
+                { title: t("hotelReserve"), href: "/housereserve" },
                 { title: hotelData?.title },
               ]}
             />
           </div>
         </AdvancedScrollAnimation>
 
-        <div className="rounded-2xl p-4 md:p-6">
+        <div className="rounded-2xl p-4 md:p-6 800 shadow-lg">
           <div className="space-y-6">
             {step === 2 && (
               <div className="">
-                <div className="ml-20 max-[888]:left-5 max-[888]:ml-0 relative flex gap-50 mx-auto justify-center max-[1360px]:flex-col">
+                <div className="ml-20 max-[888px]:left-5 max-[888px]:ml-0 relative flex gap-50 mx-auto justify-center max-[1360px]:flex-col">
                   <AdvancedScrollAnimation type="slide-right" delay={0.2}>
                     <div>
                       <BookingSummary
@@ -383,14 +378,14 @@ const BookingPage = () => {
                   </AdvancedScrollAnimation>
 
                   <AdvancedScrollAnimation type="slide-left" delay={0.2}>
-                    <div className="rounded-[40px] p-10">
+                    <div className="rounded-[40px] p-10 ">
                       <div className="rounded-[40px]">
-                        <h3 className="font-bold text-gray-800 whitespace-nowrap text-lg mb-20 dark:text-white">
-                          مسافران انتخاب شده ({passengers.length})
+                        <h3 className="font-bold text-gray-800 dark:text-white whitespace-nowrap text-lg mb-20">
+                          {t("selectedPassengers")} ({passengers.length})
                         </h3>
                       </div>
                       <h2 className="text-xl font-black mb-10 whitespace-nowrap text-[hsl(244,80%,8%)] dark:text-white">
-                        مشخصات مسافران
+                        {t("passengerInfo")}
                       </h2>
                       <div className="space-y-12">
                         {passengers.map((passenger, index) => (
@@ -400,12 +395,12 @@ const BookingPage = () => {
                             delay={0.1 + index * 0.05}
                             duration={0.4}
                           >
-                            <div className="space-y-6 border-b border-gray-50 pb-8 last:border-0">
+                            <div className="space-y-6 border-b border-gray-100 dark:border-gray-700 pb-8 last:border-0">
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
                                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                                  <span className="font-bold text-gray-700">
-                                    مسافر شماره {index + 1}
+                                  <span className="font-bold text-gray-700 dark:text-gray-300">
+                                    {t("passengerNumber")} {index + 1}
                                   </span>
                                 </div>
                                 {passengers.length > 1 && (
@@ -415,7 +410,7 @@ const BookingPage = () => {
                                     }
                                     className="text-red-500 text-xs font-bold hover:underline"
                                   >
-                                    حذف مسافر ×
+                                    {t("removePassenger")} ×
                                   </button>
                                 )}
                               </div>
@@ -424,7 +419,7 @@ const BookingPage = () => {
                                   name="fullName"
                                   required
                                   type="text"
-                                  placeholder="نام و نام خانوادگی"
+                                  placeholder={t("fullName")}
                                   value={passenger.fullName}
                                   onChange={(e) =>
                                     updatePassenger(
@@ -433,12 +428,12 @@ const BookingPage = () => {
                                       e.target.value,
                                     )
                                   }
-                                  className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none focus:ring-1 ring-blue-200"
+                                  className="text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                 />
                                 <input
                                   type="text"
                                   inputMode="numeric"
-                                  placeholder="کد ملی"
+                                  placeholder={t("nationalCode")}
                                   value={passenger.nationalCode}
                                   onChange={(e) =>
                                     updatePassenger(
@@ -447,7 +442,7 @@ const BookingPage = () => {
                                       e.target.value,
                                     )
                                   }
-                                  className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none focus:ring-1 ring-blue-200"
+                                  className="text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                 />
                                 <div className="relative">
                                   <button
@@ -459,55 +454,59 @@ const BookingPage = () => {
                                           : index,
                                       )
                                     }
-                                    className="w-full dark:text-white dark:bg-[#060425] hover:dark:bg-[#0b0747] text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl flex items-center justify-between"
+                                    className="w-full text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl flex items-center justify-between bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                                   >
                                     <span>
-                                      {passenger.gender === "male"
-                                        ? "مرد"
-                                        : passenger.gender === "female"
-                                          ? "زن"
-                                          : "جنسیت"}
+                                      {passenger.gender === t("male")
+                                        ? t("male")
+                                        : passenger.gender === t("female")
+                                          ? t("female")
+                                          : t("selectGender")}
                                     </span>
                                     <ChevronDown
                                       size={18}
-                                      className={`transition-transform ${openGenderIndex === index ? "rotate-180" : ""}`}
+                                      className={`transition-transform text-gray-500 dark:text-gray-400 ${
+                                        openGenderIndex === index
+                                          ? "rotate-180"
+                                          : ""
+                                      }`}
                                     />
                                   </button>
 
                                   {openGenderIndex === index && (
-                                    <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#060425] border border-[#0887CAB2] rounded-2xl overflow-hidden z-20 shadow-lg">
+                                    <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden z-20 shadow-lg">
                                       <button
                                         onClick={() => {
                                           updatePassenger(
                                             index,
                                             "gender",
-                                            "male",
+                                            t("male"),
                                           );
                                           setOpenGenderIndex(null);
                                         }}
-                                        className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
+                                        className="w-full text-right p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-white"
                                       >
-                                        مرد
+                                        {t("male")}
                                       </button>
                                       <button
                                         onClick={() => {
                                           updatePassenger(
                                             index,
                                             "gender",
-                                            "female",
+                                            t("female"),
                                           );
                                           setOpenGenderIndex(null);
                                         }}
-                                        className="w-full text-right p-3 hover:bg-gray-100 dark:hover:bg-[#0b0747] transition-colors"
+                                        className="w-full text-right p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-white"
                                       >
-                                        زن
+                                        {t("female")}
                                       </button>
                                     </div>
                                   )}
                                 </div>
                                 <input
                                   type="text"
-                                  placeholder="تاریخ تولد"
+                                  placeholder={t("birthDate")}
                                   value={passenger.birthDate}
                                   onChange={(e) =>
                                     updatePassenger(
@@ -516,7 +515,7 @@ const BookingPage = () => {
                                       e.target.value,
                                     )
                                   }
-                                  className="text-[#0887CAB2] border border-[#0887CAB2] p-4 rounded-2xl outline-none"
+                                  className="text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                 />
                               </div>
                             </div>
@@ -527,21 +526,21 @@ const BookingPage = () => {
                       <AdvancedScrollAnimation type="scale" delay={0.3}>
                         <button
                           onClick={addPassenger}
-                          className="w-full py-5 mt-10 whitespace-nowrap border-2 border-dashed border-blue-100 rounded-3xl text-[rgb(16,8,143)] font-black hover:bg-blue-50 transition-all flex items-center justify-center gap-2"
+                          className="w-full py-5 mt-10 whitespace-nowrap border-2 border-dashed border-blue-200 dark:border-gray-600 rounded-3xl text-blue-700 dark:text-blue-300 font-black hover:bg-blue-50 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2"
                         >
-                          + افزودن مسافر جدید
+                          + {t("addPassenger")}
                         </button>
                       </AdvancedScrollAnimation>
 
                       <AdvancedScrollAnimation type="fade" delay={0.2}>
-                        <div className="rounded-[40px] p-10">
-                          <h3 className="font-bold text-[rgb(6,4,37)] whitespace-nowrap mb-8 text-lg dark:text-white">
-                            ارسال بلیط به دیگران
+                        <div className="rounded-[40px] p-10 ">
+                          <h3 className="font-bold text-gray-800 dark:text-white whitespace-nowrap mb-8 text-lg">
+                            {t("sendTicketToOthers")}
                           </h3>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 dark:text-black">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <input
                               type="email"
-                              placeholder="ایمیل (example@mail.com)"
+                              placeholder={t("email")}
                               value={extraEmail}
                               onChange={(e) => {
                                 const val = e.target.value
@@ -549,16 +548,16 @@ const BookingPage = () => {
                                   .replace(/\s/g, "");
                                 setExtraEmail(val);
                               }}
-                              className={`bg-[#F8FAFC] border p-4 rounded-2xl outline-none transition-all ${
+                              className={`bg-gray-50 dark:bg-gray-900 border p-4 rounded-2xl outline-none transition-all text-gray-700 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 ${
                                 extraEmail &&
                                 !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(extraEmail)
-                                  ? "border-red-500 bg-red-50"
-                                  : "border-gray-100"
+                                  ? "border-red-500 bg-red-50 dark:bg-red-900/20"
+                                  : "border-gray-200 dark:border-gray-700"
                               }`}
                             />
                             <input
                               type="text"
-                              placeholder="شماره تماس (۰۹xxxxxxxxx)"
+                              placeholder={t("phone")}
                               value={extraPhone}
                               inputMode="numeric"
                               maxLength={11}
@@ -569,10 +568,10 @@ const BookingPage = () => {
                                 );
                                 setExtraPhone(val);
                               }}
-                              className={`bg-[#F8FAFC] border p-4 rounded-2xl outline-none transition-all dark:text-black ${
+                              className={`bg-gray-50 dark:bg-gray-900 border p-4 rounded-2xl outline-none transition-all text-gray-700 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 ${
                                 extraPhone && !/^09\d{9}$/.test(extraPhone)
-                                  ? "border-red-500 bg-red-50"
-                                  : "border-gray-100"
+                                  ? "border-red-500 bg-red-50 dark:bg-red-900/20"
+                                  : "border-gray-200 dark:border-gray-700"
                               }`}
                             />
                           </div>
@@ -587,21 +586,21 @@ const BookingPage = () => {
                             }}
                             className={`w-full py-5 rounded-3xl font-black mt-10 transition-all duration-300 ${
                               isAllFormsNotif
-                                ? "bg-[rgb(21,151,125)] text-white hover:bg-[#12806a] shadow-lg cursor-pointer"
-                                : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-70"
+                                ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg cursor-pointer"
+                                : "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
                             }`}
                           >
-                            ثبت اطلاعات
+                            {t("saveInfo")}
                           </button>
 
-                          <div className="mt-12 pt-6 border-t border-gray-100">
-                            <div className="flex justify-between max-[888]:flex-col items-center mb-6">
-                              <span className="text-gray-400 text-xs font-black whitespace-nowrap">
-                                قیمت نهایی
+                          <div className="mt-12 pt-6 border-t border-gray-100 dark:border-gray-700">
+                            <div className="flex justify-between max-[888px]:flex-col items-center mb-6">
+                              <span className="text-gray-500 dark:text-gray-400 text-xs font-black">
+                                {t("finalPrice")}
                               </span>
-                              <span className="font-black whitespace-nowrap max-[888]:mt-4 text-[rgb(16,8,143)] text-xl">
+                              <span className="font-black whitespace-nowrap max-[888px]:mt-4 text-blue-700 dark:text-blue-300 text-xl">
                                 {bookingPrices.discountedTotal.toLocaleString()}{" "}
-                                تومان
+                                {t("toman")}
                               </span>
                             </div>
 
@@ -615,11 +614,11 @@ const BookingPage = () => {
                               }}
                               className={`w-full py-5 rounded-3xl font-black mt-10 transition-all ${
                                 isAllFormsValid
-                                  ? "bg-[rgb(21,151,125)] text-white hover:bg-[#12806a] cursor-pointer"
-                                  : "bg-gray-300 whitespace-nowrap text-gray-500 cursor-not-allowed"
+                                  ? "bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer"
+                                  : "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
                               }`}
                             >
-                              تأیید و ادامه فرآیند
+                              {t("confirmAndContinue")}
                             </button>
                           </div>
                         </div>
@@ -650,7 +649,7 @@ const BookingPage = () => {
                     description={description}
                     handelFinalBooking={() => {
                       console.log(
-                        "🔵 handelFinalBooking از BookingStepThree فراخوانی شد",
+                        " handelFinalBooking از BookingStepThree فراخوانی شد",
                       );
                       handelFinalBooking();
                     }}
@@ -662,6 +661,7 @@ const BookingPage = () => {
                 </div>
               </AdvancedScrollAnimation>
             )}
+
 
             {step === 5 && (
               <AdvancedScrollAnimation type="scale" delay={0.1}>

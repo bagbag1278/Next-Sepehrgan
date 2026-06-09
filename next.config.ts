@@ -1,14 +1,17 @@
-import type { NextConfig } from "next";
+const createNextIntlPlugin = require('next-intl/plugin');
 
-const nextConfig: NextConfig = {
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api-proxy/:path*',
-        destination: 'http://next.genzuni.website/api/:path*', 
+      source: '/api/:path*',
+        destination: 'http://188.121.111.8:3003/api/:path*',
       },
-    ]
+    ];
   },
 };
 
-export default nextConfig;
+module.exports = withNextIntl(nextConfig);
