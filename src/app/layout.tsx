@@ -1,24 +1,9 @@
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/header/Header";
-import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
-import ThemeManager from "@/components/utils/ThemeManager";
-import { ThemeProvider } from "next-themes";
+// app/layout.tsx
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
-import VoiceCommand from "@/components/VoiceCommand";
+import ClientLayout from "./ClientLayout";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
@@ -39,15 +24,7 @@ export default async function RootLayout({
         className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
       >
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Header />
-            <ThemeManager>
-              <NeshanMapLoader />
-              <main className="w-full">{children}</main>
-            </ThemeManager>
-            <Footer />
-            <VoiceCommand />
-          </ThemeProvider>
+          <ClientLayout>{children}</ClientLayout>
         </NextIntlClientProvider>
       </body>
     </html>

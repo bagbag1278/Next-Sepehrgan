@@ -39,7 +39,7 @@ const HotelsManagement = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);

@@ -1,4 +1,3 @@
-// middleware.ts
 import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
@@ -12,11 +11,20 @@ const intlMiddleware = createMiddleware({
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
-  if (pathname.includes('/admin/AdminDashboard')) {
-    return NextResponse.next();
+  const response = NextResponse.next();
+  response.headers.set('x-pathname', pathname);
+  
+  if (pathname.includes('/admin')) {
+    return response;
   }
   
-  return intlMiddleware(request);
+  const intlResponse = intlMiddleware(request);
+  if (intlResponse) {
+    intlResponse.headers.set('x-pathname', pathname);
+    return intlResponse;
+  }
+  
+  return response;
 }
 
 export const config = {
