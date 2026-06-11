@@ -64,7 +64,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  const itemsPerPage = 4;
 
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -391,9 +391,8 @@ const confirmEdit = async (data: any) => {
   ];
 
   return (
-    <div dir="rtl" className="min-h-screen">
+    <div dir="rtl" className="">
       <div className="px-4 sm:p-6 lg:px-8 py-6 space-y-6">
-        {/* Header */}
         <AdvancedScrollAnimation type="slide-right" delay={0.1}>
         <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
                 dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 

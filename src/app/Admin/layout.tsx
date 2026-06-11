@@ -186,12 +186,13 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-100 dark:bg-gray-900 overflow-hidden">
+    <div dir="rtl" className=" bg-gray-100 dark:bg-gray-900 ">
       <LogoutModal isOpen={showLogoutModal} onClose={handleLogoutCancel} onConfirm={handleLogoutConfirm} />
 
-      <div className="hidden lg:block w-full max-w-[1600px] mx-auto px-6">
-        <div className="flex gap-6 h-screen overflow-hidden">
-          <div className="w-[280px] flex-shrink-0 min-h-screen">
+      {/* دسکتاپ */}
+      <div className="hidden lg:block w-full max-w-[1600px] mx-auto h-screen">
+        <div className="flex gap-6 h-full">
+          <div className="w-[280px] flex-shrink-0 h-full overflow-y-auto scrollbar-none">
             <AdminSidebar 
               userData={userData}
               profileAside={profileAside}
@@ -201,15 +202,16 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
             />
           </div>
 
-          <div className="flex-1 flex flex-col h-full overflow-hidden">
+          <div className="flex-1 flex flex-col h-full ">
             <AdminHeader userData={userData} handleLogoutClick={handleLogoutClick} formatPhoneNumber={formatPhoneNumber} />
-            <main className="flex-1 mt-6 rounded-2xl shadow-lg bg-white dark:bg-gray-800 p-6 overflow-y-auto">
-              {children}
-            </main>
+<main className="flex-1 mt-4 rounded-tl-[40px] rounded-br-[40px] bg-white dark:bg-[#060425] p-6 shadow-[0_0_8px] shadow-blue-300/15 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+  {children}
+</main>
           </div>
         </div>
       </div>
 
+      {/* موبایل */}
       <div className="lg:hidden">
         <div className="flex justify-between items-center mb-4 px-4">
           <div className="dark:hidden"><HeaderIcon1Mini /></div>
@@ -219,7 +221,7 @@ const AdminLayout: FC<IChildren> = ({ children }) => {
             <AdminMobileMenu MenuItems={MenuItems} handleLogoutClick={handleLogoutClick} />
           </div>
         </div>
-        <main className="rounded-2xl shadow-lg bg-white dark:bg-gray-800 p-4 mx-4">
+        <main className="rounded-tl-[40px] rounded-br-[40px] bg-white dark:bg-[#060425] p-4 mx-4 shadow-[0_0_8px] shadow-blue-300/15">
           {children}
         </main>
       </div>

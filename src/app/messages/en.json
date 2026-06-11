@@ -550,25 +550,7 @@
     "toman": "Toman",
     "changeHotel": "Change Hotel"
   },
-  "BookingSummaryTwo": {
-    "checkInDate": "Hotel Check-in Date",
-    "checkOutDate": "Hotel Check-out Date",
-    "finalPrice": "Final Price",
-    "toman": "Toman",
-    "passengerInfo": "Passenger Information",
-    "passenger": "passenger",
-    "ageRange": "Age Range",
-    "adult": "Adult",
-    "fullName": "Full Name",
-    "gender": "Gender",
-    "male": "Male",
-    "female": "Female",
-    "nationalCode": "National ID / Passport Number",
-    "birthDate": "Birth Date",
-    "editPassengers": "Edit Passengers",
-    "bookingId": "Booking ID",
-    "extraCost": "Extra Cost"
-  },
+
   "Stepper": {
     "step1": "Hotel",
     "step2": "Passengers",
@@ -811,5 +793,27 @@
   "location3": "Tehran, Lavasan...",
   "location4": "Savadkuh, Mazandaran...",
   "location5": "Savadkuh, Mazandaran..."
+},
+"BookingSummaryTwo": {
+  "checkInDate": "Hotel Check-in Date",
+  "checkOutDate": "Hotel Check-out Date",
+  "finalPrice": "Final Price",
+  "toman": "Toman",
+  "passengerInfo": "Passenger Information",
+  "passenger": "passenger",
+  "ageRange": "Age Range",
+  "adult": "Adult",
+  "fullName": "Full Name",
+  "gender": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "nationalCode": "National ID / Passport Number",
+  "birthDate": "Birth Date",
+  "editPassengers": "Edit Passengers",
+  "bookingId": "Booking ID",
+  "extraCost": "Extra Cost",
+  "contactInfo": "Contact Information",
+  "email": "Email",
+  "phone": "Phone"
 }
 }

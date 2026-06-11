@@ -1,29 +1,32 @@
+// app/admin/BookingsManagement/page.tsx
 "use client";
+
 import { useState, useEffect } from "react";
 import {
   Search,
   Calendar,
   Clock,
-  Home,
   User,
   Filter,
   X,
   Building2,
-  DollarSign,
   Hash,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Succsess from "../Icon/Succsess";
-import ReservingIcon from "../Icon/ReservingIcon";
-import NotActive from "../Icon/NotActive";
-import Pagination from "../Pagination/PaginationAdmin";
-import FilterBookingModal from "./filter/FilterBookingModal";
-import ActionMenu from "./filter/menu/ActionMenu";
+
 import DetailBookingModal from "./filter/menu/Operation/DetailBookingModal";
 import EditBookingModal from "./filter/menu/Operation/EditBookingModal";
 import DeleteBookingModal from "./filter/menu/Operation/DeleteBookingModal";
+import AcceptBookingModal from "./filter/menu/Operation/AcceptBookingModal";
+import CancelBookingModal from "./filter/menu/Operation/CancelBookingModal";
 import toast from "react-hot-toast";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
+import ActionMenu from "./filter/menu/ActionMenu";
+import Pagination from "../Pagination/PaginationAdmin";
+import FilterBookingModal from "./filter/FilterBookingModal";
+import Succsess from "../Icon/Succsess";
+import ReservingIcon from "../Icon/ReservingIcon";
+import NotActive from "../Icon/NotActive";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
 
@@ -40,6 +43,7 @@ interface Booking {
   created_at: string;
   updatedAt: string;
   updated_at: string;
+  total_price?: number;
 }
 
 interface House {
@@ -90,16 +94,18 @@ const BookingsManagement = () => {
   const [priceMax, setPriceMax] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isAcceptModalOpen, setIsAcceptModalOpen] = useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [selectedBookingForAction, setSelectedBookingForAction] = useState<Booking | null>(null);
   const [editingHouseTitle, setEditingHouseTitle] = useState("");
   const [editingHousePrice, setEditingHousePrice] = useState(0);
 
-  // ============ Helper Functions ============
   const getToken = () => localStorage.getItem("accessToken");
 
   const toEnglishNumber = (str: string): string => {
@@ -133,16 +139,19 @@ const BookingsManagement = () => {
   };
 
   const getHouseTitle = (houseId: number): string => {
+    if (!houseId) return "ملک نامشخص";
     const house = housesMap.get(houseId);
     return house?.title || `ملک شماره ${houseId}`;
   };
 
   const getHousePrice = (houseId: number): number => {
+    if (!houseId) return 0;
     const house = housesMap.get(houseId);
     return house?.price || 0;
   };
 
   const getUserName = (userId: number, booking?: Booking): string => {
+    if (!userId) return "کاربر ناشناس";
     const user = usersMap.get(userId);
     if (user?.firstName || user?.lastName) {
       const firstName = user.firstName || "";
@@ -161,12 +170,16 @@ const BookingsManagement = () => {
     return `کاربر ${userId}`;
   };
 
-  const getUserEmail = (userId: number): string =>
-    usersMap.get(userId)?.email || "";
-  const getUserMobile = (userId: number): string =>
-    usersMap.get(userId)?.mobile || "";
+  const getUserEmail = (userId: number): string => {
+    if (!userId) return "";
+    return usersMap.get(userId)?.email || "";
+  };
 
-  // ============ Fetch Houses ============
+  const getUserMobile = (userId: number): string => {
+    if (!userId) return "";
+    return usersMap.get(userId)?.mobile || "";
+  };
+
   const fetchHouses = async (houseIds: number[]) => {
     try {
       const token = getToken();
@@ -191,22 +204,10 @@ const BookingsManagement = () => {
               photos: houseData.photos || [],
             });
           } else {
-            newMap.set(hid, {
-              id: hid,
-              title: "",
-              price: 0,
-              address: "",
-              photos: [],
-            });
+            newMap.set(hid, { id: hid, title: "", price: 0, address: "", photos: [] });
           }
         } catch {
-          newMap.set(hid, {
-            id: hid,
-            title: "",
-            price: 0,
-            address: "",
-            photos: [],
-          });
+          newMap.set(hid, { id: hid, title: "", price: 0, address: "", photos: [] });
         }
       }
       setHousesMap(newMap);
@@ -215,7 +216,6 @@ const BookingsManagement = () => {
     }
   };
 
-  // ============ Fetch Users ============
   const fetchUsers = async (userIds: number[]) => {
     try {
       const token = getToken();
@@ -240,22 +240,10 @@ const BookingsManagement = () => {
               mobile: userData.mobile || userData.phone || "",
             });
           } else {
-            newMap.set(uid, {
-              id: uid,
-              firstName: "",
-              lastName: "",
-              email: "",
-              mobile: "",
-            });
+            newMap.set(uid, { id: uid, firstName: "", lastName: "", email: "", mobile: "" });
           }
         } catch {
-          newMap.set(uid, {
-            id: uid,
-            firstName: "",
-            lastName: "",
-            email: "",
-            mobile: "",
-          });
+          newMap.set(uid, { id: uid, firstName: "", lastName: "", email: "", mobile: "" });
         }
       }
       setUsersMap(newMap);
@@ -264,7 +252,6 @@ const BookingsManagement = () => {
     }
   };
 
-  // ============ Fetch Bookings ============
   const fetchBookings = async () => {
     setLoading(true);
     setError(null);
@@ -310,7 +297,6 @@ const BookingsManagement = () => {
     }
   };
 
-  // ============ Update Booking ============
   const updateBooking = async (bookingId: number, data: any) => {
     const token = getToken();
     const response = await fetch(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
@@ -321,27 +307,17 @@ const BookingsManagement = () => {
       },
       body: JSON.stringify(data),
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.json();
   };
 
-  // ============ Delete Booking ============
   const deleteBooking = async (bookingId: number) => {
     const token = getToken();
     const response = await fetch(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
   };
 
   useEffect(() => {
@@ -420,7 +396,6 @@ const BookingsManagement = () => {
     }
   };
 
-  // فرمت تاریخ رزرو (تاریخ‌های رزرو شده)
   const formatReservedDates = (dates?: string[]) => {
     if (!dates || dates.length === 0) return "—";
     return dates.map(date => {
@@ -451,15 +426,23 @@ const BookingsManagement = () => {
     setIsDeleteModalOpen(true);
   };
 
+  const handleAccept = (b: Booking) => {
+    setSelectedBookingForAction(b);
+    setIsAcceptModalOpen(true);
+  };
+
+  const handleCancel = (b: Booking) => {
+    setSelectedBookingForAction(b);
+    setIsCancelModalOpen(true);
+  };
+
   const confirmEdit = async (data: any) => {
     try {
       if (!selectedBooking) return;
-      
       await updateBooking(selectedBooking.id, {
         reservedDates: data.reservedDates,
         status: data.status,
       });
-      
       toast.success("رزرو با موفقیت ویرایش شد");
       await fetchBookings();
       setIsEditModalOpen(false);
@@ -472,7 +455,6 @@ const BookingsManagement = () => {
   const confirmDelete = async () => {
     try {
       if (!selectedBooking) return;
-      
       await deleteBooking(selectedBooking.id);
       toast.success("رزرو با موفقیت حذف شد");
       await fetchBookings();
@@ -481,6 +463,14 @@ const BookingsManagement = () => {
       console.error(error);
       toast.error("خطا در حذف رزرو");
     }
+  };
+
+  const confirmAccept = async () => {
+    await fetchBookings();
+  };
+
+  const confirmCancel = async () => {
+    await fetchBookings();
   };
 
   if (loading) {
@@ -498,7 +488,7 @@ const BookingsManagement = () => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="text-red-500 text-5xl mb-4">هیچ رزروی یافت نشد</div>
+          <div className="text-red-500 text-5xl mb-4">خطا</div>
           <p className="text-red-600 dark:text-red-400">{error}</p>
           <button
             onClick={fetchBookings}
@@ -515,14 +505,10 @@ const BookingsManagement = () => {
     <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6 min-h-screen">
       {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
-             <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
-                dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 
-                rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 
-                shadow-lg shadow-gray-200/70 dark:shadow-none
-                border border-gray-200 dark:border-gray-700/50">
-  <h1 className="text-3xl font-bold text-gray-900 dark:text-white">رزرو مدیریت</h1>
-  <p className="text-gray-500 dark:text-gray-400 mt-2">به مشاهده و مدریت همه رزرو ها خوش امدید </p>
-</div>
+        <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 shadow-lg shadow-gray-200/70 dark:shadow-none border border-gray-200 dark:border-gray-700/50">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">مدیریت رزروها</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-2">مشاهده و مدیریت همه رزروها</p>
+        </div>
       </AdvancedScrollAnimation>
 
       {/* Stats Cards */}
@@ -601,7 +587,8 @@ const BookingsManagement = () => {
 
           return (
             <AdvancedScrollAnimation key={booking.id} type="slide-up" delay={0.4 + idx * 0.05} duration={0.4}>
-              <div className=" rounded-2xl p-4 border border-gray-100 dark:border-gray-700 dark:bg-gray-800 hover:shadow-lg transition-all shadow-[0_0_8px] shadow-blue-300/20">
+              <div className="rounded-2xl p-4 border border-gray-100 dark:border-gray-700 dark:bg-gray-800 hover:shadow-lg transition-all shadow-[0_0_8px] shadow-blue-300/20">
+                
                 {/* Mobile View */}
                 <div className="flex flex-col gap-3 md:hidden">
                   <div className="flex items-center justify-between">
@@ -615,6 +602,8 @@ const BookingsManagement = () => {
                         onView={() => handleViewDetails(booking)}
                         onEdit={() => handleEdit(booking)}
                         onDelete={() => handleDelete(booking)}
+                        onAccept={() => handleAccept(booking)}
+                        onCancel={() => handleCancel(booking)}
                       />
                     </div>
                   </div>
@@ -665,6 +654,8 @@ const BookingsManagement = () => {
                       onView={() => handleViewDetails(booking)}
                       onEdit={() => handleEdit(booking)}
                       onDelete={() => handleDelete(booking)}
+                      onAccept={() => handleAccept(booking)}
+                      onCancel={() => handleCancel(booking)}
                     />
                   </div>
                 </div>
@@ -714,11 +705,11 @@ const BookingsManagement = () => {
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
         booking={selectedBooking}
-        userName={getUserName(selectedBooking?.user_id || 0, selectedBooking || undefined)}
-        userEmail={getUserEmail(selectedBooking?.user_id || 0)}
-        userPhone={getUserMobile(selectedBooking?.user_id || 0)}
-        houseTitle={getHouseTitle(selectedBooking?.houseId || 0)}
-        housePrice={getHousePrice(selectedBooking?.houseId || 0)}
+        userName={getUserName(selectedBooking?.user_id ?? 0, selectedBooking || undefined)}
+        userEmail={getUserEmail(selectedBooking?.user_id ?? 0)}
+        userPhone={getUserMobile(selectedBooking?.user_id ?? 0)}
+        houseTitle={getHouseTitle(selectedBooking?.houseId ?? 0)}
+        housePrice={getHousePrice(selectedBooking?.houseId ?? 0)}
       />
 
       <EditBookingModal
@@ -734,7 +725,40 @@ const BookingsManagement = () => {
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={confirmDelete}
-        bookingId={selectedBooking?.id || 0}
+        bookingId={selectedBooking?.id ?? 0}
+      />
+
+      <AcceptBookingModal
+        isOpen={isAcceptModalOpen}
+        onClose={() => setIsAcceptModalOpen(false)}
+        onConfirm={confirmAccept}
+        bookingId={selectedBookingForAction?.id ?? 0}
+        bookingDetails={{
+          id: selectedBookingForAction?.id ?? 0,
+          userName: getUserName(selectedBookingForAction?.user_id ?? 0, selectedBookingForAction || undefined),
+          userPhone: getUserMobile(selectedBookingForAction?.user_id ?? 0),
+          userEmail: getUserEmail(selectedBookingForAction?.user_id ?? 0),
+          houseTitle: getHouseTitle(selectedBookingForAction?.houseId ?? 0),
+          checkIn: selectedBookingForAction?.reservedDates?.[0] || "",
+          checkOut: selectedBookingForAction?.reservedDates?.[1] || "",
+          guests: selectedBookingForAction?.traveler_details?.length ?? 1,
+          totalPrice: getHousePrice(selectedBookingForAction?.houseId ?? 0),
+        }}
+      />
+
+      <CancelBookingModal
+        isOpen={isCancelModalOpen}
+        onClose={() => setIsCancelModalOpen(false)}
+        onConfirm={confirmCancel}
+        bookingId={selectedBookingForAction?.id ?? 0}
+        bookingDetails={{
+          id: selectedBookingForAction?.id ?? 0,
+          userName: getUserName(selectedBookingForAction?.user_id ?? 0, selectedBookingForAction || undefined),
+          userPhone: getUserMobile(selectedBookingForAction?.user_id ?? 0),
+          userEmail: getUserEmail(selectedBookingForAction?.user_id ?? 0),
+          houseTitle: getHouseTitle(selectedBookingForAction?.houseId ?? 0),
+          totalPrice: getHousePrice(selectedBookingForAction?.houseId ?? 0),
+        }}
       />
     </div>
   );

@@ -551,25 +551,7 @@
       "toman": "تومان",
       "changeHotel": "تغییر هتل"
     },
-    "BookingSummaryTwo": {
-      "checkInDate": "تاریخ ورود به هتل",
-      "checkOutDate": "تاریخ خروج از هتل",
-      "finalPrice": "قیمت نهایی",
-      "toman": "تومان",
-      "passengerInfo": "مشخصات مسافران",
-      "passenger": "مسافر",
-      "ageRange": "بازه سنی",
-      "adult": "بزرگسال",
-      "fullName": "نام و نام خانوادگی",
-      "gender": "جنسیت",
-      "male": "مرد",
-      "female": "زن",
-      "nationalCode": "کد ملی / شماره پاسپورت",
-      "birthDate": "تاریخ تولد",
-      "editPassengers": "ویرایش مسافران",
-      "bookingId": "شماره رزرو",
-      "extraCost": "هزینه جانبی"
-    },
+  
     "Stepper": {
       "step1": "هتل",
       "step2": "مسافران",
@@ -827,5 +809,28 @@
   "share": "اشتراک‌گذاری",
   "shareDesc": "ارسال آدرس برای دیگران",
   "addressCopied": "آدرس کپی شد!"
+}
+,
+"BookingSummaryTwo": {
+  "checkInDate": "تاریخ ورود به هتل",
+  "checkOutDate": "تاریخ خروج از هتل",
+  "finalPrice": "قیمت نهایی",
+  "toman": "تومان",
+  "passengerInfo": "مشخصات مسافران",
+  "passenger": "مسافر",
+  "ageRange": "بازه سنی",
+  "adult": "بزرگسال",
+  "fullName": "نام و نام خانوادگی",
+  "gender": "جنسیت",
+  "male": "مرد",
+  "female": "زن",
+  "nationalCode": "کد ملی / شماره پاسپورت",
+  "birthDate": "تاریخ تولد",
+  "editPassengers": "ویرایش مسافران",
+  "bookingId": "شماره رزرو",
+  "extraCost": "هزینه جانبی",
+  "contactInfo": "اطلاعات تماس",
+  "email": "ایمیل",
+  "phone": "تلفن"
 }
   }

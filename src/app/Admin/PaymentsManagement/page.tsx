@@ -43,7 +43,7 @@ const PaymentsManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedPayment, setSelectedPayment] = useState<Payment | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const itemsPerPage = 10;
+  const itemsPerPage = 4;
 
   const fetchUsers = async (userIds: number[]) => {
     try {
