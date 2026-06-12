@@ -550,25 +550,7 @@
     "toman": "تومان",
     "changeHotel": "تغيير الفندق"
   },
-  "BookingSummaryTwo": {
-    "checkInDate": "تاريخ الوصول إلى الفندق",
-    "checkOutDate": "تاريخ المغادرة من الفندق",
-    "finalPrice": "السعر النهائي",
-    "toman": "تومان",
-    "passengerInfo": "بيانات المسافرين",
-    "passenger": "مسافر",
-    "ageRange": "الفئة العمرية",
-    "adult": "بالغ",
-    "fullName": "الاسم الكامل",
-    "gender": "الجنس",
-    "male": "ذكر",
-    "female": "أنثى",
-    "nationalCode": "الرقم الوطني / رقم جواز السفر",
-    "birthDate": "تاريخ الميلاد",
-    "editPassengers": "تعديل بيانات المسافرين",
-    "bookingId": "رقم الحجز",
-    "extraCost": "تكلفة إضافية"
-  },
+
   "Stepper": {
     "step1": "الفندق",
     "step2": "المسافرون",

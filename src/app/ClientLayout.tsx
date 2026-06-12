@@ -1,9 +1,7 @@
-// app/ClientLayout.tsx
 "use client";
 
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
-import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
 import ThemeManager from "@/components/utils/ThemeManager";
 import { ThemeProvider } from "next-themes";
 import VoiceCommand from "@/components/VoiceCommand";
@@ -19,10 +17,14 @@ const noLayoutRoutes = [
   "/admin/PaymentsManagement",
   "/admin/ChatsManagement",
   "/admin/AdminNotifications",
+  "/admin/SocialLink",
+  "/admin/AdminBlog",
   "/login",
   "/register",
   "/404",
 ];
+
+const noLayoutBooking = ["/housereserve", "/booking"];
 
 export default function ClientLayout({
   children,
@@ -30,20 +32,32 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  
-  const isNoLayoutRoute = noLayoutRoutes.some(route => 
-    pathname === route || pathname?.startsWith(route)
+
+  const isNoLayoutRoute = noLayoutRoutes.some(
+    (route) => pathname === route || pathname?.startsWith(route),
   );
+
+  const isBookingRoute = noLayoutBooking.some((route) =>
+    pathname?.startsWith(route),
+  );
+
+  if (isBookingRoute) {
+    return (
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Header />
+        <main className="w-full min-h-screen">{children}</main>
+      </ThemeProvider>
+    );
+  }
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       {isNoLayoutRoute ? (
-        <main className="w-full  min-h-screen">{children}</main>
+        <main className="w-full min-h-screen">{children}</main>
       ) : (
         <>
           <Header />
           <ThemeManager>
-            <NeshanMapLoader />
             <main className="w-full">{children}</main>
           </ThemeManager>
           <Footer />

@@ -1,154 +1,96 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { CheckCheck, Check, Bell, Search, X } from "lucide-react";
-import toast from "react-hot-toast";
-import Pagination from "../Pagination/PaginationAdmin";
+import { useState, useEffect } from "react";
+import { Bell, Check, CheckCheck, Search, X } from "lucide-react";
+import Pagination from "../../../components/Admin/Pagination/PaginationAdmin";
+import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
 interface Notification {
   id: number;
-  userId: number;
   title: string;
   message: string;
-  type: string;
-  data: any;
   isRead: boolean;
   createdAt: string;
-  updatedAt: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
-const PER_PAGE = 4;
+const API_BASE_URL = "http://188.121.111.8:3003";
 
-const AdminAnnouncements = () => {
+export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const PER_PAGE = 5;
 
-  const getToken = () => localStorage.getItem("accessToken");
+  const getToken = (): string | null => localStorage.getItem("accessToken");
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = async (): Promise<void> => {
+    setLoading(true);
+    setError(null);
+    
+    const token = getToken();
+    
+    if (!token) {
+      setError("توکن یافت نشد");
+      setLoading(false);
+      return;
+    }
+
     try {
-      setLoading(true);
-      setError(null);
-      const token = getToken();
-      
-      if (!token) {
-        setError("توکن یافت نشد. لطفاً دوباره وارد شوید.");
-        setLoading(false);
-        return;
-      }
-
-      const response = await fetch(`${API_BASE_URL}/notifications`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+      const response = await fetch(`${API_BASE_URL}/api/notifications`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (response.status === 401) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("user");
-        setError("نشست شما منقضی شده است. لطفاً دوباره وارد شوید.");
-        setLoading(false);
-        return;
+      
+      if (response.ok) {
+        const result = await response.json();
+        const data: Notification[] = result.data || result;
+        setNotifications(Array.isArray(data) ? data : []);
+      } else {
+        setError(`خطا: ${response.status}`);
       }
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const result = await response.json();
-      const data = result.data || result;
-      setNotifications(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-      setError("خطا در دریافت اعلان‌ها. لطفاً دوباره تلاش کنید.");
+    } catch (err: any) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const markAsRead = async (id: number) => {
+  const markAsRead = async (id: number): Promise<void> => {
     try {
       const token = getToken();
-      const response = await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
+      await fetch(`${API_BASE_URL}/api/notifications/${id}/read`, {
         method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      if (response.ok) {
-        setNotifications((prev) =>
-          prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
-        );
-        toast.success("نوتیفیکیشن خوانده شد");
-      } else {
-        toast.error("خطا در بروزرسانی");
-      }
-    } catch (error) {
-      console.error("Error marking as read:", error);
-      toast.error("خطا در بروزرسانی");
+      
+      setNotifications((prev: Notification[]) =>
+        prev.map((n) => (n.id === id ? { ...n, isRead: true } : n))
+      );
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const markAllAsRead = async () => {
-    try {
-      const token = getToken();
-      const unreadIds = notifications.filter((n) => !n.isRead).map((n) => n.id);
-      
-      if (unreadIds.length === 0) {
-        toast("هیچ اعلان خوانده نشده‌ای وجود ندارد");
-        return;
-      }
-
-      for (const id of unreadIds) {
-        await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
-          method: "PUT",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-      }
-      setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
-      toast.success("همه نوتیفیکیشن‌ها خوانده شد");
-    } catch (error) {
-      console.error("Error marking all as read:", error);
-      toast.error("خطا در بروزرسانی");
+  const markAllAsRead = async (): Promise<void> => {
+    const unreadIds = notifications.filter((n) => !n.isRead).map((n) => n.id);
+    if (unreadIds.length === 0) return;
+    
+    const token = getToken();
+    for (const id of unreadIds) {
+      await fetch(`${API_BASE_URL}/api/notifications/${id}/read`, {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
+      });
     }
+    setNotifications((prev: Notification[]) => prev.map((n) => ({ ...n, isRead: true })));
   };
 
   useEffect(() => {
     fetchNotifications();
   }, []);
 
-  const formatDate = (dateStr: string) => {
-    try {
-      const date = new Date(dateStr);
-      return date.toLocaleDateString("fa-IR", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-    } catch {
-      return "—";
-    }
-  };
-
-  const formatTime = (dateStr: string) => {
-    try {
-      const date = new Date(dateStr);
-      return date.toLocaleTimeString("fa-IR", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } catch {
-      return "—";
-    }
-  };
-
-  const filtered = notifications.filter((n) => {
+  const filtered = notifications.filter((n: Notification) => {
     const matchSearch =
       !searchTerm ||
       n.message?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -158,239 +100,269 @@ const AdminAnnouncements = () => {
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE);
   const paginated = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE);
+  const unreadCount = notifications.filter((n: Notification) => !n.isRead).length;
 
-  const resetFilters = () => {
+  const formatDate = (dateStr: string): string => {
+    try {
+      return new Date(dateStr).toLocaleDateString("fa-IR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+    } catch {
+      return "—";
+    }
+  };
+
+  const formatTime = (dateStr: string): string => {
+    try {
+      return new Date(dateStr).toLocaleTimeString("fa-IR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch {
+      return "—";
+    }
+  };
+
+  const resetFilters = (): void => {
     setSearchTerm("");
     setCurrentPage(1);
   };
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-[#0887CAB2] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 dark:text-gray-400">در حال بارگذاری...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Bell size={48} className="mx-auto text-red-500 mb-4" />
+          <p className="text-red-500 mb-4">{error}</p>
+          <button
+            onClick={fetchNotifications}
+            className="px-4 py-2 bg-[#0887CAB2] text-white rounded-xl"
+          >
+            تلاش مجدد
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div dir="rtl" className="min-h-screen ">
-      <div className="px-4 sm:p-6 lg:px-8 py-6 space-y-6">
-
-        {/* Header */}
-        <div
-          className="bg-gradient-to-br from-slate-100 via-white to-gray-100
-            dark:from-slate-950 dark:via-gray-900 dark:to-slate-900
-            rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7
-            shadow-lg shadow-gray-200/70 dark:shadow-none
-            border border-gray-200 dark:border-gray-700/50"
-        >
+    <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6 min-h-screen">
+      {/* Header */}
+      <AdvancedScrollAnimation type="slide-right" delay={0.1}>
+        <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 shadow-lg shadow-gray-200/70 dark:shadow-none border border-gray-200 dark:border-gray-700/50">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 rounded-xl bg-[#0887CA1A] flex items-center justify-center">
               <Bell size={22} className="text-[#0887CAB2]" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                اعلان‌ها
-              </h1>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">اعلان‌ها</h1>
               <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">
-                لیست اعلان های شما ({notifications.length} مورد
+                لیست اعلان‌های شما ({notifications.length} مورد
                 {unreadCount > 0 && (
-                  <span className="mr-1 text-[#0887CAB2] font-medium">
-                    — {unreadCount} خوانده نشده
-                  </span>
+                  <span className="mr-1 text-[#0887CAB2] font-medium">— {unreadCount} خوانده نشده</span>
                 )}
-                )
               </p>
             </div>
           </div>
         </div>
+      </AdvancedScrollAnimation>
 
-        {/* Table Card */}
-        <div className="rounded-2xl shadow-md overflow-hidden ">
-
-          {/* Toolbar */}
-          <div className="p-6">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <AdvancedScrollAnimation type="fade" delay={0.1}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-md">
+            <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-bold text-lg flex items-center gap-2 text-gray-800 dark:text-white">
-                  <Bell size={20} className="text-[#0887CAB2]" />
-                  لیست اعلان‌ها
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-                  مشاهده و مدیریت اعلان‌های دریافتی
-                </p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">کل اعلان‌ها</p>
+                <p className="text-2xl font-bold mt-1 text-gray-800 dark:text-white">{notifications.length}</p>
               </div>
-
-              <div className="flex items-center gap-3 flex-wrap">
-                {/* Search */}
-                <div className="relative">
-                  <Search
-                    size={16}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0887CAB2]"
-                  />
-                  <input
-                    type="text"
-                    placeholder="جستجو..."
-                    value={searchTerm}
-                    onChange={(e) => {
-                      setSearchTerm(e.target.value);
-                      setCurrentPage(1);
-                    }}
-                    className="pr-9 pl-4 py-3 border border-[#0887CAB2] text-[#0887CAB2] rounded-2xl text-sm w-full sm:w-56 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#0887CAB2] placeholder:text-[#0887CA80]"
-                  />
-                </div>
-
-                {/* Mark All as Read */}
-                {unreadCount > 0 && (
-                  <button
-                    onClick={markAllAsRead}
-                    className="flex items-center gap-2 bg-[#3730A3] hover:bg-[#312E81] text-white text-sm font-medium px-5 py-3 rounded-2xl transition-colors whitespace-nowrap"
-                  >
-                    <CheckCheck size={16} />
-                    علامت‌گذاری همه
-                  </button>
-                )}
-
-                {/* Reset Filters */}
-                {searchTerm && (
-                  <button
-                    onClick={resetFilters}
-                    className="flex items-center gap-1 text-red-500 hover:text-red-600 text-sm font-medium px-3 py-3 rounded-2xl transition-colors"
-                  >
-                    <X size={16} />
-                    پاک کردن
-                  </button>
-                )}
+              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                <Bell size={20} className="text-blue-600" />
               </div>
             </div>
           </div>
-
-          {/* Table Header */}
-          <div className="hidden md:flex items-center h-14 px-5 font-bold text-gray-700 dark:text-gray-300  shadow-[0_0_8px] shadow-blue-300/30 mx-4 mb-2 rounded-2xl">
-            <div className="flex-1 relative right-6">اعلان</div>
-            <div className="w-32 text-center">تاریخ</div>
-            <div className="w-24 text-center">زمان</div>
-            <div className="w-44 text-center">وضعیت</div>
+        </AdvancedScrollAnimation>
+        <AdvancedScrollAnimation type="fade" delay={0.2}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-md">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">خوانده شده</p>
+                <p className="text-2xl font-bold mt-1 text-green-600">{notifications.length - unreadCount}</p>
+              </div>
+              <div className="w-10 h-10 rounded-xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center">
+                <Check size={20} className="text-green-600" />
+              </div>
+            </div>
           </div>
-
-          {/* Rows */}
-          <div className="space-y-3 p-4">
-            {loading ? (
-              <div className="text-center py-16 text-gray-400 dark:text-gray-500 =rounded-2xl">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#0887CAB2] mx-auto mb-3"></div>
-                <p>در حال بارگذاری...</p>
+        </AdvancedScrollAnimation>
+        <AdvancedScrollAnimation type="fade" delay={0.3}>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-md">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">خوانده نشده</p>
+                <p className="text-2xl font-bold mt-1 text-yellow-600">{unreadCount}</p>
               </div>
-            ) : error ? (
-              <div className="text-center py-16 text-red-500 bg-white dark:bg-gray-800 rounded-2xl">
-                <Bell size={40} className="mx-auto mb-3 text-red-300" />
-                <p>{error}</p>
-                <button
-                  onClick={fetchNotifications}
-                  className="mt-4 px-4 py-2 bg-[#0887CAB2] text-white rounded-xl text-sm"
-                >
-                  تلاش مجدد
-                </button>
+              <div className="w-10 h-10 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center">
+                <Bell size={20} className="text-yellow-600" />
               </div>
-            ) : paginated.length === 0 ? (
-              <div className="text-center py-16 text-gray-400 dark:text-gray-500 rounded-2xl">
-                <Bell size={40} className="mx-auto mb-3 text-gray-300 dark:text-gray-600" />
-                <p>اعلانی یافت نشد</p>
-              </div>
-            ) : (
-              paginated.map((notif) => (
-                <div
-                  key={notif.id}
-                  className={`flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 rounded-2xl transition-all shadow-[0_0_8px] shadow-blue-300/20 hover:shadow-blue-300/40 ${
-                    notif.isRead
-                      ? "bg-white dark:bg-gray-800"
-                      : "bg-blue-50/60 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800/30"
-                  }`}
-                >
-                  {/* Mobile */}
-                  <div className="flex flex-col gap-2 md:hidden">
-                    <p className="font-medium text-gray-800 dark:text-white text-sm">
-                      {notif.title}
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-400 text-xs line-clamp-2">
-                      {notif.message}
-                    </p>
-                    <div className="flex justify-between items-center mt-1">
-                      <span className="text-xs text-gray-400">{formatDate(notif.createdAt)}</span>
-                      {notif.isRead ? (
-                        <span className="inline-flex items-center gap-1 text-xs font-medium bg-gray-800 dark:bg-gray-600 text-gray-200 px-3 py-1.5 rounded-lg">
-                          <Check size={11} /> خوانده شده
-                        </span>
-                      ) : (
-                        <button
-                          onClick={() => markAsRead(notif.id)}
-                          className="inline-flex items-center gap-1 text-xs font-medium bg-green-100 hover:bg-green-200 text-green-800 dark:bg-green-900/40 dark:text-green-300 px-3 py-1.5 rounded-lg transition-colors"
-                        >
-                          <CheckCheck size={11} /> علامت‌گذاری
-                        </button>
-                      )}
-                    </div>
-                  </div>
+            </div>
+          </div>
+        </AdvancedScrollAnimation>
+      </div>
 
-                  {/* Desktop */}
-                  <div className="hidden md:flex md:items-center w-full gap-4">
-                    {/* نقطه خوانده‌نشده */}
-                    <div className="w-2 flex-shrink-0">
-                      {!notif.isRead && (
-                        <span className="block w-2 h-2 rounded-full bg-[#0887CAB2]" />
-                      )}
-                    </div>
-
-                    {/* متن */}
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-800 dark:text-white text-sm truncate">
-                        {notif.title}
-                      </p>
-                      <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5 truncate">
-                        {notif.message}
-                      </p>
-                    </div>
-
-                    {/* تاریخ */}
-                    <div className="w-32 text-center text-sm text-gray-500 dark:text-gray-400 flex-shrink-0">
-                      {formatDate(notif.createdAt)}
-                    </div>
-
-                    {/* زمان */}
-                    <div className="w-24 text-center text-sm text-gray-500 dark:text-gray-400 flex-shrink-0">
-                      {formatTime(notif.createdAt)}
-                    </div>
-
-                    {/* وضعیت */}
-                    <div className="w-44 flex justify-center flex-shrink-0">
-                      {notif.isRead ? (
-                        <span className="inline-flex items-center gap-1.5 text-xs font-medium bg-gray-800 dark:bg-gray-600 text-gray-200 px-4 py-2 rounded-xl">
-                          <Check size={12} />
-                          خوانده شده
-                        </span>
-                      ) : (
-                        <button
-                          onClick={() => markAsRead(notif.id)}
-                          className="inline-flex items-center gap-1.5 text-xs font-medium bg-green-100 hover:bg-green-200 text-green-800 dark:bg-green-900/40 dark:text-green-300 px-4 py-2 rounded-xl transition-colors"
-                        >
-                          <CheckCheck size={12} />
-                          علامت‌گذاری به عنوان خوانده شده
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))
+      {/* Search & Actions */}
+      <AdvancedScrollAnimation type="slide-up" delay={0.2}>
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          <div className="relative w-full sm:w-96">
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0887CAB2]" size={18} />
+            <input
+              type="text"
+              placeholder="جستجوی عنوان یا متن اعلان..."
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+              className="w-full h-12 pr-10 pl-4 border border-[#0887CAB2] rounded-2xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0887CAB2]"
+            />
+          </div>
+          <div className="flex gap-3">
+            {unreadCount > 0 && (
+              <button
+                onClick={markAllAsRead}
+                className="px-4 py-2 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white transition flex items-center gap-2"
+              >
+                <CheckCheck size={18} />
+                علامت‌گذاری همه
+              </button>
+            )}
+            {searchTerm && (
+              <button
+                onClick={resetFilters}
+                className="px-4 py-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition flex items-center gap-2"
+              >
+                <X size={18} />
+                <span className="hidden sm:inline">پاک کردن</span>
+              </button>
             )}
           </div>
-
-          {/* Pagination */}
-          {totalPages > 1 && !loading && !error && (
-            <div className="flex justify-start pt-2 pb-4 px-4">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-              />
-            </div>
-          )}
         </div>
+      </AdvancedScrollAnimation>
+
+      {/* Table Header */}
+      <AdvancedScrollAnimation type="fade" delay={0.3}>
+        <div className="hidden md:flex items-center justify-between h-16 rounded-xl px-5 font-bold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 shadow-[0_0_8px] shadow-blue-300/30">
+          <div className="flex-1">اعلان</div>
+          <div className="w-32 text-center">تاریخ</div>
+          <div className="w-24 text-center">زمان</div>
+          <div className="w-32 text-center">وضعیت</div>
+        </div>
+      </AdvancedScrollAnimation>
+
+      {/* Notifications List */}
+      <div className="flex flex-col gap-3">
+        {paginated.length === 0 ? (
+          <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-2xl shadow">
+            <Bell size={48} className="mx-auto text-gray-300 dark:text-gray-600 mb-3" />
+            <p className="text-gray-500 dark:text-gray-400">
+              {searchTerm ? "نتیجه‌ای برای جستجوی شما یافت نشد" : "هیچ اعلانی یافت نشد"}
+            </p>
+          </div>
+        ) : (
+          paginated.map((notif: Notification, idx: number) => (
+            <AdvancedScrollAnimation key={notif.id} type="slide-up" delay={0.4 + idx * 0.05} duration={0.4}>
+              <div className={`rounded-2xl p-4 border transition-all shadow-[0_0_8px] shadow-blue-300/20 hover:shadow-blue-300/40 ${
+                !notif.isRead
+                  ? "bg-blue-50/60 dark:bg-blue-900/10 border-blue-100 dark:border-blue-800/30"
+                  : "bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700"
+              }`}>
+                
+                {/* Mobile View */}
+                <div className="flex flex-col gap-2 md:hidden">
+                  <p className="font-medium text-gray-800 dark:text-white text-sm">{notif.title || "بدون عنوان"}</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs line-clamp-2">{notif.message}</p>
+                  <div className="flex justify-between items-center mt-1">
+                    <span className="text-xs text-gray-400">{formatDate(notif.createdAt)}</span>
+                    {!notif.isRead ? (
+                      <button
+                        onClick={() => markAsRead(notif.id)}
+                        className="px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg text-xs transition-colors"
+                      >
+                        <CheckCheck size={12} className="inline ml-1" />
+                        خوانده شد
+                      </button>
+                    ) : (
+                      <span className="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg text-xs">
+                        <Check size={12} className="inline ml-1" />
+                        خوانده شده
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Desktop View */}
+                <div className="hidden md:flex md:items-center justify-between w-full">
+                  <div className="w-2 flex-shrink-0">
+                    {!notif.isRead && <span className="block w-2 h-2 rounded-full bg-[#0887CAB2]" />}
+                  </div>
+                  <div className="flex-1 min-w-0 px-3">
+                    <p className="font-medium text-gray-800 dark:text-white text-sm truncate">{notif.title || "بدون عنوان"}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5 truncate">{notif.message}</p>
+                  </div>
+                  <div className="w-32 text-center text-sm text-gray-500 dark:text-gray-400">
+                    {formatDate(notif.createdAt)}
+                  </div>
+                  <div className="w-24 text-center text-sm text-gray-500 dark:text-gray-400">
+                    {formatTime(notif.createdAt)}
+                  </div>
+                  <div className="w-32 flex justify-center">
+                    {!notif.isRead ? (
+                      <button
+                        onClick={() => markAsRead(notif.id)}
+                        className="px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-lg text-xs transition-colors flex items-center gap-1"
+                      >
+                        <CheckCheck size={12} />
+                        خوانده شد
+                      </button>
+                    ) : (
+                      <span className="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg text-xs flex items-center gap-1">
+                        <Check size={12} />
+                        خوانده شده
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </AdvancedScrollAnimation>
+          ))
+        )}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <AdvancedScrollAnimation type="fade" delay={0.6}>
+          <div className="flex justify-start pt-2">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        </AdvancedScrollAnimation>
+      )}
     </div>
   );
-};
-
-export default AdminAnnouncements;
+}

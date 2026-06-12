@@ -17,10 +17,10 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { createPortal } from "react-dom";
-import Pagination from "../Pagination/PaginationAdmin";
+import Pagination from "../../../components/Admin/Pagination/PaginationAdmin";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import { chatService } from "@/core/service/chatService";
-import MessageActions from "./Action/MessageActions";
+import MessageActions from "../../../components/Admin/ChatsManagement/Action/MessageActions";
 
 interface ChatRoom {
   id?: number;

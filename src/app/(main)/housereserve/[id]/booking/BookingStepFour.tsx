@@ -17,7 +17,9 @@ const BookingStepFour = ({
   step,
   finalTotal,
   bookingResult,
-  description
+  description,
+  extraEmail,
+  extraPhone
 }: any) => {
   const t = useTranslations('BookingStepFour');
   
@@ -38,6 +40,8 @@ const BookingStepFour = ({
               bookingResult={bookingResult}
               description={description}
               showExtraCost={false}
+              extraEmail={extraEmail}
+              extraPhone={extraPhone}
             />
           </div>
 
@@ -48,7 +52,7 @@ const BookingStepFour = ({
                 <div className="max-[508]:hidden dark:hidden">
                   <SatisfactionTike />
                 </div>
-                <div className="absolute dark:relative dark:h-30 dark:mt-10 dark:mr-10 max-[500]:left-5  w-120 h-100 max-[508]:w- max-[508]:relative max-[508]:h-40 -top-30 max-[508]:-top-20 max-[508]:-left-10">
+                <div className="absolute dark:relative dark:h-30 dark:mt-10 dark:mr-10 max-[500]:left-5 w-120 h-100 max-[508]:w- max-[508]:relative max-[508]:h-40 -top-30 max-[508]:-top-20 max-[508]:-left-10">
                   <SatisfactioMain />
                 </div>
                 <div className="mt-30 max-[508]:hidden dark:hidden">
@@ -95,8 +99,6 @@ const BookingStepFour = ({
                   {t('viewMyTickets')}
                 </button>
               </Link>
-
-              
             </div>
           </div>
         </div>

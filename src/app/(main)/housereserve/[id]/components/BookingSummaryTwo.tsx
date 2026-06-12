@@ -8,22 +8,21 @@ const ImageFallback =
 
 interface Passenger {
   fullName?: string;
-  gender?: "male" | "female";
+  gender?: string;
   nationalCode?: string;
   birthDate?: string;
 }
 
+interface PricesProps {
+  originalPricePerNight: number;
+  discountedPricePerNight: number;
+  nights: number;
+  originalTotal: number;
+  discountedTotal: number;
+}
+
 interface Props {
-  hotelData: {
-    title: string;
-    photo?: string;
-    address: string;
-    rate?: number;
-    rating?: number;
-    price: number;
-    discounted_price?: number;
-    passengers?: string;
-  };
+  hotelData: any;
   checkInDate: string;
   checkOutDate: string;
   passengers: Passenger[];
@@ -33,6 +32,7 @@ interface Props {
   showExtraCost?: boolean;
   extraEmail?: string;
   extraPhone?: string;
+  prices?: PricesProps;
 }
 
 const BookingSummaryTwo = ({
@@ -46,9 +46,24 @@ const BookingSummaryTwo = ({
   showExtraCost = false,
   extraEmail,
   extraPhone,
+  prices,  // ✅ دریافت prices
 }: Props) => {
   const t = useTranslations('BookingSummaryTwo');
   const [isOpen, setIsOpen] = useState(true);
+
+  // استفاده از prices اگر وجود دارد، وگرنه از finalTotal استفاده کن
+  const displayPrice = prices?.discountedTotal?.toLocaleString() || finalTotal;
+  const displayNights = prices?.nights || 1;
+
+  const getGenderText = (gender: string) => {
+    if (gender === "male") return "آقا";
+    if (gender === "female") return "خانم";
+    return "نامشخص";
+  };
+
+  const scrollToStep3 = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="w-full mx-auto lg:mx-0 top-10 px-4 sm:px-0">
@@ -95,10 +110,10 @@ const BookingSummaryTwo = ({
               {t('finalPrice')}
             </span>
             <div className="text-left w-full sm:w-auto">
-              {hotelData?.price && hotelData?.discounted_price && (
+              {prices?.originalPricePerNight && prices?.discountedPricePerNight && (
                 <div className="flex items-center justify-end gap-2 mb-1">
                   <span className="text-gray-300 line-through text-xs">
-                    {hotelData?.price?.toLocaleString()}
+                    {prices.originalPricePerNight.toLocaleString()}
                   </span>
                   <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-lg font-black">
                     ٪۵
@@ -106,7 +121,7 @@ const BookingSummaryTwo = ({
                 </div>
               )}
               <div className="text-[#15977D] font-black text-lg sm:text-xl">
-                {finalTotal}
+                {displayPrice}
                 <span className="text-xs mr-1">{t('toman')}</span>
               </div>
             </div>
@@ -163,42 +178,37 @@ const BookingSummaryTwo = ({
                 </div>
               )}
 
+              {/* لیست مسافران */}
               {passengers?.map((p, index) => (
                 <div
                   key={index}
                   className="text-xs sm:text-sm space-y-2 sm:space-y-3 bg-gray-50 dark:bg-gray-800/50 p-3 sm:p-4 rounded-xl sm:rounded-2xl"
                 >
-                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">{t('ageRange')}</span>
-                    <span className="font-bold">{t('adult')}</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">{t('fullName')}</span>
-                    <span className="font-bold break-words max-w-[200px] sm:max-w-none">
-                      {p.fullName || "---"}
+                  <div className="flex justify-between items-center pb-2 border-b border-gray-200 dark:border-gray-700">
+                    <span className="font-bold text-gray-700 dark:text-gray-300">
+                      {t('passenger')} {index + 1}
+                    </span>
+                    <span className="text-blue-600 font-medium text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full">
+                      {getGenderText(p.gender || "")}
                     </span>
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">{t('gender')}</span>
-                    <span className="font-bold">
-                      {p.gender === "male" ? t('male') : p.gender === "female" ? t('female') : "---"}
-                    </span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">{t('fullName')}:</span>
+                    <span className="font-medium">{p.fullName || "---"}</span>
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">{t('nationalCode')}</span>
-                    <span className="font-bold text-[#15977D]">
-                      {p.nationalCode || "---"}
-                    </span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">{t('nationalCode')}:</span>
+                    <span className="font-medium text-[#15977D]">{p.nationalCode || "---"}</span>
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                    <span className="text-gray-500">{t('birthDate')}</span>
-                    <span className="font-bold">{p.birthDate || "---"}</span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">{t('birthDate')}:</span>
+                    <span className="font-medium">{p.birthDate || "---"}</span>
                   </div>
                 </div>
               ))}
 
               <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                onClick={scrollToStep3}
                 className="w-full h-11 sm:h-12 py-2 sm:py-3 bg-[rgb(16,8,143)] text-white rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm hover:bg-blue-800 transition-colors"
               >
                 {t('editPassengers')}

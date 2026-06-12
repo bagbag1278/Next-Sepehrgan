@@ -44,7 +44,7 @@ const BookingStepThree = ({
   };
 
   const discountedTotal = () => {
-    const originalPrice = parseInt(finalTotal?.replace(/,/g, "0")) || 0;
+    const originalPrice = parseInt(finalTotal?.replace(/,/g, "")) || 0;
     if (couponApplied) {
       const discount = originalPrice * (discountAmount / 100);
       return (originalPrice - discount).toLocaleString();
@@ -54,29 +54,16 @@ const BookingStepThree = ({
 
   const handleNextStep = () => {
     if (isAllFormsValid && !loading) {
-      setStep(4);
-      window.scrollTo(0, 0);
+      handelFinalBooking();
     }
   };
 
   return (
     <div
-      className="h-278 w-full relative bottom-30 max-[1280px]:h-375"
+      className="min-h-screen w-full relative bottom-30 max-[1280px]:h-375"
       dir="rtl"
     >
-      <div className="relative -bottom-13 left-3 max-[1280px]:hidden">
-        <div className="absolute left-5 top-150">
-          <TallerFlash />
-        </div>
-        <div className="absolute left-16 top-150">
-          <div className="absolute">
-            <SmallFlash />
-          </div>
-          <div className="absolute mb-2 -mr-1">
-            <SmallTwo />
-          </div>
-        </div>
-      </div>
+x
       <div className="w-11/12">
         <div className="flex items-start">
           <div
@@ -163,7 +150,7 @@ const BookingStepThree = ({
                       {t("hotelPrice")}
                     </span>
                     <span className="text-blue-900 font-black text-2xl">
-                      {bookingPrices?.discountedTotal.toLocaleString() ||
+                      {bookingPrices?.discountedTotal?.toLocaleString() ||
                         finalTotal}{" "}
                       {t("toman")}
                     </span>
@@ -196,7 +183,7 @@ const BookingStepThree = ({
                         : "bg-gray-300 text-gray-500 cursor-not-allowed"
                     }`}
                   >
-                    {t("onlinePayment")}
+                    {loading ? "در حال پردازش..." : t("onlinePayment")}
                   </button>
 
                   <button
@@ -220,6 +207,7 @@ const BookingStepThree = ({
                     showExtraCost={true}
                     extraEmail={extraEmail}
                     extraPhone={extraPhone}
+                    prices={bookingPrices}
                   />
                 </AdvancedScrollAnimation>
               </div>

@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import axios from "axios";
+
+import { useState, useEffect } from "react";
 import {
   Search,
   Home,
@@ -10,13 +10,15 @@ import {
   X,
   User,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import Pagination from "../Pagination/PaginationAdmin";
+import axios from "axios";
+import Pagination from "../../../components/Admin/Pagination/PaginationAdmin";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
-import DetailModalHotel from "./more/DetailModalHotel";
-import EditModalHotel from "./more/EditModalHotel";
-import DeleteModalHotel from "./more/DeleteModalHotel";
-import ActionMenu from "./more/ActionMenu";
+import DetailModalHotel from "../../../components/Admin/HotelsManagement/more/DetailModalHotel";
+import EditModalHotel from "../../../components/Admin/HotelsManagement/more/EditModalHotel";
+import DeleteModalHotel from "../../../components/Admin/HotelsManagement/more/DeleteModalHotel";
+import ActionMenu from "../../../components/Admin/HotelsManagement/more/ActionMenu";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
 
@@ -35,6 +37,7 @@ interface Hotel {
 }
 
 const HotelsManagement = () => {
+  const router = useRouter();
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -103,7 +106,9 @@ const HotelsManagement = () => {
   };
 
   useEffect(() => {
-    fetchHotels();
+    const token = getToken();
+    if (!token) router.push("/login");
+    else fetchHotels();
   }, []);
 
   const filteredHotels = hotels.filter((hotel) => {
@@ -144,47 +149,47 @@ const HotelsManagement = () => {
     setHasBookings(hasExistingBookings);
     setIsDeleteOpen(true);
   };
-const confirmEdit = async (data: any) => {
-  if (!selectedHotel) return;
-  
-  setEditLoading(true);
-  const loadingToast = toast.loading("در حال ویرایش...");
-  
-  try {
-    const token = getToken();
+
+  const confirmEdit = async (data: any) => {
+    if (!selectedHotel) return;
     
-    const updateData: any = {};
-    if (data.title !== undefined) updateData.title = data.title;
-    if (data.address !== undefined) updateData.address = data.address;
-    if (data.price !== undefined) updateData.price = Number(data.price);
-    if (data.discounted_price !== undefined) updateData.discounted_price = data.discounted_price ? Number(data.discounted_price) : null;
-    if (data.rate !== undefined) updateData.rate = Number(data.rate); 
-    console.log("Updating hotel with data:", updateData);
+    setEditLoading(true);
+    const loadingToast = toast.loading("در حال ویرایش...");
     
-    const response = await axios.put(
-      `${API_BASE_URL}/admin/houses/${selectedHotel.id}`,
-      updateData,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    
-    if (response.status === 200 || response.status === 201) {
-      toast.success("هتل با موفقیت ویرایش شد", { id: loadingToast });
-      await fetchHotels();
-      setIsEditOpen(false);
-      setSelectedHotel(null);
-    } else {
-      throw new Error("خطا در ویرایش هتل");
+    try {
+      const token = getToken();
+      
+      const updateData: any = {};
+      if (data.title !== undefined) updateData.title = data.title;
+      if (data.address !== undefined) updateData.address = data.address;
+      if (data.price !== undefined) updateData.price = Number(data.price);
+      if (data.discounted_price !== undefined) updateData.discounted_price = data.discounted_price ? Number(data.discounted_price) : null;
+      if (data.rate !== undefined) updateData.rate = Number(data.rate); 
+      
+      const response = await axios.put(
+        `${API_BASE_URL}/admin/houses/${selectedHotel.id}`,
+        updateData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      if (response.status === 200 || response.status === 201) {
+        toast.success("هتل با موفقیت ویرایش شد", { id: loadingToast });
+        await fetchHotels();
+        setIsEditOpen(false);
+        setSelectedHotel(null);
+      } else {
+        throw new Error("خطا در ویرایش هتل");
+      }
+    } catch (error: any) {
+      console.error("Error editing hotel:", error);
+      const errorMessage = error.response?.data?.message || 
+                          error.response?.data?.error || 
+                          "خطا در ویرایش هتل";
+      toast.error(errorMessage, { id: loadingToast });
+    } finally {
+      setEditLoading(false);
     }
-  } catch (error: any) {
-    console.error("Error editing hotel:", error);
-    const errorMessage = error.response?.data?.message || 
-                        error.response?.data?.error || 
-                        "خطا در ویرایش هتل";
-    toast.error(errorMessage, { id: loadingToast });
-  } finally {
-    setEditLoading(false);
-  }
-};
+  };
 
   const confirmDelete = async () => {
     if (!selectedHotel) return;
@@ -264,7 +269,7 @@ const confirmEdit = async (data: any) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0887CAB2] mx-auto mb-4"></div>
           <p className="text-gray-600 dark:text-gray-400">در حال بارگذاری...</p>
@@ -274,18 +279,16 @@ const confirmEdit = async (data: any) => {
   }
 
   return (
-    <div dir="rtl" className="p-4 sm:p-6 space-y-4 sm:space-y-6  min-h-screen">
+    <div dir="rtl" className="p-4 sm:p-6 space-y-4 sm:space-y-6 min-h-screen">
+      {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
-                    <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 
-                dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 
-                rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 
-                shadow-lg shadow-gray-200/70 dark:shadow-none
-                border border-gray-200 dark:border-gray-700/50">
-  <h1 className="text-3xl font-bold text-gray-900 dark:text-white"> مشاهده و مدریت هتل ها  </h1>
-  <p className="text-gray-500 dark:text-gray-400 mt-2">   به مدیریت هتل ها خوش امدید</p>
-</div>
+        <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 shadow-lg shadow-gray-200/70 dark:shadow-none border border-gray-200 dark:border-gray-700/50">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">مشاهده و مدیریت هتل ها</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-2">به مدیریت هتل ها خوش آمدید</p>
+        </div>
       </AdvancedScrollAnimation>
 
+      {/* Search */}
       <AdvancedScrollAnimation type="slide-up" delay={0.2}>
         <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4">
           <div className="relative w-full sm:w-96">
@@ -310,6 +313,7 @@ const confirmEdit = async (data: any) => {
         </div>
       </AdvancedScrollAnimation>
 
+      {/* Table Header */}
       <AdvancedScrollAnimation type="fade" delay={0.3}>
         <div className="hidden md:flex items-center justify-between h-[64px] rounded-[16px] px-5 font-bold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 shadow-[0_0_8px] shadow-blue-300/30">
           <div className="w-[22%]">نام هتل</div>
@@ -321,11 +325,14 @@ const confirmEdit = async (data: any) => {
         </div>
       </AdvancedScrollAnimation>
 
+      {/* Hotels List */}
       <div className="flex flex-col gap-2">
         {paginatedHotels.length > 0 ? (
           paginatedHotels.map((hotel, idx) => (
             <AdvancedScrollAnimation key={hotel.id} type="slide-up" delay={0.4 + idx * 0.05} duration={0.4}>
               <div className="flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 rounded-[16px] bg-white dark:bg-gray-800 hover:shadow-lg transition-all shadow-[0_0_8px] shadow-blue-300/20">
+                
+                {/* Mobile View */}
                 <div className="flex flex-col gap-2 md:hidden">
                   <div className="flex items-center gap-2">
                     <Home size={16} className="text-gray-400" />
@@ -344,9 +351,9 @@ const confirmEdit = async (data: any) => {
                       <Star size={14} className="text-yellow-500 fill-yellow-500" />
                       <span className="text-gray-700 dark:text-gray-300">{hotel.rate}</span>
                     </span>
-                  </div>
-                  <div className="flex justify-between items-center">
                     <span className="text-[#0887CAB2] font-bold">{hotel.price?.toLocaleString()} تومان</span>
+                  </div>
+                  <div className="flex justify-end">
                     <ActionMenu
                       onEdit={() => handleEdit(hotel)}
                       onDelete={() => handleDelete(hotel)}
@@ -355,6 +362,7 @@ const confirmEdit = async (data: any) => {
                   </div>
                 </div>
 
+                {/* Desktop View */}
                 <div className="hidden md:flex md:items-center justify-between w-full">
                   <div className="w-[22%] flex items-center gap-2">
                     <Home size={16} className="text-gray-400" />
@@ -394,6 +402,7 @@ const confirmEdit = async (data: any) => {
         )}
       </div>
 
+      {/* Pagination */}
       {filteredHotels.length > 0 && totalPages > 1 && (
         <AdvancedScrollAnimation type="fade" delay={0.6}>
           <div className="flex justify-start pt-2">
@@ -406,6 +415,7 @@ const confirmEdit = async (data: any) => {
         </AdvancedScrollAnimation>
       )}
 
+      {/* Modals */}
       <DetailModalHotel 
         isOpen={isDetailOpen} 
         onClose={() => setIsDetailOpen(false)} 
