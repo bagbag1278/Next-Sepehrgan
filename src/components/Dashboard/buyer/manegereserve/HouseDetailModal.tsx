@@ -3,11 +3,15 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 import HouseDetail from "./HouseDetail";
+import { Booking } from "@/core/types/buyer/IBooking";
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  booking: Booking;
 }
-const HouseDetailModal = ({ isOpen, onClose }: ModalProps) => {
+
+const HouseDetailModal = ({ isOpen, onClose, booking }: ModalProps) => {
   if (typeof window === "undefined" || !isOpen) return null;
 
   const modalContent = (
@@ -25,7 +29,7 @@ const HouseDetailModal = ({ isOpen, onClose }: ModalProps) => {
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-183.25 rounded-2xl bg-[#F5F5F5] p-8 shadow-[0_0_10px] shadow-blue-300/15"
       >
-        <HouseDetail/>
+        <HouseDetail booking={booking} />
       </motion.div>
     </motion.div>
   );

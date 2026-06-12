@@ -1,4 +1,5 @@
 "use client";
+import AvatarSlider from "@/components/Dashboard/buyer/info/AvatarSlider";
 import EditForm from "@/components/Dashboard/buyer/info/EditForm";
 import ImageUploader from "@/components/Dashboard/buyer/info/ImageUploader";
 import { AnimatePresence, motion } from "framer-motion";
@@ -10,13 +11,13 @@ const BuyerInfoPage = () => {
     "/FastReserve/images.jfif",
   );
 
-  // تابعی که ImageUploader برای به‌روزرسانی عکس صدا می‌زند
+
   const handleImageUpdate = (newImageSrc: string) => {
     setCurrentImageSrc(newImageSrc);
   };
   return (
     <div>
-      <div className="w-82.5 h-80.25 flex flex-col gap-6">
+      <div className="w-82.5 flex flex-col gap-6">
         <h2 className="font-bold">عکس نمایه شما</h2>
         {/*  */}
         <div className="flex gap-6 items-center h-32.5">
@@ -28,7 +29,7 @@ const BuyerInfoPage = () => {
                 width={130}
                 height={130}
                 alt="Current profile picture"
-                className="rounded-full object-cover" // object-cover برای اینکه عکس خوب دیده شود
+                className="rounded-full object-cover"
               />
             ) : (
               <div className="">No Image</div>
@@ -44,6 +45,7 @@ const BuyerInfoPage = () => {
         </div>
 
         {/*  */}
+        <AvatarSlider/>
       </div>
       {/* dfghj */}
       <AnimatePresence mode="wait">

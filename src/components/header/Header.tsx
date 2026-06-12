@@ -4,7 +4,8 @@ import HeroSction2 from "./Icon/HeaderIcon2";
 import HeaderIcon3 from "./Icon/HeaderIcon3";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-
+import Image from "next/image";
+import Cookies from "js-cookie";
 const nav = [
   { title: "صفحه اصلی", href: "/" },
   { title: "رزرو سریع", href: "/housereserve" },
@@ -15,8 +16,8 @@ const nav = [
 
 const Header = () => {
   const pathname = usePathname();
+  const isLoggedIn = Cookies.get("isLoggedIn") === "true";
   return (
-    
     <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center xl:block">
       <div
         dir="rtl"
@@ -28,8 +29,11 @@ const Header = () => {
               item.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(item.href);
-                
-            if (item.title === "رزرو سریع" && pathname.startsWith("/housereserve")) {
+
+            if (
+              item.title === "رزرو سریع" &&
+              pathname.startsWith("/housereserve")
+            ) {
               isActive = true;
             }
             if (
@@ -47,7 +51,7 @@ const Header = () => {
                 <span
                   className={`text-[16px] font-medium transition-all duration-300 ${
                     isActive
-                      ? "text-[#28A5E6] mb-3" 
+                      ? "text-[#28A5E6] mb-3"
                       : "text-black dark:text-white"
                   }`}
                 >
@@ -73,17 +77,33 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="w-69.5 h-12 xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden  hidden ">
-          <Link href="/login">
-            <div className="text-blue-100 font-bold  cursor-pointer z-20 relative text-[18px] dark:text-[#28A5E6] ">
-              ورود
+        <div className="w-69.5 h-12 xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden hidden">
+          {isLoggedIn  ? (
+            <div className="ml-25 relative z-40 overflow-hidden cursor-pointer shadow-[8px_0px_20px_rgba(8,135,202,0.30)] size-14 rounded-full">
+              <Link href="/dashboard/buyer">
+                <Image
+                  src="/FastReserve/images.jfif"
+                  width={56}
+                  height={56}
+                  alt="profile"
+                />
+              </Link>
             </div>
-          </Link>
-          <Link className="z-20" href="/register">
-            <button className="bg-[#F5F5F5]  shadow-[8px_0px_20px_rgba(8,135,202,0.30)]  border-gray-200 w-35 h-12 rounded-2x1 text-blue-100 dark:text-[#28A5E6] font-bold cursor-pointer text-[18px] rounded-2xl ml-14">
-              ثبت نام
-            </button>
-          </Link>
+          ) : (
+            <>
+              <Link href="/login">
+                <div className="text-blue-100 font-bold cursor-pointer z-20 relative text-[18px] dark:text-[#28A5E6]">
+                  ورود
+                </div>
+              </Link>
+
+              <Link className="z-20" href="/register">
+                <button className="bg-[#F5F5F5] shadow-[8px_0px_20px_rgba(8,135,202,0.30)] border-gray-200 w-35 h-12 rounded-2xl text-blue-100 dark:text-[#28A5E6] font-bold cursor-pointer text-[18px] ml-14">
+                  ثبت نام
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

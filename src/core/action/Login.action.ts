@@ -1,9 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { loginApi } from "../api/Login.api";
+
 import { LoginApiResponse } from "../types/ILogin";
+import { loginApi } from "../api/auth/Login.api";
 
 export type ActionState = {
   success?: boolean;
@@ -31,20 +31,33 @@ export async function loginAction(
 
     const cookieStore = await cookies();
 
-    cookieStore.set("accessToken", data.accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    });
+    const accessTokenMaxAge = 60 * 15; // 15 دقیقه
 
-    cookieStore.set("refreshToken", data.refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-    });
+    const refreshTokenMaxAge = 60 * 60 * 24 * 30; // 30 روز
 
+cookieStore.set("accessToken", data.accessToken, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  path: "/",
+  maxAge: accessTokenMaxAge,
+});
+
+cookieStore.set("refreshToken", data.refreshToken, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  path: "/",
+  maxAge: refreshTokenMaxAge,
+});
+
+cookieStore.set("isLoggedIn", "true", {
+  httpOnly: false,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  path: "/",
+  maxAge: refreshTokenMaxAge,
+});
 
     return { ...prevState, success: true, message: "خوش آمدید" };
   } catch (error: any) {

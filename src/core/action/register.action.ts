@@ -2,7 +2,8 @@
 
 import { cookies } from "next/headers";
 import { CompleteRegistrationRequest } from "../types/IRegister";
-import { completeRegistrationApi } from "../api/Register.api";
+import { completeRegistrationApi } from "../api/auth/Register.api";
+
 
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 

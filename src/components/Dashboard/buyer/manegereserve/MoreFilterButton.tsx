@@ -11,7 +11,7 @@ const MoreFilterButton = () => {
         onClick={() => {
           setIsOpen(true);
         }}
-        className="w-37 border outline-0 border-blue-300/70 dark:bg-white rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 flex justify-center gap-1 items-center text-sm p-2"
+        className="w-37 border outline-0  border-blue-300/70 dark:border-blue-300 rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 dark:text-blue-300 flex justify-center gap-1 items-center text-sm p-2"
         type="button"
       >
         {/* SVG icon */}

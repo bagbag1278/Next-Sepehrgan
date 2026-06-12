@@ -1,17 +1,32 @@
+"use client";
+
 import React from "react";
 
-const FavoriteSearch = () => {
+interface FavoriteSearchProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const FavoriteSearch = ({
+  value,
+  onChange,
+}: FavoriteSearchProps) => {
   return (
     <div>
-      <form className="relative">
+      <form
+        className="relative"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <input
           type="search"
           name="house"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
           placeholder="نام ملک مورد نظر ...."
-          className="w-112.5 h-12 text-sm border placeholder:text-blue-300/70 border-blue-300/70 dark:bg py-1 px-4 outline-0 text-blue-300 rounded-2xl"
+          className="w-112.5 h-12 text-sm border dark:border-blue-300 placeholder:text-blue-300/70 border-blue-300/70 py-1 px-4 outline-0 text-blue-300 rounded-2xl"
         />
 
-        <div className="absolute top-3.5 left-4 bg-[#f5f5f5] dark:bg-slate-600 pointer-events-none">
+        <div className="absolute top-3.5 left-4 bg-[#f5f5f5] dark:bg-slate-900 pointer-events-none">
           <svg
             width="19"
             height="19"

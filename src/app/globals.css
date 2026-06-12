@@ -23,7 +23,7 @@
       --color-foreground: var(--foreground);
       --font-sans: var(--font-geist-sans);
       --font-mono: var(--font-geist-mono);
-            --color-blue-100: #10088F;
+      --color-blue-100: #10088F;
       --color-blue-200: #005EA4;
       --color-blue-300: #0887CA;
       --color-green-100: #15977D;
@@ -54,7 +54,22 @@
 .swiper-button-next {
   display: none;
 }
+.avatar-swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.avatar-swiper .swiper-slide img {
+  width: 58px;
+  height: 58px;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
 
+.avatar-swiper .swiper-slide-active img {
+  width: 92px;
+  height: 92px;
+}
 @media (min-width: 1024px) {
 
   .swiper-button-prev,

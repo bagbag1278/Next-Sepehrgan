@@ -4,7 +4,7 @@ const FavoriteFilterButtun = () => {
   return (
     <div>
       <button
-        className="w-37 border outline-0 border-blue-300/70 dark:bg-white rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 text-blue-300/70 h-12 flex justify-center text-nowrap gap-1 items-center text-sm p-2.5"
+        className="w-37 border outline-0 border-blue-300/70 dark:border-blue-300 rounded-2xl font-normal cursor-pointer hover:border-2 transition-colors duration-150 dark:text-blue-300 text-blue-300/70 h-12 flex justify-center text-nowrap gap-1 items-center text-sm p-2.5"
         type="button"
       >
         {/* SVG icon */}

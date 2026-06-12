@@ -13,19 +13,19 @@ const ImageUploader = ({ onImageUpdate, initialImageSrc }: { onImageUpdate: (src
       const reader = new FileReader();
       reader.onload = (e) => {
         const newImageSrc = e.target?.result as string;
-        onImageUpdate(newImageSrc); // عکس جدید را به والد پاس می‌دهیم
+        onImageUpdate(newImageSrc); 
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleButtonClick = () => {
-    // با استفاده از ref روی input file کلیک می‌کنیم
+  
     fileInputRef.current?.click();
   };
 
   return (
-    <div className=""> {/* اضافه کردن justify-center */}
+    <div className=""> 
       
       <input
         type="file"
@@ -38,7 +38,7 @@ const ImageUploader = ({ onImageUpdate, initialImageSrc }: { onImageUpdate: (src
       
       <button
         onClick={handleButtonClick}
-        className="border-2 px-7 py-2 border-dashed text-sm border-blue-200 text-blue-200 rounded-2xl"
+        className="border-2 px-7 py-2 shadow-[0_0_10px] shadow-blue-300/20 border-dashed text-sm dark:border-blue-300 dark:text-blue-300 border-blue-200 text-blue-200 rounded-2xl"
       >
         {initialImageSrc ? 'تغییر عکس' : 'تغییر عکس'} 
       </button>
