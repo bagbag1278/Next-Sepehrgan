@@ -2,6 +2,7 @@
 
 import React, {
     useEffect,
+    useMemo,
     useRef,
     useState
 } from 'react'
@@ -17,28 +18,62 @@ import {
     Trash2,
     PlusCircleIcon,
     PlusIcon,
+    ParenthesesIcon,
+    LucideParentheses,
 } from 'lucide-react'
-
 import CirclesIcon from '../Icon/CirclesIcon'
-import PlaceholderIco from '../Icon/PlaceholderIco'
-import LoadingIco from '../Icon/LoadingIco'
-import CalenderIco from '../Icon/CalenderIco'
-import ClickBoardIco from '../Icon/ClickBoardIco'
 import FilterSec from './FilterSec'
 import Link from 'next/link'
 
-const stats = [
-    { label: 'کل املاک', value: '۵', icon: <ClickBoardIco /> },
-    { label: 'رزرو های فعال', value: '۸', icon: <CalenderIco /> },
-    { label: 'رزرو های انتظار', value: '۹', icon: <LoadingIco /> },
-    { label: 'بازدید ها', value: '۲', icon: <PlaceholderIco /> },
-]
+import GetHousesUser, { IHouse } from "@/core/api/DashboardSeller/GetHousesUser";
+import DeleteHouseModal from "../DeleteHouse/DeleteHouseModal";
+import DeleteHouse from "@/core/api/DashboardSeller/DeleteHouse";
+import toast from "react-hot-toast";
+import formatDate from '@/components/Untils/FormData'
+import EditHouseModal from '../EditHouse/EditHouseModal'
+import UpdateHouse from '@/core/api/DashboardSeller/UpdateHouse'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+
 
 const HosueManagement = () => {
 
+    const [houses, setHouses] = useState<IHouse[]>([]);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [selectedHouseId, setSelectedHouseId] = useState<number | null>(null);
     const [openMenu, setOpenMenu] = useState<number | null>(null)
-
     const menuRef = useRef<HTMLDivElement | null>(null)
+    const [totalCount, setTotalCount] = useState(0);
+    const [editModal, setEditModal] = useState(false);
+    const [selectedHouse, setSelectedHouse] = useState<IHouse | null>(null);
+
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const searchParams = useSearchParams();
+
+
+
+    // For Api     
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const data =
+                await GetHousesUser();
+
+            setHouses(data.houses);
+
+            setTotalCount(
+                data.totalCount
+            );
+
+        };
+
+        fetchData();
+
+    }, []);
+
+
 
     // close modal on outside click
     useEffect(() => {
@@ -76,6 +111,154 @@ const HosueManagement = () => {
 
     }, [])
 
+    // Handle Section
+
+    const handleDelete = async () => {
+
+        if (!selectedHouseId) return;
+
+        try {
+
+            await DeleteHouse(
+                selectedHouseId
+            );
+
+            setHouses((prev) =>
+                prev.filter(
+                    (house) =>
+                        Number(house.id) !==
+                        selectedHouseId
+                )
+            );
+
+            toast.success(
+                "ملک حذف شد"
+            );
+
+        } catch (error) {
+
+            console.log(error);
+
+            toast.error(
+                "حذف ناموفق بود"
+            );
+
+        } finally {
+
+            setDeleteModal(false);
+
+        }
+
+    };
+
+    const handleSearchChange = (
+        value: string
+    ) => {
+
+        const params =
+            new URLSearchParams(
+                searchParams.toString()
+            );
+
+        if (value.trim()) {
+
+            params.set(
+                "search",
+                value
+            );
+
+        } else {
+
+            params.delete(
+                "search"
+            );
+
+        }
+
+        router.replace(
+            `${pathname}?${params.toString()}`,
+            {
+                scroll: false
+            }
+        );
+
+    };
+
+    // Handle Update 
+    const handleUpdate =
+        async (data: any) => {
+
+            if (!selectedHouse)
+                return;
+
+            try {
+
+                await UpdateHouse(
+                    Number(
+                        selectedHouse.id
+                    ),
+                    data
+                );
+
+                //    Update
+                setHouses((prev) =>
+                    prev.map((house) =>
+
+                        Number(house.id) ===
+                            Number(selectedHouse.id)
+
+                            ? {
+                                ...house,
+                                ...data,
+                            }
+
+                            : house
+                    )
+                );
+
+                toast.success(
+                    "ملک بروزرسانی شد"
+                );
+
+                setEditModal(false);
+
+            } catch (error) {
+
+                console.log(error);
+
+                toast.error(
+                    "ویرایش ناموفق بود"
+                );
+
+            }
+
+        };
+
+    const search = searchParams.get("search") || "";
+
+    const filteredHouses = useMemo(() => {
+
+        return houses.filter(
+            (house) => {
+
+                if (!search.trim())
+                    return true;
+
+                return house.title
+                    .toLowerCase()
+                    .includes(
+                        search.toLowerCase()
+                    );
+
+            }
+        );
+
+    }, [
+        houses,
+        search
+    ]);
+
+
     return (
 
         <div
@@ -101,7 +284,7 @@ const HosueManagement = () => {
                     </div>
 
                     <div
-                        className='text-blue-500
+                        className='text-blue-200  dark:text-blue-500
                         text-[18px] font-bold'
                     >
                         مدیریت املاک
@@ -132,18 +315,22 @@ const HosueManagement = () => {
                         <span>لیست املاک من</span>
 
                         <div className='text-gray-500'>
-                            (28)
+                            ({totalCount})
                         </div>
 
                     </div>
+                    <FilterSec
+                        search={search}
+                        onSearch={handleSearchChange}
 
-                    <FilterSec />
+                    />
 
                 </div>
 
-                {/* table */}
+
+                {/* main */}
                 <div
-                    className='w-full h-90
+                    className='w-full h-90 
                     bg-gray-50/50 dark:bg-slate-900
                     rounded-2xl
                     border border-gray-100
@@ -152,278 +339,243 @@ const HosueManagement = () => {
 
                     {/* table header */}
                     <div
-                        className='flex justify-center
-                        bg-white dark:bg-slate-800
-                        mx-2 rounded-xl shadow-sm
-                        border border-gray-100
-                        dark:border-slate-700
-                        px-6 py-4
-                        text-gray-500 dark:text-gray-300
-                        text-sm'
+                        className='flex justify-start bg-white dark:bg-slate-800 mx-2 mt-1.5 rounded-xl shadow-sm
+                        border border-gray-100 text-sm
+                        dark:border-slate-700 px-6 py-4 text-gray-500 dark:text-gray-300'
                     >
 
-                        <div
-                            className='w-198.5
-                            flex justify-between'
-                        >
+                        <div className='w-220.5 flex justify-between'>
 
-                            <span className='w-31'>
+                            <span className=''>
                                 نام اقامتگاه
                             </span>
+                            <div className='w-180 flex justify-around '>
 
-                            <span className='w-20'>
-                                قیمت
-                            </span>
+                                <span className='w-25'>
+                                    قیمت
+                                </span>
 
-                            <span>امتیازات</span>
+                                <span>امتیازات</span>
 
-                            <span>بازدیدها</span>
+                                <span>بازدیدها</span>
 
-                            <span>رزورها</span>
+                                <span>رزورها</span>
 
-                            <span className='w-20'>
-                                وضعیت
-                            </span>
+                                <span className='w-20'>
+                                    وضعیت
+                                </span>
+                            </div>
 
                         </div>
 
                     </div>
 
+
+
                     {/* table rows */}
                     <div className='h-90 overflow-hidden'>
 
-                        {
-                            [1, 2, 3, 4].map((row) => (
+                        {/* edit */}
 
-                                <div
-                                    key={row}
-                                    className='
-                                    flex items-center
-                                    flex-row-reverse justify-between
-                                    px-4 py-3 mt-2 mx-2 mb-2
-                                    bg-white dark:bg-slate-800
-                                    rounded-xl shadow-sm
-                                    border border-gray-100
-                                    dark:border-slate-700
-                                    transition-all duration-200
-                                    hover:bg-gray-50
-                                    dark:hover:bg-slate-700/40
-                                    hover:border-blue-500/40'
-                                >
+                        {filteredHouses.map((house) => (
 
-                                    {/* action menu */}
-                                    <div className='relative'>
+                            <div
+                                key={house.id}
+                                className='
+                                flex items-center 
+                                flex-row-reverse justify-between
+                                px-4 py-3 mt-2 mx-2 mb-2
+                                bg-white dark:bg-slate-800
+                                rounded-xl shadow-sm
+                                border border-gray-100
+                                dark:border-slate-700
+                                transition-all duration-200
+                                hover:bg-gray-50
+                                dark:hover:bg-slate-700/40
+                                hover:border-blue-500/40'
+                            >
 
-                                        {/* menu button */}
-                                        <button
-                                            onClick={() =>
-                                                setOpenMenu(
-                                                    openMenu === row
-                                                        ? null
-                                                        : row
-                                                )
-                                            }
-                                        >
+                                {/* action menu */}
+                                <div className='relative'>
 
-                                            <MoreVertical
-                                                size={16}
-                                                className='
-                                                text-gray-400
-                                                dark:text-gray-300
-                                                cursor-pointer'
-                                            />
+                                    {/* menu button */}
+                                    <button
+                                        onClick={() =>
+                                            setOpenMenu(
+                                                openMenu === Number(house.id)
+                                                    ? null
+                                                    : Number(house.id)
+                                            )
+                                        }
+                                    >
 
-                                        </button>
+                                        <MoreVertical
+                                            size={16}
+                                            className='
+                    text-gray-400
+                    dark:text-gray-300
+                    cursor-pointer'
+                                        />
 
-                                        {/* dropdown modal */}
-                                        {
-                                            openMenu === row && (
+                                    </button>
 
-                                                <div
-                                                    ref={menuRef}
-                                                    className='absolute
-                                                    -top-6 left-0
-                                                    w-37.5
-                                                    h-37.5
-                                                    rounded-[28px]
-                                                    bg-white
-                                                    dark:bg-slate-800
-                                                    shadow-[0_0_15px_rgba(0,0,0,0.08)]
-                                                    border border-gray-100
-                                                    dark:border-slate-700
-                                                    z-50 p-4'
-                                                >
+                                    {/* dropdown modal */}
+                                    {
+                                        openMenu === Number(house.id) && (
 
-                                                    <div
-                                                        className='flex
-                                                        flex-col
-                                                        justify-between
-                                                        h-full'
+                                            <div
+                                                ref={menuRef}
+                                                className='absolute
+                        -top-6 left-0
+                        w-37.5
+                        h-37.5
+                        rounded-[28px]
+                        bg-white
+                        dark:bg-slate-800
+                        shadow-[0_0_15px_rgba(0,0,0,0.08)]
+                        border border-gray-100
+                        dark:border-slate-700
+                        z-50 p-4'
+                                            >
+
+                                                <div className='flex flex-col justify-between h-full' >
+
+                                                    {/* active */}
+                                                    <button
+                                                        className='w-full h-10 rounded-2xl bg-blue-500 text-white 
+                                                        flex items-center justify-center gap-2 text-sm'
                                                     >
 
-                                                        {/* active */}
-                                                        <button
-                                                            className='
-                                                            w-full h-10
-                                                            rounded-2xl
-                                                            bg-blue-500
-                                                            text-white
-                                                            flex items-center
-                                                            justify-center
-                                                            gap-2 text-sm'
-                                                        >
+                                                        فعال کردن
 
-                                                            فعال کردن
+                                                        <CheckCircle2
+                                                            size={16}
+                                                        />
 
-                                                            <CheckCircle2
-                                                                size={16}
-                                                            />
+                                                    </button>
 
-                                                        </button>
+                                                    {/* edit */}
+                                                    <button
+                                                        onClick={() => {
 
-                                                        {/* edit */}
-                                                        <button
-                                                            className='
-                                                            flex items-center
-                                                            justify-center
-                                                            gap-2 text-sm
-                                                            text-[#1E1B4B]
-                                                            dark:text-white'
-                                                        >
+                                                            setSelectedHouse(house);
 
-                                                            ویرایش
+                                                            setEditModal(true);
 
-                                                            <Pencil
-                                                                size={18}
-                                                            />
+                                                            setOpenMenu(null);
 
-                                                        </button>
+                                                        }}
+                                                        className='flex items-center justify-center text-sm 
+                                                        text-[#1E1B4B] dark:text-white'
+                                                    >
+                                                        ویرایش
 
-                                                        {/* delete */}
-                                                        <button
-                                                            className='
-                                                            flex items-center
-                                                            justify-center
-                                                            gap-2 text-sm
-                                                            text-pink-500'
-                                                        >
+                                                        <Pencil size={18} />
+                                                    </button>
 
-                                                            حذف
-
-                                                            <Trash2
-                                                                size={18}
-                                                            />
-
-                                                        </button>
-
-                                                    </div>
+                                                    {/* delete */}
+                                                    <button
+                                                        onClick={() => {
+                                                            setSelectedHouseId(
+                                                                Number(house.id)
+                                                            );
+                                                            setDeleteModal(true);
+                                                            setOpenMenu(null);
+                                                        }}
+                                                        className="flex items-center justify-center
+                                                        gap-1 text-sm text-pink-500"
+                                                    >
+                                                        حذف
+                                                        <Trash2 size={16} />
+                                                    </button>
 
                                                 </div>
 
-                                            )
-                                        }
+                                            </div>
 
-                                    </div>
-
-                                    {/* status */}
-                                    <div className='text-green-500'>
-
-                                        {
-                                            row === 1 ? (
-
-                                                <CheckCircle2 />
-
-                                            ) : row === 2 ? (
-
-                                                <MinusCircle
-                                                    className='text-orange-400'
-                                                />
-
-                                            ) : (
-
-                                                <XCircle
-                                                    className='text-red-500'
-                                                />
-
-                                            )
-                                        }
-
-                                    </div>
-
-                                    {/* reserve */}
-                                    <span
-                                        className='text-sm
-                                        text-gray-600
-                                        dark:text-gray-300'
-                                    >
-                                        ۵بار
-                                    </span>
-
-                                    {/* views */}
-                                    <span
-                                        className='flex gap-0.5
-                                        text-sm text-gray-600
-                                        dark:text-gray-300'
-                                    >
-
-                                        <EyeIcon size={16} />
-
-                                        9
-
-                                    </span>
-
-                                    {/* score */}
-                                    <span
-                                        className='flex gap-0.5
-                                        text-sm text-gray-600
-                                        dark:text-gray-300'
-                                    >
-
-                                        <StarIcon size={16} />
-
-                                        <span>9</span>
-
-                                    </span>
-
-                                    {/* price */}
-                                    <span
-                                        className='text-blue-800
-                                        dark:text-blue-400
-                                        font-medium text-sm'
-                                    >
-                                        ۱,۸۰۰,۰۰۰ تومان
-                                    </span>
-
-                                    {/* property */}
-                                    <div
-                                        className='flex
-                                        items-center gap-2'
-                                    >
-
-                                        <div
-                                            className='w-10 h-10
-                                            bg-gray-200
-                                            dark:bg-slate-700
-                                            rounded-lg overflow-hidden'
-                                        >
-
-                                           
-                                        </div>
-
-                                        <span
-                                            className='text-sm
-                                            text-gray-800
-                                            dark:text-gray-200'
-                                        >
-                                            هتل سراوان را...
-                                        </span>
-
-                                    </div>
+                                        )
+                                    }
 
                                 </div>
 
-                            ))
-                        }
+                                {/* status */}
+                                <div className='text-green-500'>
+
+                                    <CheckCircle2 />
+
+                                </div>
+
+                                {/* comments */}
+                                <span
+                                    className='text-sm
+            text-gray-600
+            dark:text-gray-300'
+                                >
+                                    {house.num_comments} نظر
+                                </span>
+
+                                {/* rate */}
+                                <span
+                                    className='flex gap-0.5
+            text-sm text-gray-600
+            dark:text-gray-300'
+                                >
+
+                                    <StarIcon size={16} />
+
+                                    <span>
+                                        {house.rate || 0}
+                                    </span>
+
+                                </span>
+
+                                {/* date */}
+                                <span
+                                    className='text-sm
+                                    text-gray-600
+                                    dark:text-gray-300'
+                                >
+                                    {house.last_updated
+                                        ? formatDate(house.last_updated)
+                                        : "تاریخ نامشخص"}
+                                </span>
+
+                                {/* price */}
+                                <span className='text-blue-800 dark:text-blue-400 font-medium text-sm'>
+                                    {Number(house.price)
+                                        .toLocaleString("fa-IR")} تومان
+                                </span>
+
+                                {/* property */}
+                                <div className='flex items-center gap-2'>
+
+                                    <div
+                                        className='w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded-lg overflow-hidden'
+                                    >
+
+                                        {
+                                            house.photos?.[0] && (
+
+                                                <img
+                                                    src={house.photos[0]}
+                                                    alt={house.title}
+                                                    className='w-full h-full object-cover'
+                                                />
+                                            )
+                                        }
+
+                                    </div>
+
+                                    <span className='text-sm text-gray-800 dark:text-gray-200'
+                                    >
+                                        {house.title}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        ))}
 
                     </div>
 
@@ -450,6 +602,23 @@ const HosueManagement = () => {
 
 
             </div>
+
+            <DeleteHouseModal
+                open={deleteModal}
+                onClose={() =>
+                    setDeleteModal(false)
+                }
+                onDelete={handleDelete}
+            />
+
+            <EditHouseModal
+                open={editModal}
+                onClose={() =>
+                    setEditModal(false)
+                }
+                house={selectedHouse}
+                onSubmit={handleUpdate}
+            />
 
         </div>
     )

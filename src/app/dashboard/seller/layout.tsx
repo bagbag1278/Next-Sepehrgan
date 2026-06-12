@@ -35,7 +35,7 @@ export default async function SellerLayout({children,}: IChildren) {
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6"
+      className="min-h-screen  bg-gray-50 dark:bg-gray-900 p-6"
     >
       {/* دسکتاپ */}
       <div className="hidden lg:grid grid-cols-[280px_1fr] gap-6">
@@ -79,7 +79,7 @@ export default async function SellerLayout({children,}: IChildren) {
         </header>
 
         {/* محتوا */}
-        <main className="w-255 h-155 rounded-tl-[40px] rounded-br-[40px] shadow-[0_0_8px] shadow-blue-300/15 dark:shadow-blue-500/5 bg-white dark:bg-blue-400 p-4 sm:p-6">
+        <main className="w-255 rounded-tl-[40px] rounded-br-[40px] shadow-[0_0_8px] shadow-blue-300/15 dark:shadow-blue-500/5 bg-white dark:bg-blue-400 p-4 sm:p-6">
           {children}
         </main>
       </div>

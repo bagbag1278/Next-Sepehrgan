@@ -1,15 +1,88 @@
 "use client";
 
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CirclesIcon from '../Icon/CirclesIcon'
 import FilterSec from '../MyHosueLits/FilterSec'
-import { CheckCircle2, EyeIcon, MinusCircle, MoreVertical, Pencil, StarIcon, Trash2, XCircle } from 'lucide-react'
+import {
+    CheckCircle2, EyeIcon, MinusCircle, MoreVertical,
+    Pencil, StarIcon, Trash2, XCircle
+} from 'lucide-react'
+import GetBookingsCustomers from '@/core/api/DashboardSeller/GetBookingsCustomers';
 
 const ReserveManage = () => {
 
     const [openMenu, setOpenMenu] = useState<number | null>(null)
-
     const menuRef = useRef<HTMLDivElement | null>(null)
+
+    const [bookings, setBookings] = useState([]);
+    const [totalCount, setTotalCount] = useState(0);
+    const [page, setPage] = useState(1);
+    const [status, setStatus] = useState("");
+    const [houseId, setHouseId] = useState<number | undefined>();
+
+    // get api 
+    useEffect(() => {
+
+        const fetchBookings = async () => {
+
+            try {
+
+                const data = await GetBookingsCustomers({
+
+                    bookingId: 1, // فعلاً تستی
+
+                    page,
+
+                    limit: 10,
+
+                    status,
+
+                    houseId,
+
+                    sort: "created_at",
+
+                    order: "DESC",
+
+                });
+
+                console.log(
+                    JSON.stringify(
+                        data,
+                        null,
+                        2
+                    )
+                );
+
+                console.log(data);
+
+                setBookings(
+                    data.bookings ||
+                    data.data ||
+                    []
+                );
+
+                setTotalCount(
+                    data.totalCount ||
+                    data.total ||
+                    0
+                );
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        };
+
+        fetchBookings();
+
+    }, [
+        page,
+        status,
+        houseId,
+    ]);
+
     return (
         <div>
             {/* PAGE TITLE */}
@@ -19,7 +92,7 @@ const ReserveManage = () => {
                     <CirclesIcon />
                 </div>
 
-                <div className="dark:text-blue-500 text-blue-400 text-[18px] font-bold" >
+                <div className=" dark:text-blue-500 text-blue-200 text-[18px] font-bold" >
                     داشبورد
                 </div>
 
@@ -49,12 +122,14 @@ const ReserveManage = () => {
 
                 </div>
 
-                <FilterSec />
+                {/* <FilterSec /> */}
 
             </div>
 
+
+
             <div
-                className='flex justify-center
+                className='flex justify-center h-16 items-center
                         bg-white dark:bg-slate-800
                         mx-2 rounded-xl shadow-sm
                         border border-gray-100
@@ -95,7 +170,7 @@ const ReserveManage = () => {
             </div>
 
             {/* table rows */}
-            <div className='h-90 overflow-hidden'>
+            <div className='h-90  overflow-hidden'>
 
                 {
                     [1, 2, 3, 4].map((row) => (
@@ -103,9 +178,9 @@ const ReserveManage = () => {
                         <div
                             key={row}
                             className='
-                                    flex items-center
-                                    flex-row-reverse justify-between
-                                    px-4 py-3 mt-2 mx-2 mb-2
+                                    flex items-center 
+                                    flex-row-reverse justify-around
+                                     h-16 mt-2 mx-2 mb-2
                                     bg-white dark:bg-slate-800
                                     rounded-xl shadow-sm
                                     border border-gray-100
@@ -255,7 +330,7 @@ const ReserveManage = () => {
 
                             </div>
 
-                                {/* reserve status */}
+                            {/* reserve status */}
                             <div className='text-green-500'>
 
                                 {
@@ -346,6 +421,7 @@ const ReserveManage = () => {
                 }
 
             </div>
+
 
         </div>
     )

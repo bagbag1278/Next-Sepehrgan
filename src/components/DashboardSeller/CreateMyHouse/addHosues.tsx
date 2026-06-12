@@ -15,6 +15,8 @@ import {
     MapPinned,
     Sparkles
 } from "lucide-react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 import CirclesIcon from "@/components/DashboardSeller/Icon/CirclesIcon";
 
@@ -28,8 +30,8 @@ import ToEnglishNumber from "@/components/Untils/ToEnglishNumber";
 const AddHousePage = () => {
 
     const [step, setStep] = useState(1);
-
     const [image, setImage] = useState<string | null>(null);
+    const router = useRouter();
 
     const [formData, setFormData] = useState({
         title: "",
@@ -105,44 +107,48 @@ const AddHousePage = () => {
 
     const handleSubmit = async () => {
 
-        const body = {
-            title: formData.title,
-            address: formData.location.address,
-            price: ToEnglishNumber(formData.price),
-            tags: amenities.tags,
-            capacity: ToEnglishNumber(formData.capacity),
-
-            location: {
-                lat: formData.location.lat,
-                lng: formData.location.lng,
-            },
-
-            categories: {
-                name: formData.propertyType,
-            },
-
-            bathrooms: Number(amenities.bathrooms),
-            parking: Number(amenities.parking),
-            rooms: Number(amenities.rooms),
-
-            yard_type: amenities.yard_type,
-
-            transaction_type: formData.transaction_type,
-
-            caption: formData.caption,
-        };
-
-        console.log("BODY =>", body);
-
         try {
 
-            const data = await CreateHouse(body);
+            const body = {
+                title: formData.title,
+                address: formData.location.address ||  "آدرس ثبت نشده",
+                price: Number(ToEnglishNumber(formData.price)),
+                tags: amenities.tags,
+                capacity: Number(ToEnglishNumber(formData.capacity)),
 
-            console.log("SUCCESS =>", data);
+                location: {
+                    lat: formData.location.lat,
+                    lng: formData.location.lng,
+                },
 
-        } catch (err) {
+                categories: {
+                    name: formData.propertyType,
+                },
 
-            console.log("ERROR =>", err);
+                bathrooms: Number(amenities.bathrooms),
+                parking: Number(amenities.parking),
+                rooms: Number(amenities.rooms),
+
+                yard_type: amenities.yard_type,
+
+                transaction_type: formData.transaction_type,
+
+                caption: formData.caption,
+            };
+
+            const response = await CreateHouse(body);
+
+            console.log("SUCCESS =>", response);
+
+            toast.success("آگهی با موفقیت ثبت شد");
+
+            router.push("/dashboard/seller/housemanegement");
+
+        } catch (error) {
+
+            console.log("ERROR =>", error);
+
+            toast.error("ثبت آگهی ناموفق بود");
 
         }
 
@@ -246,7 +252,7 @@ const AddHousePage = () => {
                             <CirclesIcon />
                         </div>
 
-                        <div className="text-blue-500 text-[18px] font-bold">
+                        <div className="text-blue-200  dark:text-blue-500 text-[18px] font-bold">
                             مدیریت املاک
                         </div>
 

@@ -60,12 +60,6 @@ const MenuItems = [
         label: 'مدیریت نظرات',
         href: '/dashboard/seller/commentmanegement',
     },
-    {
-        id: 8,
-        icon: Settings,
-        label: 'اعلان ها',
-        href: '/dashboard/seller/notifications',
-    },
 ]
 
 const Sidebar = () => {

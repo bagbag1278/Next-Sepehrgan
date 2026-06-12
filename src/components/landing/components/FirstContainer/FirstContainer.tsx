@@ -6,7 +6,7 @@ import BigArrowIcon from '../../Icon/FirstContainer/BigArrowIcon'
 
 const FirstContainer = () => {
     return (
-        <div className='w-full flex justify-center '>
+        <div className='w-full flex justify-center'>
             <div className=' w-full hidden sm:flex justify-center '>
                 <div className='w-330.75  relative'>
                     {/* ///// */}
