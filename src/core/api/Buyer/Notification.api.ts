@@ -1,4 +1,5 @@
-import { cookies } from "next/headers";
+import { serverFetch } from "@/core/interceptor/serverFetch";
+
 
 export async function getNotifications(
   userId: number,
@@ -6,9 +7,7 @@ export async function getNotifications(
   page: number = 1,
   limit: number = 4
 ) {
-  const cookieStore = await cookies();
   const query = new URLSearchParams();
-
   query.append("page", String(page));
   query.append("limit", String(limit));
   query.append("sort", "createdAt");
@@ -18,12 +17,8 @@ export async function getNotifications(
     query.append("isRead", isRead);
   }
 
-  const response = await fetch(
-    `http://localhost:3000/api/proxy/notifications/${userId}?${query.toString()}`,
-    {
-      headers: { Cookie: cookieStore.toString() },
-      cache: "no-store",
-    }
+  const response = await serverFetch(
+    `/notifications/${userId}?${query.toString()}`
   );
 
   if (!response.ok) throw new Error("Failed to fetch notifications");
