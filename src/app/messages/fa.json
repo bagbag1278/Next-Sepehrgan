@@ -537,21 +537,23 @@
       "viewMyTickets": "مشاهده بلیط‌های من",
       "printBooking": "چاپ اطلاعات رزرو"
     },
-    "BookingSummary": {
-      "checkInDate": "تاریخ ورود",
-      "checkOutDate": "تاریخ خروج",
-      "nightsCount": "تعداد شب‌ها",
-      "nights": "شب",
-      "passengersCount": "تعداد مسافران",
-      "people": "نفر",
-      "originalPricePerNight": "قیمت هر شب (اصلی)",
-      "discountedPricePerNight": "قیمت هر شب (با تخفیف ۵٪)",
-      "totalWithoutDiscount": "قیمت کل (بدون تخفیف)",
-      "contactInfo": "اطلاعات تماس",
-      "finalPrice": "قیمت نهایی",
-      "toman": "تومان",
-      "changeHotel": "تغییر هتل"
-    },
+"BookingSummary": {
+  "checkInDate": "تاریخ ورود",
+  "checkOutDate": "تاریخ خروج",
+  "nightsCount": "تعداد شب‌ها",
+  "nights": "شب",
+  "passengersCount": "تعداد مسافران",
+  "people": "نفر",
+  "originalPricePerNight": "قیمت هر شب (اصلی)",
+  "discountedPricePerNight": "قیمت هر شب (با تخفیف ۵٪)",
+  "totalWithoutDiscount": "قیمت کل (بدون تخفیف)",
+  "contactInfo": "اطلاعات تماس",
+  "finalPrice": "قیمت نهایی",
+  "toman": "تومان",
+  "changeHotel": "تغییر هتل",
+  "email": "ایمیل",
+  "phone": "شماره تماس"
+},
   
     "Stepper": {
       "step1": "هتل",

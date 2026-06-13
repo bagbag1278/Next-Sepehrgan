@@ -12,6 +12,8 @@ import { ChevronDown } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import moment from 'moment-jalaali';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003";
+
 const BookingPage = () => {
   const t = useTranslations("Booking");
   const params = useParams();
@@ -27,8 +29,8 @@ const BookingPage = () => {
   const [bookingResult, setBookingResult] = useState<any>(null);
   const [openGenderIndex, setOpenGenderIndex] = useState<number | null>(null);
 
-  const checkInDate = searchParams.get("in") || "۱۴۰۴/۰۶/۱۶";
-  const checkOutDate = searchParams.get("out") || "۱۴۰۴/۰۶/۱۷";
+  const checkInDate = searchParams.get("in") || moment().format('jYYYY/jMM/jDD');
+  const checkOutDate = searchParams.get("out") || moment().add(1, 'days').format('jYYYY/jMM/jDD');
   const initialGuests = Number(searchParams.get("guests")) || 1;
 
   const [passengers, setPassengers] = useState(
@@ -43,34 +45,61 @@ const BookingPage = () => {
   );
 
   const persianToGregorian = (persianDate: string) => {
-    if (!persianDate) return null;
-    
-    let cleanDate = persianDate.replace(/[^0-9/]/g, "");
-    
-    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    
-    persianDigits.forEach((p, i) => {
-      cleanDate = cleanDate.replace(new RegExp(p, "g"), englishDigits[i]);
-    });
-    
-    const m = moment(cleanDate, 'jYYYY/jMM/jDD');
-    
-    if (!m.isValid()) {
-      console.error("تاریخ نامعتبر:", persianDate);
+    if (!persianDate || persianDate === "" || persianDate === "نامشخص") {
       return null;
     }
     
-    return m.format('YYYY-MM-DD');
+    try {
+      let cleanDate = persianDate.replace(/[^0-9/]/g, "");
+      
+      const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+      const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      
+      persianDigits.forEach((p, i) => {
+        cleanDate = cleanDate.replace(new RegExp(p, "g"), englishDigits[i]);
+      });
+      
+      const parts = cleanDate.split("/");
+      if (parts.length !== 3) return null;
+      
+      const year = parseInt(parts[0]);
+      const month = parseInt(parts[1]);
+      const day = parseInt(parts[2]);
+      
+      if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
+      if (year < 1300 || year > 1500) return null;
+      
+      const m = moment(`${year}/${month}/${day}`, 'jYYYY/jMM/jDD');
+      
+      if (!m.isValid()) return null;
+      
+      return m.format('YYYY-MM-DD');
+    } catch (error) {
+      return null;
+    }
   };
 
   const calculateNights = (inDate: string, outDate: string) => {
-    if (!inDate || !outDate) return 1;
+    if (!inDate || !outDate || inDate === "نامشخص" || outDate === "نامشخص") return 1;
+    
     const start = persianToGregorian(inDate);
     const end = persianToGregorian(outDate);
+    
     if (!start || !end) return 1;
-    const diffTime = Math.abs(new Date(end).getTime() - new Date(start).getTime());
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+    
+    try {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return 1;
+      
+      const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+      const nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      return nights > 0 ? nights : 1;
+    } catch (error) {
+      return 1;
+    }
   };
 
   const finalTotal = useMemo(() => {
@@ -154,8 +183,6 @@ const BookingPage = () => {
   };
 
   const handelFinalBooking = async () => {
-    console.log("===== شروع رزرو =====");
-    
     const token = localStorage.getItem("accessToken");
     if (!token) {
       toast.error(t("loginRequired"));
@@ -209,11 +236,10 @@ const BookingPage = () => {
       sharedMobile: extraPhone || undefined,
     };
 
-    console.log("Payload:", bookingPayload);
-
     try {
       setLoading(true);
-      const response = await fetch(`/api/bookings`, {
+      
+      const response = await fetch(`${API_BASE_URL}/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -248,7 +274,7 @@ const BookingPage = () => {
       if (!params.id) return;
       try {
         setLoading(true);
-        const response = await fetch(`/api/houses/${params.id}`);
+        const response = await fetch(`${API_BASE_URL}/houses/${params.id}`);
         if (!response.ok) throw new Error(`خطای سرور: ${response.status}`);
         const result = await response.json();
         setHotelData(result);

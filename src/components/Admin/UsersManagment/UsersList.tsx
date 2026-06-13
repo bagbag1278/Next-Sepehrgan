@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "../../../app/admin/UsersManagment/page"; 
-import { UserCard } from "./edit&delete/UserCard";
+import { UserCard } from "../../../app/admin/UsersManagment/edit&delete/UserCard";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import { UsersEmptyState } from "./UsersEmptyState";
 
