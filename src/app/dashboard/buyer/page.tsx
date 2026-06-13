@@ -58,7 +58,7 @@ const BuyerDashPage = async () => {
         <ProfileInfoCard />
         <div className="p-3 flex flex-col dark:bg-slate-800 h-45.75 rounded-2xl shadow-[0_0_4px] shadow-blue-200/20">
           <h4 className="font-bold">نمودار رزرو ها</h4>
-          <ReservationChart />
+          {/* <ReservationChart /> */}
         </div>
       </div>
     </div>

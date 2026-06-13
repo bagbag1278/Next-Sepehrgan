@@ -94,12 +94,12 @@ const ManegeHouseDrop = ({ booking }: Props) => {
     <div className="">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="h-5.5 w-5 mr-16 mt-2 cursor-pointer"
+        className="h-5.5 w-5 mr-225 mt-2 cursor-pointer"
       >
         <PiDotsThreeOutlineVerticalFill />
       </button>
       <div
-        className={`absolute bg-[#f5f5f5] dark:bg-slate-400 px-4 py-4.75 ease-out transition-transform duration-300 w-37.5 rounded-2xl shadow-[0_0_15px] shadow-blue-300/30
+        className={`absolute -left-12 bg-[#f5f5f5] z-20 dark:bg-slate-400 px-4 py-4.75 ease-out transition-transform duration-300 w-37.5 rounded-2xl shadow-[0_0_15px] shadow-blue-300/30
           ${isOpen ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"}`}
       >
         <div className="h-full flex flex-col gap-4">

@@ -40,7 +40,7 @@ const UserDropdown = ({ user }: UserDropdownProps) => {
     try {
       await logout();
 
-      setIsModalOpen(false);
+      setIsLogoutModalOpen(false);
       setIsOpen(false);
 
       router.replace("/");
@@ -63,7 +63,9 @@ const UserDropdown = ({ user }: UserDropdownProps) => {
             } text-blue-200`}
           />
 
-          <h4 className="text-blue-200 text-nowrap truncate font-bold text-[17px]">{user.name}</h4>
+          <h4 className="text-blue-200 text-nowrap truncate font-bold text-[17px]">
+            {user.name}
+          </h4>
         </div>
 
         <div
@@ -88,7 +90,10 @@ const UserDropdown = ({ user }: UserDropdownProps) => {
               <div className="flex flex-col">
                 <span className="text-[15px]">{user.name}</span>
 
-                <span dir="ltr" className="text-[11px] text-blue-400 opacity-70">
+                <span
+                  dir="ltr"
+                  className="text-[11px] text-blue-400 opacity-70"
+                >
                   +98 9119598397
                 </span>
               </div>

@@ -43,29 +43,29 @@ const ManegeHouse = ({ booking }: ManegeHouseProps) => {
     return digitsEnToFa(`${h}:${m}`);
   };
   return (
-    <div className="h-16 rounded-2xl dark:bg-slate-600 shadow-[0_0_4px] hover:dark:shadow-slate-700 hover:shadow-[0_0_10px] transition-shadow duration-200 flex items-center shadow-blue-200/20 py-5 px-6">
+    <div className="h-16 rounded-2xl relative dark:bg-slate-600 shadow-[0_0_4px] hover:dark:shadow-slate-700 hover:shadow-[0_0_10px] transition-shadow duration-200 flex items-center shadow-blue-200/20 py-5 px-6">
       {/* name */}
-      <h6 className="h-5.5 w-27.75 text-sm text-nowrap  mr-1">
+      <h6 className="h-5.5 w-27.75 text-sm text-nowrap absolute right-6 ">
         {booking.house.title}
       </h6>
       {/* date */}
-      <span className=" h-5.5 w-23 text-nowrap text-[13px] text-center mr-20">
+      <span className=" h-5.5 w-23 text-nowrap text-[13px] text-center absolute right-[188px]">
         {toJalali(booking.created_at)}
       </span>
       {/* time */}
-      <span className=" h-5.5 w-8 text-[13px] mr-18">
+      <span className=" h-5.5 w-8 text-[13px] absolute right-[340px]">
         {toTime(booking.created_at)}
       </span>
       {/* price */}
-      <span className=" h-5.5 w-25 text-[13px] mr-16 text-nowrap text-blue-200 dark:text-blue-300">
+      <span className=" h-5.5 w-25 text-[13px] text-nowrap text-blue-200 absolute right-[436px] dark:text-blue-300">
         {digitsEnToFa(addCommas(booking.house.price))} تومان
       </span>
       {/* travelers */}
-      <span className=" h-5.5 w-23 text-[13px] text-center mr-10">
+      <span className=" h-5.5 w-23 text-[13px] text-center absolute right-[588px]">
         {digitsEnToFa(booking.traveler_details.length.toString())}نفر
       </span>
       {/* reserve status */}
-      <span className="h-5.5 w-20 text-[13px] mr-17 text-center">
+      <span className="h-5.5 w-20 text-[13px] text-center absolute right-[724px]">
         {booking.status === "pending" && <Decline />}
 
         {booking.status === "confirmed" && <Accept />}
@@ -73,12 +73,13 @@ const ManegeHouse = ({ booking }: ManegeHouseProps) => {
         {booking.status === "canceled" && <Reeject />}
       </span>
       {/* payment status */}
-      <span className="h-5.5 w-5 text-[13px] mr-26">
+      <span className="h-5.5 w-5 text-[13px] absolute right-[843px]">
         <Decline />
       </span>
       {/* more */}
-
-      <ManegeHouseDrop booking={booking} />
+      <div className="relative">
+        <ManegeHouseDrop booking={booking} />
+      </div>
     </div>
   );
 };

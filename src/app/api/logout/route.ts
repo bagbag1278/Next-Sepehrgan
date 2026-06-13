@@ -42,6 +42,7 @@ export async function POST() {
 
     res.cookies.delete("accessToken");
     res.cookies.delete("refreshToken");
+    res.cookies.delete("isLoggedIn");
 
     return res;
   } catch (error) {

@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-
+import jwt from "jsonwebtoken";
 import { LoginApiResponse } from "../types/ILogin";
 import { loginApi } from "../api/auth/Login.api";
 
@@ -31,33 +31,46 @@ export async function loginAction(
 
     const cookieStore = await cookies();
 
-    const accessTokenMaxAge = 60 * 15; // 15 دقیقه
+    const accessTokenMaxAge = 60 * 15;
+    const refreshTokenMaxAge = 60 * 60 * 24 * 30;
 
-    const refreshTokenMaxAge = 60 * 60 * 24 * 30; // 30 روز
+    // ✅ exp رو از توکن بخون
+    const decoded = jwt.decode(data.accessToken) as { exp: number } | null;
 
-cookieStore.set("accessToken", data.accessToken, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  path: "/",
-  maxAge: accessTokenMaxAge,
-});
+    cookieStore.set("accessToken", data.accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: accessTokenMaxAge,
+    });
 
-cookieStore.set("refreshToken", data.refreshToken, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  path: "/",
-  maxAge: refreshTokenMaxAge,
-});
+    cookieStore.set("refreshToken", data.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: refreshTokenMaxAge,
+    });
 
-cookieStore.set("isLoggedIn", "true", {
-  httpOnly: false,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  path: "/",
-  maxAge: refreshTokenMaxAge,
-});
+    cookieStore.set("isLoggedIn", "true", {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: refreshTokenMaxAge,
+    });
+
+    // ✅ کوکی کمکی برای interceptor که بتونه exp رو از client بخونه
+    if (decoded?.exp) {
+      cookieStore.set("accessTokenExpiry", String(decoded.exp), {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: accessTokenMaxAge,
+      });
+    }
 
     return { ...prevState, success: true, message: "خوش آمدید" };
   } catch (error: any) {
