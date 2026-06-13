@@ -33,6 +33,9 @@ import formatDate from '@/components/Untils/FormData'
 import EditHouseModal from '../EditHouse/EditHouseModal'
 import UpdateHouse from '@/core/api/DashboardSeller/UpdateHouse'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import Pagination from './Pagination'
+import Image from 'next/image'
+
 
 
 const HosueManagement = () => {
@@ -48,31 +51,24 @@ const HosueManagement = () => {
 
     const router = useRouter();
     const pathname = usePathname();
-
     const searchParams = useSearchParams();
 
+    const limit = 4;
+    const page = Number(searchParams.get("page") ?? "1");
 
+    const search = searchParams.get("search") ?? "";
 
     // For Api     
     useEffect(() => {
-
         const fetchData = async () => {
-
-            const data =
-                await GetHousesUser();
-
+            const data = await GetHousesUser({ page, limit, search });
             setHouses(data.houses);
-
-            setTotalCount(
-                data.totalCount
-            );
-
+            setTotalCount(data.totalCount);
         };
-
         fetchData();
+    }, [page, search]);
 
-    }, []);
-
+    const totalPages = Math.ceil(totalCount / limit);
 
 
     // close modal on outside click
@@ -151,37 +147,15 @@ const HosueManagement = () => {
 
     };
 
-    const handleSearchChange = (
-        value: string
-    ) => {
-
-        const params =
-            new URLSearchParams(
-                searchParams.toString()
-            );
-
+    const handleSearchChange = (value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
         if (value.trim()) {
-
-            params.set(
-                "search",
-                value
-            );
-
+            params.set("search", value);
         } else {
-
-            params.delete(
-                "search"
-            );
-
+            params.delete("search");
         }
-
-        router.replace(
-            `${pathname}?${params.toString()}`,
-            {
-                scroll: false
-            }
-        );
-
+        params.set("page", "1");
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     };
 
     // Handle Update 
@@ -234,8 +208,6 @@ const HosueManagement = () => {
 
         };
 
-    const search = searchParams.get("search") || "";
-
     const filteredHouses = useMemo(() => {
 
         return houses.filter(
@@ -258,6 +230,12 @@ const HosueManagement = () => {
         search
     ]);
 
+    // handle change
+    const handlePageChange = (newPage: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", String(newPage));
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
     return (
 
@@ -548,29 +526,19 @@ const HosueManagement = () => {
 
                                 {/* property */}
                                 <div className='flex items-center gap-2'>
-
-                                    <div
-                                        className='w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded-lg overflow-hidden'
-                                    >
-
-                                        {
-                                            house.photos?.[0] && (
-
-                                                <img
-                                                    src={house.photos[0]}
-                                                    alt={house.title}
-                                                    className='w-full h-full object-cover'
-                                                />
-                                            )
-                                        }
-
+                                    <div className='w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded-lg overflow-hidden'>
+                                        <Image
+                                            src={house.photos?.[0] ?? '/Image/Image.png'}
+                                            alt={house.title}
+                                            width={40}
+                                            height={40}
+                                            className='w-full h-full object-cover'
+                                        />
                                     </div>
 
-                                    <span className='text-sm text-gray-800 dark:text-gray-200'
-                                    >
+                                    <span className='text-sm text-gray-800 dark:text-gray-200'>
                                         {house.title}
                                     </span>
-
                                 </div>
 
                             </div>
@@ -581,24 +549,31 @@ const HosueManagement = () => {
 
                 </div>
 
-                {/* pagination */}
-                <Link
-                    href={'/dashboard/seller/CreateMyHosue'}
-                    className='flex justify-between  w-full h-10 '
-                >
-                    <div
+                {/* bottom */}
+                <div className='flex w-full justify-between '>
 
-                        className='cursor-pointer flex justify-center items-center gap-1 dark:text-blue-300 text-blue-100 border border-blue-200 w-50 h-full rounded-xl '
-                    >
-                        <PlusIcon />
-                        <span >افزودن ملک </span>
+                    <Link href={'/dashboard/seller/CreateMyHosue'} className='h-10'>
+                        <div
+                            className='cursor-pointer flex justify-center items-center gap-1 dark:text-blue-300 text-blue-100 border border-blue-200 w-50 h-full rounded-xl '
+                        >
+                            <PlusIcon />
+                            <span >افزودن ملک </span>
+                        </div>
+
+
+
+                    </Link>
+
+                    {/* pagiation */}
+                    <div className='h-full '>
+                        <Pagination
+                            currentPage={page}
+                            totalCount={totalCount}
+                            limit={limit}
+                            onPageChange={handlePageChange} // اینجا
+                        />
                     </div>
-
-                    <div
-                        className='border w-20 h-full'
-                    />
-
-                </Link>
+                </div>
 
 
             </div>

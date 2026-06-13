@@ -1,13 +1,15 @@
 import axios from "axios";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(
-    request: NextRequest,
-    { params }: {
+export async function POST(
+    request: Request,
+    {
+        params,
+    }: {
         params: Promise<{
-            id: string
-        }>
+            id: string;
+        }>;
     }
 ) {
 
@@ -24,13 +26,24 @@ export async function GET(
                 "accessToken"
             )?.value;
 
-        const searchParams = request.nextUrl.searchParams;
+        if (!token) {
 
-        const query = searchParams.toString();
+            return NextResponse.json(
+                {
+                    message:
+                        "Unauthorized",
+                },
+                {
+                    status: 401,
+                }
+            );
+
+        }
 
         const response =
-            await axios.get(
-                `http://188.121.111.8:3003/api/bookings/${id}/customers?${query}`,
+            await axios.post(
+                `http://188.121.111.8:3003/api/bookings/${id}/continue`,
+                {},
                 {
                     headers: {
                         Authorization:
@@ -46,21 +59,18 @@ export async function GET(
     } catch (error: any) {
 
         console.log(
-            "Booking Customers Error:",
-            error.response?.data ||
-            error.message
+            "CONTINUE BOOKING ERROR",
+            error?.response?.data ||
+            error
         );
 
         return NextResponse.json(
             {
                 message:
-                    error.response?.data ||
-                    "server error",
+                    "Server Error",
             },
             {
-                status:
-                    error.response?.status ||
-                    500,
+                status: 500,
             }
         );
 

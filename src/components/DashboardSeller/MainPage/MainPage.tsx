@@ -27,6 +27,7 @@ import formatDate from '@/components/Untils/FormData';
 import DeleteHouseModal from '../DeleteHouse/DeleteHouseModal';
 import toast from 'react-hot-toast';
 import DeleteHouse from '@/core/api/DashboardSeller/DeleteHouse';
+import Image from 'next/image';
 
 const MainPage = () => {
 
@@ -55,7 +56,7 @@ const MainPage = () => {
         },
         {
             label: 'بازدید ها',
-            value: '۲',
+            value: '0',
             icon: <PlaceholderIco />
         },
     ];
@@ -195,7 +196,7 @@ const MainPage = () => {
                 <div
                     className="
                     flex flex-row-reverse
-                    gap-4.75"
+                    gap-4.75 "
                 >
 
                     {/* VIEW ALL */}
@@ -280,7 +281,7 @@ const MainPage = () => {
                 {/* TABLE */}
                 <div
                     className="
-                    w-full h-84
+                    w-full h-84 overflow-hidden
                     bg-gray-50/50
                     dark:bg-slate-900
                     rounded-2xl
@@ -328,27 +329,20 @@ const MainPage = () => {
                             >
 
                                 {/* PROPERTY */}
-                                <div className="flex items-center gap-2">
-
-                                    <div className=" w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded-lg overflow-hidden" >
-
-                                        {
-                                            house.photos?.[0] && (
-                                                <img
-                                                    src={house.photos[0]}
-                                                    alt={house.title}
-                                                    className=" w-full h-full object-cover"
-                                                />
-                                            )
-                                        }
-
+                                <div className='flex items-center gap-2'>
+                                    <div className='w-10 h-10 bg-gray-200 dark:bg-slate-700 rounded-lg overflow-hidden'>
+                                        <Image
+                                            src={house.photos?.[0] ?? '/Image/Image.png'}
+                                            alt={house.title}
+                                            width={40}
+                                            height={40}
+                                            className='w-full h-full object-cover'
+                                        />
                                     </div>
-                                    <span
-                                        className=" text-sm text-gray-800 dark:text-gray-200"
-                                    >
+
+                                    <span className='text-sm text-gray-800 dark:text-gray-200'>
                                         {house.title}
                                     </span>
-
                                 </div>
 
                                 {/* DATE */}
@@ -359,7 +353,7 @@ const MainPage = () => {
 
                                 {/* PRICE */}
                                 <span
-                                    className=" text-blue-800  dark:text-blue-400 font-medium text-sm"
+                                    className=" text-blue-800  dark:text-gray-500 font-medium text-sm"
                                 >
                                     {Number(house.price).toLocaleString("fa-IR")} تومان
                                 </span>

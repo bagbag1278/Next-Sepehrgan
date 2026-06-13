@@ -9,54 +9,36 @@ export interface IHouse {
     price: string;
     tags: string[];
     last_updated?: string;
-
     capacity: number;
-
-    location: {
-        lat: number;
-        lng: number;
-    };
-
-    categories: {
-        id: number;
-        name: string;
-    };
-
+    location: { lat: number; lng: number };
+    categories: { id: number; name: string };
     bathrooms: number;
     parking: number;
     rooms: number;
     yard_type: string;
-
     num_comments: number;
-
     transaction_type: string;
-
     sellerId: string;
 }
 
-export interface IGetHosuesRes {
+export interface IGetHousesRes {
     houses: IHouse[];
     totalCount: number;
+    page: number;
+    limit: number;
 }
 
-export default async function GetHousesUser():
-    Promise<IGetHosuesRes> {
+export interface IGetHousesParams {
+    page?: number;
+    limit?: number;
+    search?: string;
+}
 
-    try {
-
-        const res = await axios.get("/api/houses");
-
-        return res.data;
-
-    } catch (err) {
-
-        console.log(
-            "dataFetching Error",
-            err
-        );
-
-        throw err;
-
-    }
-
+export default async function GetHousesUser(
+    { page = 1, limit = 4, search = "" }: IGetHousesParams = {}
+): Promise<IGetHousesRes> {
+    const res = await axios.get("/api/houses", {
+        params: { page, limit, search },
+    });
+    return res.data;
 }

@@ -1,62 +1,80 @@
 import axios from "axios";
 
-export interface GetBookingsCustomersParams {
-    bookingId: number;
+export interface IBooking {
+
+    id: number;
+
+    user_id: number;
+
+    houseId: number;
+
+    reservedDates: string[];
+
+    traveler_details: {
+        gender: string;
+        lastName: string;
+        birthDate: string;
+        firstName: string;
+        nationalId: string;
+    }[];
+
+    status: string;
+
+    sharedEmail: string;
+
+    sharedMobile: string;
+
+    createdAt: string;
+
+    house: {
+        title: string;
+        price: string;
+
+    };
+
+}
+
+interface IResponse {
+
+    bookings: IBooking[];
+
+    totalCount: number;
+
+}
+
+
+
+interface GetBookingsParams {
     page?: number;
     limit?: number;
-    sort?: string;
     order?: string;
     houseId?: number;
     status?: string;
 }
 
-const GetBookingsCustomers = async ({
-    bookingId,
-    page = 1,
-    limit = 10,
-    sort = "created_at",
-    order = "DESC",
-    houseId,
-    status,
-}: GetBookingsCustomersParams) => {
+const GetBookings = async ({
+    page,
+    limit,
+    
+}: GetBookingsParams) => {
 
-    const params = new URLSearchParams();
+    const params =new URLSearchParams();
 
-    params.set("page", String(page));
-    params.set("limit", String(limit));
-    params.set("sort", sort);
-    params.set("order", order);
+    params.set("page",String(page));
+    params.set( "limit", String(limit));
 
-    if (houseId) {
-        params.set("houseId", String(houseId));
-    }
+  
 
-    if (status) {
-        params.set("status", status);
-    }
 
-    const url =
-        `/api/bookings/${bookingId}/customers?${params.toString()}`;
+    const url = `/api/bookings/customers?${params.toString()}`
 
     console.log(url);
 
-    try {
+    const response =
+        await axios.get(url);
 
-        const response = await axios.get(url);
+    return response.data;
 
-            console.log("RESPONSE:", response.data);
-
-        return response.data;
-
-    } catch (error) {
-
-        console.log(
-            "GetBookingsCustomers Error",
-            error
-        );
-
-        throw error;
-    }
 };
 
-export default GetBookingsCustomers;
+export default GetBookings;
