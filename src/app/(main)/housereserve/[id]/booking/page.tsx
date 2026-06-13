@@ -10,12 +10,14 @@ import BookingStepFour from "./BookingStepFour";
 import { toast } from "react-hot-toast";
 import { ChevronDown } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
+import moment from 'moment-jalaali';
 
 const BookingPage = () => {
   const t = useTranslations("Booking");
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
+  moment.loadPersian();
 
   const [hotelData, setHotelData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -34,7 +36,7 @@ const BookingPage = () => {
       id: Math.random(),
       fullName: "",
       nationalCode: "",
-      gender: t("selectGender"),
+      gender: "male",
       birthDate: "",
       number: "",
     })),
@@ -42,22 +44,24 @@ const BookingPage = () => {
 
   const persianToGregorian = (persianDate: string) => {
     if (!persianDate) return null;
+    
+    let cleanDate = persianDate.replace(/[^0-9/]/g, "");
+    
     const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
     const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    let englishDate = persianDate;
+    
     persianDigits.forEach((p, i) => {
-      englishDate = englishDate.replace(new RegExp(p, "g"), englishDigits[i]);
+      cleanDate = cleanDate.replace(new RegExp(p, "g"), englishDigits[i]);
     });
-    const parts = englishDate.split("/");
-    if (parts.length === 3) {
-      let persianYear = parseInt(parts[0]);
-      const month = parts[1].padStart(2, "0");
-      const day = parts[2].padStart(2, "0");
-      if (persianYear < 1300 || persianYear > 1500) persianYear = 1404;
-      const gregorianYear = persianYear + 621;
-      return `${gregorianYear}-${month}-${day}`;
+    
+    const m = moment(cleanDate, 'jYYYY/jMM/jDD');
+    
+    if (!m.isValid()) {
+      console.error("تاریخ نامعتبر:", persianDate);
+      return null;
     }
-    return null;
+    
+    return m.format('YYYY-MM-DD');
   };
 
   const calculateNights = (inDate: string, outDate: string) => {
@@ -123,19 +127,21 @@ const BookingPage = () => {
     return passengers.every((p) => {
       const nameParts = p.fullName.trim().split(" ");
       const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
       return firstName.length > 0 &&
+        lastName.length > 0 &&
         p.nationalCode.length === 10 &&
-        p.gender !== t("selectGender") &&
+        p.gender !== "selectGender" &&
         p.birthDate.length > 0;
     });
-  }, [passengers, t]);
+  }, [passengers]);
 
   const addPassenger = () => {
     setPassengers([...passengers, {
       id: Date.now(),
       fullName: "",
       nationalCode: "",
-      gender: t("selectGender"),
+      gender: "male",
       birthDate: "",
       number: "",
     }]);
@@ -148,6 +154,8 @@ const BookingPage = () => {
   };
 
   const handelFinalBooking = async () => {
+    console.log("===== شروع رزرو =====");
+    
     const token = localStorage.getItem("accessToken");
     if (!token) {
       toast.error(t("loginRequired"));
@@ -155,42 +163,43 @@ const BookingPage = () => {
       return;
     }
 
+    const startDate = persianToGregorian(checkInDate);
+    const endDate = persianToGregorian(checkOutDate);
+    
+    if (!startDate || !endDate) {
+      toast.error("تاریخ انتخاب شده معتبر نیست");
+      return;
+    }
+
     const traveler_details = [];
     for (let i = 0; i < passengers.length; i++) {
       const p = passengers[i];
+      
       const nameParts = p.fullName.trim().split(" ");
       const firstName = nameParts[0] || "";
-      const lastName = nameParts.slice(1).join(" ") || "";
-
-      if (!firstName) {
-        toast.error(t("firstNameRequired", { number: i + 1 }));
-        return;
+      let lastName = nameParts.slice(1).join(" ");
+      
+      if (!lastName) {
+        lastName = "ناشناس";
       }
-      if (!p.nationalCode || p.nationalCode.length !== 10) {
-        toast.error(t("nationalCodeRequired", { number: i + 1 }));
-        return;
-      }
-      if (!p.gender || p.gender === t("selectGender")) {
-        toast.error(t("genderRequired", { number: i + 1 }));
-        return;
-      }
-      if (!p.birthDate) {
-        toast.error(t("birthDateRequired", { number: i + 1 }));
-        return;
+      
+      let birthDateGregorian = null;
+      if (p.birthDate) {
+        birthDateGregorian = persianToGregorian(p.birthDate);
+        if (!birthDateGregorian) {
+          toast.error(`تاریخ تولد مسافر ${i + 1} معتبر نیست`);
+          return;
+        }
       }
 
-      const formattedBirthDate = p.birthDate.replace(/\//g, "-");
       traveler_details.push({
         firstName: firstName,
-        lastName: lastName || firstName,
-        gender: p.gender === t("male") ? "male" : "female",
-        birthDate: formattedBirthDate,
-        nationalId: p.nationalCode,
+        lastName: lastName,
+        gender: p.gender === "male" ? "male" : "female",
+        birthDate: birthDateGregorian || "2000-01-01",
+        nationalId: p.nationalCode || "1234567890",
       });
     }
-
-    const startDate = persianToGregorian(checkInDate);
-    const endDate = persianToGregorian(checkOutDate);
 
     const bookingPayload = {
       houseId: Number(params.id),
@@ -199,6 +208,8 @@ const BookingPage = () => {
       sharedEmail: extraEmail || undefined,
       sharedMobile: extraPhone || undefined,
     };
+
+    console.log("Payload:", bookingPayload);
 
     try {
       setLoading(true);
@@ -210,12 +221,22 @@ const BookingPage = () => {
         },
         body: JSON.stringify(bookingPayload),
       });
+
       const result = await response.json();
-      if (!response.ok) throw new Error(result.message || "خطا در ثبت رزرو");
-      setBookingResult(result.booking || result);
+
+      if (!response.ok) {
+        toast.error(result.message || result.error || "خطا در ثبت رزرو");
+        return;
+      }
+
+      const bookingData = result.booking || result.data || result;
+      setBookingResult(bookingData);
       setStep(5);
       toast.success(t("bookingSuccess"));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      
     } catch (error: any) {
+      console.error("خطا:", error);
       toast.error(error.message || t("bookingFailed"));
     } finally {
       setLoading(false);
@@ -259,7 +280,7 @@ const BookingPage = () => {
           </div>
         </AdvancedScrollAnimation>
 
-        <div className="rounded-2xl p-4 md:p-6 ">
+        <div className="rounded-2xl p-4 md:p-6  ">
           <div className="space-y-6">
             {step === 2 && (
               <div className="ml-20 max-[888px]:left-5 max-[888px]:ml-0 relative flex gap-50 mx-auto justify-center max-[1360px]:flex-col">
@@ -276,7 +297,7 @@ const BookingPage = () => {
                 </AdvancedScrollAnimation>
 
                 <AdvancedScrollAnimation type="slide-left" delay={0.2}>
-                  <div className="rounded-[40px] p-10">
+                  <div className="rounded-[40px] p-10 bg-white dark:bg-gray-800">
                     <div className="rounded-[40px]">
                       <h3 className="font-bold text-gray-800 dark:text-white whitespace-nowrap text-lg mb-20">
                         {t("selectedPassengers")} ({passengers.length})
@@ -325,17 +346,17 @@ const BookingPage = () => {
                                   className="w-full text-gray-700 dark:text-white border border-gray-300 dark:border-gray-600 p-4 rounded-2xl flex items-center justify-between bg-white dark:bg-gray-800"
                                 >
                                   <span>
-                                    {passenger.gender === t("male") ? t("male") : 
-                                     passenger.gender === t("female") ? t("female") : t("selectGender")}
+                                    {passenger.gender === "male" ? t("male") : 
+                                     passenger.gender === "female" ? t("female") : t("selectGender")}
                                   </span>
                                   <ChevronDown size={18} className={`transition-transform text-gray-500 ${openGenderIndex === index ? "rotate-180" : ""}`} />
                                 </button>
                                 {openGenderIndex === index && (
                                   <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 rounded-2xl overflow-hidden z-20 shadow-lg">
-                                    <button onClick={() => { updatePassenger(index, "gender", t("male")); setOpenGenderIndex(null); }} className="w-full text-right p-3 hover:bg-gray-50">
+                                    <button onClick={() => { updatePassenger(index, "gender", "male"); setOpenGenderIndex(null); }} className="w-full text-right p-3 hover:bg-gray-50">
                                       {t("male")}
                                     </button>
-                                    <button onClick={() => { updatePassenger(index, "gender", t("female")); setOpenGenderIndex(null); }} className="w-full text-right p-3 hover:bg-gray-50">
+                                    <button onClick={() => { updatePassenger(index, "gender", "female"); setOpenGenderIndex(null); }} className="w-full text-right p-3 hover:bg-gray-50">
                                       {t("female")}
                                     </button>
                                   </div>
@@ -419,7 +440,6 @@ const BookingPage = () => {
             {step === 3 && (
               <AdvancedScrollAnimation type="fade" delay={0.1}>
                 <BookingStepThree
-                  step={step}
                   setStep={setStep}
                   hotelData={hotelData}
                   checkInDate={checkInDate}
@@ -450,6 +470,7 @@ const BookingPage = () => {
                   extraEmail={extraEmail}
                   extraPhone={extraPhone}
                   bookingResult={bookingResult}
+                  description={description}
                 />
               </AdvancedScrollAnimation>
             )}

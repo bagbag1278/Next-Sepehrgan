@@ -31,7 +31,7 @@ export const useNotifications = () => {
     }
 
     try {
-      const url = `${API_BASE_URL}/api/notifications`;
+      const url = `${API_BASE_URL}/notifications`;
       console.log("📡 آدرس:", url);
       
       const response = await fetch(url, {
@@ -72,7 +72,7 @@ export const useNotifications = () => {
   const markAsRead = async (id: number) => {
     try {
       const token = getToken();
-      const response = await fetch(`${API_BASE_URL}/api/notifications/${id}/read`, {
+      const response = await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
         method: "PUT",
         headers: { 
           Authorization: `Bearer ${token}`,
@@ -101,7 +101,7 @@ export const useNotifications = () => {
     try {
       const token = getToken();
       for (const id of unreadIds) {
-        await fetch(`${API_BASE_URL}/api/notifications/${id}/read`, {
+        await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
           method: "PUT",
           headers: { Authorization: `Bearer ${token}` },
         });

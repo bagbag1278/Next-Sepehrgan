@@ -6,7 +6,6 @@ import SatisfactionTike from "@/app/(main)/housereserve/[id]/booking/icon/peymen
 import SatisfactioMain from "@/app/(main)/housereserve/[id]/booking/icon/peyment/SatisfactioMain";
 import PaymentHandOne from "@/app/(main)/housereserve/[id]/booking/icon/peyment/PaymentHandOne";
 import PaymentHandTwo from "@/app/(main)/housereserve/[id]/booking/icon/peyment/PaymentHandTwo";
-import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import BookingSummaryTwo from "../components/BookingSummaryTwo";
 
 const BookingStepFour = ({
@@ -19,14 +18,15 @@ const BookingStepFour = ({
   bookingResult,
   description,
   extraEmail,
-  extraPhone
+  extraPhone,
+  setStep
 }: any) => {
   const t = useTranslations('BookingStepFour');
   
   if (step !== 5) return null;
 
   return (
-    <div className="h-300 max-[1280px]:h-375 pb-10 max-[600]:mt-10" dir="rtl">
+    <div className="h-300 max-[1280]:h-455 pb-10 max-[600]:mt-10 max-[1024]:mt-14" dir="rtl">
       <div className="w-full mx-auto">
         <div className="flex flex-col max-[888]:left-5 relative xl:flex-row gap-20 w-full pt-6 md:pt-10">
           
@@ -42,6 +42,7 @@ const BookingStepFour = ({
               showExtraCost={false}
               extraEmail={extraEmail}
               extraPhone={extraPhone}
+              setStep={setStep}
             />
           </div>
 
@@ -52,7 +53,7 @@ const BookingStepFour = ({
                 <div className="max-[508]:hidden dark:hidden">
                   <SatisfactionTike />
                 </div>
-                <div className="absolute dark:relative dark:h-30 dark:mt-10 dark:mr-10 max-[500]:left-5 w-120 h-100 max-[508]:w- max-[508]:relative max-[508]:h-40 -top-30 max-[508]:-top-20 max-[508]:-left-10">
+                <div className="absolute max-[1024]:mr-20 dark:relative dark:h-30 dark:mt-10 dark:mr-10  max-[500]:left-5 w-120 h-100 max-[508]:w- max-[508]:relative max-[508]:h-40 -top-30 max-[508]:-top-20 max-[508]:-left-10">
                   <SatisfactioMain />
                 </div>
                 <div className="mt-30 max-[508]:hidden dark:hidden">

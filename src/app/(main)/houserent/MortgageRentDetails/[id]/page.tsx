@@ -17,6 +17,7 @@ import Like from "../components/HouseRent/Like";
 import Seller from "../components/HouseRent/Seller";
 import SimilarProperties from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/SimilarProperties";
 import { MapPin } from "lucide-react";
+import NotFound from "@/app/not-found";
 
 const LoadingComponent = () => {
   const t = useTranslations("MortgageRentDetails");
@@ -43,7 +44,8 @@ const MortgageRentDetails = () => {
   const [loading, setLoading] = useState(true);
   const [locationData, setLocationData] = useState<any>(null);
   const [locationLoading, setLocationLoading] = useState(true);
-
+    const [notFound, setNotFound] = useState(false);
+  
 const fetchLocation = async () => {
   if (!houseId) return;
 
@@ -156,6 +158,15 @@ const fetchLocation = async () => {
     },
     { title: data.title },
   ];
+
+  if (notFound || !data) {
+      return (
+        <>
+        <NotFound/>
+        </>
+  
+      );
+    }
 
   return (
     <div>

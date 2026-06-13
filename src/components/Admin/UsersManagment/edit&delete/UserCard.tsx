@@ -2,13 +2,13 @@ import { Mail, Phone, CalendarDays } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import EditUser from "@/components/Admin/UsersManagment/edit&delete/EditUser";
 import DeleteUser from "@/components/Admin/UsersManagment/edit&delete/DeleteUsers";
-import { User } from "../../../app/admin/UsersManagment/page";
+import { User } from "../../../../app/admin/UsersManagment/page";
 
 interface UserCardProps {
   user: User;
   index: number;
-  onEdit: () => void;
-  onDelete: () => void;
+  onEdit: (updatedUser: User, originalUser?: User) => Promise<void>;
+  onDelete: (id: number) => void;  
 }
 
 const formatDate = (dateStr?: string) => {
@@ -35,6 +35,14 @@ export const UserCard = ({ user, index, onEdit, onDelete }: UserCardProps) => {
   const roleBadge = getRoleBadge(user.role);
   const firstLetter = user.fullName?.charAt(0) || "ک";
 
+  const handleEdit = async (updatedUser: User, originalUser?: User) => {
+    await onEdit(updatedUser, originalUser);
+  };
+
+  const handleDelete = () => {
+    onDelete(user.id);
+  };
+
   return (
     <AdvancedScrollAnimation type="slide-up" delay={0.4 + index * 0.05} duration={0.4}>
       <div className="rounded-2xl p-4 border border-gray-100 dark:border-gray-700 dark:bg-gray-800 hover:shadow-lg transition-all shadow-[0_0_8px] shadow-blue-300/20">
@@ -49,8 +57,8 @@ export const UserCard = ({ user, index, onEdit, onDelete }: UserCardProps) => {
               <span className="font-medium text-gray-800 dark:text-white">{user.fullName}</span>
             </div>
             <div className="flex items-center gap-2">
-              <EditUser user={user} onEdit={onEdit} />
-              <DeleteUser user={user} onDelete={onDelete} />
+              <EditUser user={user} onEdit={handleEdit} />
+              <DeleteUser user={user} onDelete={handleDelete} />
             </div>
           </div>
           
@@ -104,8 +112,8 @@ export const UserCard = ({ user, index, onEdit, onDelete }: UserCardProps) => {
           </div>
           
           <div className="w-[13%] flex items-center justify-center gap-2">
-            <EditUser user={user} onEdit={onEdit} />
-            <DeleteUser user={user} onDelete={onDelete} />
+            <EditUser user={user} onEdit={handleEdit} />
+            <DeleteUser user={user} onDelete={handleDelete} />
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
-// app/layout.tsx
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import LocalFont from "next/font/local";
 import ClientLayout from "./ClientLayout";
 import "./globals.css";
+import VoiceCommand from "@/components/VoiceCommand";
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
@@ -25,6 +25,8 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <ClientLayout>{children}</ClientLayout>
+                    <VoiceCommand />
+
         </NextIntlClientProvider>
       </body>
     </html>

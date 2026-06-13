@@ -14,7 +14,7 @@ interface DeleteUserProps {
   trigger?: React.ReactNode; 
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003";
 
 const DeleteUser = ({ user, onDelete, trigger }: DeleteUserProps) => {
   const [open, setOpen] = useState(false);
@@ -48,6 +48,8 @@ const DeleteUser = ({ user, onDelete, trigger }: DeleteUserProps) => {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("user");
           setTimeout(() => window.location.reload(), 1500);
+        } else if (response.status === 404) {
+          toast.error("کاربر یافت نشد");
         } else {
           toast.error(`خطا: ${response.status}`);
         }
@@ -92,7 +94,7 @@ const DeleteUser = ({ user, onDelete, trigger }: DeleteUserProps) => {
             </div>
 
             <div className="flex gap-3 border-t border-gray-200 dark:border-gray-700 p-5">
-              <button onClick={() => setOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-500 transition-all">
+              <button onClick={() => setOpen(false)} className="flex-1 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
                 انصراف
               </button>
               <button 

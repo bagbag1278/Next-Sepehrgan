@@ -130,16 +130,10 @@ const ListBookingsModal = ({
           className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto relative shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="  rounded-t-2xl px-6 py-4 text-white sticky top-0 z-10">
+          <div className=" bg-blue-100 rounded-t-2xl px-6 py-4 text-white sticky top-0 z-10">
             <div className="flex justify-between items-center flex-wrap gap-2">
               <h2 className="text-xl font-bold">لیست رزروهای {userName}</h2>
-              <Link
-                href={`/admin/BookingsManagement?userId=${userId}`}
-                target="_blank"
-                className="text-sm bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full flex items-center gap-1 transition"
-              >
-                <ExternalLink size={14} /> مشاهده همه
-              </Link>
+         
               <button
                 onClick={onClose}
                 className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition"

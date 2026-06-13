@@ -6,7 +6,6 @@ import {
   Home,
   MapPin,
   Star,
-  DollarSign,
   X,
   User,
 } from "lucide-react";
@@ -48,7 +47,6 @@ const HotelsManagement = () => {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [hasBookings, setHasBookings] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
 
@@ -90,21 +88,6 @@ const HotelsManagement = () => {
     }
   };
 
-  const checkBookings = async (houseId: number) => {
-    try {
-      const token = getToken();
-      const response = await axios.get(`${API_BASE_URL}/admin/bookings`, {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { houseId },
-      });
-      const bookings = response.data?.data || response.data || [];
-      return bookings.length > 0;
-    } catch (error) {
-      console.error("Error checking bookings:", error);
-      return false;
-    }
-  };
-
   useEffect(() => {
     const token = getToken();
     if (!token) router.push("/login");
@@ -143,10 +126,8 @@ const HotelsManagement = () => {
     setIsEditOpen(true);
   };
   
-  const handleDelete = async (hotel: Hotel) => {
+  const handleDelete = (hotel: Hotel) => {
     setSelectedHotel(hotel);
-    const hasExistingBookings = await checkBookings(hotel.id);
-    setHasBookings(hasExistingBookings);
     setIsDeleteOpen(true);
   };
 
@@ -165,6 +146,12 @@ const HotelsManagement = () => {
       if (data.price !== undefined) updateData.price = Number(data.price);
       if (data.discounted_price !== undefined) updateData.discounted_price = data.discounted_price ? Number(data.discounted_price) : null;
       if (data.rate !== undefined) updateData.rate = Number(data.rate); 
+      if (data.status !== undefined) updateData.status = data.status;
+      if (data.capacity !== undefined) updateData.capacity = Number(data.capacity);
+      if (data.bathrooms !== undefined) updateData.bathrooms = Number(data.bathrooms);
+      if (data.parking !== undefined) updateData.parking = Number(data.parking);
+      if (data.rooms !== undefined) updateData.rooms = Number(data.rooms);
+      if (data.caption !== undefined) updateData.caption = data.caption;
       
       const response = await axios.put(
         `${API_BASE_URL}/admin/houses/${selectedHotel.id}`,
@@ -195,73 +182,26 @@ const HotelsManagement = () => {
     if (!selectedHotel) return;
     
     setDeleteLoading(true);
-    const loadingToast = toast.loading("در حال پردازش...");
+    const loadingToast = toast.loading("در حال حذف...");
 
     try {
       const token = getToken();
-      const hotelId = selectedHotel.id;
+      const response = await axios.delete(`${API_BASE_URL}/admin/houses/${selectedHotel.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       
-      if (hasBookings) {
-        const response = await axios.patch(
-          `${API_BASE_URL}/admin/houses/${hotelId}`,
-          { status: "inactive" },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-        
-        if (response.status === 200 || response.status === 201) {
-          toast.success("هتل با موفقیت غیرفعال شد", { id: loadingToast });
-          await fetchHotels();
-          setIsDeleteOpen(false);
-          setSelectedHotel(null);
-        } else {
-          throw new Error("خطا در غیرفعال کردن هتل");
-        }
+      if (response.status === 200 || response.status === 204) {
+        toast.success("هتل با موفقیت حذف شد", { id: loadingToast });
+        await fetchHotels();
+        setIsDeleteOpen(false);
+        setSelectedHotel(null);
       } else {
-        const response = await axios.delete(`${API_BASE_URL}/admin/houses/${hotelId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        
-        if (response.status === 200 || response.status === 204) {
-          toast.success("هتل با موفقیت حذف شد", { id: loadingToast });
-          await fetchHotels();
-          setIsDeleteOpen(false);
-          setSelectedHotel(null);
-        } else {
-          throw new Error("خطا در حذف هتل");
-        }
+        throw new Error("خطا در حذف هتل");
       }
     } catch (error: any) {
       console.error("Delete error:", error);
-      
-      if (error.response?.status === 409 || 
-          error.response?.status === 400 ||
-          error.response?.data?.name === "SequelizeForeignKeyConstraintError") {
-        try {
-          const token = getToken();
-          const hotelId = selectedHotel.id;
-          
-          const deactivateResponse = await axios.patch(
-            `${API_BASE_URL}/admin/houses/${hotelId}`,
-            { status: "inactive" },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          
-          if (deactivateResponse.status === 200 || deactivateResponse.status === 201) {
-            toast.success("هتل به دلیل وجود رزرو غیرفعال شد", { id: loadingToast });
-            await fetchHotels();
-            setIsDeleteOpen(false);
-            setSelectedHotel(null);
-          } else {
-            toast.error("خطا در غیرفعال کردن هتل", { id: loadingToast });
-          }
-        } catch (err2: any) {
-          const errorMsg = err2.response?.data?.message || "خطا در غیرفعال کردن هتل";
-          toast.error(errorMsg, { id: loadingToast });
-        }
-      } else {
-        const errorMessage = error.response?.data?.message || error.response?.data?.error || "خطا در عملیات";
-        toast.error(errorMessage, { id: loadingToast });
-      }
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || "خطا در حذف هتل";
+      toast.error(errorMessage, { id: loadingToast });
     } finally {
       setDeleteLoading(false);
     }
@@ -280,7 +220,6 @@ const HotelsManagement = () => {
 
   return (
     <div dir="rtl" className="p-4 sm:p-6 space-y-4 sm:space-y-6 min-h-screen">
-      {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
         <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 shadow-lg shadow-gray-200/70 dark:shadow-none border border-gray-200 dark:border-gray-700/50">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">مشاهده و مدیریت هتل ها</h1>
@@ -288,7 +227,6 @@ const HotelsManagement = () => {
         </div>
       </AdvancedScrollAnimation>
 
-      {/* Search */}
       <AdvancedScrollAnimation type="slide-up" delay={0.2}>
         <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4">
           <div className="relative w-full sm:w-96">
@@ -313,7 +251,6 @@ const HotelsManagement = () => {
         </div>
       </AdvancedScrollAnimation>
 
-      {/* Table Header */}
       <AdvancedScrollAnimation type="fade" delay={0.3}>
         <div className="hidden md:flex items-center justify-between h-[64px] rounded-[16px] px-5 font-bold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 shadow-[0_0_8px] shadow-blue-300/30">
           <div className="w-[22%]">نام هتل</div>
@@ -325,14 +262,12 @@ const HotelsManagement = () => {
         </div>
       </AdvancedScrollAnimation>
 
-      {/* Hotels List */}
       <div className="flex flex-col gap-2">
         {paginatedHotels.length > 0 ? (
           paginatedHotels.map((hotel, idx) => (
             <AdvancedScrollAnimation key={hotel.id} type="slide-up" delay={0.4 + idx * 0.05} duration={0.4}>
               <div className="flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 rounded-[16px] bg-white dark:bg-gray-800 hover:shadow-lg transition-all shadow-[0_0_8px] shadow-blue-300/20">
                 
-                {/* Mobile View */}
                 <div className="flex flex-col gap-2 md:hidden">
                   <div className="flex items-center gap-2">
                     <Home size={16} className="text-gray-400" />
@@ -362,7 +297,6 @@ const HotelsManagement = () => {
                   </div>
                 </div>
 
-                {/* Desktop View */}
                 <div className="hidden md:flex md:items-center justify-between w-full">
                   <div className="w-[22%] flex items-center gap-2">
                     <Home size={16} className="text-gray-400" />
@@ -402,7 +336,6 @@ const HotelsManagement = () => {
         )}
       </div>
 
-      {/* Pagination */}
       {filteredHotels.length > 0 && totalPages > 1 && (
         <AdvancedScrollAnimation type="fade" delay={0.6}>
           <div className="flex justify-start pt-2">
@@ -415,7 +348,6 @@ const HotelsManagement = () => {
         </AdvancedScrollAnimation>
       )}
 
-      {/* Modals */}
       <DetailModalHotel 
         isOpen={isDetailOpen} 
         onClose={() => setIsDetailOpen(false)} 
@@ -435,7 +367,6 @@ const HotelsManagement = () => {
         onConfirm={confirmDelete}
         hotelId={selectedHotel?.id || 0}
         hotelTitle={selectedHotel?.title || ""}
-        hasBookings={hasBookings}
         loading={deleteLoading}
       />
     </div>

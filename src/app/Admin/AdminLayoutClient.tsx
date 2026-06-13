@@ -1,8 +1,8 @@
 "use client";
 
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AlertTriangle, LayoutDashboard, Hotel, Users, CalendarCheck, TicketPercent, MessageSquare, MessageCircleMore, Bell, Share2, FileText } from "lucide-react";
+import { AlertTriangle, LayoutDashboard, Hotel, Users, CalendarCheck, TicketPercent, MessageSquare, MessageCircleMore, Bell, Share2, FileText, Phone, Mail, Wallet, User, ChevronDown, LogOut } from "lucide-react";
 import toast from "react-hot-toast";
 
 import DarkModeHero from "@/components/landing/components/HeroSction/HeroFilter/DarkModeHero";
@@ -11,6 +11,7 @@ import HeaderIcon2Mini from "@/components/header/Icon/HeaderIcon2Mini";
 import { AdminHeader } from "@/components/Admin/layout/AdminHeader";
 import { AdminMobileMenu } from "@/components/Admin/layout/AdminMobileMenu";
 import { AdminSidebar } from "@/components/Admin/layout/AdminSidebar";
+import RezaBakhshian from "@/app/admin/Icon/RezaBakhshian";
 
 interface IChildren {
   children: ReactNode;
@@ -66,8 +67,21 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
   const router = useRouter();
   const [profileAside, setProfileAside] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // تشخیص موبایل
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleLogoutClick = () => setShowLogoutModal(true);
+  
   const handleLogoutConfirm = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
@@ -76,6 +90,7 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
     setShowLogoutModal(false);
     router.push("/login");
   };
+  
   const handleLogoutCancel = () => setShowLogoutModal(false);
 
   const formatPhoneNumber = (phone: string) => {
@@ -87,7 +102,7 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
   };
 
   return (
-    <div dir="rtl" className="bg-gray-100 dark:bg-gray-900">
+    <div dir="rtl" className="bg-gray-100 dark:bg-gray-900 ">
       <LogoutModal isOpen={showLogoutModal} onClose={handleLogoutCancel} onConfirm={handleLogoutConfirm} />
 
       {/* دسکتاپ */}
@@ -104,7 +119,12 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
           </div>
 
           <div className="flex-1 flex flex-col h-full">
-            <AdminHeader userData={userData} handleLogoutClick={handleLogoutClick} formatPhoneNumber={formatPhoneNumber} />
+            <AdminHeader 
+              userData={userData} 
+              handleLogoutClick={handleLogoutClick} 
+              formatPhoneNumber={formatPhoneNumber}
+              MenuItems={MenuItems}
+            />
             <main className="flex-1 mt-4 rounded-tl-[40px] rounded-br-[40px] bg-white dark:bg-[#060425] p-6 shadow-[0_0_8px] shadow-blue-300/15 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {children}
             </main>
@@ -114,15 +134,20 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
 
       {/* موبایل */}
       <div className="lg:hidden">
-        <div className="flex justify-between items-center mb-4 px-4">
+        <div className="flex justify-between items-center p-4 bg-white dark:bg-[#060425] border-b border-gray-200 dark:border-gray-700">
           <div className="dark:hidden"><HeaderIcon1Mini /></div>
           <div className="hidden dark:block"><HeaderIcon2Mini /></div>
           <div className="flex items-center gap-3">
             <DarkModeHero />
-            <AdminMobileMenu MenuItems={MenuItems} handleLogoutClick={handleLogoutClick} />
+            <AdminMobileMenu 
+              MenuItems={MenuItems} 
+              handleLogoutClick={handleLogoutClick}
+              userData={userData}
+              formatPhoneNumber={formatPhoneNumber}
+            />
           </div>
         </div>
-        <main className="rounded-tl-[40px] rounded-br-[40px] bg-white dark:bg-[#060425] p-4 mx-4 shadow-[0_0_8px] shadow-blue-300/15">
+        <main className="rounded-tl-[40px] rounded-br-[40px] bg-white dark:bg-[#060425] p-4 m-4 shadow-[0_0_8px] shadow-blue-300/15">
           {children}
         </main>
       </div>

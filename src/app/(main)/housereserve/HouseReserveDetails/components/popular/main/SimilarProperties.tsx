@@ -19,7 +19,7 @@ interface Property {
 
 const mockProperties: Property[] = [
   {
-    id: 10,
+    id: 110,
     title: "ویلا مدرن خزر",
     address: "گیلان، رشت، انزلی",
     price: "250000000",
@@ -28,7 +28,7 @@ const mockProperties: Property[] = [
     location: "گیلان، رشت"
   },
   {
-    id: 11,
+    id: 118,
     title: "عمارت رویال",
     address: "تهران، لواسان",
     price: "850000000",
@@ -37,7 +37,7 @@ const mockProperties: Property[] = [
     location: "تهران، لواسان"
   },
   {
-    id: 12,
+    id: 119,
     title: "کلبه درختی",
     address: "مازندران، سوادکوه",
     price: "180000000",

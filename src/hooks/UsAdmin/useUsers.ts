@@ -1,4 +1,5 @@
-import { useState } from "react";
+// useUsers.ts
+import { useState, useCallback } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -20,7 +21,7 @@ export const useUsers = () => {
 
   const getToken = () => localStorage.getItem("accessToken");
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -38,7 +39,7 @@ export const useUsers = () => {
         },
       });
       
-      let usersList: User[] = [];
+      let usersList: any[] = [];
       if (response.data?.data && Array.isArray(response.data.data)) {
         usersList = response.data.data;
       } else if (Array.isArray(response.data)) {
@@ -47,7 +48,7 @@ export const useUsers = () => {
         usersList = [];
       }
       
-      const formattedUsers = usersList.map((user: any) => ({
+      const formattedUsers: User[] = usersList.map((user: any) => ({
         id: user.id,
         fullName: user.fullName || `${user.firstName || ""} ${user.lastName || ""}`.trim() || user.email?.split("@")[0] || "کاربر ناشناس",
         email: user.email,
@@ -70,66 +71,126 @@ export const useUsers = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = useCallback(async (id: number) => {
     try {
       const token = getToken();
       
-      await axios.delete(`${API_BASE_URL}/admin/users/${id}`, {
+      const response = await axios.delete(`${API_BASE_URL}/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
-      await fetchUsers();
-      toast.success("کاربر با موفقیت حذف شد");
+      if (response.status === 200 || response.status === 204) {
+        setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
+        toast.success("کاربر با موفقیت حذف شد");
+      }
     } catch (error: any) {
       console.error("خطا در حذف کاربر:", error);
-      toast.error(error.response?.data?.message || "خطا در حذف کاربر");
+      
+      if (error.response?.status === 400) {
+        toast.error("این کاربر دارای رزرو فعال است و قابل حذف نمی‌باشد");
+      } else if (error.response?.status === 404) {
+        toast.error("کاربر یافت نشد");
+      } else if (error.response?.status === 403) {
+        toast.error("شما دسترسی حذف کاربر را ندارید");
+      } else {
+        toast.error(error.response?.data?.message || "خطا در حذف کاربر");
+      }
     }
-  };
+  }, []);
 
-const handleEdit = async (updatedUser: User) => {
-  try {
-    const token = getToken();
-    
-    const fullNameParts = updatedUser.fullName?.trim().split(" ") || [];
-    const firstName = fullNameParts[0] || "";
-    const lastName = fullNameParts.slice(1).join(" ") || "";
-    
-    const payload = {
-      firstName: firstName,
-      lastName: lastName,
-      fullName: updatedUser.fullName,
-      email: updatedUser.email,
-      phoneNumber: updatedUser.phoneNumber || "",
-      emailVerified: false,
-      membershipDate: new Date().toISOString(),
-      profilePicture: "",
-    };
-    
-    console.log(" ارسال داده برای ویرایش:", payload);
-    
-    const response = await axios.put(`${API_BASE_URL}/admin/users/${updatedUser.id}`, payload, {
-      headers: { 
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-      },
-    });
-    
-    console.log("پاسخ سرور:", response.data);
-    
-    await fetchUsers();
-    toast.success("کاربر با موفقیت ویرایش شد");
-    
-  } catch (error: any) {
-    console.error(" خطا در ویرایش کاربر:", error);
-    console.error("پاسخ خطا:", error.response?.data);
-    
-    const errorMessage = error.response?.data?.message || error.response?.data?.error || "خطا در ویرایش کاربر";
-    toast.error(errorMessage);
-    throw error;
-  }
-};
+  const handleEdit = useCallback(async (updatedUser: User, originalUser?: User) => {
+    try {
+      const token = getToken();
+      if (!token) {
+        toast.error("توکن یافت نشد");
+        return;
+      }
+      
+      const fullNameParts = updatedUser.fullName?.trim().split(" ") || [];
+      const firstName = fullNameParts[0] || "";
+      const lastName = fullNameParts.slice(1).join(" ") || "";
+      
+      const userInfoPayload = {
+        email: updatedUser.email,
+        fullName: updatedUser.fullName,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: updatedUser.phoneNumber || "",
+        emailVerified: 1,
+        membershipDate: new Date().toISOString(),
+        profilePicture: ""
+      };
+      
+      const url = `${API_BASE_URL}/admin/users/${updatedUser.id}`;
+      console.log("📡 درخواست ویرایش اطلاعات:", url);
+      console.log("📦 payload:", userInfoPayload);
+      
+      await axios.put(url, userInfoPayload, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+      });
+      
+      console.log("✅ اطلاعات کاربر با موفقیت ویرایش شد");
+      
+      if (originalUser && originalUser.role !== updatedUser.role) {
+        const rolePayload = { role: updatedUser.role };
+        const roleUrl = `${API_BASE_URL}/admin/users/${updatedUser.id}/role`;
+        
+        console.log("📡 درخواست تغییر نقش:", roleUrl);
+        console.log("📦 payload نقش:", rolePayload);
+        
+        await axios.put(roleUrl, rolePayload, {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          },
+        });
+        
+        console.log("✅ نقش کاربر با موفقیت تغییر کرد");
+      } else {
+        console.log("ℹ نقش کاربر تغییر نکرده است");
+      }
+      
+      setUsers(prevUsers => {
+        const newUsers = prevUsers.map(user =>
+          user.id === updatedUser.id
+            ? {
+                ...user,
+                fullName: updatedUser.fullName,
+                email: updatedUser.email,
+                phoneNumber: updatedUser.phoneNumber,
+                role: updatedUser.role,
+              }
+            : user
+        );
+        return [...newUsers];
+      });
+      
+      toast.success("کاربر با موفقیت ویرایش شد");
+      
+    } catch (error: any) {
+      console.error("❌ خطا در ویرایش کاربر:", error);
+      console.log("وضعیت خطا:", error.response?.status);
+      console.log("پیام خطا:", error.response?.data?.message);
+      
+      if (error.response?.status === 404) {
+        toast.error("کاربر یافت نشد");
+      } else if (error.response?.status === 403) {
+        toast.error("شما دسترسی ویرایش این کاربر را ندارید");
+      } else if (error.response?.status === 400) {
+        const errorMessage = error.response?.data?.message || error.response?.data?.error || "داده‌های ارسالی معتبر نیست";
+        toast.error(errorMessage);
+      } else {
+        const errorMessage = error.response?.data?.message || error.response?.data?.error || "خطا در ویرایش کاربر";
+        toast.error(errorMessage);
+      }
+      throw error;
+    }
+  }, []);
 
   return {
     users,

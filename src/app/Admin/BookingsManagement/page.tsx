@@ -8,7 +8,6 @@ import AcceptBookingModal from "@/components/Admin/BookingsManagement/filter/men
 import CancelBookingModal from "@/components/Admin/BookingsManagement/filter/menu/Operation/CancelBookingModal";
 import FilterBookingModal from "@/components/Admin/BookingsManagement/filter/FilterBookingModal";
 
-import { StatusBadge } from "@/components/Admin/BookingsManagement/filter/StatusBadge";
 import { StatsCards } from "@/components/Admin/BookingsManagement/filter/StatsCards";
 import { SearchFilter } from "@/components/Admin/BookingsManagement/filter/SearchFilter";
 import { BookingCard } from "@/components/Admin/BookingsManagement/filter/BookingCard";
@@ -38,7 +37,6 @@ const BookingsManagement = () => {
     getUserMobile,
   } = useBookings();
 
-  // State
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFrom, setDateFrom] = useState("");
@@ -49,7 +47,6 @@ const BookingsManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  // Modal States - ✅ اضافه کردن نوع
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -66,13 +63,11 @@ const BookingsManagement = () => {
     else fetchBookings();
   }, []);
 
-  // Statistics
   const totalBookings = bookings.length;
   const confirmedBookings = bookings.filter((b: Booking) => b.status === "confirmed").length;
   const pendingBookings = bookings.filter((b: Booking) => b.status === "pending").length;
   const canceledBookings = bookings.filter((b: Booking) => b.status === "canceled" || b.status === "cancelled").length;
 
-  // Filtering
   const resetFilters = () => {
     setSearch("");
     setStatusFilter("all");
@@ -112,7 +107,6 @@ const BookingsManagement = () => {
       .join("، ");
   };
 
-  // ✅ اضافه کردن نوع به پارامترها
   const handleViewDetails = (b: Booking) => {
     setSelectedBooking(b);
     setIsDetailModalOpen(true);
@@ -140,41 +134,62 @@ const BookingsManagement = () => {
     setIsCancelModalOpen(true);
   };
 
-  // ✅ اضافه کردن نوع به پارامترها
-  const confirmEdit = async (data: { reservedDates: string[]; status: string }) => {
+  const confirmEditBooking = async (data: { 
+    status: string; 
+    sharedEmail: string; 
+    sharedMobile: string; 
+    traveler_details: any[] 
+  }) => {
+    const loadingToast = toast.loading("در حال ویرایش رزرو...");
+    
     try {
       if (!selectedBooking) return;
-      await updateBooking(selectedBooking.id, {
-        reservedDates: data.reservedDates,
+      
+      console.log("داده ارسالی به سرور:", {
         status: data.status,
+        sharedEmail: data.sharedEmail,
+        sharedMobile: data.sharedMobile,
+        traveler_details: data.traveler_details,
       });
-      toast.success("رزرو با موفقیت ویرایش شد");
+      
+      await updateBooking(selectedBooking.id, {
+        status: data.status,
+        sharedEmail: data.sharedEmail,
+        sharedMobile: data.sharedMobile,
+        traveler_details: data.traveler_details,
+      });
+      
+      toast.success("رزرو با موفقیت ویرایش شد", { id: loadingToast });
       await fetchBookings();
       setIsEditModalOpen(false);
-    } catch (error) {
-      toast.error("خطا در ویرایش رزرو");
+      setSelectedBooking(null);
+    } catch (error: any) {
+      console.error("Error:", error);
+      toast.error(error.response?.data?.message || error.message || "خطا در ویرایش رزرو", { id: loadingToast });
     }
   };
 
-  const confirmDelete = async () => {
+  const confirmDeleteBooking = async () => {
+    const loadingToast = toast.loading("در حال حذف رزرو...");
     try {
       if (!selectedBooking) return;
       await deleteBooking(selectedBooking.id);
-      toast.success("رزرو با موفقیت حذف شد");
+      toast.success("رزرو با موفقیت حذف شد", { id: loadingToast });
       await fetchBookings();
       setIsDeleteModalOpen(false);
+      setSelectedBooking(null);
     } catch (error) {
-      toast.error("خطا در حذف رزرو");
+      toast.error("خطا در حذف رزرو", { id: loadingToast });
     }
   };
 
-  const confirmAccept = async () => {
+  const confirmAcceptBooking = async () => {
     await fetchBookings();
     setIsAcceptModalOpen(false);
     setSelectedBookingForAction(null);
   };
 
-  const confirmCancel = async () => {
+  const confirmCancelBooking = async () => {
     await fetchBookings();
     setIsCancelModalOpen(false);
     setSelectedBookingForAction(null);
@@ -207,7 +222,6 @@ const BookingsManagement = () => {
 
   return (
     <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6 min-h-screen">
-      {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
         <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 shadow-lg shadow-gray-200/70 dark:shadow-none border border-gray-200 dark:border-gray-700/50">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">مدیریت رزروها</h1>
@@ -215,10 +229,8 @@ const BookingsManagement = () => {
         </div>
       </AdvancedScrollAnimation>
 
-      {/* Stats */}
       <StatsCards total={totalBookings} confirmed={confirmedBookings} pending={pendingBookings} canceled={canceledBookings} />
 
-      {/* Search & Filters */}
       <SearchFilter
         search={search}
         onSearchChange={setSearch}
@@ -227,10 +239,8 @@ const BookingsManagement = () => {
         hasActiveFilters={statusFilter !== "all" || !!dateFrom || !!dateTo || !!priceMin || !!priceMax || !!search}
       />
 
-      {/* Table Header */}
       <BookingTableHeader />
 
-      {/* Bookings List */}
       <div className="flex flex-col gap-3">
         {paginated.map((booking: Booking) => (
           <BookingCard
@@ -249,7 +259,6 @@ const BookingsManagement = () => {
         ))}
       </div>
 
-      {/* Pagination */}
       {filteredBookings.length > 0 && (
         <AdvancedScrollAnimation type="fade" delay={0.6}>
           <div className="flex justify-start pt-2">
@@ -258,10 +267,8 @@ const BookingsManagement = () => {
         </AdvancedScrollAnimation>
       )}
 
-      {/* Empty State */}
       {filteredBookings.length === 0 && !loading && <EmptyState />}
 
-      {/* Modals */}
       <FilterBookingModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
@@ -292,7 +299,7 @@ const BookingsManagement = () => {
       <EditBookingModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        onSave={confirmEdit}
+        onSave={confirmEditBooking}
         booking={selectedBooking}
         houseTitle={editingHouseTitle}
         housePrice={editingHousePrice}
@@ -301,14 +308,14 @@ const BookingsManagement = () => {
       <DeleteBookingModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={confirmDelete}
+        onConfirm={confirmDeleteBooking}
         bookingId={selectedBooking?.id ?? 0}
       />
 
       <AcceptBookingModal
         isOpen={isAcceptModalOpen}
         onClose={() => setIsAcceptModalOpen(false)}
-        onConfirm={confirmAccept}
+        onConfirm={confirmAcceptBooking}
         bookingId={selectedBookingForAction?.id ?? 0}
         bookingDetails={{
           id: selectedBookingForAction?.id ?? 0,
@@ -326,7 +333,7 @@ const BookingsManagement = () => {
       <CancelBookingModal
         isOpen={isCancelModalOpen}
         onClose={() => setIsCancelModalOpen(false)}
-        onConfirm={confirmCancel}
+        onConfirm={confirmCancelBooking}
         bookingId={selectedBookingForAction?.id ?? 0}
         bookingDetails={{
           id: selectedBookingForAction?.id ?? 0,

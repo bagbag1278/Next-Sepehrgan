@@ -1,4 +1,3 @@
-// components/Admin/AdminHeader.tsx
 "use client";
 
 import { useState } from "react";
@@ -12,9 +11,10 @@ interface AdminHeaderProps {
   userData: any;
   handleLogoutClick: () => void;
   formatPhoneNumber: (phone: string) => string;
+  MenuItems: any[];
 }
 
-export const AdminHeader = ({ userData, handleLogoutClick, formatPhoneNumber }: AdminHeaderProps) => {
+export const AdminHeader = ({ userData,  MenuItems , handleLogoutClick, formatPhoneNumber }: AdminHeaderProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
 
   return (
@@ -47,7 +47,7 @@ export const AdminHeader = ({ userData, handleLogoutClick, formatPhoneNumber }: 
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setProfileOpen(false)} />
                 <div className="absolute left-0 top-full mt-2 w-72 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden">
-                  <div className="p-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+                  <div className="p-4 bg-indigo-700 text-white">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
                         <RezaBakhshian />

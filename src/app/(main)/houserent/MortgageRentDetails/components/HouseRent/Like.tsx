@@ -17,37 +17,19 @@ const Like = ({
   const t = useTranslations('Like');
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [userId, setUserId] = useState<number | null>(null);
   const [favoriteId, setFavoriteId] = useState<number | null>(null);
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+  
   const getToken = () => localStorage.getItem("accessToken");
 
-  const getUserIdFromToken = (): number | null => {
-    const token = getToken();
-    if (!token) return null;
-    
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.id || payload.userId || payload.sub || null;
-    } catch (error) {
-      console.error("Error parsing token:", error);
-      return null;
-    }
-  };
-
   useEffect(() => {
-    const extractedUserId = getUserIdFromToken();
-    setUserId(extractedUserId);
+    const savedLiked = localStorage.getItem(`liked_${houseId}`);
+    const savedId = localStorage.getItem(`favoriteId_${houseId}`);
     
-    // خواندن وضعیت لایک از localStorage
-    const liked = localStorage.getItem(`liked_${houseId}`);
-    const savedFavoriteId = localStorage.getItem(`favoriteId_${houseId}`);
-    if (liked === 'true') {
+    if (savedLiked === 'true' && savedId) {
       setIsLiked(true);
-      if (savedFavoriteId) {
-        setFavoriteId(Number(savedFavoriteId));
-      }
+      setFavoriteId(Number(savedId));
     }
   }, [houseId]);
 
@@ -58,7 +40,7 @@ const Like = ({
       return;
     }
 
-    if (!houseId || !userId) {
+    if (!houseId) {
       toast.error(t('missingInfo'));
       return;
     }
@@ -67,7 +49,7 @@ const Like = ({
     try {
       const response = await axios.post(
         `${API_BASE_URL}/favorites`,
-        { house_id: houseId, user_id: userId },
+        { house_id: houseId },
         { 
           headers: { 
             Authorization: `Bearer ${token}`,
@@ -76,54 +58,30 @@ const Like = ({
         }
       );
 
-      // ذخیره favoriteId از پاسخ سرور
-      const newFavoriteId = response.data?.id || response.data?.data?.id;
+      const newFavoriteId = response.data?.id || response.data?.data?.id || Date.now();
       setFavoriteId(newFavoriteId);
-      localStorage.setItem(`favoriteId_${houseId}`, newFavoriteId);
-      
       setIsLiked(true);
       localStorage.setItem(`liked_${houseId}`, 'true');
+      localStorage.setItem(`favoriteId_${houseId}`, String(newFavoriteId));
       
-      // پیام لایک موفق
-      toast.success(t('addSuccess'), {
-        icon: '❤️',
-        style: {
-          borderRadius: '12px',
-          background: '#FFE4E4',
-          color: '#E53E3E',
-          fontWeight: 'bold',
-        },
-        duration: 2000,
-      });
-      
+      toast.success(t('addSuccess'));
       onLikeChange?.(true);
       
     } catch (error: any) {
-      console.error("Error adding to favorites:", error);
+      console.error("Error:", error);
       
-      // اگر 409 بود، یعنی قبلاً لایک شده
       if (error.response?.status === 409) {
+        const fakeId = Date.now();
         setIsLiked(true);
+        setFavoriteId(fakeId);
         localStorage.setItem(`liked_${houseId}`, 'true');
-        
-        toast.success(t('alreadyExists'), {
-          icon: '❤️',
-          style: {
-            borderRadius: '12px',
-            background: '#FFE4E4',
-            color: '#E53E3E',
-            fontWeight: 'bold',
-          },
-          duration: 1500,
-        });
-        
+        localStorage.setItem(`favoriteId_${houseId}`, String(fakeId));
+        toast.success(t('alreadyExists'));
         onLikeChange?.(true);
       } else if (error.response?.status === 401) {
-        toast.error(t('loginRequired'), {
-          duration: 3000,
-        });
+        toast.error(t('loginRequired'));
       } else {
-        toast.error(error.response?.data?.message || t('addError'));
+        toast.error(t('addError'));
       }
     } finally {
       setLoading(false);
@@ -137,56 +95,46 @@ const Like = ({
       return;
     }
 
+    if (!favoriteId) {
+      setIsLiked(false);
+      localStorage.removeItem(`liked_${houseId}`);
+      localStorage.removeItem(`favoriteId_${houseId}`);
+      onLikeChange?.(false);
+      return;
+    }
+
     setLoading(true);
     try {
-      // سعی می‌کنیم با favoriteId حذف کنیم
-      if (favoriteId) {
-        await axios.delete(`${API_BASE_URL}/favorites/${favoriteId}`, {
-          headers: { 
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-        });
-      }
+      await axios.delete(`${API_BASE_URL}/favorites/${favoriteId}`, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+      });
       
       setIsLiked(false);
       setFavoriteId(null);
       localStorage.removeItem(`liked_${houseId}`);
       localStorage.removeItem(`favoriteId_${houseId}`);
       
-      // پیام آنلایک موفق
-      toast.success(t('removeSuccess'), {
-        icon: '💔',
-        style: {
-          borderRadius: '12px',
-          background: '#F0F0F0',
-          color: '#666',
-          fontWeight: 'bold',
-        },
-        duration: 2000,
-      });
-      
+      toast.success(t('removeSuccess'));
       onLikeChange?.(false);
       
     } catch (error: any) {
-      console.error("Error removing from favorites:", error);
+      console.error("Error:", error);
       
-      // حتی اگر خطا خورد، وضعیت محلی را تغییر بده
-      setIsLiked(false);
-      setFavoriteId(null);
-      localStorage.removeItem(`liked_${houseId}`);
-      localStorage.removeItem(`favoriteId_${houseId}`);
-      
-      toast.success(t('removeSuccess'), {
-        icon: '💔',
-        style: {
-          borderRadius: '12px',
-          background: '#F0F0F0',
-          color: '#666',
-          fontWeight: 'bold',
-        },
-        duration: 2000,
-      });
+      if (error.response?.status === 404) {
+        setIsLiked(false);
+        setFavoriteId(null);
+        localStorage.removeItem(`liked_${houseId}`);
+        localStorage.removeItem(`favoriteId_${houseId}`);
+        toast.success(t('removeSuccess'));
+        onLikeChange?.(false);
+      } else if (error.response?.status === 401) {
+        toast.error(t('loginRequired'));
+      } else {
+        toast.error(t('removeError'));
+      }
     } finally {
       setLoading(false);
     }
@@ -206,7 +154,7 @@ const Like = ({
     <button
       onClick={handleLikeClick}
       disabled={loading}
-      className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 dark:border-gray-500 rounded-lg flex items-center justify-center border  border-blue-400 transition-all active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 dark:border-gray-500 rounded-lg flex items-center justify-center border border-blue-400 transition-all active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {loading ? (
         <div className="w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>

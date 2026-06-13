@@ -33,7 +33,7 @@ const TravelersModal = ({
         className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto relative shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-gradient-to-l from-blue-700 via-blue-800 to-indigo-900 rounded-t-2xl px-6 py-4 text-white sticky top-0 z-10">
+        <div className="bg-indigo-900 rounded-t-2xl px-6 py-4 text-white sticky top-0 z-10">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold">مشخصات مسافران</h2>
             <button

@@ -115,7 +115,7 @@ const SocialLinksManagement = () => {
     setSubmitting(true);
     try {
       const token = getToken();
-      await axios.delete(`${API_BASE_URL}/api/social-media-links/${selectedLink.id}`, {
+      await axios.delete(`${API_BASE_URL}/social-media-links/${selectedLink.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("لینک با موفقیت حذف شد");

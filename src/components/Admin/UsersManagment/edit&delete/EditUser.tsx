@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { X, Edit, Shield, UserCog, Store, User as UserIcon } from "lucide-react";
+import { X, Edit, UserCog, Store, User as UserIcon, Loader2 } from "lucide-react";
 
 interface User {
   id: number;
@@ -13,14 +13,13 @@ interface User {
 
 interface EditUserProps {
   user: User;
-  onEdit: (updatedUser: User) => void;
+  onEdit: (updatedUser: User, originalUser?: User) => Promise<void>;
   trigger?: React.ReactNode;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
-
 export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
   const [open, setOpen] = useState(false);
+  const [originalRole, setOriginalRole] = useState(user.role);
   const [form, setForm] = useState({
     fullName: user.fullName || "",
     email: user.email || "",
@@ -28,8 +27,6 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
     role: user.role,
   });
   const [loading, setLoading] = useState(false);
-
-  const getToken = () => localStorage.getItem("accessToken");
 
   const handleRoleChange = (newRole: "buyer" | "seller" | "admin") => {
     setForm({ ...form, role: newRole });
@@ -40,77 +37,21 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
     setLoading(true);
     
     try {
-      const token = getToken();
-      if (!token) {
-        toast.error("توکن یافت نشد");
-        setLoading(false);
-        return;
-      }
-
-      // 1. اول اطلاعات اصلی کاربر را آپدیت کن (بدون نقش)
-      const userUpdateData = {
-        fullName: form.fullName,
-        email: form.email,
-        phoneNumber: form.phoneNumber,
-      };
-
-      console.log("📤 ارسال داده کاربر:", userUpdateData);
-      
-      const userResponse = await fetch(`${API_BASE_URL}/admin/users/${user.id}`, {
-        method: "PUT",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userUpdateData),
-      });
-
-      console.log("📥 وضعیت پاسخ کاربر:", userResponse.status);
-
-      if (!userResponse.ok) {
-        const errorText = await userResponse.text();
-        throw new Error(`خطا در ویرایش کاربر: ${errorText}`);
-      }
-
-      // 2. اگر نقش تغییر کرده بود، آن را با آدرس جداگانه آپدیت کن
-      if (form.role !== user.role) {
-        console.log("📤 ارسال داده نقش:", { role: form.role });
-        
-        const roleResponse = await fetch(`${API_BASE_URL}/admin/users/${user.id}/role`, {
-          method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ role: form.role }),
-        });
-
-        console.log("📥 وضعیت پاسخ نقش:", roleResponse.status);
-
-        if (!roleResponse.ok) {
-          const errorText = await roleResponse.text();
-          console.warn("خطا در تغییر نقش:", errorText);
-          toast.warning("اطلاعات کاربر ذخیره شد، اما نقش تغییر نکرد");
-        } else {
-          toast.success("نقش کاربری با موفقیت تغییر کرد");
-        }
-      }
-
-      toast.success("اطلاعات کاربر با موفقیت به‌روز شد");
-      
       const updatedUser: User = {
         ...user,
-        fullName: form.fullName,
-        email: form.email,
-        phoneNumber: form.phoneNumber,
+        fullName: form.fullName.trim(),
+        email: form.email.trim(),
+        phoneNumber: form.phoneNumber?.trim() || null,
         role: form.role,
       };
       
-      onEdit(updatedUser);
+      await onEdit(updatedUser, { ...user, role: originalRole });
+      toast.success("اطلاعات کاربر با موفقیت به‌روز شد");
       setOpen(false);
+      setOriginalRole(form.role);
       
     } catch (err: any) {
-      console.error("❌ خطا:", err);
+      console.error("خطا:", err);
       toast.error(err.message || "خطا در ویرایش کاربر");
     } finally {
       setLoading(false);
@@ -130,7 +71,6 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
         >
           <div 
             className="bg-white dark:bg-gray-900 rounded-2xl max-w-md w-full mx-auto shadow-xl transition-all"
-            style={{ boxShadow: "0 4px 20px rgba(8, 135, 202, 0.3)" }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center p-5 border-b border-gray-100 dark:border-gray-800">
@@ -182,7 +122,7 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
                   dir="rtl"
                   type="tel"
                   placeholder="شماره تماس"
-                  value={form.phoneNumber}
+                  value={form.phoneNumber || ""}
                   onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
                   className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                 />
@@ -210,7 +150,7 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
                     onClick={() => handleRoleChange("seller")}
                     className={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl border transition-all ${
                       form.role === "seller"
-                        ? "bg-blue-50 dark:bg-blue-900/30 border-blue-500 text-blue-600 "
+                        ? "bg-blue-50 dark:bg-blue-900/30 border-blue-500 text-blue-600 dark:text-blue-400"
                         : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                     }`}
                   >
@@ -245,9 +185,7 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
                   disabled={loading}
                   className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  {loading && (
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  )}
+                  {loading && <Loader2 size={18} className="animate-spin" />}
                   {loading ? "در حال ذخیره..." : "ذخیره"}
                 </button>
               </div>

@@ -4,7 +4,6 @@ import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
 import ThemeManager from "@/components/utils/ThemeManager";
 import { ThemeProvider } from "next-themes";
-import VoiceCommand from "@/components/VoiceCommand";
 import { usePathname } from "next/navigation";
 
 const noLayoutRoutes = [
@@ -61,7 +60,6 @@ export default function ClientLayout({
             <main className="w-full">{children}</main>
           </ThemeManager>
           <Footer />
-          <VoiceCommand />
         </>
       )}
     </ThemeProvider>

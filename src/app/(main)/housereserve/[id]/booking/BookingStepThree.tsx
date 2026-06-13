@@ -3,9 +3,6 @@ import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import BookingSummaryTwo from "../components/BookingSummaryTwo";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import TallerFlash from "./icon/flesh/TallerFlash";
-import SmallFlash from "./icon/flesh/SmallFlash";
-import SmallTwo from "./icon/flesh/SmallTwo";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 
 const BookingStepThree = ({
@@ -14,7 +11,6 @@ const BookingStepThree = ({
   setStep,
   checkInDate,
   checkOutDate,
-  step,
   extraEmail,
   extraPhone,
   description,
@@ -44,7 +40,7 @@ const BookingStepThree = ({
   };
 
   const discountedTotal = () => {
-    const originalPrice = parseInt(finalTotal?.replace(/,/g, "0")) || 0;
+    const originalPrice = parseInt(finalTotal?.replace(/,/g, "")) || 0;
     if (couponApplied) {
       const discount = originalPrice * (discountAmount / 100);
       return (originalPrice - discount).toLocaleString();
@@ -54,8 +50,7 @@ const BookingStepThree = ({
 
   const handleNextStep = () => {
     if (isAllFormsValid && !loading) {
-      setStep(4);
-      window.scrollTo(0, 0);
+      handelFinalBooking();
     }
   };
 
@@ -64,24 +59,10 @@ const BookingStepThree = ({
       className="h-278 w-full relative bottom-30 max-[1280px]:h-375"
       dir="rtl"
     >
-      <div className="relative -bottom-13 left-3 max-[1280px]:hidden">
-        <div className="absolute left-5 top-150">
-          <TallerFlash />
-        </div>
-        <div className="absolute left-16 top-150">
-          <div className="absolute">
-            <SmallFlash />
-          </div>
-          <div className="absolute mb-2 -mr-1">
-            <SmallTwo />
-          </div>
-        </div>
-      </div>
+     
       <div className="w-11/12">
         <div className="flex items-start">
-          <div
-            className={`flex-1 flex w-full order-3 ${step === 3 ? "lg:order-1" : "lg:order-2"}`}
-          >
+          <div className="flex-1 flex w-full order-3 lg:order-1">
             <div className="flex max-[1330px]:flex-col gap-8 items-start w-full">
               <div className="flex-1 w-full space-y-6 order-2 lg:order-1">
                 <div className="rounded-[40px] p-8">
@@ -163,7 +144,7 @@ const BookingStepThree = ({
                       {t("hotelPrice")}
                     </span>
                     <span className="text-blue-900 font-black text-2xl">
-                      {bookingPrices?.discountedTotal.toLocaleString() ||
+                      {bookingPrices?.discountedTotal?.toLocaleString() ||
                         finalTotal}{" "}
                       {t("toman")}
                     </span>
@@ -196,7 +177,7 @@ const BookingStepThree = ({
                         : "bg-gray-300 text-gray-500 cursor-not-allowed"
                     }`}
                   >
-                    {t("onlinePayment")}
+                    {loading ? "در حال پردازش..." : t("onlinePayment")}
                   </button>
 
                   <button
@@ -220,6 +201,8 @@ const BookingStepThree = ({
                     showExtraCost={true}
                     extraEmail={extraEmail}
                     extraPhone={extraPhone}
+                    prices={bookingPrices}
+                    setStep={setStep}
                   />
                 </AdvancedScrollAnimation>
               </div>

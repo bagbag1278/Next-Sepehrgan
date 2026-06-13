@@ -1,42 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Users } from "lucide-react";
-
-import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
-import Pagination from "@/components/Admin/Pagination/PaginationAdmin";
+import { useEffect, useState, useCallback } from "react";
 import { useUsers } from "@/hooks/UsAdmin/useUsers";
 import { UsersHeader } from "@/components/Admin/UsersManagment/UsersHeader";
 import { UsersStats } from "@/components/Admin/UsersManagment/UsersStats";
 import { UsersSearchFilter } from "@/components/Admin/UsersManagment/UsersSearchFilter";
 import { UsersTableHeader } from "@/components/Admin/UsersManagment/UsersTableHeader";
 import { UsersList } from "@/components/Admin/UsersManagment/UsersList";
+import Pagination from "@/components/Admin/Pagination/PaginationAdmin";
 
 export interface User {
   id: number;
   fullName: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   phoneNumber: string | null;
   role: "buyer" | "seller" | "admin";
   created_at?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
-
 const UsersManagement = () => {
-  const {
-    users,
-    loading,
-    fetchUsers,
-    handleDelete,
-    handleEdit,
-  } = useUsers();
+  const { users, loading, fetchUsers, handleDelete, handleEdit } = useUsers();
 
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState<"all" | "admin" | "seller" | "buyer">("all");
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [updateKey, setUpdateKey] = useState(0);
   const itemsPerPage = 4;
 
   const filteredUsers = users.filter((user: User) => {
@@ -45,9 +36,8 @@ const UsersManagement = () => {
       user.fullName?.toLowerCase().includes(search.toLowerCase()) ||
       user.email?.toLowerCase().includes(search.toLowerCase()) ||
       user.phoneNumber?.toLowerCase().includes(search.toLowerCase());
-    
+
     const matchesRole = roleFilter === "all" || user.role === roleFilter;
-    
     return matchesSearch && matchesRole;
   });
 
@@ -63,7 +53,12 @@ const UsersManagement = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [updateKey]);
+
+  const handleEditWithRefresh = useCallback(async (updatedUser: User, originalUser?: User) => {
+    await handleEdit(updatedUser, originalUser);
+    setUpdateKey(prev => prev + 1);
+  }, [handleEdit]);
 
   const totalUsers = users.length;
   const adminCount = users.filter((u: User) => u.role === "admin").length;
@@ -75,7 +70,7 @@ const UsersManagement = () => {
     setRoleFilter("all");
   };
 
-  if (loading) {
+  if (loading && users.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
@@ -89,14 +84,12 @@ const UsersManagement = () => {
   return (
     <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6 min-h-screen">
       <UsersHeader />
-
       <UsersStats
         totalUsers={totalUsers}
         adminCount={adminCount}
         sellerCount={sellerCount}
         buyerCount={buyerCount}
       />
-
       <UsersSearchFilter
         search={search}
         onSearchChange={setSearch}
@@ -106,25 +99,25 @@ const UsersManagement = () => {
         onOpenChange={setIsOpen}
         onResetFilters={resetFilters}
       />
-
       <UsersTableHeader />
-
       <UsersList
+        key={updateKey}
         users={paginatedUsers}
         loading={loading}
         search={search}
         roleFilter={roleFilter}
-        onEdit={handleEdit}
+        onEdit={handleEditWithRefresh}
         onDelete={handleDelete}
       />
-
-      <div className="flex justify-start pt-2">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      {totalPages > 1 && (
+        <div className="flex justify-start pt-2">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      )}
     </div>
   );
 };

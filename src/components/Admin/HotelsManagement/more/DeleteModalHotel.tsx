@@ -1,6 +1,5 @@
-// components/DeleteModalHotel/DeleteModalHotel.tsx
 "use client";
-import { X, AlertTriangle } from "lucide-react";
+import { X, AlertTriangle, Trash2 } from "lucide-react";
 
 interface DeleteModalHotelProps {
   isOpen: boolean;
@@ -8,7 +7,6 @@ interface DeleteModalHotelProps {
   onConfirm: () => void;
   hotelId: number;
   hotelTitle: string;
-  hasBookings?: boolean;
   loading?: boolean;
 }
 
@@ -18,62 +16,71 @@ const DeleteModalHotel = ({
   onConfirm, 
   hotelId, 
   hotelTitle, 
-  hasBookings = false,
   loading = false
 }: DeleteModalHotelProps) => {
   if (!isOpen) return null;
 
-  const handleConfirm = () => {
-    onConfirm();
-  };
-
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={onClose}>
-      <div className="bg-white dark:bg-gray-800 rounded-3xl w-full max-w-md relative shadow-2xl" onClick={(e) => e.stopPropagation()}>
+      <div className="bg-white dark:bg-gray-800 rounded-3xl w-full max-w-md relative shadow-2xl animate-in fade-in zoom-in duration-200" onClick={(e) => e.stopPropagation()}>
+        
         <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 p-5">
-          <h2 className={`text-xl font-bold ${hasBookings ? "text-yellow-600" : "text-red-600"}`}>
-            {hasBookings ? "غیرفعال سازی هتل" : "حذف هتل"}
-          </h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+          <div className="flex items-center gap-2">
+            <Trash2 size={20} className="text-red-50" />
+            <h2 className="text-xl font-bold text-red-600">حذف هتل</h2>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+          >
             <X size={20} className="text-gray-500" />
           </button>
         </div>
 
-        <div className="p-5 text-center">
-          <AlertTriangle size={48} className={`mx-auto mb-4 ${hasBookings ? "text-yellow-500" : "text-red-500"}`} />
-          {hasBookings ? (
-            <>
-              <p className="text-gray-700 dark:text-gray-300 mb-2">
-                این هتل دارای رزرو فعال است و قابل حذف نمی‌باشد.
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                آیا می‌خواهید آن را غیرفعال کنید؟
-              </p>
-            </>
-          ) : (
-            <p className="text-gray-700 dark:text-gray-300 mb-2">آیا از حذف این هتل اطمینان دارید؟</p>
-          )}
-          <p className="text-sm text-gray-500 dark:text-gray-400">#{hotelId} - {hotelTitle}</p>
+        <div className="p-6 text-center">
+          <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+            <AlertTriangle size={40} className="text-red-50" />
+          </div>
+          
+          <p className="text-gray-700 dark:text-gray-300 text-lg font-medium mb-2">
+            آیا از حذف این هتل اطمینان دارید؟
+          </p>
+          
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            این عمل غیرقابل بازگشت است و تمام اطلاعات مربوط به هتل حذف خواهد شد.
+          </p>
+          
+          <div className="bg-gray-100 dark:bg-gray-700/50 rounded-xl p-3">
+            <p className="text-xs text-gray-500 dark:text-gray-400">شناسه هتل</p>
+            <p className="text-sm font-mono font-bold text-gray-800 dark:text-gray-200">#{hotelId}</p>
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mt-1">{hotelTitle}</p>
+          </div>
         </div>
 
         <div className="flex gap-3 border-t border-gray-200 dark:border-gray-700 p-5">
           <button 
             onClick={onClose} 
             disabled={loading}
-            className="flex-1 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 transition-all disabled:opacity-50"
+            className="flex-1 py-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all disabled:opacity-50 font-medium"
           >
             انصراف
           </button>
           <button 
-            onClick={handleConfirm}
+            onClick={onConfirm}
             disabled={loading}
-            className={`flex-1 py-2.5 rounded-xl text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
-              hasBookings 
-                ? "bg-yellow-600 hover:bg-yellow-700" 
-                : "bg-red-600 hover:bg-red-700"
-            }`}
+            className="flex-1 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center gap-2"
           >
-            {loading ? "در حال پردازش..." : (hasBookings ? "غیرفعال کن" : "بله، حذف شود")}
+            {loading ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                در حال حذف...
+              </>
+            ) : (
+              <>
+                <Trash2 size={16} />
+                بله، حذف شود
+              </>
+            )}
           </button>
         </div>
       </div>
