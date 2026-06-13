@@ -219,7 +219,7 @@ const HosueManagement = () => {
 
                 {/* main */}
                 <div
-                    className='w-full h-90  bg-gray-50/50 dark:bg-slate-900
+                    className='w-full h-90.75  bg-gray-50/50 dark:bg-slate-900
                     rounded-2xl border border-gray-100 dark:border-slate-700'
                 >
 
@@ -235,7 +235,7 @@ const HosueManagement = () => {
                             <span className=''>
                                 نام اقامتگاه
                             </span>
-                            <div className='w-180 flex justify-around '>
+                            <div className=' w-160 flex justify-around '>
 
                                 <span className='w-25'>
                                     قیمت
@@ -259,7 +259,7 @@ const HosueManagement = () => {
 
 
                     {/* table rows */}
-                    <div className='h-90 overflow-hidden'>
+                    <div className='h-90  overflow-hidden'>
 
                         {/* edit */}
 
@@ -267,7 +267,7 @@ const HosueManagement = () => {
 
                             <div
                                 key={house.id}
-                                className=' flex items-center  flex-row-reverse justify-between px-4 py-3 mt-2 mx-2 mb-2 bg-white dark:bg-slate-800
+                                className=' m flex items-center  flex-row-reverse justify-between px-4 py-3 mt-2 mx-2 mb-1 bg-white dark:bg-slate-800
                                 rounded-xl shadow-sm  border border-gray-100  dark:border-slate-700  transition-all duration-200
                                      hover:bg-gray-50  dark:hover:bg-slate-700/40 hover:border-blue-500/40'
                             >
@@ -395,7 +395,7 @@ const HosueManagement = () => {
                                 </span>
 
                                 {/* price */}
-                                <span className='text-blue-800 dark:text-blue-400 font-medium text-sm'>
+                                <span className=' text-blue-800 dark:text-gray-500  font-medium text-sm'>
                                     {Number(house.price)
                                         .toLocaleString("fa-IR")} تومان
                                 </span>
@@ -412,7 +412,7 @@ const HosueManagement = () => {
                                         />
                                     </div>
 
-                                    <span className='text-sm text-gray-800 dark:text-gray-200'>
+                                    <span className='w-30  text-sm text-gray-800 dark:text-gray-200'>
                                         {house.title}
                                     </span>
                                 </div>

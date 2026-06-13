@@ -49,7 +49,7 @@ export default async function SellerLayout({children,}: IChildren) {
 
             <div className="flex items-center gap-3">
               {/* نوتیف */}
-              <div className="relative cursor-pointer">
+              {/* <div className="relative cursor-pointer">
                 <svg
                   width="18"
                   height="20"
@@ -68,7 +68,7 @@ export default async function SellerLayout({children,}: IChildren) {
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-white text-[10px] flex items-center justify-center">
                   3
                 </span>
-              </div>
+              </div> */}
 
               {/* دارک مود */}
               <div className="flex items-center justify-center w-9 h-9 rounded-full dark:bg-blue-200 shadow-md cursor-pointer">
