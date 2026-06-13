@@ -34,17 +34,12 @@ export async function PUT(
                     method: "PUT",
 
                     headers: {
+                     "Content-Type":  "application/json",
 
-                        "Content-Type":
-                            "application/json",
-
-                        Authorization:
-                            `Bearer ${token}`,
+                        Authorization:`Bearer ${token}`,
                     },
 
-                    body: JSON.stringify(
-                        body
-                    ),
+                    body: JSON.stringify( body),
                 }
             );
 
@@ -52,11 +47,8 @@ export async function PUT(
             await response.json();
 
         return NextResponse.json(
-            data,
-            {
-                status:
-                    response.status,
-            }
+            data, 
+            { status:  response.status,}
         );
 
     } catch (err) {
@@ -64,13 +56,8 @@ export async function PUT(
         console.log("PUT ERROR =>", err);
 
         return NextResponse.json(
-            {
-                message:
-                    "server error",
-            },
-            {
-                status: 500,
-            }
+            {  message:  "server error",},
+            {  status: 500, }
         );
 
     }

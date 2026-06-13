@@ -16,6 +16,7 @@ import {
 
 import HeaderIcon from '@/components/DashboardSeller/Icon/HeaderIcon'
 import HeaderIconDark from '@/components/DashboardSeller/Icon/HeaderIconDark'
+import LogoutBox from './logout/LogoutBox'
 
 const MenuItems = [
     {
@@ -28,7 +29,7 @@ const MenuItems = [
         id: 3,
         icon: Users,
         label: 'اطلاعات کاربری',
-        href: '/dashboard/seller/UserInfo',
+        href: '/dashboard/seller/userprofile',
     },
     {
         id: 4,
@@ -145,13 +146,9 @@ const Sidebar = () => {
                     dark:border-gray-700'
                 >
 
-                    <form
-                        action='/api/logout'
-                        method='POST'
-                    >
+                   
 
-                        <button
-                            type='submit'
+                        < div
                             className='w-full flex items-center
                             gap-3 px-4 py-3 rounded-xl
                             text-red-500 hover:bg-red-50
@@ -161,15 +158,13 @@ const Sidebar = () => {
 
                             <LogOut size={20} />
 
-                            <span
-                                className='text-sm font-medium'
-                            >
-                                خروج
+                            <span className='text-sm font-medium'>
+                                    <LogoutBox />
                             </span>
 
-                        </button>
+                        </div>
 
-                    </form>
+                    
 
                 </div>
 

@@ -10,23 +10,103 @@ import {
     X,
 } from "lucide-react";
 import Image from "next/image";
-import Iamger from "../../../../public/Image/Image.png"
-import { useState } from "react";
+import GetHouseById from "@/core/api/DashboardSeller/GetHouseById";
+import { useEffect, useState } from "react";
 import HistoryModal from "./HistoryModal";
 import PaymentsList from "./PaymentsList";
 import TravelerList from "./TravelereList";
+import formatDate from "@/components/Untils/FormData";
+import { IBooking } from "@/core/api/DashboardSeller/GetBookingsCustomers";
 
 interface ReserveDetailsModalProps {
     isOpen: boolean;
+    houseId: number | null;
+    onClose: () => void;
+}
+interface IHouse {
+    id: number;
+    title: string;
+    address: string;
+    caption: string;
+    price: string;
+    rooms: number;
+    bathrooms: number;
+    parking: number;
+    photos: string[] | null;
+    tags: string[];
+    yard_type: string;
+    categories: {
+        name: string;
+    };
+}
+
+
+interface ReserveDetailsModalProps {
+    isOpen: boolean;
+    houseId: number | null;
+    booking: IBooking | null;
     onClose: () => void;
 }
 
-export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetailsModalProps) {
-    if (!isOpen) return null;
+interface HistoryModalProps {
+    booking: IBooking | null;
+    onClose: () => void;
+}
+
+interface ReserveDetailsModalProps {
+    isOpen: boolean;
+    houseId: number | null;
+    booking: IBooking | null;
+    onClose: () => void;
+}
+
+export default function ReserveDetailsModal({
+    isOpen,
+    houseId,
+    onClose,
+    booking, }: ReserveDetailsModalProps) {
+
 
     const [showHistoryModal, setShowHistoryModal] = useState(false);
     const [showPAymentsList, setshowPAymentsList] = useState(false);
     const [showtravelers, setshowtravelers] = useState(false);
+    const [house, setHouse] = useState<IHouse | null>(null);
+
+    useEffect(() => {
+        console.log("BOOKING =", booking);
+    }, [booking]);
+
+
+
+    useEffect(() => {
+
+        if (!houseId) return;
+
+        const fetchHouse = async () => {
+
+            try {
+
+                const data =
+                    await GetHouseById(houseId);
+
+                console.log(data);
+
+                setHouse(data);
+
+            } catch (error) {
+
+                console.log(error);
+
+            }
+
+        };
+
+        fetchHouse();
+
+    }, [houseId]);
+
+    if (!isOpen) return null;
+
 
     return (
         <div className="fixed inset-0 z-9999 flex items-center justify-center bg-black/70 backdrop-blur-sm">
@@ -53,43 +133,43 @@ export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetails
                     {/* Info */}
                     <div className="h-52 ">
                         <h2 className="text-[22px] font-bold text-[#101035] dark:text-white">
-                            هتل همایون فر کیش ایران
+                            {house?.title}
                         </h2>
 
                         <div className="flex items-center gap-2 mt-5 text-[#6B7280] dark:text-slate-300">
                             <MapPin size={18} />
                             <span className="text-sm">
-                                گیلان، رشت، میدان آزادی، جنب چهارراه عظیمی
+                                {house?.address}
                             </span>
                         </div>
 
                         <div className="flex items-center gap-2 mt-4 text-[#6B7280]/60 dark:text-slate-300">
                             <CalendarDays size={18} />
                             <span className="text-sm">
-                                ۱۲ مرداد ۱۴۰۴ تا ۲۰ مرداد ۱۴۰۴
+                                {house?.address}
                             </span>
                         </div>
 
                         {/* Features */}
-                        <div className="flex flex-wrap  mt-8 justify-between  text-[#6B7280] dark:text-slate-300">
+                        <div className="flex flex-nowrap gap-1  mt-8 justify-between  text-[#6B7280] dark:text-slate-300">
                             <div className="flex items-center gap-2 text-[13px] p-1 rounded-2xl dark:bg-blue-950 bg-gray-200">
                                 <Car size={16} />
-                                <span>پارکینگ</span>
+                                <span>{house?.parking} پارکینگ </span>
                             </div>
 
                             <div className="flex items-center gap-2 text-[13px] p-1 rounded-2xl dark:bg-blue-950 bg-gray-200">
                                 <Trees size={18} />
-                                <span>حیاط دار</span>
+                                <span> {house?.yard_type} حیاط</span>
                             </div>
 
                             <div className="flex items-center gap-2 text-[13px] p-1 rounded-2xl dark:bg-blue-950 bg-gray-200">
                                 <BedDouble size={16} />
-                                <span>۴ خواب</span>
+                                <span>{house?.rooms} اتاق</span>
                             </div>
 
                             <div className="flex items-center gap-2 text-[13px] p-1 rounded-2xl dark:bg-blue-950 bg-gray-200">
                                 <Bath size={16} />
-                                <span>۲ حمام</span>
+                                <span>{house?.bathrooms}  حمام</span>
                             </div>
                         </div>
 
@@ -100,7 +180,10 @@ export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetails
                             </span>
 
                             <span className="text-blue-300 font-bold text-[20px]">
-                                ۳۵,۰۰۰,۰۰۰ تومان
+                                {house?.price
+                                    ? Number(house.price).toLocaleString("fa-IR")
+                                    : "0"} تومان
+
                             </span>
                         </div>
                     </div>
@@ -123,11 +206,7 @@ export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetails
                     </h3>
 
                     <p className=" text-justify leading-9 text-[#6B7280] dark:text-slate-300 text-[13px]">
-                        آپارتمانی دنج و آرام در قلب شهر، جایی که زندگی روزمره
-                        راحت و سبک‌تر است. فضایی مدرن با طراحی منحصربه‌فرد،
-                        یادآور لحظه‌های خوش، آرامش و شروعی نو در زندگی روزمره.
-                        محیطی مناسب برای استراحت و اقامتی دلنشین در کنار خانواده
-                        و دوستان.
+                        {house?.caption}
                     </p>
                 </div>
 
@@ -137,21 +216,20 @@ export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetails
                         برچسب ها
                     </span>
 
-                    <span className="px-4 py-1 rounded-full bg-blue-300 text-white">
-                        مسکونی
-                    </span>
-
-                    <span className="px-4 py-1 rounded-full bg-blue-300 text-white">
-                        آپارتمان
-                    </span>
-
-                    <span className="px-4 py-1 rounded-full bg-blue-300 text-white">
-                        بالکن
-                    </span>
-
-                    <span className="px-4 py-1 rounded-full bg-blue-300 text-white">
-                        خانوادگی
-                    </span>
+                    {house?.tags?.map((tag, index) => (
+                        <span
+                            key={index}
+                            className="
+                px-4 py-1
+                rounded-full
+                bg-blue-300
+                text-white
+                text-sm
+            "
+                        >
+                            {tag}
+                        </span>
+                    ))}
                 </div>
 
                 {/* Footer */}
@@ -170,6 +248,7 @@ export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetails
             "
                             >
                                 <TravelerList
+                                    booking={booking}
                                     onClose={() => setshowtravelers(false)}
                                 />
 
@@ -201,6 +280,7 @@ export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetails
             "
                             >
                                 <PaymentsList
+                                    booking={booking}
                                     onClose={() => setshowPAymentsList(false)}
                                 />
 
@@ -231,6 +311,7 @@ export default function ReserveDetailsModal({ isOpen, onClose, }: ReserveDetails
             "
                             >
                                 <HistoryModal
+                                    booking={booking}
                                     onClose={() => setShowHistoryModal(false)}
                                 />
 

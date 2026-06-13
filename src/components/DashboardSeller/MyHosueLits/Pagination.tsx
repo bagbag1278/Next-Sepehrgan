@@ -26,7 +26,7 @@ const Pagination = ({
     return (
         <div className="flex items-center flex-row-reverse justify-center gap-2">
 
-            {/* دکمه قبلی */}
+            {/* button prev */}
             <button
                 disabled={currentPage === 1}
                 onClick={() => onPageChange(currentPage - 1)}
@@ -35,7 +35,7 @@ const Pagination = ({
                 <ChevronLeft />
             </button>
 
-            {/* شماره صفحات */}
+             {/* number page */}
             {getPages().map((p, i) =>
                 p === "..." ? (
                     <span
@@ -59,7 +59,7 @@ const Pagination = ({
                 )
             )}
 
-            {/* دکمه بعدی */}
+            {/* button next  */}
             <button
                 disabled={currentPage === totalPages}
                 onClick={() => onPageChange(currentPage + 1)}

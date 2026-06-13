@@ -29,13 +29,15 @@ const ReserveManage = () => {
     const [openReserveMenu, setOpenReserveMenu] = useState<number | null>(null);
     const [showFilterModal, setShowFilterModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
+    const [selectedBooking, setSelectedBooking] = useState<IBooking | null>(null);
 
     const reserveMenuRef = useRef<HTMLDivElement | null>(null);
 
     const [allBookings, setAllBookings] = useState<IBooking[]>([]);
     const [totalCount, setTotalCount] = useState(0);
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedBookingId, setSelectedBookingId] = useState<number | null>(null);
+
+    const [selectedHouseId, setSelectedHouseId] = useState<number | null>(null);
     const pathname = usePathname();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -212,6 +214,7 @@ const ReserveManage = () => {
             );
     }, []);
 
+
     return (
         <div>
             {/* PAGE TITLE */}
@@ -273,83 +276,95 @@ const ReserveManage = () => {
 
             {/* Table Rows */}
             <div className="">
-                {paginatedBookings.length > 0 ? (
-                    paginatedBookings.map((booking) => (
-                        <div
-                            key={booking.id}
-                            className="flex items-center flex-row-reverse justify-around h-16 mt-2 mx-2 mb-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700/40 hover:border-blue-500/40 transition-all duration-200"
-                        >
-                            {/* Operations Menu */}
-                            <div className="relative">
-                                <button
-                                    onClick={() =>
-                                        setOpenReserveMenu(openReserveMenu === booking.id ? null : booking.id
-                                        )
-                                    }
-                                >
-                                    <MoreVertical size={18} />
-                                </button>
+                {paginatedBookings.length > 0 ? (paginatedBookings.map((booking) => (
+                    <div
+                        key={booking.id}
+                        className="flex items-center flex-row-reverse justify-around h-16 mt-2 mx-2 mb-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-100 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700/40 hover:border-blue-500/40 transition-all duration-200"
+                    >
+                        {/* Operations Menu */}
+                        <div className="relative">
+                            <button
+                                onClick={() =>
+                                    setOpenReserveMenu(openReserveMenu === booking.id ? null : booking.id
+                                    )
+                                }
+                            >
+                                <MoreVertical size={18} />
+                            </button>
 
-                                {openReserveMenu === booking.id && (
-                                    <ReserveDropdown
-                                        bookingId={booking.id}
-                                        status={booking.status}
-                                        onContinue={handleContinueBooking}
-                                        onCancel={handleCancelBooking}
-                                        onDelete={handleDeleteBooking}
-                                        onDetails={(id) => {
-                                            setSelectedBookingId(id);
-                                            setShowDetailsModal(true);
-                                            setOpenReserveMenu(null);
-                                        }}
-                                    />
-                                )}
+                            {openReserveMenu === booking.id && (
+                                <ReserveDropdown
+                                    bookingId={booking.id}
+                                    status={booking.status}
+                                    onContinue={handleContinueBooking}
+                                    onCancel={handleCancelBooking}
+                                    onDelete={handleDeleteBooking}
+                                    onDetails={(bookingId) => {
 
-                                <ReserveDetailsModal
-                                    isOpen={showDetailsModal}
-                                    onClose={() => {
-                                        setShowDetailsModal(false);
-                                        setSelectedBookingId(null);
+                                        const booking = allBookings.find(
+                                            item => item.id === bookingId
+                                        );
 
+                                        if (!booking) return;
+
+                                        setSelectedBooking(booking);
+                                        setSelectedHouseId(booking.houseId);
+
+                                        setShowDetailsModal(true);
+
+                                        setOpenReserveMenu(null);
                                     }}
                                 />
-                            </div>
+                            )}
 
-                            {/* Status */}
-                            <div className="w-20 flex justify-center">
-                                {booking.status === "confirmed" ? <CheckCircle2 className="text-green-500" /> :
-                                    booking.status === "pending" ? <MinusCircle className="text-yellow-500" /> :
-                                        booking.status === "canceled" ? <XCircle className="text-red-500" /> : null}
-                            </div>
 
-                            <span className="text-sm text-gray-600 dark:text-gray-300">
-                                {formatReservationDate(booking.createdAt)}
-                            </span>
-
-                            <span className="w-30 justify-center flex gap-1 text-sm text-gray-600 dark:text-gray-300">
-                                {booking.reservedDates?.[0] ? formatReservationDate(booking.reservedDates[0]) : "بدون تاریخ"}
-                            </span>
-
-                            <span className="flex gap-1 text-sm text-gray-600 dark:text-gray-300">
-                                {booking.traveler_details?.[0]?.firstName} {booking.traveler_details?.[0]?.lastName}
-                            </span>
-
-                            <span className="text-blue-800 dark:text-blue-300 font-medium text-sm">
-                                {Number(booking.house?.price || 0).toLocaleString("fa-IR")} تومان
-                            </span>
-
-                            <div className="flex items-center gap-2">
-                                <span className="w-20 text-sm text-gray-800 dark:text-gray-200">
-                                    {booking.house?.title}
-                                </span>
-                            </div>
                         </div>
-                    ))
+
+                        {/* Status */}
+                        <div className="w-20 flex justify-center">
+                            {booking.status === "confirmed" ? <CheckCircle2 className="text-green-500" /> :
+                                booking.status === "pending" ? <MinusCircle className="text-yellow-500" /> :
+                                    booking.status === "canceled" ? <XCircle className="text-red-500" /> : null}
+                        </div>
+
+                        <span className="text-sm text-gray-600 dark:text-gray-300">
+                            {formatReservationDate(booking.createdAt)}
+                        </span>
+
+                        <span className="w-30 justify-center flex gap-1 text-sm text-gray-600 dark:text-gray-300">
+                            {booking.reservedDates?.[0] ? formatReservationDate(booking.reservedDates[0]) : "بدون تاریخ"}
+                        </span>
+
+                        <span className="flex gap-1 text-sm text-gray-600 dark:text-gray-300">
+                            {booking.traveler_details?.[0]?.firstName} {booking.traveler_details?.[0]?.lastName}
+                        </span>
+
+                        <span className="text-blue-800 dark:text-blue-300 font-medium text-sm">
+                            {Number(booking.house?.price || 0).toLocaleString("fa-IR")} تومان
+                        </span>
+
+                        <div className="flex items-center gap-2">
+                            <span className="w-20 text-sm text-gray-800 dark:text-gray-200">
+                                {booking.house?.title}
+                            </span>
+                        </div>
+                    </div>
+                ))
                 ) : (
                     <div className="text-center py-16 text-gray-500 dark:text-gray-400">
                         {searchTerm ? "هیچ رزروی با این نام یافت نشد" : "رزروی یافت نشد"}
                     </div>
                 )}
+
+                <ReserveDetailsModal
+                    isOpen={showDetailsModal}
+                    houseId={selectedHouseId}
+                    booking={selectedBooking}
+                    onClose={() => {
+                        setShowDetailsModal(false);
+                        setSelectedBooking(null);
+                    }}
+                />
             </div>
 
             {/* Pagination */}

@@ -19,11 +19,8 @@ export interface IBooking {
     }[];
 
     status: string;
-
     sharedEmail: string;
-
     sharedMobile: string;
-
     createdAt: string;
 
     house: {

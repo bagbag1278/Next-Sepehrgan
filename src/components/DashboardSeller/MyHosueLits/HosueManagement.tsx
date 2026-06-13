@@ -9,17 +9,11 @@ import React, {
 
 import {
     CheckCircle2,
-    EyeIcon,
-    MinusCircle,
     MoreVertical,
     StarIcon,
-    XCircle,
     Pencil,
     Trash2,
-    PlusCircleIcon,
     PlusIcon,
-    ParenthesesIcon,
-    LucideParentheses,
 } from 'lucide-react'
 import CirclesIcon from '../Icon/CirclesIcon'
 import FilterSec from './FilterSec'
@@ -55,7 +49,6 @@ const HosueManagement = () => {
 
     const limit = 4;
     const page = Number(searchParams.get("page") ?? "1");
-
     const search = searchParams.get("search") ?? "";
 
     // For Api     
@@ -90,19 +83,9 @@ const HosueManagement = () => {
             }
 
         }
-
-        document.addEventListener(
-            'mousedown',
-            handleClickOutside
-        )
-
+        document.addEventListener('mousedown', handleClickOutside)
         return () => {
-
-            document.removeEventListener(
-                'mousedown',
-                handleClickOutside
-            )
-
+            document.removeEventListener('mousedown', handleClickOutside)
         }
 
     }, [])
@@ -115,34 +98,17 @@ const HosueManagement = () => {
 
         try {
 
-            await DeleteHouse(
-                selectedHouseId
-            );
-
-            setHouses((prev) =>
-                prev.filter(
-                    (house) =>
-                        Number(house.id) !==
-                        selectedHouseId
-                )
-            );
-
-            toast.success(
-                "ملک حذف شد"
-            );
+            await DeleteHouse(selectedHouseId);
+            setHouses((prev) => prev.filter((house) => Number(house.id) !== selectedHouseId));
+            toast.success("ملک حذف شد");
 
         } catch (error) {
 
             console.log(error);
-
-            toast.error(
-                "حذف ناموفق بود"
-            );
+            toast.error("حذف ناموفق بود");
 
         } finally {
-
             setDeleteModal(false);
-
         }
 
     };
@@ -166,46 +132,22 @@ const HosueManagement = () => {
                 return;
 
             try {
-
-                await UpdateHouse(
-                    Number(
-                        selectedHouse.id
-                    ),
-                    data
-                );
+                await UpdateHouse(Number(selectedHouse.id), data);
 
                 //    Update
-                setHouses((prev) =>
-                    prev.map((house) =>
-
-                        Number(house.id) ===
-                            Number(selectedHouse.id)
-
-                            ? {
-                                ...house,
-                                ...data,
-                            }
-
-                            : house
-                    )
+                setHouses((prev) => prev.map((house) => Number(house.id) === Number(selectedHouse.id)
+                    ? { ...house, ...data, } : house
+                )
                 );
 
-                toast.success(
-                    "ملک بروزرسانی شد"
-                );
+                toast.success("ملک بروزرسانی شد");
 
                 setEditModal(false);
 
             } catch (error) {
-
                 console.log(error);
-
-                toast.error(
-                    "ویرایش ناموفق بود"
-                );
-
+                toast.error("ویرایش ناموفق بود");
             }
-
         };
 
     const filteredHouses = useMemo(() => {
@@ -218,9 +160,7 @@ const HosueManagement = () => {
 
                 return house.title
                     .toLowerCase()
-                    .includes(
-                        search.toLowerCase()
-                    );
+                    .includes(search.toLowerCase());
 
             }
         );
@@ -239,56 +179,32 @@ const HosueManagement = () => {
 
     return (
 
-        <div
-            className='w-full flex justify-center
-            flex-nowrap gap-9
-            transition-colors'
-        >
+        <div className='w-full flex justify-center flex-nowrap gap-9 transition-colors'>
 
-            <div
-                className='flex flex-wrap
-                w-243 gap-y-1 space-y-4'
-            >
+            <div className='flex flex-wrap w-243 gap-y-1 space-y-4' >
 
                 {/* title */}
                 <div className='w-full h-14 flex gap-1'>
 
-                    <div
-                        className='w-6.75 h-6.5
-                        flex gap-0.5 items-center
-                        flex-wrap-reverse scale-x-[-1]'
-                    >
+                    <div className='w-6.75 h-6.5 flex gap-0.5 items-center  flex-wrap-reverse scale-x-[-1]'>
                         <CirclesIcon />
                     </div>
 
-                    <div
-                        className='text-blue-200  dark:text-blue-500
-                        text-[18px] font-bold'
-                    >
+                    <div className='text-blue-200  dark:text-blue-500 text-[18px] font-bold' >
                         مدیریت املاک
                     </div>
 
-                    <div
-                        className='w-6.75 h-6.5
-                        flex gap-0.5 items-center
-                        flex-wrap-reverse'
-                    >
+                    <div className='w-6.75 h-6.5  flex gap-0.5 items-center  flex-wrap-reverse'>
                         <CirclesIcon />
                     </div>
 
                 </div>
 
                 {/* filter section */}
-                <div
-                    className='flex justify-between
-                    items-center w-full h-12'
-                >
+                <div className='flex justify-between  items-center w-full h-12'>
 
                     {/* title */}
-                    <div
-                        className='flex gap-2 text-[14px]
-                        text-blue-400 dark:text-blue-500'
-                    >
+                    <div className='flex gap-2 text-[14px] text-blue-400 dark:text-blue-500' >
 
                         <span>لیست املاک من</span>
 
@@ -297,22 +213,14 @@ const HosueManagement = () => {
                         </div>
 
                     </div>
-                    <FilterSec
-                        search={search}
-                        onSearch={handleSearchChange}
-
-                    />
+                    <FilterSec search={search} onSearch={handleSearchChange} />
 
                 </div>
 
-
                 {/* main */}
                 <div
-                    className='w-full h-90 
-                    bg-gray-50/50 dark:bg-slate-900
-                    rounded-2xl
-                    border border-gray-100
-                    dark:border-slate-700'
+                    className='w-full h-90  bg-gray-50/50 dark:bg-slate-900
+                    rounded-2xl border border-gray-100 dark:border-slate-700'
                 >
 
                     {/* table header */}
@@ -359,18 +267,9 @@ const HosueManagement = () => {
 
                             <div
                                 key={house.id}
-                                className='
-                                flex items-center 
-                                flex-row-reverse justify-between
-                                px-4 py-3 mt-2 mx-2 mb-2
-                                bg-white dark:bg-slate-800
-                                rounded-xl shadow-sm
-                                border border-gray-100
-                                dark:border-slate-700
-                                transition-all duration-200
-                                hover:bg-gray-50
-                                dark:hover:bg-slate-700/40
-                                hover:border-blue-500/40'
+                                className=' flex items-center  flex-row-reverse justify-between px-4 py-3 mt-2 mx-2 mb-2 bg-white dark:bg-slate-800
+                                rounded-xl shadow-sm  border border-gray-100  dark:border-slate-700  transition-all duration-200
+                                     hover:bg-gray-50  dark:hover:bg-slate-700/40 hover:border-blue-500/40'
                             >
 
                                 {/* action menu */}
@@ -378,21 +277,11 @@ const HosueManagement = () => {
 
                                     {/* menu button */}
                                     <button
-                                        onClick={() =>
-                                            setOpenMenu(
-                                                openMenu === Number(house.id)
-                                                    ? null
-                                                    : Number(house.id)
-                                            )
-                                        }
+                                        onClick={() => setOpenMenu(openMenu === Number(house.id) ? null : Number(house.id))}
                                     >
 
-                                        <MoreVertical
-                                            size={16}
-                                            className='
-                    text-gray-400
-                    dark:text-gray-300
-                    cursor-pointer'
+                                        <MoreVertical size={16}
+                                            className=' text-gray-400 dark:text-gray-300 cursor-pointer'
                                         />
 
                                     </button>
@@ -403,17 +292,8 @@ const HosueManagement = () => {
 
                                             <div
                                                 ref={menuRef}
-                                                className='absolute
-                        -top-6 left-0
-                        w-37.5
-                        h-37.5
-                        rounded-[28px]
-                        bg-white
-                        dark:bg-slate-800
-                        shadow-[0_0_15px_rgba(0,0,0,0.08)]
-                        border border-gray-100
-                        dark:border-slate-700
-                        z-50 p-4'
+                                                className='absolute    -top-6 left-0  w-37.5  h-37.5  rounded-[28px]  bg-white
+                        dark:bg-slate-800 shadow-[0_0_15px_rgba(0,0,0,0.08)]  border border-gray-100  dark:border-slate-700 z-50 p-4'
                                             >
 
                                                 <div className='flex flex-col justify-between h-full' >
@@ -423,12 +303,8 @@ const HosueManagement = () => {
                                                         className='w-full h-10 rounded-2xl bg-blue-500 text-white 
                                                         flex items-center justify-center gap-2 text-sm'
                                                     >
-
                                                         فعال کردن
-
-                                                        <CheckCircle2
-                                                            size={16}
-                                                        />
+                                                        <CheckCircle2 size={16} />
 
                                                     </button>
 
@@ -570,7 +446,7 @@ const HosueManagement = () => {
                             currentPage={page}
                             totalCount={totalCount}
                             limit={limit}
-                            onPageChange={handlePageChange} // اینجا
+                            onPageChange={handlePageChange} 
                         />
                     </div>
                 </div>
@@ -580,17 +456,13 @@ const HosueManagement = () => {
 
             <DeleteHouseModal
                 open={deleteModal}
-                onClose={() =>
-                    setDeleteModal(false)
-                }
+                onClose={() => setDeleteModal(false) }
                 onDelete={handleDelete}
             />
 
             <EditHouseModal
                 open={editModal}
-                onClose={() =>
-                    setEditModal(false)
-                }
+                onClose={() => setEditModal(false)}
                 house={selectedHouse}
                 onSubmit={handleUpdate}
             />
@@ -600,3 +472,5 @@ const HosueManagement = () => {
 }
 
 export default HosueManagement
+
+// must Componentization ****************
