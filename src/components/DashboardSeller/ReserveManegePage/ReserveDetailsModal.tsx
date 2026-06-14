@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import HistoryModal from "./HistoryModal";
 import PaymentsList from "./PaymentsList";
 import TravelerList from "./TravelereList";
-import formatDate from "@/components/Untils/FormData";
+import formatDate from "@/components/untils/FormData";
 import { IBooking } from "@/core/api/DashboardSeller/GetBookingsCustomers";
 import { formatReservationDate } from "@/core/Untils/date";
 

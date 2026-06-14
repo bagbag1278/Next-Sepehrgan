@@ -1,6 +1,6 @@
 'use client';
 
-import formatDate from "@/components/Untils/FormData";
+import formatDate from "@/components/untils/FormData";
 import { Payment } from "@/core/types/DashboardSeller/Payment";
 import { Clock10 } from "lucide-react";
 import moment from "moment-jalaali";

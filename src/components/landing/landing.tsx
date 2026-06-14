@@ -18,7 +18,7 @@ const Landing = () => {
 
   return (
     <div className='w-full flex flex-col gap-18' dir='rtl'>
-      
+
       <AdvancedScrollAnimation type="fade" delay={0.1}>
         <div className=''>
           <HeroSction />
@@ -43,12 +43,34 @@ const Landing = () => {
         </div>
       </AdvancedScrollAnimation>
 
-      {/* **** secound container **** */}
+      <AdvancedScrollAnimation type="slide-up" delay={0.2}>
+        <TopCategories />
+      </AdvancedScrollAnimation>
+
+      <AdvancedScrollAnimation type="slide-left" delay={0.3}>
+        <BuyAndSellSlider />
+      </AdvancedScrollAnimation>
+
+      <AdvancedScrollAnimation type="scale" delay={0.4}>
+        <FirstContainer />
+      </AdvancedScrollAnimation>
+
+      <AdvancedScrollAnimation type="slide-right" delay={0.5}>
+        <VillaSlider />
+      </AdvancedScrollAnimation>
+
+      <AdvancedScrollAnimation type="slide-up" delay={0.6}>
         <SecoundContainer />
-      {/* *** third container *** */}
-      <ThirdContainer />
-      {/* **** users comment **** */}
-      <UserComments />
+      </AdvancedScrollAnimation>
+
+      <AdvancedScrollAnimation type="fade" delay={0.7}>
+        <ThirdContainer />
+      </AdvancedScrollAnimation>
+
+      <AdvancedScrollAnimation type="scale" delay={0.8}>
+        <UserComments />
+      </AdvancedScrollAnimation>
+
     </div>
   );
 }

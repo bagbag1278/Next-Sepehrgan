@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation';
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/header/Header";
 import Footer from "@/components/Footer/Footer";
-import ThemeManager from "@/components/utils/ThemeManager";
-import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
+// import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
 import "../globals.css";
+import ThemeManager from '@/components/untils/ThemeManager';
 
 export default async function LocaleLayout({
   children,
@@ -34,7 +34,7 @@ export default async function LocaleLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Header />
             <ThemeManager>
-              <NeshanMapLoader />
+              {/* <NeshanMapLoader /> */}
               <main className="w-full">{children}</main>
             </ThemeManager>
             <Footer />

@@ -23,7 +23,7 @@ import GetHousesUser, { IHouse } from "@/core/api/DashboardSeller/GetHousesUser"
 import DeleteHouseModal from "../DeleteHouse/DeleteHouseModal";
 import DeleteHouse from "@/core/api/DashboardSeller/DeleteHouse";
 import toast from "react-hot-toast";
-import formatDate from '@/components/Untils/FormData'
+import formatDate from '@/components/untils/FormData'
 import EditHouseModal from '../EditHouse/EditHouseModal'
 import UpdateHouse from '@/core/api/DashboardSeller/UpdateHouse'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
