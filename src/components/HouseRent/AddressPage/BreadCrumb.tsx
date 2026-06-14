@@ -12,15 +12,12 @@ const BreadCrumb = () => {
         { title: "رهن و اجاره آپارتمان رشت", href: "" }
     ];
 
-    // توضیح ٬٬٬٬٬٬٬٬٬٬ 
-    // buttonLabels.length > 0 این میاد انداره آرایه رو نگاه میکنه 
-    // ? buttonLabels[buttonLabels.length - 1].title اینم میاد نگاه میکنه اگه شرط قبلی اوکی بود این اجرا بشه
+
 
     const lastButtonTitle =buttonLabels.length > 0 ? buttonLabels[buttonLabels.length - 1].title : null;
     const [activeButton, setActiveButton] = useState<string | null>(lastButtonTitle);
 
 
-    // handleClick  ArrowFunction 
     const handleButtonClick = (buttonName: string) => {
         setActiveButton(buttonName); 
     };

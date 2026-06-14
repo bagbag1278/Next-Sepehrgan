@@ -50,7 +50,6 @@ const DesktopCard = ({ house, isInvalid = false }: DesktopCardProps) => {
         </div>
 
         <div className="relative w-79.5 h-39 gap-1">
-          {/* بخش عنوان و آدرس - ارتفاع ثابت */}
           <div className="h-19 border-b border-gray-200 dark:border-gray-700 px-3 pt-2 overflow-hidden">
             <div className={`text-[17px] mb-2 font-bold truncate ${isInvalid ? "text-gray-500 dark:text-gray-500" : "text-gray-800 dark:text-white"}`}>
               {house.title || t("defaultTitle")}
@@ -63,7 +62,6 @@ const DesktopCard = ({ house, isInvalid = false }: DesktopCardProps) => {
             </div>
           </div>
 
-          {/* بخش امکانات و قیمت - پایین ثابت */}
           <div className="relative bottom-0 left-0 right-0 py-2 ">
             <div className="flex justify-between text-[11px] text-gray-700 dark:text-gray-300 mb-2">
   <div className="flex items-center gap-1 rounded-2xl  whitespace-nowrap">
@@ -108,7 +106,6 @@ const DesktopCard = ({ house, isInvalid = false }: DesktopCardProps) => {
         </div>
       </div>
       
-      {/* 8 empty divs needed for the 3D effect */}
       <div></div><div></div><div></div><div></div>
       <div></div><div></div><div></div><div></div>
     </div>

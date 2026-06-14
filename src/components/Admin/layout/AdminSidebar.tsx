@@ -65,14 +65,12 @@ export const AdminSidebar = ({
   };
 
   return (
-    <aside className="row-span-2 min-h-screen top-6 rounded-2xl shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10 bg-white dark:bg-[#060425] p-4 flex flex-col">
-      {/* لوگو */}
+    <aside className="row-span-2  top-6 rounded-2xl shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10 bg-white dark:bg-[#060425] p-4 flex flex-col">
       <div className="flex justify-center py-4 border-b border-gray-200 dark:border-gray-700">
         <div className="dark:hidden"><HeaderIcon1Mini /></div>
         <div className="hidden dark:block"><HeaderIcon2Mini /></div>
       </div>
 
-      {/* منو */}
       <nav className="mt-4 space-y-1 flex-1">
         {MenuItems.map((item) => {
           const isActive = pathname === item.href;
@@ -93,7 +91,6 @@ export const AdminSidebar = ({
         })}
       </nav>
 
-      {/* پروفایل سایدبار */}
       <div className="relative mt-auto pt-4 border-t border-gray-200 dark:border-gray-700">
         <div className="flex justify-center w-full">
           <div className="flex justify-center w-full mb-2">

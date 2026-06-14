@@ -36,7 +36,6 @@ const MobileCard = ({ house, isInvalid = false }: MobileCardProps) => {
       w-full bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden mb-4
       ${isInvalid ? 'opacity-50 grayscale' : 'hover:shadow-xl transition-all duration-300'}
     `}>
-      {/* تصویر */}
       <div className='w-full h-48 relative'>
         <img 
           src={house.imageUrl || defaultIMG} 
@@ -48,9 +47,7 @@ const MobileCard = ({ house, isInvalid = false }: MobileCardProps) => {
         />
       </div>
 
-      {/* اطلاعات */}
       <div className="p-4">
-        {/* عنوان و آدرس */}
         <div className="mb-3">
           <h3 className={`text-[16px] font-bold mb-1 line-clamp-1 ${isInvalid ? 'text-gray-600 dark:text-gray-500' : 'text-blue-100 dark:text-blue-300'}`}>
             {house.title || t('defaultTitle')}
@@ -61,7 +58,7 @@ const MobileCard = ({ house, isInvalid = false }: MobileCardProps) => {
           </div>
         </div>
 
-        {/* امکانات */}
+        
         <div className="flex flex-nowrap overflow-x-auto gap-2 mb-4 text-[11px] text-gray-700 dark:text-gray-300 pb-1 scrollbar-thin">
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-xl whitespace-nowrap flex-shrink-0">
             <RoomIcon /> 
@@ -81,7 +78,6 @@ const MobileCard = ({ house, isInvalid = false }: MobileCardProps) => {
           </div>
         </div>
 
-        {/* قیمت و دکمه */}
         <div className='flex items-center justify-between gap-2'>
           <Link
             href={`houserent/MortgageRentDetails/${house.id}`}

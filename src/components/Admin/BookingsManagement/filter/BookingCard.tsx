@@ -1,7 +1,7 @@
 import { Calendar, Clock, User, Building2, Hash } from "lucide-react";
 import { StatusBadge } from "./StatusBadge";
 import ActionMenu from "../filter/menu/ActionMenu";
-import { Booking } from "../../../../hooks/UsAdmin/useBookings";
+import { Booking } from "../../../../core/api/UsAdmin/useBookings";
 
 interface BookingCardProps {
   booking: Booking;

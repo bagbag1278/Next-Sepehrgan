@@ -1,5 +1,5 @@
 import { Check, CheckCheck } from "lucide-react";
-import { Notification } from "../../../hooks/UsAdmin/useNotifications";
+import { Notification } from "../../../core/api/UsAdmin/useNotifications";
 interface NotificationCardProps {
   notification: Notification;
   onMarkAsRead: (id: number) => void;

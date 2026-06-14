@@ -107,8 +107,8 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
 
       {/* دسکتاپ */}
       <div className="hidden lg:block w-full max-w-[1600px] mx-auto h-screen">
-        <div className="flex gap-6 h-full">
-          <div className="w-[280px] flex-shrink-0 h-full overflow-y-auto scrollbar-none">
+        <div className="flex gap-6 ">
+          <div className="w-[280px] flex-shrink-0 ">
             <AdminSidebar
               userData={userData}
               profileAside={profileAside}
@@ -118,14 +118,14 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
             />
           </div>
 
-          <div className="flex-1 flex flex-col h-full">
+          <div className="flex-1 flex flex-col h-190">
             <AdminHeader 
               userData={userData} 
               handleLogoutClick={handleLogoutClick} 
               formatPhoneNumber={formatPhoneNumber}
               MenuItems={MenuItems}
             />
-            <main className="flex-1 mt-4 rounded-tl-[40px] rounded-br-[40px] bg-white dark:bg-[#060425] p-6 shadow-[0_0_8px] shadow-blue-300/15 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <main className="flex-1 mt-4  rounded-tl-[40px] rounded-br-[40px] bg-white dark:bg-[#060425] p-6 shadow-[0_0_8px] shadow-blue-300/15 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {children}
             </main>
           </div>

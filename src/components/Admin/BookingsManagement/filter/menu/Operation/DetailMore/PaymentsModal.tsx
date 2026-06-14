@@ -9,7 +9,7 @@ interface Payment {
   bookingId: number | null;
   amount: number;
   description: string;
-  status: "pending" | "success" | "failed";
+  status: "pending" | "success" | "failed" | "completed";
   paymentUrl: string;
   transactionId: string;
   createdAt: string | null;
@@ -45,7 +45,6 @@ const PaymentsModal = ({ isOpen, onClose, bookingId }: PaymentsModalProps) => {
           return;
         }
 
-        // دریافت تمام پرداخت‌ها و فیلتر بر اساس bookingId
         const response = await fetch(`${API_BASE_URL}/admin/payments`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,17 +65,24 @@ const PaymentsModal = ({ isOpen, onClose, bookingId }: PaymentsModalProps) => {
         let paymentsData = result.data || result;
         if (!Array.isArray(paymentsData)) paymentsData = [];
 
-        // فیلتر پرداخت‌های مربوط به این رزرو
-        const filteredPayments = paymentsData.filter((p: any) => p.bookingId === bookingId);
-        
-        // نرمالایز کردن داده‌ها
+        console.log("همه پرداخت‌ها:", paymentsData);
+        console.log("bookingId مورد نظر:", bookingId);
+
+        const filteredPayments = paymentsData.filter((p: any) => {
+          const paymentBookingId = Number(p.bookingId);
+          const targetBookingId = Number(bookingId);
+          return paymentBookingId === targetBookingId;
+        });
+
+        console.log("پرداخت‌های فیلتر شده:", filteredPayments);
+
         const normalizedPayments = filteredPayments.map((p: any) => ({
           id: p.id,
           userId: p.userId,
           bookingId: p.bookingId,
           amount: Number(p.amount),
           description: p.description || "",
-          status: p.status === "success" ? "success" : p.status === "failed" ? "failed" : "pending",
+          status: p.status === "success" || p.status === "completed" ? "success" : p.status === "failed" ? "failed" : "pending",
           paymentUrl: p.paymentUrl || "",
           transactionId: p.transactionId || "نامشخص",
           createdAt: p.createdAt,
@@ -167,7 +173,6 @@ const PaymentsModal = ({ isOpen, onClose, bookingId }: PaymentsModalProps) => {
           
           {!loading && !error && payments.length > 0 && (
             <div className="flex flex-col gap-3">
-              {/* خلاصه پرداخت‌ها */}
               <div className="flex gap-3 mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
                 <div className="flex-1 text-center">
                   <p className="text-xs text-gray-500 dark:text-gray-400">مجموع پرداخت شده</p>
@@ -180,7 +185,6 @@ const PaymentsModal = ({ isOpen, onClose, bookingId }: PaymentsModalProps) => {
                 </div>
               </div>
 
-              {/* لیست پرداخت‌ها */}
               {payments.map((payment) => (
                 <div key={payment.id} className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-4 shadow-[0_0_8px] shadow-blue-300/30 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
@@ -195,7 +199,7 @@ const PaymentsModal = ({ isOpen, onClose, bookingId }: PaymentsModalProps) => {
                         </div>
                       </div>
                     </div>
-                    {payment.paymentUrl && payment.status === "pending" && (
+                    {payment.paymentUrl && (payment.status === "pending") && (
                       <Link
                         href={payment.paymentUrl}
                         target="_blank"

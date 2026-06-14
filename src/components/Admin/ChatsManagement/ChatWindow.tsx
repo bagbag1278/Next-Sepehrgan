@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RefreshCw, Trash2, Send, Loader2, MessageSquare, Edit, X, Check } from "lucide-react";
 import MessageActions from "../../../components/Admin/ChatsManagement/Action/MessageActions";
-import { Message } from "../../../hooks/UsAdmin/useChats";
+import { Message } from "../../../core/api/UsAdmin/useChats";
 
 interface ChatWindowProps {
   selectedRoom: any;

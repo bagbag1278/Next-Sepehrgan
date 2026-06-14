@@ -26,7 +26,7 @@ const BookingStepFour = ({
   if (step !== 5) return null;
 
   return (
-    <div className="h-300 max-[1280]:h-455 pb-10 max-[600]:mt-10 max-[1024]:mt-14" dir="rtl">
+    <div className="h-300 max-[1280]:h-455 max-[500]:mr-10 pb-10 max-[600]:mt-10 max-[1024]:mt-14" dir="rtl">
       <div className="w-full mx-auto">
         <div className="flex flex-col max-[888]:left-5 relative xl:flex-row gap-20 w-full pt-6 md:pt-10">
           

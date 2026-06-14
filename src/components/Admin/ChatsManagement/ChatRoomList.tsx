@@ -1,5 +1,5 @@
 import Pagination from "../../../components/Admin/Pagination/PaginationAdmin";
-import { ChatRoom } from "../../../hooks/UsAdmin/useChats";
+import { ChatRoom } from "../../../core/api/UsAdmin/useChats";
 
 interface ChatRoomListProps {
   rooms: ChatRoom[];
