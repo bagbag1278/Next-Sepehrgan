@@ -1,9 +1,12 @@
+
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import ThemeManager from "@/components/utils/ThemeManager";
+import VoiceCommand from "@/components/VoiceCommand";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import LocalFont from "next/font/local";
 import ClientLayout from "./ClientLayout";
 import "./globals.css";
-import VoiceCommand from "@/components/VoiceCommand";
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
@@ -21,12 +24,19 @@ export default async function RootLayout({
   return (
     <html lang="fa" suppressHydrationWarning>
       <body
-        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} bg-[#F5F5F5] overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:from-[#121212] dark:via-blue-400 dark:to-[#121212] dark:bg-linear-to-br dark:text-white`}
       >
         <NextIntlClientProvider messages={messages}>
           <ClientLayout>{children}</ClientLayout>
                     <VoiceCommand />
 
+=======
+          <LayoutWrapper>
+            <ThemeManager>
+              <main className="w-full">{children}</main>
+            </ThemeManager>
+            <VoiceCommand />
+          </LayoutWrapper>
         </NextIntlClientProvider>
       </body>
     </html>

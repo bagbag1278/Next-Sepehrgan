@@ -1,6 +1,6 @@
 "use server";
 
-import { forgotPasswordRequestApi } from "../api/ForgetPassOne";
+import { forgotPasswordRequestApi } from "../api/auth/ForgetPassOne";
 
 export async function forgotPasswordRequestAction(formData: FormData) {
   const email = formData.get("email")?.toString().trim();

@@ -1,7 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { loginApi } from "../api/Login.api";
+import jwt from "jsonwebtoken";
+import { loginApi } from "../api/auth/Login.api";
 
 export type ActionState = {
   success: boolean;
@@ -24,18 +25,18 @@ export async function loginAction(
 
   try {
     const data = await loginApi({ email, password });
-    
-    // ✅ دیباگ - ببین data چی داره
-    console.log("🔵 loginApi response:", JSON.stringify(data, null, 2));
-    console.log("🔵 data.user:", data.user);
-    console.log("🔵 data.accessToken:", data.accessToken);
 
     const cookieStore = await cookies();
+    const accessTokenMaxAge = 60 * 15;
+    const refreshTokenMaxAge = 60 * 60 * 24 * 30;
+    const decoded = jwt.decode(data.accessToken) as { exp: number } | null;
+
     cookieStore.set("accessToken", data.accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
+      maxAge: accessTokenMaxAge,
     });
 
     cookieStore.set("refreshToken", data.refreshToken, {
@@ -43,15 +44,36 @@ export async function loginAction(
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
+      maxAge: refreshTokenMaxAge,
     });
 
-    return { 
-      success: true, 
+    // ✅ isLoggedIn قبل از return ست میشه
+    cookieStore.set("isLoggedIn", "true", {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: refreshTokenMaxAge,
+    });
+
+    if (decoded?.exp) {
+      cookieStore.set("accessTokenExpiry", String(decoded.exp), {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: accessTokenMaxAge,
+      });
+    }
+
+    // ✅ یه return در آخر
+    return {
+      success: true,
       message: "خوش آمدید",
       accessToken: data.accessToken,
-      user: data.user  // اگر data.user undefined باشد، اینجا undefined می‌شود
+      user: data.user,
     };
-    
+
   } catch (error: any) {
     console.error("Login action error:", error);
     return { success: false, error: error.message || "خطا در ورود" };
