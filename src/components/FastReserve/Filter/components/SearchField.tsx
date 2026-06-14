@@ -1,4 +1,7 @@
 import React from "react";
+import { useTranslations } from 'next-intl';
+import VoiceInput from "@/components/common/voice/VoiceInput";
+import { Search } from "lucide-react";
 
 type SearchFieldProps = {
   query: string;
@@ -6,26 +9,24 @@ type SearchFieldProps = {
 };
 
 const SearchField = ({ query, setQuery }: SearchFieldProps) => {
-    console.log("Props received in SearchField:", { query, setQuery });
+  const t = useTranslations('SearchField');
+
+  const handleVoiceInput = (text: string) => {
+    setQuery(text);
+  };
+
   return (
-    <form className="relative" onSubmit={(e) => e.preventDefault()}>
-      <div>
-        <input
-          type="text"
-          name="searchlocation"
-          placeholder="مقصد یا هتل شما"
-          value={query}
-           onChange={(e) => {
-                console.log("Input onChange triggered. Value:", e.target.value); // این خط هم اضافه کن
-                if (setQuery) { // چک کن که setQuery واقعا وجود داره
-                  setQuery(e.target.value);
-                } else {
-                  console.error("setQuery is undefined in SearchField!");
-                }
-              }}
-          className="border border-blue-300 h-12 placeholder:text-blue-300/70 w-full outline-0 rounded-2xl py-2 px-4 text-sm text-blue-100"
-        />
-      </div>
+    <form className="relative w-full" onSubmit={(e) => e.preventDefault()}>
+      <VoiceInput
+        onTranscript={handleVoiceInput}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder={t('placeholder')}
+        lang="fa"
+        dir="rtl"
+        icon={<Search size={18} className="text-blue-300/70" />}
+        className="border border-blue-300 dark:border-blue-600 h-12 placeholder:text-blue-300/70 dark:placeholder:text-blue-300/50 w-full outline-0 rounded-2xl py-2 pr-10 pl-10 text-sm text-blue-100 dark:text-white bg-white dark:bg-gray-800"
+      />
     </form>
   );
 };

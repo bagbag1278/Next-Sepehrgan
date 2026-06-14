@@ -18,7 +18,7 @@ export default function MultiForm({}) {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-10 px-4 sm:px-6 md:px-0">
       <ForgetSteps step={currentStep} setStep={setCurrentStep} />
 
       <AnimatePresence mode="wait">
@@ -30,7 +30,7 @@ export default function MultiForm({}) {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <RequestForm onNext={handleNext}/>
+            <RequestForm onNext={handleNext} />
           </motion.div>
         )}
 
@@ -42,7 +42,7 @@ export default function MultiForm({}) {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <ForgetStepTwo />
+            <ForgetStepTwo  />
           </motion.div>
         )}
 
@@ -54,7 +54,7 @@ export default function MultiForm({}) {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <ForgetStepThree/>
+            <ForgetStepThree />
           </motion.div>
         )}
       </AnimatePresence>

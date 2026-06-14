@@ -40,11 +40,10 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
     swiperRef.current = swiper;
   };
 
-  const PlaceHolderImage = ""
-
+  const PlaceHolderImage = " بدون عکس";
 
   return (
-    <div className="w-300 py-10">
+    <div className="w-300 py-10 relative">
       <div className="relative">
         <Swiper
           modules={[Navigation, Pagination]}
@@ -55,72 +54,80 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
         >
           {houses.map((house) => (
             <SwiperSlide key={house.id}>
-              <div className="relative flex justify-center flex-wrap items-center w-82 h-94 border border-white overflow-hidden rounded-4xl bg-[#F5F5F5] shadow-lg transition-all scale-100">
-
-                {/* تصویر */}
-                <div className="w-81 h-50 overflow-hidden rounded-2xl flex jus bg-[#ccc]">
-                  {Array.isArray(house.photos) && house.photos.length > 0 && house.photos[0] ? (
-                    <img
-                      src={house.photos[1]}
-                      alt={house.title || "House image"}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const img = e.currentTarget;
-                        img.replaceWith(document.createElement("div"));
-                      }}
-                    />
-                  ) : (
-                    <Image
-                      src={"/placeholder.png"} width={324} height={200} alt=""
-                    />
-                  )}
-
-
-                </div>
-
-                <div className="relative w-79.5 h-39 gap-1">
-                  <div className="w-full h-19 border-b border-[#adadad] px-3 pt-2">
-                    <div className="text-blue-100 font-bold text-[17px] mb-2">
-                      {house.title}
-                    </div>
-
-                    <div className="flex items-center gap-1 text-blue-400 text-[13px]">
-                      <LocationIconBlack />
-                      <span> {house.address}</span>
-                    </div>
+              <div className="hover-3d group">
+                <div className="relative flex justify-center flex-wrap items-center w-82 h-94 border border-white dark:border-gray-700 overflow-hidden rounded-4xl bg-[#F5F5F5] dark:bg-[#1a1a2e] shadow-lg transition-all duration-300">
+                  {/* image */}
+                  <div className="w-81 h-50 overflow-hidden rounded-2xl flex justify-center bg-[#ccc] dark:bg-[#2a2a3e]">
+                    {Array.isArray(house.photos) &&
+                    house.photos.length > 0 &&
+                    house.photos[0] ? (
+                      <img
+                        src={house.photos[1]}
+                        alt={house.title || "House image"}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                          const img = e.currentTarget;
+                          img.replaceWith(document.createElement("div"));
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={"/placeholder.png"}
+                        width={324}
+                        height={200}
+                        alt=""
+                        className="dark:opacity-70"
+                      />
+                    )}
                   </div>
 
-                  <div className="absolute bottom-0 w-full px-3 py-2">
-                    <div className="flex justify-between text-[11px] text-gray-700 mb-2">
-                      <div className="flex items-center gap-1">
-                        <RoomIcon /> <span> خواب{house.rooms} </span>
+                  <div className="relative w-79.5 h-39 gap-1">
+                    <div className="w-full h-19 border-b border-[#adadad] dark:border-gray-600 px-3 pt-2">
+                      <div className="text-blue-100 font-bold text-[17px] mb-2 dark:text-blue-300 line-clamp-1">
+                        {house.title}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <MastersIcon /> <span>۱ حمام{house.bathrooms} </span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <CarIcon /> <span>پارکینگ{house.parking} </span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <TreeIcon /> <span>کنجایش </span>
+
+                      <div className="flex items-center gap-1 text-blue-400 text-[13px] dark:text-gray-300">
+                        <LocationIconBlack />
+                        <span className="dark:text-gray-300 line-clamp-1"> {house.address}</span>
                       </div>
                     </div>
 
-                    <div className="text-blue-300 text-[15px] font-bold">
-                      {Number(house.price).toLocaleString("fa-IR")} تومان
+                    <div className="absolute bottom-0 w-full px-3 py-2">
+                      <div className="flex justify-between text-[11px] text-gray-700 dark:text-gray-300 mb-2">
+                        <div className="flex items-center gap-1">
+                          <RoomIcon /> <span>{house.rooms || 0} خواب</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <MastersIcon /> <span>{house.bathrooms || 0} حمام</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <CarIcon /> <span>{house.parking || 0} پارکینگ</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <TreeIcon /> <span>{house.capacity || 0} نفر</span>
+                        </div>
+                      </div>
+
+                      <div className="text-blue-300 text-[15px] font-bold dark:text-blue-300">
+                        {Number(house.price).toLocaleString("fa-IR")} تومان
+                      </div>
                     </div>
                   </div>
                 </div>
+                {/* 8 empty divs for 3D effect */}
+                <div></div><div></div><div></div><div></div>
+                <div></div><div></div><div></div><div></div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
 
-          {/* button ****** */}
+        {/* button ****** */}
         <div className="absolute right-0 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-3">
           <button
             type="button"
-            className="rounded-full bg-white/90 w-10 h-10 text-black transition hover:bg-white/60"
+            className="rounded-full bg-white/90 dark:bg-gray-800/90 w-10 h-10 text-black dark:text-white transition hover:bg-white/60 dark:hover:bg-gray-700/60 shadow-md"
             onClick={() => swiperRef.current?.slidePrev()}
           >
             ←
@@ -128,13 +135,16 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
 
           <button
             type="button"
-            className="rounded-full bg-white/90 w-10 h-10 text-black transition hover:bg-white/60"
+            className="rounded-full bg-white/90 dark:bg-gray-800/90 w-10 h-10 text-black dark:text-white transition hover:bg-white/60 dark:hover:bg-gray-700/60 shadow-md"
             onClick={() => swiperRef.current?.slideNext()}
           >
             →
           </button>
         </div>
       </div>
+
+      {/* responsive ========== */}
+      <div></div>
     </div>
   );
 };

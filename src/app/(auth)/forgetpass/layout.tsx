@@ -1,11 +1,18 @@
+"use client";
+
 import ImageSlider from "@/components/Auth/ImgSlider/ImageSlider";
 import CircularDropdown from "@/components/common/AuthMenu/AuthMenu";
+import { useTranslations } from 'next-intl';
 import Image from "next/image";
 import React, { FC, ReactNode } from "react";
+
 interface IChildren {
   children: ReactNode;
 }
+
 const ForgetPassLayout: FC<IChildren> = ({ children }) => {
+  const t = useTranslations('Auth');
+  
   const slideImages = [
     { src: "/auth/home1.png", alt: "Slide 1 Description" },
     { src: "/auth/home2.png", alt: "Slide 2 Description" },
@@ -14,38 +21,58 @@ const ForgetPassLayout: FC<IChildren> = ({ children }) => {
   ];
 
   return (
-    <div dir="rtl" className="h-179.5 flex justify-center relative">
-      <div className="w-2/4 h-175.25 mr-2 mt-2 relative">
-        <div className="text-white w-96.5 h-33.5 absolute right-37.5 top-109 z-20 flex flex-col gap-4">
-          <h3 className="text-2xl font-bold text-center">
-            وارد رهن کده شو و خونت رو پیدا کن !!!
+    <div dir="rtl" className="min-h-screen flex flex-col md:flex-row justify-between relative transition-colors duration-300">
+      
+      {/* سمت راست - اسلایدر (در موبایل مخفی، در دسکتاپ نمایش) */}
+      <div className="hidden md:block w-full md:w-1/2 lg:w-[55%] relative min-h-[500px] md:min-h-[600px] rounded-br-[50px] rounded-tr-[50px] overflow-hidden z-0">
+        <div className="absolute inset-x-0 bottom-10 md:bottom-20 z-20 flex flex-col gap-3 md:gap-4 px-6 md:px-10 max-w-2xl mx-auto text-center">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-lg">
+            {t('heroTitle')}
           </h3>
-          <p className="text-white/85 text-center">
-            وارد شو و با یک قدم ساده، به سوی خونه‌ای که همیشه آرزوش را داشتی،
-            برو!
+          <p className="text-white/90 text-sm md:text-base lg:text-lg drop-shadow-md">
+            {t('heroSubtitle')}
           </p>
-          <span className="text-[14px] text-white/85 text-center">
-            صفا باشه! عشق باشه! معرفت باشه!
+          <span className="text-xs md:text-sm lg:text-base text-white/80 drop-shadow-md">
+            {t('heroFooter')}
           </span>
         </div>
-        <ImageSlider images={slideImages} delay={5000} />
+        <div className="relative z-0 h-full w-full">
+          <ImageSlider images={slideImages} delay={5000} />
+        </div>
       </div>
-      <div dir="ltr" className="w-180 ml-2">
-        <div className="absolute left-24 top-3.5">
+
+      {/* سمت چپ - فرم */}
+      <div className="w-full md:w-1/2 lg:w-[45%] relative z-20  flex flex-col items-center justify-center px-4 py-8 md:py-12 transition-colors duration-300">
+        
+        <div className="absolute left-4 md:left-24 top-3.5 z-30">
           <CircularDropdown />
         </div>
-        <div className="absolute left-36">
-          <Image src={"/auth/vec2.png"} alt="vec" width={130} height={143} />
+        
+        <div className="absolute left-46 top-0 mt-2 z-10 opacity-50 md:opacity-100">
+          <Image
+            src={"/auth/vec2.png"}
+            alt="vec"
+            width={130}
+            height={143}
+            className="md:w-[130px] md:h-[143px] dark:opacity-50"
+            priority
+          />
         </div>
-        <div className=" w-44.25 h-16 mx-auto mt-40 flex gap-2 flex-col">
-          <h3 className="font-bold text-center text-[16px] opacity-80">
-            خوش آمدید :)
-          </h3>
-          <h1 className="font-bold text-center text-[17px]">
-            فراموشی رمزعبور
-          </h1>
+
+        <div className="w-full max-w-md mx-auto mt-10 md:mt-20">
+          <div className="w-full mx-auto flex gap-2 flex-col mb-8">
+            <h3 className="font-bold text-center text-[14px] md:text-[16px] opacity-80 dark:text-gray-400">
+              {t('welcome')}
+            </h3>
+            <h1 className="font-bold text-center text-[15px] md:text-[17px] dark:text-white">
+              {t('forgotPasswordTitle')}
+            </h1>
+          </div>
+          
+          <div className="max-w-107.5 w-full mx-auto relative">
+            {children}
+          </div>
         </div>
-        <div className="max-w-107.5 w-full mx-auto mt-12 relative ">{children}</div>
       </div>
     </div>
   );
