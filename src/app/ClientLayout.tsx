@@ -5,6 +5,7 @@ import Header from "@/components/header/Header";
 import ThemeManager from "@/components/utils/ThemeManager";
 import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 const noLayoutRoutes = [
   "/admin",
@@ -43,6 +44,7 @@ export default function ClientLayout({
   if (isBookingRoute) {
     return (
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Toaster position="top-center" gutter={8} />
         <Header />
         <main className="w-full min-h-screen">{children}</main>
       </ThemeProvider>
@@ -51,6 +53,7 @@ export default function ClientLayout({
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <Toaster position="top-center" gutter={8} />
       {isNoLayoutRoute ? (
         <main className="w-full min-h-screen">{children}</main>
       ) : (

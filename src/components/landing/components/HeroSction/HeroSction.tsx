@@ -32,8 +32,7 @@ const HeroSction = () => {
     <>
       {/* TitelText */}
          <div className="flex max-[1024]:right-80  max-[1024]:mt-10 max-[970]:right-70 max-[890]:right-65 max-[800]:right-54 max-[750]:right-44 max-[636]:right-0 justify-center  xl:h-160 lg:h-160 h-210  relative  ">
-        <div       className="transition-colors duration-500 absolute  left-5 top-138 max-[1224]:left-10 max-[780]:top-178 max-[780]:left-2 max-[400]:hidden z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer"
->
+        <div  className="transition-colors duration-500 absolute  left-5 top-138 min-[1500]:relative min-[1500]:right-345   max-[1380]:hidden max-[780]:top-178 max-[780]:left-2 max-[400]:hidden z-50 flex items-center justify-center w-10 h-10 rounded-full dark:bg-blue-200 shadow-lg shadow-green-100/25 cursor-pointer">
           <DarkModeHero />
         </div>
 
@@ -87,14 +86,15 @@ const HeroSction = () => {
                   </Link>
                 </div>
               </div>
+     
             </div>
 
             {/* comprof */}
-            <div className="w-71.5 h-29 max-[640]:right-86 max-[640]:top-8 xl:relative  relative -left-110 -top-12 sm:left-10 max-[500]:right-86 sm:-top-4">
+            <div className="w-71.5 h-29 max-[640]:right-86 max-[640]:top-4 xl:relative  relative -left-110 -top-12 sm:left-10 max-[500]:right-86 sm:-top-4">
               <div className="w-14 h-14  rounded-4xl absolute top-1 bg-center">
                 <Profiles />
               </div>
-              <div className="w-8 h-8 max-[500]:-right-4 max-[500]:top-16 max-[500]:absolute rounded-4xl absolute top-[40px] right-[75px]">
+              <div className="w-8 h-8 max-[500]:-right-2 max-[500]:top-15 max-[500]:absolute rounded-4xl absolute top-[40px] right-[75px]">
                 <Profiless />
               </div>
               <div className="w-12 h-12 rounded-4xl absolute top-[75px] right-[25px]">

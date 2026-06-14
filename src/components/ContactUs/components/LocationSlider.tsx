@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
-import Vila from "../icon/Vila";
+import Vila from "@/app/(main)/contactus/icon/Vila";
 
 const locations = [
   { id: 1, titleKey: "property1", locationKey: "location1" },

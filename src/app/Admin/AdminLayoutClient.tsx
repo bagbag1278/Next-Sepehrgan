@@ -102,11 +102,12 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
   };
 
   return (
-    <div dir="rtl" className="bg-gray-100 dark:bg-gray-900 ">
+    <div dir="rtl" className="">
       <LogoutModal isOpen={showLogoutModal} onClose={handleLogoutCancel} onConfirm={handleLogoutConfirm} />
 
       {/* دسکتاپ */}
-      <div className="hidden lg:block w-full max-w-[1600px] mx-auto h-screen">
+      <div className="hidden lg:flex items-center justify-center h-screen">
+             <div className="hidden lg:block w-full max-w-[1600px] mx-auto  ">
         <div className="flex gap-6 ">
           <div className="w-[280px] flex-shrink-0 ">
             <AdminSidebar
@@ -130,7 +131,9 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
             </main>
           </div>
         </div>
+      </div> 
       </div>
+
 
       {/* موبایل */}
       <div className="lg:hidden">

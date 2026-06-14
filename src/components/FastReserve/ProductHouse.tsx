@@ -11,25 +11,32 @@ interface ProductHouseProps {
 
 const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => {
   return (
-    <div dir="rtl" className="w-174.75 flex relative pr-3 mr-24 ">
+    <div dir="rtl" className="w-full px-2 sm:px-3 md:px-4">
       <div
         key={houses.id}
-        className="hover:border-2 hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300 shadow shadow-blue-300/25 hover:shadow-lg rounded-4xl w-161.75 h-54 flex justify-center gap-2 items-center mx-auto bg-white dark:bg-gray-900"
+        className="hover:border-2 hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300 shadow shadow-blue-300/25 hover:shadow-lg rounded-2xl sm:rounded-3xl md:rounded-4xl w-full flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 md:gap-4 items-center bg-white dark:bg-gray-900 overflow-hidden"
       >
-        <div className="size-7.5 rounded-tr-sm text-white rounded-br-sm bg-red-100 dark:bg-red-600 absolute top-11.5 right-2 text-center leading-8">
-          {toPersianNum("%5")}
+        {/* بخش تخفیف */}
+        <div className="absolute top-3 right-2 sm:top-11.5 sm:right-2 z-10">
+          <div className="size-6 sm:size-7.5 rounded-tr-sm text-white rounded-br-sm bg-red-100 dark:bg-red-600 text-center leading-6 sm:leading-8 text-xs sm:text-sm">
+            {toPersianNum("%5")}
+          </div>
         </div>
-        {/* img */}
-        <div className="w-81 h-50 rounded-3xl relative overflow-hidden">
-          <div className="w-77 h-6 absolute z-10 top-2 right-2 flex items-center justify-between">
-            <div className="flex gap-1 items-center">
-              <span className="text-white leading-16">{toPersianNum(houses.rate)}</span>
+
+        {/* بخش تصویر */}
+        <div className="w-full sm:w-81 h-48 sm:h-50 rounded-2xl sm:rounded-3xl relative overflow-hidden mt-2 sm:mt-0">
+          <div className="absolute top-2 right-2 left-2 flex items-center justify-between z-10">
+            <div className="flex gap-1 items-center bg-black/30 px-2 py-1 rounded-full">
+              <span className="text-white text-xs sm:text-sm leading-16">
+                {toPersianNum(houses.rate)}
+              </span>
               <svg
-                width="22"
-                height="21"
+                width="16"
+                height="15"
                 viewBox="0 0 22 21"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="sm:w-5 sm:h-5"
               >
                 <path
                   d="M10.1901 1.02872C10.3735 0.657094 10.9034 0.657094 11.0868 1.02872L13.7549 6.43491C13.8277 6.58248 13.9685 6.68477 14.1314 6.70843L20.0975 7.57535C20.5076 7.63495 20.6713 8.13893 20.3746 8.4282L16.0575 12.6363C15.9396 12.7512 15.8858 12.9167 15.9137 13.0789L16.9328 19.0209C17.0028 19.4293 16.5741 19.7408 16.2073 19.548L10.8711 16.7425C10.7254 16.666 10.5514 16.666 10.4057 16.7425L5.06952 19.548C4.7027 19.7408 4.27399 19.4293 4.34404 19.0209L5.36317 13.0789C5.39099 12.9167 5.33722 12.7512 5.21937 12.6363L0.902273 8.4282C0.605514 8.13893 0.769269 7.63495 1.17938 7.57535L7.14547 6.70843C7.30832 6.68477 7.4491 6.58248 7.52194 6.43491L10.1901 1.02872Z"
@@ -38,38 +45,46 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
                 />
               </svg>
             </div>
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10.6495 10.6495L1.45711 1.45711M0.75 9.23528V1.75C0.75 1.19772 1.19772 0.75 1.75 0.75H9.23528"
-                stroke="#F5F5F5"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
+            <div className="bg-black/30 p-1.5 rounded-full">
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="sm:w-3 sm:h-3"
+              >
+                <path
+                  d="M10.6495 10.6495L1.45711 1.45711M0.75 9.23528V1.75C0.75 1.19772 1.19772 0.75 1.75 0.75H9.23528"
+                  stroke="#F5F5F5"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
           </div>
-          <Image src={"/auth/img.png"} width={324} height={200} alt="img" className="dark:opacity-90" />
+          
+          <Image src={"/auth/img.png"} width={324} height={200} alt="img" className="dark:opacity-90 w-full h-full object-cover" />
+          
           <div className="absolute inset-0 bg-linear-to-b from-blue-400 to-transparent transition-opacity duration-300 opacity-50 hover:opacity-0"></div>
         </div>
-        {/* desc */}
-        <div className="w-74.75 h-50 rounded-2xl flex flex-col gap-3 items-center pt-2">
-          {/* title */}
-          <div className="w-70.75 h-14 flex flex-col gap-2 items-start">
-            <h2 className="max-w-62.5 h-7 w-full mr-1.5 truncate font-bold dark:text-white">
+
+        {/* بخش توضیحات */}
+        <div className="w-full sm:w-74.75 p-3 sm:p-0 sm:pt-2 flex flex-col gap-2 sm:gap-3 items-center">
+          {/* عنوان و لوکیشن */}
+          <div className="w-full px-2 sm:px-0 sm:w-70.75 flex flex-col gap-1 sm:gap-2">
+            <h2 className="w-full truncate font-bold dark:text-white text-sm sm:text-base">
               {houses.title}
             </h2>
-            <div className="flex h-6 w-full">
+            
+            <div className="flex items-start gap-1">
               <svg
-                width="24"
-                height="24"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="sm:w-5 sm:h-5 flex-shrink-0 mt-0.5"
               >
                 <g opacity="0.8">
                   <path
@@ -86,22 +101,25 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
                   />
                 </g>
               </svg>
-              <h4 className="w-full max-w-63.75 opacity-80 text-sm font-normal truncate leading-7 dark:text-gray-400">
+              <h4 className="flex-1 opacity-80 text-xs sm:text-sm font-normal truncate dark:text-gray-400">
                 {houses.location}
               </h4>
             </div>
           </div>
-          {/* line */}
-          <span className="w-70.75 h-px bg-blue-400 rounded-[100px] opacity-20"></span>
-          {/* price section */}
-          <div className="w-70.75 h-16 flex flex-col gap-4">
-            <div className="h-5.5 w-18.5 flex gap-1">
+
+          {/* خط جداکننده */}
+          <span className="w-full px-2 sm:px-0 sm:w-70.75 h-px bg-blue-400 rounded-[100px] opacity-20"></span>
+
+          {/* قیمت و اطلاعات */}
+          <div className="w-full px-2 sm:px-0 sm:w-70.75 flex flex-col gap-2 sm:gap-3">
+            <div className="flex items-center gap-1">
               <svg
-                width="19"
-                height="18"
+                width="16"
+                height="15"
                 viewBox="0 0 19 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="sm:w-4.5 sm:h-4.5"
               >
                 <path
                   d="M0.75 3.99565C1.61088 2.66221 2.78034 1.54669 4.15739 0.750122M14.1573 0.750122C15.5344 1.54669 16.7039 2.66221 17.5647 3.99565M9.08343 6.58346V9.91679L10.5267 10.7501M16.6574 9.41231C16.6574 13.5544 13.2995 16.9123 9.15737 16.9123C5.01523 16.9123 1.65737 13.5544 1.65737 9.41231C1.65737 5.27018 5.01523 1.91231 9.15737 1.91231C13.2995 1.91231 16.6574 5.27018 16.6574 9.41231Z"
@@ -111,29 +129,35 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
                   strokeLinecap="round"
                 />
               </svg>
-              <div className="text-sm opacity-90 dark:text-gray-300">
-                {houses.capacity} <span className="text-[12px]">شب</span>
+              <div className="text-xs sm:text-sm opacity-90 dark:text-gray-300">
+                {houses.capacity} <span className="text-[10px] sm:text-xs">شب</span>
               </div>
             </div>
-            {/* count */}
-            <div className="w-70.75 h-6 flex justify-center gap-6">
-              <div className="text-[12px] opacity-80 line-through decoration-red-600 dark:text-gray-500">
-                {digitsEnToFa(addCommas(houses.price))}تومان
+
+            {/* قیمت‌ها */}
+            <div className="flex flex-wrap justify-between items-center gap-2">
+              <div className="text-[10px] sm:text-[12px] opacity-80 line-through decoration-red-600 dark:text-gray-500">
+                {digitsEnToFa(addCommas(houses.price))} تومان
               </div>
-              <div className="h-6.25 flex justify-center">
-                <span className="text-blue-300 text-[14px] font-bold opacity-100 dark:text-blue-300">
-                  {digitsEnToFa(addCommas(houses.discounted_price))}تومان
+              <div className="flex items-center flex-wrap gap-1">
+                <span className="text-blue-300 text-xs sm:text-sm font-bold opacity-100 dark:text-blue-300">
+                  {digitsEnToFa(addCommas(houses.discounted_price))} تومان
                 </span>
-                <span className="text-[11px] opacity-70 leading-7 dark:text-gray-500">/هرشب</span>
+                <span className="text-[10px] sm:text-[11px] opacity-70 dark:text-gray-500">
+                  / هر شب
+                </span>
               </div>
             </div>
           </div>
-          <div className="w-70.75 flex gap-2">
+
+          {/* دکمه‌ها */}
+          <div className="w-full px-2 sm:px-0 sm:w-70.75 flex gap-2 pb-3 sm:pb-0">
             <Link href={`/housereserve/HouseReserveDetails/${houses.id}`} className="flex-1">
-              <div className="w-full border border-blue-400 h-8 rounded-xl cursor-pointer text-sm text-blue-400 dark:text-white hover:text-white justify-center hover:bg-blue-400 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors duration-200 flex flex-col items-center bg-transparent">
+              <div className="w-full border h-8 sm:h-9 rounded-xl cursor-pointer text-white hover:text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center text-xs sm:text-sm">
                 بررسی و رزرو
               </div>
             </Link>
+            
             {onCompare && (
               <button
                 onClick={(e) => {
@@ -142,10 +166,10 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
                   onCompare(houses);
                 }}
                 disabled={isInCompare}
-                className={`w-20 h-8 rounded-xl dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 text-sm font-medium transition-all duration-200 ${
+                className={`w-16 sm:w-20 h-8 sm:h-9 rounded-xl text-white text-xs sm:text-sm font-medium transition-all duration-200 ${
                   isInCompare
-                    ? "bg-gray-200 text-white cursor-not-allowed dark:bg-blue-500 dark:text-gray-500"
-                    : "border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white dark:hover:bg-blue-700 bg-transparent"
+                    ? "bg-green-500 cursor-not-allowed hover:bg-green-600"
+                    : "bg-blue-500 hover:bg-blue-700"
                 }`}
               >
                 {isInCompare ? "✓" : "مقایسه"}

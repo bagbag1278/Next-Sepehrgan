@@ -1,4 +1,3 @@
-// components/Contact/OfficeInfo.tsx
 "use client";
 
 import { Award, Star, Clock, Navigation, Share2, MapPin, ExternalLink } from "lucide-react";
@@ -75,7 +74,6 @@ export default function OfficeInfo({
         <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-2xl p-6 border border-blue-100 dark:border-blue-800">
           <div className="flex flex-wrap items-center justify-between gap-6">
             
-            {/* بخش آیکون و عنوان */}
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center">
                 <Award className="text-blue-600" size={24} />
@@ -91,7 +89,6 @@ export default function OfficeInfo({
               </div>
             </div>
 
-            {/* بخش امتیاز */}
             <div className="flex items-center gap-2">
               <Star className="text-yellow-500 fill-yellow-500" size={18} />
               <span className="font-bold text-gray-800 dark:text-white">
@@ -102,7 +99,6 @@ export default function OfficeInfo({
               </span>
             </div>
 
-            {/* بخش ساعت کاری */}
             <div className="flex items-center gap-2">
               <Clock size={18} className="text-blue-600" />
               <span className="text-sm text-gray-600 dark:text-gray-300">
@@ -110,7 +106,6 @@ export default function OfficeInfo({
               </span>
             </div>
 
-            {/* دکمه مسیریابی با منو */}
             <div className="relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -123,7 +118,6 @@ export default function OfficeInfo({
                 </svg>
               </button>
               
-              {/* منوی انتخاب نقشه */}
               {isOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />

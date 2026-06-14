@@ -51,22 +51,49 @@ const LoginForm = () => {
       }
       
       let userId = null;
+      let userRole = null;
+      let userFullName = null;
+      let userEmail = null;
+      
       if (state.user) {
         userId = state.user.id;
+        userRole = state.user.role;
+        userFullName = state.user.fullName;
+        userEmail = state.user.email;
       } else if (state.accessToken) {
         try {
           const payload = JSON.parse(atob(state.accessToken.split('.')[1]));
           userId = payload.id;
+          userRole = payload.role;
+          userFullName = payload.fullName;
+          userEmail = payload.email;
         } catch (e) {}
       }
       
       if (userId) {
-        localStorage.setItem("user", JSON.stringify({ id: userId }));
-        console.log("✅ user ذخیره شد، userId:", userId);
+        const userData = {
+          id: userId,
+          role: userRole || "buyer",
+          fullName: userFullName || "",
+          email: userEmail || "",
+          firstName: state.user?.firstName || "",
+          lastName: state.user?.lastName || "",
+        };
+        
+        localStorage.setItem("user", JSON.stringify(userData));
+        console.log(" user ذخیره شد:", userData);
       }
       
       toast.success(state.message || t('loginSuccess'));
-      router.push("/");
+      
+      // ریدایرکت بر اساس نقش
+      if (userRole === "admin") {
+        router.push("/admin");
+      } else if (userRole === "seller") {
+        router.push("/dashboard/seller");
+      } else {
+        router.push("/");
+      }
     }
     if (state.error) {
       toast.error(state.error);

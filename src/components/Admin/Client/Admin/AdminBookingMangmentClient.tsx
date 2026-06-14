@@ -1,4 +1,3 @@
-// app/admin/BookingsManagement/page.tsx
 "use client";
 
 import DetailBookingModal from "@/components/Admin/BookingsManagement/filter/menu/Operation/DetailBookingModal";

@@ -85,15 +85,15 @@ const FastFilter = ({
     <div dir="rtl" className="flex flex-col gap-6">
       <div className="h-8.5 flex flex-col gap-2">
         <div className="flex justify-between h-6">
-          <h2 className="text-blue-200">{t('filters')}</h2>
+          <h2 className="text-blue-600 dark:text-blue-300 font-medium">{t('filters')}</h2>
           <button
             onClick={onClearAllFilters}
-            className="text-[12px] opacity-50 dark:text-gra hover:opacity-100 transition-opacity"
+            className="text-[12px] text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-opacity"
           >
             {t('clearFilters')}
           </button>
         </div>
-        <span className="h-px bg-blue-300/50 rounded-full"></span>
+        <span className="h-px bg-gray-200 dark:bg-gray-700 rounded-full"></span>
       </div>
 
       <div className="w-62 flex flex-col gap-6 mx-auto">
@@ -106,17 +106,17 @@ const FastFilter = ({
           className={`flex items-center justify-between w-full p-3 rounded-2xl border transition-all duration-300 group ${
             compareCount === 2
               ? "border-green-500 bg-green-50 dark:bg-green-900/20 cursor-pointer"
-              : "border-blue-300 opacity-60 cursor-not-allowed"
+              : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 opacity-60 cursor-not-allowed"
           }`}
         >
           <div className="flex items-center gap-2">
-            <BarChart2 size={18} className={compareCount === 2 ? "text-green-500" : "text-blue-300 group-hover:text-blue-500"} />
-            <span className={`text-sm font-medium ${compareCount === 2 ? "text-green-600 dark:text-green-400" : "text-blue-300/70"}`}>
+            <BarChart2 size={18} className={compareCount === 2 ? "text-green-500" : "text-gray-400 dark:text-gray-500 group-hover:text-blue-500 dark:group-hover:text-blue-400"} />
+            <span className={`text-sm font-medium ${compareCount === 2 ? "text-green-600 dark:text-green-400" : "text-gray-500 dark:text-gray-400"}`}>
               {compareCount === 2 ? t('compareTwoProperties') : t('selectTwoProperties')}
             </span>
           </div>
           <div className="flex items-center gap-1">
-            <span className={`text-xs ${compareCount === 2 ? "text-green-600 dark:text-green-400" : "text-blue-300"}`}>
+            <span className={`text-xs ${compareCount === 2 ? "text-green-600 dark:text-green-400" : "text-gray-400 dark:text-gray-500"}`}>
               {compareCount}/2
             </span>
             {compareCount === 2 && (
@@ -125,11 +125,11 @@ const FastFilter = ({
           </div>
         </button>
 
-        <details onToggle={(e) => setIsAmenitiesOpen(e.currentTarget.open)} className="group w-full transition-all duration-150 max-w-sm rounded-2xl border border-blue-300 p-3">
-          <summary className="flex cursor-pointer list-none items-center text-sm justify-between font-medium text-blue-300/70">
+        <details onToggle={(e) => setIsAmenitiesOpen(e.currentTarget.open)} className="group w-full transition-all duration-150 max-w-sm rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
+          <summary className="flex cursor-pointer list-none items-center text-sm justify-between font-medium text-gray-600 dark:text-gray-300">
             {t('hotelAmenities')}
             <span className="transition-transform group-open:rotate-180">
-              <Image src={"/FastReserve/arow.png"} width={12} height={12} alt="" />
+              <Image src={"/FastReserve/arow.png"} width={12} height={12} alt=""/>
             </span>
           </summary>
           <div className="mt-3 transition-all duration-150">
@@ -147,11 +147,11 @@ const FastFilter = ({
         </details>
 
         <div className={`flex ${isAmenitiesOpen ? "flex-row gap-2" : "flex-col gap-6"}`}>
-          <details className="group w-full transition-all duration-150 max-w-sm rounded-2xl border border-blue-300 p-3">
-            <summary className="flex cursor-pointer list-none items-center text-sm justify-between font-medium text-blue-300/70">
+          <details className="group w-full transition-all duration-150 max-w-sm rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
+            <summary className="flex cursor-pointer list-none items-center text-sm justify-between font-medium text-gray-600 dark:text-gray-300">
               {t('minPrice')}
               <span className="transition-transform group-open:rotate-180">
-                <Image src={"/FastReserve/arow.png"} width={12} height={12} alt="" />
+                <Image src={"/FastReserve/arow.png"} width={12} height={12} alt=""  />
               </span>
             </summary>
             <div className="mt-3 space-y-2 transition-all duration-150">
@@ -165,18 +165,19 @@ const FastFilter = ({
                   setMinPriceValue(Number(e.target.value));
                   setMinPrice(Number(e.target.value).toString());
                 }}
+                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
-              <div className="text-sm text-blue-200 mt-2">
+              <div className="text-sm text-gray-600 dark:text-gray-400 mt-2">
                 {t('minPriceLabel')} {minPriceValue.toLocaleString("fa-IR")} {t('toman')}
               </div>
             </div>
           </details>
 
-          <details className="group w-full transition-all duration-150 max-w-sm rounded-2xl border border-blue-300 p-3">
-            <summary className="flex cursor-pointer list-none items-center text-sm justify-between font-medium text-blue-300/70">
+          <details className="group w-full transition-all duration-150 max-w-sm rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
+            <summary className="flex cursor-pointer list-none items-center text-sm justify-between font-medium text-gray-600 dark:text-gray-300">
               {t('maxPrice')}
               <span className="transition-transform group-open:rotate-180">
-                <Image src={"/FastReserve/arow.png"} width={12} height={12} alt="" />
+                <Image src={"/FastReserve/arow.png"} width={12} height={12} alt=""  />
               </span>
             </summary>
             <div className="mt-3 space-y-2 transition-all duration-150">
@@ -190,8 +191,9 @@ const FastFilter = ({
                   setMaxPriceValue(Number(e.target.value));
                   setMaxPrice(Number(e.target.value).toString());
                 }}
+                className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
-              <div className="text-sm text-blue-200 mt-2">
+              <div className="text-sm text-gray-600 dark:text-gray-400 mt-2">
                 {t('maxPriceLabel')} {maxPriceValue.toLocaleString("fa-IR")} {t('toman')}
               </div>
             </div>

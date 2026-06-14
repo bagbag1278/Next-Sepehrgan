@@ -14,7 +14,7 @@ const GoogleLogin = () => {
       </button>
       <div className="flex items-center justify-center mx-auto mt-5">
         <div className="flex-1 border-t border-blue-400/50 dark:border-blue-500"></div>
-        <span className="px-2 text-blue-300 dark:text-blue-400 text-[12px]">{t('or')}</span>
+        <span className="px-2 text-blue-300 dark:text-blue-300 text-[12px]">{t('or')}</span>
         <div className="flex-1 border-t border-blue-400/50 dark:border-blue-500"></div>
       </div>
     </div>

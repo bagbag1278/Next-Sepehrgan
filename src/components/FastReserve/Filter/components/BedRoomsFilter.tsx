@@ -32,10 +32,10 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
     buttons.push(
       <button
         key={0}
-        className={`w-8 h-8 flex items-center border-blue-300 dark:border-blue-500 border text-blue-300 dark:text-blue-400 justify-center rounded-full text-xs cursor-pointer transition-all duration-300 ease-in-out ${
+        className={`w-8 h-8 flex items-center justify-center rounded-full text-xs cursor-pointer transition-all duration-300 ease-in-out ${
           currentValue === 0
-            ? "shadow-md"
-            : "text-blue-300 hover:text-blue-300 dark:text-blue-400 dark:hover:text-blue-300"
+            ? "bg-blue-500 text-white shadow-md"
+            : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
         }`}
         onClick={() => stateSetter(0)} 
       >
@@ -47,10 +47,10 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
       buttons.push(
         <button
           key={i}
-          className={`w-8 h-8 flex items-center cursor-pointer justify-center rounded-full text-xs transition-all duration-300 ease-in-out ${
+          className={`w-8 h-8 flex items-center justify-center rounded-full text-xs cursor-pointer transition-all duration-300 ease-in-out ${
             currentValue === i
-              ? "border-blue-100 border text-blue-100 bg-blue-300/50 shadow-md dark:bg-blue-600/50 dark:text-white dark:border-blue-400"
-              : "border border-gray-400 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+              ? "bg-blue-500 text-white shadow-md"
+              : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
           }`}
           onClick={() => stateSetter(i)} 
         >
@@ -62,43 +62,43 @@ const BedRoomsFilter: FC<BedRoomsFilterProps> = ({
   };
 
   return (
-    <div className="">
+    <div className="space-y-4">
       {/* تعداد تخت */}
-      <div className="mb-5">
-        <label className="block text-gray-700 dark:text-gray-300 text-sm font-normal mb-2 opacity-70">
+      <div>
+        <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
           {t('beds')}
         </label>
-        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+        <div className="flex items-center gap-2">
           {renderButtons(setSelectedRooms, selectedRooms, 5)}
         </div>
       </div>
 
       {/* تعداد حمام */}
-      <div className="mb-5">
-        <label className="block text-gray-700 dark:text-gray-300 text-sm font-normal mb-2 opacity-70">
+      <div>
+        <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
           {t('bathrooms')}
         </label>
-        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+        <div className="flex items-center gap-2">
           {renderButtons(setSelectedBathrooms, selectedBathrooms, 5)}
         </div>
       </div>
 
       {/* تعداد دستشویی */}
-      <div className="mb-5">
-        <label className="block text-gray-700 dark:text-gray-300 text-sm font-normal mb-2 opacity-70">
+      <div>
+        <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
           {t('toilets')}
         </label>
-        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+        <div className="flex items-center gap-2">
           {renderButtons(setSelectedToilets, selectedToilets, 5)}
         </div>
       </div>
 
       {/* تعداد پارکینگ */}
       <div>
-        <label className="block text-gray-700 dark:text-gray-300 text-sm font-normal mb-2 opacity-70">
+        <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
           {t('parking')}
         </label>
-        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+        <div className="flex items-center gap-2">
           {renderButtons(setSelectedParking, selectedParking, 5)}
         </div>
       </div>

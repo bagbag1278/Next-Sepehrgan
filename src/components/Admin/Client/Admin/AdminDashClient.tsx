@@ -52,12 +52,10 @@ const AdminDashClient = () => {
     getUserPhone,
   } = useAdminDashboard();
 
-  // State
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  // Modal States
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -72,7 +70,6 @@ const AdminDashClient = () => {
     }
   }, []);
 
-  // Filtering
   const filteredBookings = bookings.filter((booking: Booking) => {
     if (!searchTerm) return true;
     const houseTitle = getHouseTitle(booking.houseId);
@@ -158,7 +155,6 @@ const AdminDashClient = () => {
 
   return (
     <div dir="rtl" className="px-4 sm:px-8 py-6 space-y-6  overflow-hidden">
-       {/* Header */}
       <AdvancedScrollAnimation type="slide-right" delay={0.1}>
         <div className="bg-gradient-to-br from-slate-100 via-white to-gray-100 dark:from-slate-950 dark:via-gray-900 dark:to-slate-900 rounded-tl-[42px] rounded-br-[42px] rounded-2xl p-7 shadow-lg shadow-gray-200/70 dark:shadow-none border border-gray-200 dark:border-gray-700/50">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">پنل مدیریت</h1>
@@ -166,19 +162,15 @@ const AdminDashClient = () => {
         </div>
       </AdvancedScrollAnimation>
 
-      {/* Stats Cards */}
       <DashboardStatsCards stats={stats} />
 
-      {/* Search & Filters */}
       <DashboardSearchFilter
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
       />
 
-      {/* Table Header */}
       <DashboardBookingTableHeader />
 
-      {/* Bookings List */}
       <div className="flex flex-col gap-3">
         {paginatedBookings.map((booking: Booking, idx: number) => (
           <DashboardBookingCard
@@ -195,7 +187,6 @@ const AdminDashClient = () => {
         ))}
       </div>
 
-      {/* Pagination */}
       {filteredBookings.length > 0 && totalPages > 1 && (
         <AdvancedScrollAnimation type="fade" delay={0.6}>
           <div className="flex justify-start pt-2">
@@ -208,10 +199,8 @@ const AdminDashClient = () => {
         </AdvancedScrollAnimation>
       )}
 
-      {/* Empty State */}
       {filteredBookings.length === 0 && !loading && <DashboardEmptyState />}
 
-      {/* Modals */}
       <DetailAdminDash
         isOpen={isDetailOpen}
         onClose={() => setIsDetailOpen(false)}

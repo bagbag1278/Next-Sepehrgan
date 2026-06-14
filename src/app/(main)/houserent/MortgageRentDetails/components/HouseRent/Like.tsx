@@ -10,17 +10,13 @@ interface LikeProps {
   onLikeChange?: (liked: boolean) => void;
 }
 
-const Like = ({ 
-  houseId, 
-  onLikeChange 
-}: LikeProps) => {
+const Like = ({ houseId, onLikeChange }: LikeProps) => {
   const t = useTranslations('Like');
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [favoriteId, setFavoriteId] = useState<number | null>(null);
 
   const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
-  
   const getToken = () => localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -50,12 +46,7 @@ const Like = ({
       const response = await axios.post(
         `${API_BASE_URL}/favorites`,
         { house_id: houseId },
-        { 
-          headers: { 
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          } 
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       const newFavoriteId = response.data?.id || response.data?.data?.id || Date.now();
@@ -68,8 +59,6 @@ const Like = ({
       onLikeChange?.(true);
       
     } catch (error: any) {
-      console.error("Error:", error);
-      
       if (error.response?.status === 409) {
         const fakeId = Date.now();
         setIsLiked(true);
@@ -95,22 +84,13 @@ const Like = ({
       return;
     }
 
-    if (!favoriteId) {
-      setIsLiked(false);
-      localStorage.removeItem(`liked_${houseId}`);
-      localStorage.removeItem(`favoriteId_${houseId}`);
-      onLikeChange?.(false);
-      return;
-    }
-
     setLoading(true);
     try {
-      await axios.delete(`${API_BASE_URL}/favorites/${favoriteId}`, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-      });
+      if (favoriteId) {
+        await axios.delete(`${API_BASE_URL}/favorites/${favoriteId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      }
       
       setIsLiked(false);
       setFavoriteId(null);
@@ -121,8 +101,6 @@ const Like = ({
       onLikeChange?.(false);
       
     } catch (error: any) {
-      console.error("Error:", error);
-      
       if (error.response?.status === 404) {
         setIsLiked(false);
         setFavoriteId(null);
@@ -142,7 +120,6 @@ const Like = ({
 
   const handleLikeClick = async () => {
     if (loading) return;
-    
     if (isLiked) {
       await removeFromFavorites();
     } else {
@@ -157,7 +134,7 @@ const Like = ({
       className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 dark:border-gray-500 rounded-lg flex items-center justify-center border border-blue-400 transition-all active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {loading ? (
-        <div className="w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
       ) : (
         <Heart
           size={20}
