@@ -1,3 +1,4 @@
+
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
 import NeshanMapLoader from "@/components/utils/NeshanMapLoader";
@@ -6,6 +7,10 @@ import { ThemeProvider } from "next-themes";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
+
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
+
+
 import LocalFont from "next/font/local";
 import VoiceCommand from "@/components/VoiceCommand";
 import "./globals.css";
@@ -36,7 +41,8 @@ export default async function RootLayout({
   return (
     <html lang="fa" suppressHydrationWarning>
       <body
-        className={`${iran.className} overflow-x-hidden bg-white text-black dark:bg-black dark:text-white`}
+        className={`${iran.className} bg-[#F5F5F5] overflow-x-hidden flex flex-col min-h-screen items-center text-black dark:from-[#121212] dark:via-blue-400 dark:to-[#121212] dark:bg-linear-to-br dark:text-white`}
+
       >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

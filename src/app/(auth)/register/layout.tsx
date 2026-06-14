@@ -1,4 +1,4 @@
-// RegisterLayout.tsx
+
 "use client";
 
 import ImageSlider from "@/components/Auth/ImgSlider/ImageSlider";
@@ -38,9 +38,11 @@ const RegisterLayout: FC<IChildren> = ({ children }) => {
             {t('heroFooter')}
           </span>
         </div>
+
         
         <div className="relative z-0 h-full w-full">
           <ImageSlider images={slideImages} delay={5000} />
+
         </div>
       </div>
 

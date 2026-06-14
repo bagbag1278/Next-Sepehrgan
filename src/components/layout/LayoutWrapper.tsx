@@ -13,7 +13,16 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
 
-  const hideHeaderFooter = pathname.startsWith("/dashboard");
+  const hiddenRoutes = [
+    "/dashboard",
+    "/login",
+    "/register",
+    "/forgot-password",
+  ];
+
+  const hideHeaderFooter = hiddenRoutes.some((route) =>
+    pathname.startsWith(route),
+  );
 
   return (
     <ThemeProvider

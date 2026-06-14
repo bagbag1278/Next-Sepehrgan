@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation"; // برای ریدایرکت بعد از موفقیت
-import { verifyPasswordResetCode } from "../api/verifyPasswordResetCode";
+import { verifyPasswordResetCode } from "../api/auth/verifyPasswordResetCode";
 
 // Type برای ورودی Server Action
 interface VerifyCodeServerActionArgs {
