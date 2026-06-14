@@ -57,7 +57,6 @@ const ReserveManage = () => {
         reservationStatus,
     });
 
-    // فیلتر جستجوی زنده
     const filteredBookings = useMemo(() => {
         if (!searchTerm.trim()) return allBookings;
 
@@ -75,7 +74,6 @@ const ReserveManage = () => {
 
     const totalPages = Math.ceil(filteredBookings.length / limit);
 
-    // جستجوی زنده + ذخیره در URL
     const handleSearchChange = (value: string) => {
         setSearchTerm(value);
         const params = new URLSearchParams(searchParams.toString());
@@ -88,7 +86,6 @@ const ReserveManage = () => {
         router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     };
 
-    // بستن منو با کلیک خارج
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (reserveMenuRef.current && !reserveMenuRef.current.contains(event.target as Node)) {
@@ -156,7 +153,6 @@ const ReserveManage = () => {
         setShowFilterModal(false);
     };
 
-    // عملیات رزرو
     const handleContinueBooking = async (bookingId: number) => {
         try {
             await ContinueBooking(bookingId);
@@ -360,6 +356,7 @@ const ReserveManage = () => {
                     isOpen={showDetailsModal}
                     houseId={selectedHouseId}
                     booking={selectedBooking}
+                    
                     onClose={() => {
                         setShowDetailsModal(false);
                         setSelectedBooking(null);

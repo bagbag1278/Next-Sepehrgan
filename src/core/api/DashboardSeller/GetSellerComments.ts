@@ -1,15 +1,11 @@
 import axios from "axios";
-import { SellerCommentsResponse } from './../../types/DashboardSeller/CommentsType';
 
-const GetSellerComments = async (
-  sellerId: number,
-  page = 1
-): Promise<SellerCommentsResponse> => {
-  const response = await axios.get(
-    `/api/comments/seller/${sellerId}?page=${page}&limit=10`
+const GetSellerComments = async (page = 1) => {
+  const res = await axios.get(
+    `/api/comments/seller?page=${page}&limit=4`
   );
 
-  return response.data;
+  return res.data;
 };
 
 export default GetSellerComments;

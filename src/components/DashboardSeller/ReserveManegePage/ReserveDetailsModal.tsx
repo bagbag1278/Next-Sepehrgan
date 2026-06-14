@@ -17,6 +17,7 @@ import PaymentsList from "./PaymentsList";
 import TravelerList from "./TravelereList";
 import formatDate from "@/components/Untils/FormData";
 import { IBooking } from "@/core/api/DashboardSeller/GetBookingsCustomers";
+import { formatReservationDate } from "@/core/Untils/date";
 
 interface ReserveDetailsModalProps {
     isOpen: boolean;
@@ -145,8 +146,13 @@ export default function ReserveDetailsModal({
 
                         <div className="flex items-center gap-2 mt-4 text-[#6B7280]/60 dark:text-slate-300">
                             <CalendarDays size={18} />
+
                             <span className="text-sm">
-                                {house?.address}
+                                {booking?.reservedDates?.length
+                                    ? booking.reservedDates
+                                        .map(date => formatReservationDate(date))
+                                        .join(" تا ")
+                                    : "---"}
                             </span>
                         </div>
 

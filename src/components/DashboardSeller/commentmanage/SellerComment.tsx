@@ -1,128 +1,228 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Star, MessageSquare, Search, Trash2 } from "lucide-react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
+import GetSellerComments from "@/core/api/DashboardSeller/GetSellerComments";
+import CirclesIcon from "../Icon/CirclesIcon";
+import Pagination from "./Pagination";
+import DeleteComment from "@/core/api/DashboardSeller/DeleteComment";
 interface SellerCommentType {
     id: number;
-    house_id: number;
     title: string;
     caption: string;
     rating: string;
     created_at: string;
-    parent_comment_id: number | null;
-
     user: {
         firstName: string;
         lastName: string;
-        profilePicture: string | null;
     };
-
     house: {
-        id: number;
         title: string;
-        address: string;
     };
-}
-
-interface SellerCommentsResponse {
-    comments: SellerCommentType[];
-    totalCount: number;
-    currentPage: number;
-    totalPages: number;
 }
 
 export default function SellerComment() {
     const [comments, setComments] = useState<SellerCommentType[]>([]);
+    const [totalComments, setTotalComments] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+    const [totalPages, setTotalPages] = useState(1);
+
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    const currentPage = Number(searchParams.get("page")) || 1;
 
     useEffect(() => {
         const fetchComments = async () => {
             try {
                 setLoading(true);
 
-                const response = await fetch(
-                    "/api/comments/seller/360?page=1&limit=10"
-                );
-
-                if (!response.ok) {
-                    throw new Error("خطا در دریافت کامنت‌ها");
-                }
-
-                const data: SellerCommentsResponse =
-                    await response.json();
+                const data = await GetSellerComments(currentPage,);
 
                 setComments(data.comments || []);
+                setTotalPages(data.totalPages || 1);
+                setTotalComments(data.totalCount || 0);
+
             } catch (err) {
-                console.error("خطا در دریافت کامنت‌ها:", err);
-                setError("دریافت کامنت‌ها ناموفق بود");
+                console.log(err);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchComments();
-    }, []);
+    }, [currentPage]);
+
+    const handlePageChange = (newPage: number) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", String(newPage));
+
+        router.replace(`${pathname}?${params.toString()}`, {
+            scroll: false,
+        });
+    };
+
+    const handleDelete = async (id: number) => {
+        try {
+            await DeleteComment(id);
+
+            setComments((prev) => prev.filter((c) => c.id !== id));
+            setTotalComments((prev) => prev - 1);
+
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center py-10">
-                در حال دریافت اطلاعات...
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="text-red-500 text-center py-10">
-                {error}
+            <div className="flex items-center justify-center py-20">
+                <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
             </div>
         );
     }
 
     return (
-        <div className="space-y-4">
-            {comments.length === 0 ? (
-                <div className="text-center">
-                    کامنتی یافت نشد
+        <div className="space-y-6">
+
+            {/* HEADER */}
+            <div className="flex items-center gap-2">
+                <CirclesIcon />
+                <h1 className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    مدیریت کامنت‌ها
+                </h1>
+                <CirclesIcon />
+            </div>
+
+            {/* COUNT */}
+            <div className="w-full flex justify-between items-center ">
+                <div className="  dark:text-gray-400">
+                    تعداد کامنت ها
+                    <span className="font-bold text-gray-500">
+                        ({totalComments})
+                    </span>
                 </div>
-            ) : (
-                comments.map((comment) => (
+
+                {/* filter */}
+                {/* <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" size={25} />
+                    <input
+                        type="text"
+                        placeholder="جستجو نام خانه..."
+                        
+                        className="w-112.5 text-[#0887CAB2] h-12 rounded-2xl pr-3 dark:bg-slate-800 border border-[#0887CAB2]/70 outline-none focus:border-[#0887CAB2] focus:ring-[#0887CAB2]/30"
+                    />
+                </div> */}
+            </div>
+
+            {/* GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                {comments.map((comment) => (
                     <div
                         key={comment.id}
-                        className="border rounded-xl p-4 bg-white"
+                        className="
+                            group
+                            bg-white dark:bg-slate-800
+                            border border-gray-100 dark:border-slate-700
+                            rounded-3xl
+                            p-3 px-4
+                            shadow-sm
+                            hover:shadow-xl
+                            hover:-translate-y-1
+                            transition-all duration-300
+                        "
                     >
-                        <div className="flex justify-between mb-2">
-                            <h3 className="font-bold">
-                                {comment.title}
-                            </h3>
 
-                            <span>
-                                ⭐ {comment.rating}
-                            </span>
+
+                        {/* USER + RATING */}
+                        <div className=" flex items-center justify-between mb-4">
+
+                            <div className="flex items-center gap-3">
+
+                                <div className="w-11 h-11 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 font-bold">
+                                    {comment.user.firstName?.charAt(0)}
+                                </div>
+
+                                <div>
+                                    <p className="font-bold text-gray-800 dark:text-white">
+                                        {comment.user.firstName} {comment.user.lastName}
+                                    </p>
+
+                                    <p className="text-xs text-gray-400">
+                                        {new Date(comment.created_at).toLocaleDateString("fa-IR")}
+                                    </p>
+                                </div>
+
+                            </div>
+                            <div className="flex w-20 justify-between ">
+
+                                <div className="flex items-center gap-1 text-yellow-500 font-bold">
+                                    <Star size={16} />
+                                    {comment.rating}
+                                </div>
+                                <button
+                                    onClick={async () => {
+                                        try {
+                                            await DeleteComment(comment.id);
+
+                                            setComments((prev) =>
+                                                prev.filter((c) => c.id !== comment.id)
+                                            );
+
+                                            setTotalComments((prev) => prev - 1);
+                                        } catch (err) {
+                                            console.log(err);
+                                        }
+                                    }}
+                                    className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition"
+                                >
+                                    <Trash2 className="text-red-500" size={18} />
+                                </button>
+                            </div>
+
+
                         </div>
 
-                        <p className="mb-3">
+                        {/* HOUSE */}
+                        <div className="mb-4 px-3 py-2 rounded-2xl bg-blue-50 dark:bg-slate-700/50">
+                            <p className="text-xs text-gray-500">اقامتگاه</p>
+                            <p className="text-sm font-semibold text-blue-700 dark:text-blue-300">
+                                {comment.house.title}
+                            </p>
+                        </div>
+
+                        {/* TITLE */}
+                        <h3 className="font-bold text-gray-900 dark:text-white mb-2">
+                            {comment.title}
+                        </h3>
+
+                        {/* CAPTION */}
+                        <p className="text-sm text-gray-600 dark:text-gray-300 leading-7">
                             {comment.caption}
                         </p>
 
-                        <div className="text-sm text-gray-500">
-                            {comment.user.firstName}{" "}
-                            {comment.user.lastName}
-                        </div>
-
-                        <div className="text-sm text-gray-500 mt-1">
-                            {comment.house.title}
-                        </div>
-
-                        <div className="text-xs text-gray-400 mt-2">
-                            {new Date(
-                                comment.created_at
-                            ).toLocaleDateString("fa-IR")}
-                        </div>
                     </div>
-                ))
+                ))}
+
+
+
+            </div>
+
+            {/* PAGINATION */}
+            {totalPages > 1 && (
+                <div className="flex justify-start pt-6">
+                    <Pagination
+                        page={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
             )}
+
         </div>
     );
 }
