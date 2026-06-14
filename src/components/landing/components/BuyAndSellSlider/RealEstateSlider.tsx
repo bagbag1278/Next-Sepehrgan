@@ -57,28 +57,19 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
               <div className="hover-3d group">
                 <div className="relative flex justify-center flex-wrap items-center w-82 h-94 border border-white dark:border-gray-700 overflow-hidden rounded-4xl bg-[#F5F5F5] dark:bg-[#1a1a2e] shadow-lg transition-all duration-300">
                   {/* image */}
-                  <div className="w-81 h-50 overflow-hidden rounded-2xl flex justify-center bg-[#ccc] dark:bg-[#2a2a3e]">
-                    {Array.isArray(house.photos) &&
-                    house.photos.length > 0 &&
-                    house.photos[0] ? (
-                      <img
-                        src={house.photos[1]}
-                        alt={house.title || "House image"}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        onError={(e) => {
-                          const img = e.currentTarget;
-                          img.replaceWith(document.createElement("div"));
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        src={"/placeholder.png"}
-                        width={324}
-                        height={200}
-                        alt=""
-                        className="dark:opacity-70"
-                      />
-                    )}
+                  <div className="w-81 h-50 overflow-hidden rounded-2xl flex justify-center">
+                
+                      <div className="w-75 overflow-hidden mt-3 ">
+                        <img
+                          src={"placeholder.png"}
+                          width={324}
+                          height={200}
+                          alt=""
+                          className="dark:opacity-70"
+                        />
+                      </div>
+
+                  
                   </div>
 
                   <div className="relative w-79.5 h-39 gap-1">
