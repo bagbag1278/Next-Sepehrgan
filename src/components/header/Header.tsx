@@ -12,6 +12,7 @@ const nav = [
   { title: " رهن اجاره", href: "/mortgage" },
   { title: "وبلاگ", href: "/blog" },
   { title: "درباره ما", href: "/contactus" },
+  { title: "چت بات", href: "/chat" },
 ];
 
 const Header = () => {

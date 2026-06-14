@@ -4,8 +4,13 @@ import React, { useEffect } from "react";
 import { useActionState } from "react";
 import { updateUserAction } from "@/core/action/updateUser.action";
 import toast from "react-hot-toast";
-
-const EditForm = () => {
+type User = {
+  name: string;
+  lastname: string;
+  email: string;
+  phone: string;
+};
+const EditForm = ({ user }: { user: User }) => {
   const [state, formAction, isPending] = useActionState(updateUserAction, null);
 
   useEffect(() => {
@@ -24,6 +29,7 @@ const EditForm = () => {
         <input
           type="text"
           name="name"
+          defaultValue={user.name}
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
@@ -40,6 +46,7 @@ const EditForm = () => {
         <input
           type="text"
           name="lastname"
+          defaultValue={user.lastname}
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
@@ -56,6 +63,7 @@ const EditForm = () => {
         <input
           type="email"
           name="email"
+          defaultValue={user.email}
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
@@ -72,6 +80,7 @@ const EditForm = () => {
         <input
           type="text"
           name="phone"
+          defaultValue={user.phone}
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
