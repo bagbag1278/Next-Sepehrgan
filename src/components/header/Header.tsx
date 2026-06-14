@@ -4,65 +4,45 @@ import HeroSction from "./Icon/HeaderIcon1";
 import HeroSction2 from "./Icon/HeaderIcon2";
 import HeaderIcon3 from "./Icon/HeaderIcon3";
 import { usePathname } from "next/navigation";
-
 import LanguageSwitcher from "../LanguageSwitcher";
-import { useTranslations } from 'next-intl';
-
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
-
-const nav = [
-  { title: "صفحه اصلی", href: "/" },
-  { title: "رزرو سریع", href: "/housereserve" },
-  { title: " رهن اجاره", href: "/houserent" },
-  { title: "وبلاگ", href: "/blog" },
-  { title: "درباره ما", href: "/contactus" },
-  { title: "چت بات", href: "/chat" },
-];
+import { useState, useEffect } from "react";
 
 const Header = () => {
   const pathname = usePathname();
+  const t = useTranslations("Header");
 
-  const t = useTranslations('Header');
-  
-  // منو با متن‌های ترجمه شده
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(Cookies.get("isLoggedIn") === "true");
+  }, []);
+
   const nav = [
-    { title: t('home'), href: "/" },
-    { title: t('quickReserve'), href: "/housereserve" },
-    { title: t('mortgage'), href: "/houserent" },
-    { title: t('blog'), href: "/blog" },
-    { title: t('aboutUs'), href: "/contactus" },
+    { title: t("home"), href: "/" },
+    { title: t("quickReserve"), href: "/housereserve" },
+    { title: t("mortgage"), href: "/houserent" },
+    { title: t("blog"), href: "/blog" },
+    { title: t("aboutUs"), href: "/contactus" },
   ];
-  
 
-  const isLoggedIn = Cookies.get("isLoggedIn") === "true";
   return (
-    <div className="  w-full items-center flex justify-center  lg:w-full lg:items-center lg:flex lg:justify-center xl:w-full xl:items-center xl:flex xl:justify-center xl:block">
-
+    <div className="w-full items-center flex justify-center">
       <div
         dir="rtl"
         className="flex justify-between w-350 mt-6 dark:text-white"
       >
         {/* منوی اصلی - دسکتاپ */}
-        <div className="lg:flex xl:flex z-30 items-center whitespace-nowrap gap-5 hidden sm:hidden sm:flex sm:justify-end">
+        <div className="lg:flex xl:flex z-30 items-center whitespace-nowrap gap-5 hidden">
           {nav.map((item) => {
-            let isActive =
+            const isActive =
               item.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(item.href);
 
-
-            if (
-              item.title === "رزرو سریع" &&
-              pathname.startsWith("/housereserve")
-            ) {
-
-              isActive = true;
-            }
-            if (item.href === "/mortgage" && pathname.startsWith("/mortgage")) {
-              isActive = true;
-            }
             return (
               <Link
                 key={item.href}
@@ -78,7 +58,6 @@ const Header = () => {
                 >
                   {item.title}
                 </span>
-
                 {isActive && (
                   <div className="absolute top-6">
                     <HeaderIcon3 />
@@ -88,7 +67,7 @@ const Header = () => {
             );
           })}
         </div>
-        
+
         {/* لوگو */}
         <div className="flex justify-center items-center w-full">
           <div className="dark:hidden">
@@ -98,17 +77,12 @@ const Header = () => {
             <HeroSction2 />
           </div>
         </div>
-
-        
-        
-          
-          
-
-
-
-        <div className="w-69.5 h-12 xl:flex xl:justify-end lg:flex lg:justify-end items-center gap-8 sm:hidden hidden">
+        <div className="relative z-50">
           <LanguageSwitcher />
-          {isLoggedIn  ? (
+        </div>
+        {/* دکمه‌های ورود/پروفایل */}
+        <div className="w-69.5 h-12 xl:flex lg:flex xl:justify-end lg:justify-end items-center gap-8 hidden">
+          {isLoggedIn ? (
             <div className="ml-25 relative z-40 overflow-hidden cursor-pointer shadow-[8px_0px_20px_rgba(8,135,202,0.30)] size-14 rounded-full">
               <Link href="/dashboard/buyer">
                 <Image
@@ -126,7 +100,6 @@ const Header = () => {
                   ورود
                 </div>
               </Link>
-
               <Link className="z-20" href="/register">
                 <button className="bg-[#F5F5F5] shadow-[8px_0px_20px_rgba(8,135,202,0.30)] border-gray-200 w-35 h-12 rounded-2xl text-blue-100 dark:text-[#28A5E6] font-bold cursor-pointer text-[18px] ml-14">
                   ثبت نام
@@ -134,7 +107,6 @@ const Header = () => {
               </Link>
             </>
           )}
-
         </div>
       </div>
     </div>

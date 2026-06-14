@@ -1,10 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-
 import jwt from "jsonwebtoken";
 import { loginApi } from "../api/auth/Login.api";
-
 
 export type ActionState = {
   success: boolean;
@@ -27,19 +25,10 @@ export async function loginAction(
 
   try {
     const data = await loginApi({ email, password });
-    
-    // ✅ دیباگ - ببین data چی داره
-    console.log("🔵 loginApi response:", JSON.stringify(data, null, 2));
-    console.log("🔵 data.user:", data.user);
-    console.log("🔵 data.accessToken:", data.accessToken);
 
     const cookieStore = await cookies();
-
-
     const accessTokenMaxAge = 60 * 15;
     const refreshTokenMaxAge = 60 * 60 * 24 * 30;
-
-    // ✅ exp رو از توکن بخون
     const decoded = jwt.decode(data.accessToken) as { exp: number } | null;
 
     cookieStore.set("accessToken", data.accessToken, {
@@ -58,15 +47,7 @@ export async function loginAction(
       maxAge: refreshTokenMaxAge,
     });
 
-
-    return { 
-      success: true, 
-      message: "خوش آمدید",
-      accessToken: data.accessToken,
-      user: data.user  // اگر data.user undefined باشد، اینجا undefined می‌شود
-    };
-    
-
+    // ✅ isLoggedIn قبل از return ست میشه
     cookieStore.set("isLoggedIn", "true", {
       httpOnly: false,
       secure: process.env.NODE_ENV === "production",
@@ -75,7 +56,6 @@ export async function loginAction(
       maxAge: refreshTokenMaxAge,
     });
 
-    // ✅ کوکی کمکی برای interceptor که بتونه exp رو از client بخونه
     if (decoded?.exp) {
       cookieStore.set("accessTokenExpiry", String(decoded.exp), {
         httpOnly: false,
@@ -86,7 +66,13 @@ export async function loginAction(
       });
     }
 
-    return { ...prevState, success: true, message: "خوش آمدید" };
+    // ✅ یه return در آخر
+    return {
+      success: true,
+      message: "خوش آمدید",
+      accessToken: data.accessToken,
+      user: data.user,
+    };
 
   } catch (error: any) {
     console.error("Login action error:", error);

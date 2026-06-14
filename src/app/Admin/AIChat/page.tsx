@@ -10,7 +10,7 @@ interface Message {
   timestamp: Date;
 }
 
-// کلید API Claude
+
 const CLAUDE_API_KEY = "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";
 
 const AIChat = () => {
