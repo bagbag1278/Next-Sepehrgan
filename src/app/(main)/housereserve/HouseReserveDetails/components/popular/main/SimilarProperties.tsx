@@ -5,7 +5,7 @@ import { Star, MapPin, ChevronLeft, Sparkles, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import HomeReserve from "@/components/HouseDetails/icon/Home/HomeReserve";
-import ReserveHome from "../../icon/ReserveHome";
+// import ReserveHome from "../../icon/ReserveHome";
 
 interface Property {
   id: number;
@@ -157,7 +157,7 @@ const SimilarProperties = ({ currentId: propId }: { currentId?: number | null })
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
-                    <ReserveHome />
+                    {/* <ReserveHome /> */}
                   </div>
                 )}
                 

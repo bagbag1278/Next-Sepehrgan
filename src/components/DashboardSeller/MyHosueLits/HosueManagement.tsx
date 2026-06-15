@@ -23,7 +23,7 @@ import GetHousesUser, { IHouse } from "@/core/api/DashboardSeller/GetHousesUser"
 import DeleteHouseModal from "../DeleteHouse/DeleteHouseModal";
 import DeleteHouse from "@/core/api/DashboardSeller/DeleteHouse";
 import toast from "react-hot-toast";
-import formatDate from '@/components/untils/FormData'
+import formatDate from '@/components/Untils/FormData'
 import EditHouseModal from '../EditHouse/EditHouseModal'
 import UpdateHouse from '@/core/api/DashboardSeller/UpdateHouse'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -303,8 +303,8 @@ const HosueManagement = () => {
                                                         className='w-full h-10 rounded-2xl bg-blue-500 text-white 
                                                         flex items-center justify-center gap-2 text-sm'
                                                     >
-                                                        فعال کردن
                                                         <CheckCircle2 size={16} />
+                                                        فعال کردن
 
                                                     </button>
 
@@ -319,12 +319,12 @@ const HosueManagement = () => {
                                                             setOpenMenu(null);
 
                                                         }}
-                                                        className='flex items-center justify-center text-sm 
+                                                        className='flex  p-1 rounded-2xl items-center  text-sm 
                                                         text-[#1E1B4B] dark:text-white'
                                                     >
+                                                        <Pencil size={18} />
                                                         ویرایش
 
-                                                        <Pencil size={18} />
                                                     </button>
 
                                                     {/* delete */}
@@ -336,11 +336,11 @@ const HosueManagement = () => {
                                                             setDeleteModal(true);
                                                             setOpenMenu(null);
                                                         }}
-                                                        className="flex items-center justify-center
-                                                        gap-1 text-sm text-pink-500"
+                                                        className="flex p-1 rounded-2xl items-center  
+                                                        gap-1 text-sm text-pink-500 border-red-500/50 "
                                                     >
-                                                        حذف
                                                         <Trash2 size={16} />
+                                                        حذف
                                                     </button>
 
                                                 </div>
