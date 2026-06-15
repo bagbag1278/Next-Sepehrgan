@@ -14,6 +14,7 @@ const DeleteHouse = async (id: number) => {
     {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     }
   );

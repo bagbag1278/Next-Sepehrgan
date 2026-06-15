@@ -15,7 +15,6 @@ import {
     XCircle
 } from 'lucide-react';
 import GetBookingsCustomers, { IBooking } from '@/core/api/DashboardSeller/GetBookingsCustomers';
-import DeleteBooking from "@/core/api/DashboardSeller/DeleteBooking";
 import ContinueBooking from "@/core/api/DashboardSeller/ContinueBooking";
 import CancelBooking from "@/core/api/DashboardSeller/CancelBooking";
 import ReserveDropdown from "./ReserveDropdown";
@@ -24,6 +23,7 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import Pagination from './Pagination';
 import toast from 'react-hot-toast';
 import ReserveDetailsModal from './ReserveDetailsModal';
+import  DeleteBooking  from '@/core/api/DashboardSeller/DeleteBooking';
 
 const ReserveManage = () => {
     const [openReserveMenu, setOpenReserveMenu] = useState<number | null>(null);

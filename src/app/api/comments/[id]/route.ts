@@ -10,9 +10,9 @@ export async function DELETE(
     try {
         const cookieStore = await cookies();
 
-        const token = cookieStore.get("token")?.value;
+        const token = cookieStore.get("accessToken")?.value;
 
-        console.log("TOKEN FROM COOKIE:", token); 
+        console.log("TOKEN FROM COOKIE:", token);
 
         if (!token) {
             return NextResponse.json(
@@ -27,6 +27,7 @@ export async function DELETE(
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
                 },
                 cache: "no-store",
             }
@@ -34,9 +35,11 @@ export async function DELETE(
 
         const data = await res.json();
 
-        console.log("BACKEND RESPONSE:", data, res.status); // 👈 مهم
+        console.log("BACKEND RESPONSE:", data, res.status);
 
-        return NextResponse.json(data, { status: res.status });
+        return NextResponse.json(data, {
+            status: res.status,
+        });
     } catch (err) {
         console.log("DELETE ERROR:", err);
 
