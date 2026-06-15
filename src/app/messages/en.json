@@ -82,9 +82,9 @@
     "viewDetails": "View Details"
   },
   "FocusCarousel": {
-    "topCommentsText": "Your top comments, your voice guides us",
-    "visitorsComments": "Visitor Comments",
-    "commentsDescription": "Your comments are not only our voice, but also a guide for others in choosing the best travel experiences!",
+    "topCommentsText": "Your top comments, your voice guides",
+    "visitorsComments": "Visitors' Comments",
+    "commentsDescription": "Your comments are not only our voice but also a guide for others in choosing the best travel experiences!",
     "viewAll": "View All",
     "unknownUser": "Unknown User",
     "noDate": "No Date",
@@ -92,7 +92,9 @@
     "unknownError": "Unknown error while fetching data",
     "loading": "Loading...",
     "error": "Error:",
-    "noItems": "No items found"
+    "noItems": "No items found",
+    "scrollLeft": "Scroll Left",
+    "scrollRight": "Scroll Right"
   },
   "FirstContainer": {
     "modernEcotourism": "Modern Ecotourism, Eternal",
@@ -569,7 +571,9 @@
     "heroSubtitle": "Login and take a simple step towards the home you've always dreamed of!",
     "heroFooter": "Purity! Love! Affection!",
     "loginWithGoogle": "Login with Google",
-    "or": "or"
+    "or": "or",
+    "login": "Login",
+    "register": "Register"
   },
   "ForgetPassword": {
     "request": "Email",
@@ -855,5 +859,6 @@
     "previous": "Previous",
     "next": "Next"
   }
-  
+
+
 }

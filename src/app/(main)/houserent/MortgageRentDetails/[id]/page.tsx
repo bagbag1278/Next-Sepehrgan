@@ -3,7 +3,6 @@ import { useTranslations } from "next-intl";
 import Link from "@/components/HouseDetails/icon/icon/Link";
 import Star from "@/components/HouseDetails/icon/icon/Star";
 import CommentsSection from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Comment/CommentsSection";
-import FleshHome from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/FleshHome";
 import Popular from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/Popular";
 import dynamic from "next/dynamic";
 
@@ -244,9 +243,6 @@ const MortgageRentDetails = () => {
                 <SimilarProperties currentId={data.id} />
               </div>
 
-              <div className="absolute -left-35 bottom-120 transform rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
-                <FleshHome />
-              </div>
             </div>
 
             <div className="flex-1 w-full max-w-200 max-[450]:w-90 h-auto rounded-2xl flex flex-col items-center gap-6 bg-white dark:bg-gray-800 shadow-lg p-6 mx-auto">

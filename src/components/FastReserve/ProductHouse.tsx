@@ -21,7 +21,7 @@ const ProductHouse = ({
     <div dir="rtl" className="w-full px-2 sm:px-3 md:px-4 ">
       <div
         key={houses.id}
-        className="hover:border-2 border w-167 h-60 max-[780px]:h-auto hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300 shadow shadow-blue-300/25 hover:shadow-lg rounded-2xl sm:rounded-3xl md:rounded-4xl flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 md:gap-4 items-center bg-white dark:bg-gray-900 overflow-hidden"
+        className="hover:border-2  w-167 h-60 max-[780px]:h-auto hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300 shadow shadow-blue-300/25 hover:shadow-lg rounded-2xl sm:rounded-3xl md:rounded-4xl flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 md:gap-4 items-center bg-white dark:bg-gray-900 overflow-hidden"
       >
         <div className="w-full sm:w-81 h-48 sm:h-50 rounded-2xl sm:rounded-3xl relative overflow-hidden mt-2 sm:mt-0">
           <div className="absolute -top-3 right-2 left-2 flex items-center justify-between z-10">

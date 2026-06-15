@@ -82,19 +82,21 @@
       "defaultTitle": "ملک",
       "viewDetails": "مشاهده جزئیات"
     },
-    "FocusCarousel": {
-      "topCommentsText": "برترین نظرات شما، صدای شما راهنمای ما",
-      "visitorsComments": "نظرات بازدید کنندگان",
-      "commentsDescription": "نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در انتخاب بهترین تجربیات سفر هستند!",
-      "viewAll": "مشاهده همه",
-      "unknownUser": "کاربر ناشناس",
-      "noDate": "بدون تاریخ",
-      "noContent": "بدون محتوا",
-      "unknownError": "خطای ناشناخته در دریافت اطلاعات",
-      "loading": "درحال بارگذاری...",
-      "error": "خطا:",
-      "noItems": "هیچ آیتمی یافت نشد"
-    },
+  "FocusCarousel": {
+    "topCommentsText": "برترین نظرات شما، صدای شما راهنمای ما",
+    "visitorsComments": "نظرات بازدید کنندگان",
+    "commentsDescription": "نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در انتخاب بهترین تجربیات سفر هستند!",
+    "viewAll": "مشاهده همه",
+    "unknownUser": "کاربر ناشناس",
+    "noDate": "بدون تاریخ",
+    "noContent": "بدون محتوا",
+    "unknownError": "خطای ناشناخته در دریافت اطلاعات",
+    "loading": "درحال بارگذاری...",
+    "error": "خطا:",
+    "noItems": "هیچ آیتمی یافت نشد",
+    "scrollLeft": "اسکرول به چپ",
+    "scrollRight": "اسکرول به راست"
+  },
     "FirstContainer": {
       "modernEcotourism": "بومگردی نوین خاطرات جاودان",
       "latestEcotourism": "جدید ترین بومگردی ها",
@@ -573,7 +575,9 @@
       "heroSubtitle": "وارد شو و با یک قدم ساده، به سوی خونه‌ای که همیشه آرزوش را داشتی، برو!",
       "heroFooter": "صفا باشه! عشق باشه! معرفت باشه!",
       "loginWithGoogle": "ورود با حساب گوگل",
-      "or": "یا"
+      "or": "یا",
+        "login": "ورود",
+    "register": "ثبت نام"
     },
     "ForgetPassword": {
       "request": "ایمیل",

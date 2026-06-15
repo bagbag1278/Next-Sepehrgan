@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
+import { useTranslations } from "next-intl";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -44,11 +45,12 @@ type ItemType = {
 // --- Component ---
 
 const FocusCarousel = () => {
+  const t = useTranslations('FocusCarousel');
   const [items, setItems] = useState<ItemType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isred, setisred] = useState(false);
+  const [likedItems, setLikedItems] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -67,17 +69,17 @@ const FocusCarousel = () => {
         const mappedItems: ItemType[] = (data.comments || []).map((comment) => {
           const fullName =
             `${comment.user?.firstName ?? ""} ${comment.user?.lastName ?? ""}`.trim() ||
-            "کاربر ناشناس";
+            t('unknownUser');
 
           const formattedDate = comment.created_at
             ? new Date(comment.created_at).toLocaleDateString("fa-IR")
-            : "بدون تاریخ";
+            : t('noDate');
 
           return {
             key: String(comment.id),
             Profile: "/placeHolder.jpeg",
             name: fullName,
-            content: comment.caption ?? comment.title ?? "بدون محتوا",
+            content: comment.caption ?? comment.title ?? t('noContent'),
             date: formattedDate,
           };
         });
@@ -87,7 +89,7 @@ const FocusCarousel = () => {
         const message =
           err instanceof Error
             ? err.message
-            : "خطای ناشناخته در دریافت اطلاعات";
+            : t('unknownError');
         setError(message);
       } finally {
         setLoading(false);
@@ -95,7 +97,14 @@ const FocusCarousel = () => {
     };
 
     fetchComments();
-  }, []);
+  }, [t]);
+
+  const handleLike = (itemKey: string) => {
+    setLikedItems(prev => ({
+      ...prev,
+      [itemKey]: !prev[itemKey]
+    }));
+  };
 
   // --- Render Logic ---
   return (
@@ -110,7 +119,7 @@ const FocusCarousel = () => {
                   <CommentsIcon />
                 </div>
                 <div className="dark:text-[#28A5E6] text-[13px] text-blue-200">
-                  برترین نظرات شما، صدای شما راهنمای ما
+                  {t('topCommentsText')}
                 </div>
                 <div className="w-6.75 h-6.5 flex gap-0.5 items-center flex-row-reverse">
                   <CommentsIcon />
@@ -118,17 +127,16 @@ const FocusCarousel = () => {
               </div>
 
               <div className="dark:text-[#F5F5F5] text-[20px] font-bold text-blue-400">
-                نظرات بازدید کنندگان
+                {t('visitorsComments')}
               </div>
             </div>
 
             <div className="hidden lg:flex lg:w-82 lg:h-17 text-center text-blue-400 dark:text-[#F5F5F5D9]">
-              نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در
-              انتخاب بهترین تجربیات سفر هستند!
+              {t('commentsDescription')}
             </div>
 
             <button className="w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer">
-              <p className="text-green-100 text-[14px]">مشاهده همه</p>
+              <p className="text-green-100 text-[14px]">{t('viewAll')}</p>
             </button>
           </div>
         </div>
@@ -139,19 +147,19 @@ const FocusCarousel = () => {
 
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center text-lg">
-              درحال بارگذاری...
+              {t('loading')}
             </div>
           )}
 
           {error && (
             <div className="absolute inset-0 flex items-center justify-center text-red-500">
-              خطا: {error}
+              {t('error')} {error}
             </div>
           )}
 
           {!loading && !error && items.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center">
-              هیچ آیتمی یافت نشد.
+              {t('noItems')}
             </div>
           )}
 
@@ -177,27 +185,28 @@ const FocusCarousel = () => {
             >
               {items.map((item, idx) => {
                 const focused = idx === activeIndex;
+                const isLiked = likedItems[item.key] || false;
 
                 return (
                   <SwiperSlide key={item.key}>
                     <div className="flex items-center justify-center mt-8 mr-20 z-50">
                       <div
                         className={[
-                          "transition-all  duration-300 flex items-center justify-center",
+                          "transition-all duration-300 flex items-center justify-center",
                           focused ? "scale-[1.08]" : "scale-100",
                         ].join(" ")}
                       >
                         <div
                           className={[
-                            "rounded-2xl  shadow-sm flex items-center justify-center transition-all duration-300 overflow-hidden",
+                            "rounded-2xl shadow-sm flex items-center justify-center transition-all duration-300 overflow-hidden",
                             focused
                               ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
-                              : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400 dark:border dark:border-gray-500/50 ",
+                              : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400 dark:border dark:border-gray-500/50",
                           ].join(" ")}
                         >
                           {focused ? (
                             <div className="flex flex-col items-center justify-between text-center w-full h-full p-5">
-                              <div className="w-20 h-20 bg-gray-300 rounded-full p-0.75 border-2 border-[#8cc6ac]  flex items-center justify-center overflow-hidden relative">
+                              <div className="w-20 h-20 bg-gray-300 rounded-full p-0.75 border-2 border-[#8cc6ac] flex items-center justify-center overflow-hidden relative">
                                 <User size={40} />
                               </div>
 
@@ -216,17 +225,17 @@ const FocusCarousel = () => {
                                 </span>
 
                                 <div className="cursor-pointer">
-                                  {/* <LikeIcon /> */}
                                   <HeartIcon
                                     size={26}
-                                    onClick={() => setisred(!isred)}
-                                    className={` ${isred ? "text-red-600" : "text-blue-600"} `}
+                                    onClick={() => handleLike(item.key)}
+                                    className={`${isLiked ? "text-red-600" : "text-blue-600"}`}
+                                    fill={isLiked ? "currentColor" : "none"}
                                   />
                                 </div>
                               </div>
                             </div>
                           ) : (
-                            <div className="flex  flex-col items-center justify-center text-center px-4">
+                            <div className="flex flex-col items-center justify-center text-center px-4">
                               <div className="w-16 h-16 bg-gray-300 rounded-full p-0.5 border border-[#D1F3E2] mt-3 flex items-center justify-center overflow-hidden relative">
                                 <User size={40} />
                               </div>
@@ -257,7 +266,7 @@ const FocusCarousel = () => {
               <button
                 type="button"
                 className="carousel-prev h-10 w-10 rounded-full border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-center"
-                aria-label="اسکرول به چپ"
+                aria-label={t('scrollLeft')}
               >
                 ‹
               </button>
@@ -265,7 +274,7 @@ const FocusCarousel = () => {
               <button
                 type="button"
                 className="carousel-next h-10 w-10 rounded-full border-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-center"
-                aria-label="اسکرول به راست"
+                aria-label={t('scrollRight')}
               >
                 ›
               </button>
