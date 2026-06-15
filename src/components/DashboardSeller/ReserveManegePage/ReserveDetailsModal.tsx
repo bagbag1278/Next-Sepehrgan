@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import HistoryModal from "./HistoryModal";
 import PaymentsList from "./PaymentsList";
 import TravelerList from "./TravelereList";
-import formatDate from "@/components/untils/FormData";
+import formatDate from "@/components/Untils/FormData";
 import { IBooking } from "@/core/api/DashboardSeller/GetBookingsCustomers";
 import { formatReservationDate } from "@/core/Untils/date";
 
@@ -160,7 +160,7 @@ export default function ReserveDetailsModal({
                         <div className="flex flex-nowrap gap-1  mt-8 justify-between  text-[#6B7280] dark:text-slate-300">
                             <div className="flex items-center gap-2 text-[13px] p-1 rounded-2xl dark:bg-blue-950 bg-gray-200">
                                 <Car size={16} />
-                                <span>{house?.parking} پارکینگ </span>
+                                <span >{house?.parking} پارکینگ </span>
                             </div>
 
                             <div className="flex items-center gap-2 text-[13px] p-1 rounded-2xl dark:bg-blue-950 bg-gray-200">

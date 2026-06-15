@@ -36,7 +36,7 @@ export default function PaymentsList({
             }}
         >
             {/* Overlay */}
-            <div className="absolute inset-0 bg-black/20 z-[1000]" />
+            <div className="absolute inset-0 bg-black/20 z-1000" />
 
             <div
                 className="
@@ -45,7 +45,7 @@ export default function PaymentsList({
                     top-1/2
                     -translate-x-1/2
                     -translate-y-1/2
-                    z-[1001]
+                    z-1001
                     bg-[#F4F4F4]
                     dark:bg-slate-900
                     rounded-[36px]
