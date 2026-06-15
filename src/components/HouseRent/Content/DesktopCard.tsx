@@ -8,7 +8,8 @@ import RoomIcon from "./Icon/RoomIcon";
 import MasterIcon from "./Icon/MasterIcon";
 import CarIcon from "./Icon/CarIcon";
 import TreeIcon from "./Icon/TreeIcon";
-import LocationIcon from "./Icon/LocationIcon";
+import { MapPin } from "lucide-react";
+// import LocationIcon from "./Icon/LocationIcon";
 
 interface DesktopCardProps {
   house: {
@@ -56,7 +57,7 @@ const DesktopCard = ({ house, isInvalid = false }: DesktopCardProps) => {
               {house.title || t("defaultTitle")}
             </div>
             <div className="flex items-center gap-1 text-[13px]">
-              <LocationIcon className="text-gray-500 dark:text-gray-500 flex-shrink-0" />
+              <MapPin size={16} className="text-gray-500 dark:text-gray-500 flex-shrink-0" />
               <span className={`truncate ${isInvalid ? "text-gray-500 dark:text-gray-500" : "text-gray-600 dark:text-gray-400"}`}>
                 {house.address || t("noAddress")}
               </span>
