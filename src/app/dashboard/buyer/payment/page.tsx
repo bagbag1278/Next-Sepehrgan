@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import PaymentFilters from "@/components/Dashboard/buyer/payment/PaymentFilters";
 import PaymentList from "@/components/Dashboard/buyer/payment/PaymentList";
-
 import { getPayments } from "@/core/api/Buyer/Payment.api";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "تراکنش‌ها",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type Props = {
   searchParams: Promise<{

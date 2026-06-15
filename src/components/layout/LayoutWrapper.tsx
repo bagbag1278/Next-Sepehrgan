@@ -17,7 +17,7 @@ export default function LayoutWrapper({
     "/dashboard",
     "/login",
     "/register",
-    "/forgot-password",
+    "/forgot-password","/chat",
   ];
 
   const hideHeaderFooter = hiddenRoutes.some((route) =>

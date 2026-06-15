@@ -40,7 +40,7 @@ const LoginForm = () => {
   const getBorderColor = () => {
     if (strength === 1) return "border-red-500 text-red-500 dark:border-red-400 dark:text-red-400";
     if (strength === 2) return "border-amber-500 text-amber-500 dark:border-amber-400 dark:text-amber-400";
-    if (strength === 3) return "border-green-500 text-green-500 dark:border-green-400 dark:text-green-400";
+    if (strength === 3) return "border-green-100 text-green-100 dark:border-green-100 dark:text-green-100";
     return "border-blue-300/50 dark:border-gray-600";
   };
 
@@ -62,7 +62,7 @@ const LoginForm = () => {
       
       if (userId) {
         localStorage.setItem("user", JSON.stringify({ id: userId }));
-        console.log("✅ user ذخیره شد، userId:", userId);
+        
       }
       
       toast.success(state.message || t('loginSuccess'));
@@ -164,7 +164,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
                 : strength === 2
                   ? "bg-amber-400 dark:bg-amber-500"
                   : strength === 3
-                    ? "bg-green-500 dark:bg-green-400"
+                    ? "bg-green-100 dark:bg-green-400"
                     : "bg-white dark:bg-gray-700"
             }`}
           />
@@ -172,14 +172,14 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
             className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
               strength >= 2
                 ? strength === 3
-                  ? "bg-green-500 dark:bg-green-400"
+                  ? "bg-green-100 dark:bg-green-100"
                   : "bg-amber-400 dark:bg-amber-500"
                 : "bg-white dark:bg-gray-700"
             }`}
           />
           <span
             className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
-              strength === 3 ? "bg-green-500 dark:bg-green-400" : "bg-white dark:bg-gray-700"
+              strength === 3 ? "bg-green-100 dark:bg-green-100" : "bg-white dark:bg-gray-700"
             }`}
           />
         </div>

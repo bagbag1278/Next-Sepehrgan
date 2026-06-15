@@ -4,25 +4,42 @@ import ThemeManager from "@/components/utils/ThemeManager";
 import VoiceCommand from "@/components/VoiceCommand";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Geist, Geist_Mono } from "next/font/google";
 import LocalFont from "next/font/local";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { Metadata } from "next";
 
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
   variable: "--font-iran",
   display: "swap",
 });
+
+export const metadata: Metadata = {
+  title: {
+    default: "رهن کده",
+    template: "%s | رهن کده",
+  },
+  description: "رزرو سریع ویلا، هتل و آپارتمان در رهن کده با بهترین قیمت",
+  metadataBase: new URL("http://localhost:3000"),
+  keywords: ["رهن", "اجاره", "ویلا", "هتل", "آپارتمان", "رزرو آنلاین", "رهن کده", "اجاره روزانه"],
+  authors: [{ name: "رهن کده" }],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    siteName: "رهن کده",
+    locale: "fa_IR",
+    type: "website",
+    title: "رهن کده",
+    description: "رزرو سریع ویلا، هتل و آپارتمان در رهن کده با بهترین قیمت",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "رهن کده",
+    description: "رزرو سریع ویلا، هتل و آپارتمان با بهترین قیمت",
+  },
+};
 
 export default async function RootLayout({
   children,

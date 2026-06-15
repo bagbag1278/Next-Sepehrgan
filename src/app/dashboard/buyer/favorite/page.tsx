@@ -1,12 +1,22 @@
+import type { Metadata } from "next";
 import FavoriteContainer from "@/components/Dashboard/buyer/favorite/FavoriteContainer";
 import FavoriteFilterButtun from "@/components/Dashboard/buyer/favorite/FavoriteFilterButtun";
 import { getFavorites } from "@/core/api/Buyer/Favorite.api";
 import { getUserInfo } from "@/core/token/auth";
 
+export const metadata: Metadata = {
+  title: "علاقه‌مندی‌ها",
+  description: "لیست اقامتگاه‌های ذخیره شده در رهن کده",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 const FavoritePage = async () => {
   const user = await getUserInfo();
-
   const favorites = await getFavorites(user!.id);
+
   return (
     <div>
       <div className="w-243 h-12 mx-auto mt-16 flex justify-between items-center">
@@ -29,7 +39,6 @@ const FavoritePage = async () => {
             <span className=" mr-12">آدرس</span>
           </div>
         </div>
-        
         <FavoriteContainer favorites={favorites.data} />
       </div>
     </div>

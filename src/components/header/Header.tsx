@@ -27,6 +27,7 @@ const Header = () => {
     { title: t("mortgage"), href: "/houserent" },
     { title: t("blog"), href: "/blog" },
     { title: t("aboutUs"), href: "/contactus" },
+   
   ];
 
   return (
