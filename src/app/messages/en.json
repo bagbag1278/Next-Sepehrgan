@@ -95,7 +95,7 @@
     "noItems": "No items found"
   },
   "FirstContainer": {
-    "modernEcotourism": "Modern Ecotourism, Eternal Memories",
+    "modernEcotourism": "Modern Ecotourism, Eternal",
     "latestEcotourism": "Latest Ecotourism",
     "description": "The best ecotourism experiences await you; let's travel together to the green world and enjoy the beauty of nature!",
     "viewAll": "View All",
@@ -126,15 +126,7 @@
     "viewsCount": "373,048 +",
     "yourBeautifulOversight": "Your beautiful oversight"
   },
-  "VillaSlider": {
-    "discoverWithUs": "Discover the latest with us and enjoy",
-    "latestRecreationalAreas": "Latest Recreational Areas",
-    "villaMashhad": "Mashhad Villa",
-    "villaIsfahan": "Isfahan Villa",
-    "villaGahrdasht": "Gahrdasht Villa",
-    "villaSari": "Sari Villa",
-    "villaTehran": "Tehran Villa"
-  },
+
   "ThirdContainer": {
     "discoverWithUs": "Discover the latest with us and enjoy",
     "popularVillaAreas": "Popular Villa Areas",
@@ -815,5 +807,53 @@
   "contactInfo": "Contact Information",
   "email": "Email",
   "phone": "Phone"
-}
+},
+  "ProductHouse": {
+    "night": "Night",
+    "toman": "Toman",
+    "perNight": "per night",
+    "viewAndBook": "View & Book",
+    "added": "Added",
+    "compare": "Compare"
+  },
+
+    "Breadcrumbs": {
+    "home": "Home",
+    "hotelReserve": "Hotel Reserve",
+    "articles": "Articles",
+    "blog": "Blog",
+    "contactUs": "Contact Us",
+    "dashboard": "Dashboard",
+    "admin": "Admin Panel",
+    "login": "Login",
+    "register": "Register",
+    "about": "About Us",
+    "faq": "FAQ",
+    "houseReserveDetails": "Accommodation Details"
+  },
+    "RealEstateSlider": {
+    "rooms": "Rooms",
+    "bathrooms": "Bathrooms",
+    "parking": "Parking",
+    "capacity": "Guests",
+    "toman": "Toman",
+    "noImage": "No image",
+    "prev": "Previous",
+    "next": "Next"
+  },
+    "VillaSlider": {
+    "discoverWithUs": "Discover With Us",
+    "latestRecreationalAreas": "Latest Recreational Areas",
+    "villaMashhad": "Mashhad Villa",
+    "villaIsfahan": "Isfahan Villa",
+    "villaGohardasht": "Gohardasht Villa",
+    "villaSari": "Sari Villa",
+    "villaMashhad2": "Mashhad Villa",
+    "villaTehran": "Tehran Villa",
+    "villaMashhad3": "Mashhad Villa",
+    "villaIsfahan2": "Isfahan Villa",
+    "previous": "Previous",
+    "next": "Next"
+  }
+  
 }

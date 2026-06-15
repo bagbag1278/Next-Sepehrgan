@@ -127,15 +127,7 @@
       "viewsCount": "۳۷۳۰۴۸ +",
       "yourBeautifulOversight": "نظارت زیبای شما"
     },
-    "VillaSlider": {
-      "discoverWithUs": "جدید ترین ها را با ما کشف کنید لذت ببرید",
-      "latestRecreationalAreas": "جدید ترین مناطق تفریحی",
-      "villaMashhad": "ویلای مشهد",
-      "villaIsfahan": "ویلای اصفهان",
-      "villaGahrdasht": "ویلای گهردشت",
-      "villaSari": "ویلای ساری",
-      "villaTehran": "ویلای تهران"
-    },
+   
     "ThirdContainer": {
       "discoverWithUs": "جدید ترین ها را با ما کشف کنید لذت ببرید",
       "popularVillaAreas": "مناطق محبوب ویلایی",
@@ -835,5 +827,58 @@
   "contactInfo": "اطلاعات تماس",
   "email": "ایمیل",
   "phone": "تلفن"
-}
+},
+
+  "ProductHouse": {
+    "night": "شب",
+    "toman": "تومان",
+    "perNight": "هر شب",
+    "viewAndBook": "بررسی و رزرو",
+    "added": "افزوده شد",
+    "compare": "مقایسه"
+  
+  },
+
+  "Breadcrumbs": {
+    "home": "خانه",
+    "hotelReserve": "رزرو هتل",
+    "articles": "مقالات",
+    "blog": "وبلاگ",
+    "contactUs": "تماس با ما",
+    "dashboard": "داشبورد",
+    "admin": "پنل مدیریت",
+    "login": "ورود",
+    "register": "ثبت نام",
+    "about": "درباره ما",
+    "faq": "سوالات متداول",
+    "houseReserveDetails": "جزئیات اقامتگاه"
+  },
+
+    "RealEstateSlider": {
+    "rooms": "خواب",
+    "bathrooms": "حمام",
+    "parking": "پارکینگ",
+    "capacity": "نفر",
+    "toman": "تومان",
+    "noImage": "بدون عکس",
+    "prev": "قبلی",
+    "next": "بعدی"
+  },
+    "VillaSlider": {
+    "discoverWithUs": "با ما کشف کن",
+    "latestRecreationalAreas": "جدیدترین مناطق گردشگری",
+    "villaMashhad": "ویلای مشهد",
+    "villaIsfahan": "ویلای اصفهان",
+    "villaGohardasht": "ویلای گهردشت",
+    "villaSari": "ویلای ساری",
+    "villaMashhad2": "ویلای مشهد",
+    "villaTehran": "ویلای تهران",
+    "villaMashhad3": "ویلای مشهد",
+    "villaIsfahan2": "ویلای اصفهان",
+    "previous": "قبلی",
+    "next": "بعدی"
+  }
+  
+
+  
   }

@@ -126,15 +126,7 @@
     "viewsCount": "373,048 +",
     "yourBeautifulOversight": "إشرافك الجميل"
   },
-  "VillaSlider": {
-    "discoverWithUs": "اكتشف الأحدث معنا واستمتع",
-    "latestRecreationalAreas": "أحدث المناطق الترفيهية",
-    "villaMashhad": "فيلا مشهد",
-    "villaIsfahan": "فيلا أصفهان",
-    "villaGahrdasht": "فيلا كهردشت",
-    "villaSari": "فيلا ساري",
-    "villaTehran": "فيلا طهران"
-  },
+  
   "ThirdContainer": {
     "discoverWithUs": "اكتشف الأحدث معنا واستمتع",
     "popularVillaAreas": "مناطق الفيلا الشعبية",
@@ -816,5 +808,52 @@
   "contactInfo": "معلومات الاتصال",
   "email": "البريد الإلكتروني",
   "phone": "الهاتف"
-}
+},
+  "ProductHouse": {
+    "night": "ليلة",
+    "toman": "تومان",
+    "perNight": "لكل ليلة",
+    "viewAndBook": "عرض والحجز",
+    "added": "تمت الإضافة",
+    "compare": "مقارنة"
+  },
+    "Breadcrumbs": {
+    "home": "الرئيسية",
+    "hotelReserve": "حجز فندق",
+    "articles": "المقالات",
+    "blog": "المدونة",
+    "contactUs": "اتصل بنا",
+    "dashboard": "لوحة التحكم",
+    "admin": "لوحة الإدارة",
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "about": "معلومات عنا",
+    "faq": "الأسئلة الشائعة",
+    "houseReserveDetails": "تفاصيل الإقامة"
+  },
+
+    "RealEstateSlider": {
+    "rooms": "غرف",
+    "bathrooms": "حمامات",
+    "parking": "مواقف",
+    "capacity": "أشخاص",
+    "toman": "تومان",
+    "noImage": "بدون صورة",
+    "prev": "السابق",
+    "next": "التالي"
+  },
+  "VillaSlider": {
+    "discoverWithUs": "اكتشف معنا",
+    "latestRecreationalAreas": "أحدث المناطق الترفيهية",
+    "villaMashhad": "فيلا مشهد",
+    "villaIsfahan": "فيلا أصفهان",
+    "villaGohardasht": "فيلا كهردشت",
+    "villaSari": "فيلا ساري",
+    "villaMashhad2": "فيلا مشهد",
+    "villaTehran": "فيلا طهران",
+    "villaMashhad3": "فيلا مشهد",
+    "villaIsfahan2": "فيلا أصفهان",
+    "previous": "السابق",
+    "next": "التالي"
+  }
 }

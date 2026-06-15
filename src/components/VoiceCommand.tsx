@@ -112,7 +112,7 @@ const VoiceCommand = () => {
   return (
     <button
       onClick={isListening ? stopListening : startListening}
-      className={`fixed bottom-17 left-4 z-50 p-2 rounded-full shadow-lg transition-all duration-300 ${
+      className={`fixed bottom-17 left-4 z-999 p-2 rounded-full shadow-lg transition-all duration-300 ${
         isListening 
           ? 'bg-red-500 animate-pulse' 
           : 'bg-[#0887CAB2] hover:bg-[#0887CA]/90'

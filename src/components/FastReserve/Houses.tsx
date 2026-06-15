@@ -34,6 +34,8 @@ type Props = {
   };
   onAddToCompare?: (house: CompareItem) => void;
   compareList?: CompareItem[];
+  onHouseClick?: (houseId: number) => void;
+  selectedHouseId?: number;
 };
 
 const Houses = ({
@@ -44,6 +46,8 @@ const Houses = ({
   filters = {},
   onAddToCompare,
   compareList = [],
+  onHouseClick,
+  selectedHouseId,
 }: Props) => {
   const filteredAndSortedHouses = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -130,7 +134,7 @@ const Houses = ({
   };
 
   return (
-    <ScrollArea.Root className="w-177.5 h-174 mt-39 mr-22.25">
+    <ScrollArea.Root className="w-177.5 h-174 mt-39 mr-22.25 max-[780]:">
       <ScrollArea.Viewport className="h-full w-full">
         <div dir="ltr" className="flex justify-end flex-wrap gap-6">
           {isLoading ? (
@@ -139,12 +143,19 @@ const Houses = ({
             )
           ) : filteredAndSortedHouses.length > 0 ? (
             filteredAndSortedHouses.map((house) => (
-              <ProductHouse 
+              <div 
                 key={house.id} 
-                houses={house}
-                onCompare={() => handleCompareClick(house)}
-                isInCompare={isInCompareList(house.id)}
-              />
+                onClick={() => onHouseClick?.(house.id)}
+                className={`cursor-pointer transition-all duration-300 ${
+                  selectedHouseId === house.id ? ' rounded-2xl scale-[1.05]' : ''
+                }`}
+              >
+                <ProductHouse 
+                  houses={house}
+                  onCompare={() => handleCompareClick(house)}
+                  isInCompare={isInCompareList(house.id)}
+                />
+              </div>
             ))
           ) : (
             <div className="text-center text-lg text-blue-400 mt-6 col-span-full">
@@ -163,4 +174,4 @@ const Houses = ({
   );
 };
 
-export default Houses;
+export default Houses
