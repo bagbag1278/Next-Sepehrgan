@@ -136,8 +136,11 @@ const MortgageRentDetails = () => {
 
   if (loading && !data) {
     return (
-      <div className="text-center mt-20 animate-pulse text-gray-500 dark:text-gray-400">
-        {t("loading")}
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-500 dark:text-gray-400">{t("loading")}</p>
+        </div>
       </div>
     );
   }
@@ -164,7 +167,6 @@ const MortgageRentDetails = () => {
       <>
         <NotFound />
       </>
-
     );
   }
 
@@ -179,13 +181,13 @@ const MortgageRentDetails = () => {
 
         <AdvancedScrollAnimation type="scale" delay={0.1}>
           <div className="w-full h-102 flex">
-            <div className="w-full">
+            <div className="w-full  max-w-300 mx-auto ">
               <SwiperGalery images={data.images || []} />
             </div>
           </div>
         </AdvancedScrollAnimation>
 
-        <div className="mt-24 max-[1300]:mt-14 max-[600]:mt-0 ">
+        <div dir="ltr" className="mt-24 max-[1300]:mt-14 max-[600]:mt-0 ">
           <AdvancedScrollAnimation type="slide-up" delay={0.1}>
             <div className="w-full max-w-7xl flex justify-between items-center flex-wrap gap-4">
               <div className="w-20 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-28 max-[600px]:top-15 ">
@@ -193,12 +195,14 @@ const MortgageRentDetails = () => {
                   <Link />
                 </div>
                 <div>
-                  <Like
-                    houseId={data?.id}
-                    onLikeChange={(liked) =>
-                      console.log("Like changed:", liked)
-                    }
-                  />
+                  <div className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 rounded-lg flex items-center justify-center border border-blue-400 dark:border-gray-500">
+                    <Like
+                      houseId={data?.id}
+                      onLikeChange={(liked) =>
+                        console.log("Like changed:", liked)
+                      }
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -225,8 +229,8 @@ const MortgageRentDetails = () => {
           </AdvancedScrollAnimation>
 
           <div className="flex justify-between gap-4 max-[1300px]:flex-col ">
-            <div className="flex gap-10 flex-col items-center w-full lg:w-auto">
-              <div className="w-107 h-150 justify-center flex p-8">
+            <div className="flex gap-4 flex-col items-center w-full lg:w-auto">
+              <div className="w-107 h-135 justify-center flex p-8">
                 <Seller
                   sellerName={data.sellerName}
                   sellerId={data.sellerId}
@@ -276,7 +280,10 @@ const MortgageRentDetails = () => {
                 </AdvancedScrollAnimation>
 
                 <AdvancedScrollAnimation type="slide-up" delay={0.3}>
-                  <div className="w-full pl-3 mt-10 flex flex-col gap-6" dir="rtl">
+                  <div
+                    className="w-full pl-3 mt-10 flex flex-col gap-6"
+                    dir="rtl"
+                  >
                     <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-2 max-[1024px]:pr-12">
                       {t("location")}
                     </h3>
@@ -291,7 +298,6 @@ const MortgageRentDetails = () => {
                       />
                     )}
 
-                 
                     <div className="w-full mt-2 ">
                       <h4 className="text-[rgb(6,4,37)] dark:text-white font-bold text-[16px] mb-3 flex items-center gap-2">
                         <MapPin size={18} className="text-blue-500" />

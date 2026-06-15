@@ -9,6 +9,7 @@ import { useActionState, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
+import Cookies from "js-cookie";
 
 const initialState: ActionState = {
   success: false,
@@ -46,8 +47,11 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (state.success) {
+      // ذخیره توکن در localStorage
       if (state.accessToken) {
         localStorage.setItem("accessToken", state.accessToken);
+        // همچنین در کوکی برای دسترسی در سرور
+        Cookies.set("accessToken", state.accessToken, { expires: 7, path: "/" });
       }
       
       let userId = null;
@@ -81,19 +85,22 @@ const LoginForm = () => {
         };
         
         localStorage.setItem("user", JSON.stringify(userData));
-        console.log(" user ذخیره شد:", userData);
+        Cookies.set("user", JSON.stringify(userData), { expires: 7, path: "/" });
+        console.log("✅ user ذخیره شد:", userData);
       }
       
       toast.success(state.message || t('loginSuccess'));
       
       // ریدایرکت بر اساس نقش
-      if (userRole === "admin") {
-        router.push("/admin");
-      } else if (userRole === "seller") {
-        router.push("/dashboard/seller");
-      } else {
-        router.push("/");
-      }
+      setTimeout(() => {
+        if (userRole === "admin") {
+          router.push("/admin");
+        } else if (userRole === "seller") {
+          router.push("/dashboard/seller");
+        } else {
+          router.push("/");
+        }
+      }, 100);
     }
     if (state.error) {
       toast.error(state.error);
@@ -101,10 +108,7 @@ const LoginForm = () => {
   }, [state, router, t]);
 
   return (
-    <form
-      action={formAction}
-      className="mt-6 flex flex-col justify-between gap-6"
-    >
+    <form action={formAction} className="mt-6 flex flex-col justify-between gap-6">
       <div className="flex flex-col gap-2 relative">
         <input
           type="email"
@@ -130,7 +134,7 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M1.58333 1.58333L8.0601 6.62082C8.66195 7.08892 9.50472 7.08892 10.1066 6.62082L16.5833 1.58333M3.41667 14.0833H14.75C15.6834 14.0833 16.1501 14.0833 16.5067 13.9017C16.8203 13.7419 17.0752 13.4869 17.235 13.1733C17.4167 12.8168 17.4167 12.3501 17.4167 11.4167V3.41667C17.4167 2.48325 17.4167 2.01654 17.235 1.66002C17.0752 1.34641 16.8203 1.09144 16.5067 0.931656C16.15010.75 15.6834 0.75 14.75 0.75H3.41667C2.48325 0.75 2.01654 0.75 1.66002 0.931656C1.34641 1.09144 1.09144 1.34641 0.931656 1.66002C0.75 2.01654 0.75 2.48325 0.75 3.41667V11.4167C0.75 12.3501 0.75 12.8168 0.931656 13.1733C1.09144 13.4869 1.34641 13.7419 1.66002 13.9017C2.01654 14.0833 2.48325 14.0833 3.41667 14.0833Z"
+              d="M1.58333 1.58333L8.0601 6.62082C8.66195 7.08892 9.50472 7.08892 10.1066 6.62082L16.5833 1.58333M3.41667 14.0833H14.75C15.6834 14.0833 16.1501 14.0833 16.5067 13.9017C16.8203 13.7419 17.0752 13.4869 17.235 13.1733C17.4167 12.8168 17.4167 12.3501 17.4167 11.4167V3.41667C17.4167 2.48325 17.4167 2.01654 17.235 1.66002C17.0752 1.34641 16.8203 1.09144 16.5067 0.931656C16.1501 0.75 15.6834 0.75 14.75 0.75H3.41667C2.48325 0.75 2.01654 0.75 1.66002 0.931656C1.34641 1.09144 1.09144 1.34641 0.931656 1.66002C0.75 2.01654 0.75 2.48325 0.75 3.41667V11.4167C0.75 12.3501 0.75 12.8168 0.931656 13.1733C1.09144 13.4869 1.34641 13.7419 1.66002 13.9017C2.01654 14.0833 2.48325 14.0833 3.41667 14.0833Z"
               stroke="#0887CA"
               strokeOpacity="0.7"
               strokeWidth="1.5"
@@ -169,59 +173,32 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 cursor-pointer"
             >
               {showPassword ? (
-                <FaRegEyeSlash
-                  size={20}
-                  className={`text-blue-300 dark:text-gray-400 ${getBorderColor()}`}
-                />
+                <FaRegEyeSlash size={20} className={`text-blue-300 dark:text-gray-400 ${getBorderColor()}`} />
               ) : (
-                <IoEyeOutline
-                  size={20}
-                  className={`text-blue-300 dark:text-gray-400 ${getBorderColor()}`}
-                />
+                <IoEyeOutline size={20} className={`text-blue-300 dark:text-gray-400 ${getBorderColor()}`} />
               )}
             </button>
           </div>
         </div>
 
         <div className="h-0.5 w-full flex justify-between mx-auto gap-1 mt-1">
-          <span
-            className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
-              strength === 1
-                ? "bg-red-600 dark:bg-red-500"
-                : strength === 2
-                  ? "bg-amber-400 dark:bg-amber-500"
-                  : strength === 3
-                    ? "bg-green-500 dark:bg-green-400"
-                    : "bg-white dark:bg-gray-700"
-            }`}
-          />
-          <span
-            className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
-              strength >= 2
-                ? strength === 3
-                  ? "bg-green-500 dark:bg-green-400"
-                  : "bg-amber-400 dark:bg-amber-500"
-                : "bg-white dark:bg-gray-700"
-            }`}
-          />
-          <span
-            className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
-              strength === 3 ? "bg-green-500 dark:bg-green-400" : "bg-white dark:bg-gray-700"
-            }`}
-          />
+          <span className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
+            strength === 1 ? "bg-red-600 dark:bg-red-500" : strength === 2 ? "bg-amber-400 dark:bg-amber-500" : strength === 3 ? "bg-green-500 dark:bg-green-400" : "bg-white dark:bg-gray-700"
+          }`} />
+          <span className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
+            strength >= 2 ? strength === 3 ? "bg-green-500 dark:bg-green-400" : "bg-amber-400 dark:bg-amber-500" : "bg-white dark:bg-gray-700"
+          }`} />
+          <span className={`w-1/3 rounded-[100px] transition-colors duration-300 ${
+            strength === 3 ? "bg-green-500 dark:bg-green-400" : "bg-white dark:bg-gray-700"
+          }`} />
         </div>
       </div>
 
       <div className="w-107.5 h-5 flex justify-between items-center relative max-[440]:flex-col max-[440]:left-30 max-[440]:bottom-5">
-        <Link
-          href={"/loginphone"}
-          className="text-blue-100 text-[13px] underline underline-offset-4 font-medium dark:text-blue-300 relative max-[440]:left-9"
-        >
+        <Link href="/loginphone" className="text-blue-100 text-[13px] underline underline-offset-4 font-medium dark:text-blue-300 relative max-[440]:left-9">
           {t('loginWithPhone')}
         </Link>
-        <Link
-          href={"/forgetpass"}className="text-blue-300 dark:text-blue-900 max-[480]:pl-10 max-[440]:mt-2 text-[11px] underline underline-offset-4 font-medium decoration"
-        >
+        <Link href="/forgetpass" className="text-blue-300 dark:text-blue-900 max-[480]:pl-10 max-[440]:mt-2 text-[11px] underline underline-offset-4 font-medium decoration">
           {t('forgotPassword')}
         </Link>
       </div>
@@ -229,16 +206,14 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
       <button
         type="submit"
         disabled={pending}
-        className="w-full h-12 rounded-2xl
-           bg-blue-100 hover:bg-blue-200 dark:bg-blue-800 dark:hover:bg-blue-700
-         transition-colors duration-200 text-white disabled:bg-blue-400/50 dark:disabled:bg-blue-900/50"
+        className="w-full h-12 rounded-2xl bg-blue-100 hover:bg-blue-200 dark:bg-blue-800 dark:hover:bg-blue-700 transition-colors duration-200 text-white disabled:bg-blue-400/50 dark:disabled:bg-blue-900/50"
       >
         {pending ? t('loggingIn') : t('loginButton')}
       </button>
 
       <div className="h-6 mx-auto flex gap-0.5 justify-center items-center">
         <h6 className="font-normal text-[13px] dark:text-gray-400">{t('noAccount')}</h6>
-        <Link href={"/register"}>
+        <Link href="/register">
           <h5 className="text-blue-100 font-medium text-[15px] underline underline-offset-4 dark:text-blue-300">
             {t('registerButton')}
           </h5>

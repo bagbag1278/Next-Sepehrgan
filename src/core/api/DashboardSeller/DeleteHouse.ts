@@ -1,16 +1,24 @@
 import axios from "axios";
 
-const DeleteHouse = async (
-    id: number
-) => {
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
 
-    const response =
-        await axios.delete(
-            `/api/houses/${id}`
-        );
+const DeleteHouse = async (id: number) => {
+  const token = localStorage.getItem("accessToken");
+  
+  if (!token) {
+    throw new Error("لطفاً دوباره وارد شوید");
+  }
 
-    return response.data;
+  const response = await axios.delete(
+    `${API_BASE_URL}/houses/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
+  return response.data;
 };
 
 export default DeleteHouse;

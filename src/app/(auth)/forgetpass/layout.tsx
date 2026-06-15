@@ -23,8 +23,7 @@ const ForgetPassLayout: FC<IChildren> = ({ children }) => {
   return (
     <div dir="rtl" className="min-h-screen flex flex-col md:flex-row justify-between relative transition-colors duration-300">
       
-      {/* سمت راست - اسلایدر (در موبایل مخفی، در دسکتاپ نمایش) */}
-      <div className="hidden md:block w-full md:w-1/2 lg:w-[55%] relative min-h-[500px] md:min-h-[600px] rounded-br-[50px] rounded-tr-[50px] overflow-hidden z-0">
+      <div className="hidden md:block w-full md:w-1/2 lg:w-[55%] relative min-h-[500px] md:min-h-[600px] rounded-br-[50px] rounded-tr-[50px]  z-0">
         <div className="absolute inset-x-0 bottom-10 md:bottom-20 z-20 flex flex-col gap-3 md:gap-4 px-6 md:px-10 max-w-2xl mx-auto text-center">
           <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white drop-shadow-lg">
             {t('heroTitle')}

@@ -4,8 +4,8 @@ import { notFound } from 'next/navigation';
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/header/Header";
 import Footer from "@/components/Footer/Footer";
-import ThemeManager from "@/components/utils/ThemeManager";
 import "../globals.css";
+import ThemeManager from '@/components/Untils/ThemeManager';
 export default async function LocaleLayout({
   children,
   params,

@@ -22,6 +22,9 @@ const noLayoutRoutes = [
   "/login",
   "/register",
   "/404",
+  "/forgetpass",
+  "/dashboard",
+  
 ];
 
 const noLayoutBooking = ["/housereserve", "/booking"];

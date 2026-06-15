@@ -131,7 +131,7 @@ const Like = ({ houseId, onLikeChange }: LikeProps) => {
     <button
       onClick={handleLikeClick}
       disabled={loading}
-      className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 dark:border-gray-500 rounded-lg flex items-center justify-center border border-blue-400 transition-all active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="w-8 h-8   rounded-lg flex items-center justify-center  transition-all active:scale-90 disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {loading ? (
         <div className="w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />

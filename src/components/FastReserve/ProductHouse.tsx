@@ -9,24 +9,22 @@ interface ProductHouseProps {
   isInCompare?: boolean;
 }
 
-const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => {
+const ProductHouse = ({
+  houses,
+  onCompare,
+  isInCompare,
+}: ProductHouseProps) => {
   return (
     <div dir="rtl" className="w-full px-2 sm:px-3 md:px-4">
       <div
         key={houses.id}
-        className="hover:border-2 hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300 shadow shadow-blue-300/25 hover:shadow-lg rounded-2xl sm:rounded-3xl md:rounded-4xl w-full flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 md:gap-4 items-center bg-white dark:bg-gray-900 overflow-hidden"
+        className="hover:border-2 border w-167 h-60 hover:border-blue-200 dark:hover:border-blue-400 transition-all duration-300 shadow shadow-blue-300/25 hover:shadow-lg rounded-2xl sm:rounded-3xl md:rounded-4xl  flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 md:gap-4 items-center bg-white dark:bg-gray-900 overflow-hidden"
       >
-        {/* بخش تخفیف */}
-        <div className="absolute top-3 right-2 sm:top-11.5 sm:right-2 z-10">
-          <div className="size-6 sm:size-7.5 rounded-tr-sm text-white rounded-br-sm bg-red-100 dark:bg-red-600 text-center leading-6 sm:leading-8 text-xs sm:text-sm">
-            {toPersianNum("%5")}
-          </div>
-        </div>
 
-        {/* بخش تصویر */}
-        <div className="w-full sm:w-81 h-48 sm:h-50 rounded-2xl sm:rounded-3xl relative overflow-hidden mt-2 sm:mt-0">
+
+        <div className="w-full bor sm:w-81 h-48 sm:h-50 rounded-2xl sm:rounded-3xl relative overflow-hidden mt-2 sm:mt-0">
           <div className="absolute top-2 right-2 left-2 flex items-center justify-between z-10">
-            <div className="flex gap-1 items-center bg-black/30 px-2 py-1 rounded-full">
+            <div className="flex gap-1 items-center ">
               <span className="text-white text-xs sm:text-sm leading-16">
                 {toPersianNum(houses.rate)}
               </span>
@@ -63,20 +61,24 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
               </svg>
             </div>
           </div>
-          
-          <Image src={"/auth/img.png"} width={324} height={200} alt="img" className="dark:opacity-90 w-full h-full object-cover" />
-          
+
+          <Image
+            src={"/auth/img.png"}
+            width={324}
+            height={200}
+            alt="img"
+            className="dark:opacity-90 w-full h-full object-cover"
+          />
+
           <div className="absolute inset-0 bg-linear-to-b from-blue-400 to-transparent transition-opacity duration-300 opacity-50 hover:opacity-0"></div>
         </div>
 
-        {/* بخش توضیحات */}
         <div className="w-full sm:w-74.75 p-3 sm:p-0 sm:pt-2 flex flex-col gap-2 sm:gap-3 items-center">
-          {/* عنوان و لوکیشن */}
           <div className="w-full px-2 sm:px-0 sm:w-70.75 flex flex-col gap-1 sm:gap-2">
             <h2 className="w-full truncate font-bold dark:text-white text-sm sm:text-base">
               {houses.title}
             </h2>
-            
+
             <div className="flex items-start gap-1">
               <svg
                 width="18"
@@ -130,7 +132,8 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
                 />
               </svg>
               <div className="text-xs sm:text-sm opacity-90 dark:text-gray-300">
-                {houses.capacity} <span className="text-[10px] sm:text-xs">شب</span>
+                {houses.capacity}{" "}
+                <span className="text-[10px] sm:text-xs">شب</span>
               </div>
             </div>
 
@@ -152,28 +155,51 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
 
           {/* دکمه‌ها */}
           <div className="w-full px-2 sm:px-0 sm:w-70.75 flex gap-2 pb-3 sm:pb-0">
-            <Link href={`/housereserve/HouseReserveDetails/${houses.id}`} className="flex-1">
+            <Link
+              href={`/housereserve/HouseReserveDetails/${houses.id}`}
+              className="flex-1"
+            >
               <div className="w-full border h-8 sm:h-9 rounded-xl cursor-pointer text-white hover:text-white bg-blue-500 hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center text-xs sm:text-sm">
                 بررسی و رزرو
               </div>
             </Link>
-            
-            {onCompare && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onCompare(houses);
-                }}
-                disabled={isInCompare}
-                className={`w-20 h-8 rounded-xl dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 text-sm font-medium transition-all duration-200 ${isInCompare
-                    ? "bg-gray-200 text-white cursor-not-allowed dark:bg-blue-500 dark:text-gray-500"
-                    : "border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white dark:hover:bg-blue-700 bg-transparent"
-                  }`}
-              >
-                {isInCompare ? "✓" : "مقایسه"}
-              </button>
-            )}
+
+ {onCompare && (
+  <button
+    onClick={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onCompare(houses);
+    }}
+    disabled={isInCompare}
+    className={`w-24 h-8 whitespace-nowrap sm:h-9 rounded-xl transition-all duration-200 flex items-center justify-center text-xs sm:text-sm font-medium ${
+      isInCompare
+        ? "bg-green-500 text-white cursor-not-allowed hover:bg-green-600 shadow-md"
+        : "bg-blue-500 text-white hover:bg-blue-600 shadow-sm hover:shadow-md"
+    }`}
+  >
+    {isInCompare ? (
+      <div className="flex items-center gap-1">
+        <svg 
+          className="w-4 h-4 animate-bounce" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M5 13l4 4L19 7" 
+          />
+        </svg>
+        <span>افزوده شد</span>
+      </div>
+    ) : (
+      "مقایسه"
+    )}
+  </button>
+)}
           </div>
         </div>
       </div>

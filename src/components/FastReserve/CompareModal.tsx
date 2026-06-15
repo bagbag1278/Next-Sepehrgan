@@ -17,6 +17,7 @@ import {
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Like from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/Like";
 
 interface CompareItem {
   id: number;
@@ -121,7 +122,8 @@ const CompareModal = ({
                         {winner.title}
                       </span>
                     </div>
-                  </motion.div>)}
+                  </motion.div>
+                )}
 
                 {/* Compare Table */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -148,16 +150,19 @@ const CompareModal = ({
                       {/* Winner Crown */}
                       {winner?.id === item.id && (
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-yellow-500 rounded-full p-2 shadow-lg">
-                          <span className="text-2xl">👑</span>
+                          <span className="text-2xl"></span>
                         </div>
                       )}
 
                       {/* Image Section */}
                       <div className="relative h-56 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 overflow-hidden group">
                         <div className="w-full h-full flex items-center justify-center">
-                          <Home
-                            size={64}
-                            className="text-gray-300 dark:text-gray-600"
+                          <Image
+                            src={"/auth/img.png"}
+                            width={404}
+                            height={100}
+                            alt="img"
+                            className="dark:opacity-90  object-cover"
                           />
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -249,12 +254,14 @@ const CompareModal = ({
                               {t("viewDetails")}
                             </button>
                           </Link>
-                          <button className="p-2.5 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
-                            <Heart
-                              size={18}
-                              className="text-gray-500 group-hover:text-red-500 transition-colors"
+                          <div className="p-1 items-center rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                            <Like
+                              houseId={item?.id}
+                              onLikeChange={(liked) =>
+                                console.log("Like changed:", liked)
+                              }
                             />
-                          </button>
+                          </div>
                           <button className="p-2.5 rounded-xl border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <Share2 size={18} className="text-gray-500" />
                           </button>

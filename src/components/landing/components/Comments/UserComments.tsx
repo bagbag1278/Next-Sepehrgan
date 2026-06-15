@@ -19,7 +19,6 @@ type ApiUser = {
   firstName?: string;
   lastName?: string;
   profilePicture?: string | null;
-
 };
 
 type ApiComment = {
@@ -39,7 +38,7 @@ type ItemType = {
   Profile: string;
   name: string;
   content: string;
-  date: string
+  date: string;
 };
 
 // --- Component ---
@@ -49,7 +48,7 @@ const FocusCarousel = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isred, setisred] = useState(false)
+  const [isred, setisred] = useState(false);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -86,7 +85,9 @@ const FocusCarousel = () => {
         setItems(mappedItems);
       } catch (err) {
         const message =
-          err instanceof Error ? err.message : "خطای ناشناخته در دریافت اطلاعات";
+          err instanceof Error
+            ? err.message
+            : "خطای ناشناخته در دریافت اطلاعات";
         setError(message);
       } finally {
         setLoading(false);
@@ -122,7 +123,8 @@ const FocusCarousel = () => {
             </div>
 
             <div className="hidden lg:flex lg:w-82 lg:h-17 text-center text-blue-400 dark:text-[#F5F5F5D9]">
-              نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در انتخاب بهترین تجربیات سفر هستند!
+              نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در
+              انتخاب بهترین تجربیات سفر هستند!
             </div>
 
             <button className="w-30 h-10 hover:border-2 rounded-xl border border-green-100 cursor-pointer">
@@ -190,13 +192,13 @@ const FocusCarousel = () => {
                             "rounded-2xl  shadow-sm flex items-center justify-center transition-all duration-300 overflow-hidden",
                             focused
                               ? "w-70 h-77.5 ml-2.5 bg-white dark:bg-white"
-                              : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400 dark:border dark:border-gray-500/50 ", 
+                              : "w-55 h-60 bg-[#F5F5F5] dark:bg-blue-400 dark:border dark:border-gray-500/50 ",
                           ].join(" ")}
                         >
                           {focused ? (
                             <div className="flex flex-col items-center justify-between text-center w-full h-full p-5">
                               <div className="w-20 h-20 bg-gray-300 rounded-full p-0.75 border-2 border-[#8cc6ac]  flex items-center justify-center overflow-hidden relative">
-                                  <User size={40} />
+                                <User size={40} />
                               </div>
 
                               <p className="mt-3 text-lg font-bold text-[#0A1133] dark:text-black">
@@ -215,9 +217,10 @@ const FocusCarousel = () => {
 
                                 <div className="cursor-pointer">
                                   {/* <LikeIcon /> */}
-                                  <HeartIcon size={26} 
-                                  onClick={() => setisred(!isred)}
-                                 className={` ${ isred ? "text-red-600" : "text-blue-600" } `}
+                                  <HeartIcon
+                                    size={26}
+                                    onClick={() => setisred(!isred)}
+                                    className={` ${isred ? "text-red-600" : "text-blue-600"} `}
                                   />
                                 </div>
                               </div>

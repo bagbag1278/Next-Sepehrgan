@@ -263,7 +263,7 @@ const BookingPage = () => {
       const bookingData = result.booking || result.data || result;
       setBookingResult(bookingData);
       setStep(5);
-      toast.success(t("bookingSuccess"));
+      toast.success("رزرو با موفقیت ثبت شد");
       window.scrollTo({ top: 0, behavior: "smooth" });
       
     } catch (error: any) {
@@ -328,7 +328,7 @@ const BookingPage = () => {
                 </AdvancedScrollAnimation>
 
                 <AdvancedScrollAnimation type="slide-left" delay={0.2}>
-                  <div className="rounded-[40px] p-10 bg-white dark:bg-gray-800">
+                  <div className="rounded-[40px] p-10">
                     <div className="rounded-[40px]">
                       <h3 className="font-bold text-gray-800 dark:text-white whitespace-nowrap text-lg mb-20">
                         {t("selectedPassengers")} ({passengers.length})
