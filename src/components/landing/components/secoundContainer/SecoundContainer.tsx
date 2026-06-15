@@ -13,7 +13,7 @@ const SecoundContainer = () => {
     const t = useTranslations('SecondContainer');
 
     return (
-        <div className='w-full hidden sm:flex justify-center dark:bg-[linear-gradient(180deg,#121212_0%,rgba(4,38,55,0.5)_49.65%,#121212_100%)]'>
+        <div className='w-full hidden sm:flex justify-center '>
             <div className='relative w-352 h-125 flex flex-wrap justify-center lg:justify-between'>
 
                 {/* نسخه ریسپانسیو برای صفحه‌های کوچک (موبایل/تبلت) */}

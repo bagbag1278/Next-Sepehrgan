@@ -15,6 +15,7 @@ import MastersIcon from "../../Icon/BuyAndSellSlider/MastersIcon";
 import CarIcon from "../../Icon/BuyAndSellSlider/CarIcon";
 import TreeIcon from "../../Icon/BuyAndSellSlider/TreeIcon";
 import Image from "next/image";
+import { Car, MapPinIcon, ShowerHead, TreeDeciduous, Warehouse } from "lucide-react";
 
 interface House {
   id: number;
@@ -44,18 +45,18 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
 
   return (
     <div className="w-300 py-10 relative">
-      <div className="relative">
+      <div className="w-400 relative ">
         <Swiper
           modules={[Navigation, Pagination]}
-          slidesPerView={3.5}
-          spaceBetween={30}
+          slidesPerView={4.25}
+          spaceBetween={10}
           loop={true}
           onSwiper={handleSwiperInit}
         >
           {houses.map((house) => (
             <SwiperSlide key={house.id}>
               <div className="hover-3d group">
-                <div className="relative flex justify-center flex-wrap items-center w-82 h-94 border border-white dark:border-gray-700 overflow-hidden rounded-4xl bg-[#F5F5F5] dark:bg-[#1a1a2e] shadow-lg transition-all duration-300">
+                <div className="relative flex justify-center flex-wrap items-center w-82 h-94 border border-white dark:border-gray-700  rounded-4xl bg-[#F5F5F5] dark:bg-[#1a1a2e] shadow-lg transition-all duration-300">
                   {/* image */}
                   <div className="w-81 h-50 overflow-hidden rounded-2xl flex justify-center">
                 
@@ -79,7 +80,8 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
                       </div>
 
                       <div className="flex items-center gap-1 text-blue-400 text-[13px] dark:text-gray-300">
-                        <LocationIconBlack />
+                        {/* <LocationIcon  /> */}
+                        <MapPinIcon />
                         <span className="dark:text-gray-300 line-clamp-1"> {house.address}</span>
                       </div>
                     </div>
@@ -87,16 +89,17 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
                     <div className="absolute bottom-0 w-full px-3 py-2">
                       <div className="flex justify-between text-[11px] text-gray-700 dark:text-gray-300 mb-2">
                         <div className="flex items-center gap-1">
-                          <RoomIcon /> <span>{house.rooms || 0} خواب</span>
+                          <Warehouse size={16} /> <span>{house.rooms || 0} خواب</span>
+                         
                         </div>
                         <div className="flex items-center gap-1">
-                          <MastersIcon /> <span>{house.bathrooms || 0} حمام</span>
+                          <ShowerHead size={16} /> <span>{house.bathrooms || 0} حمام</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <CarIcon /> <span>{house.parking || 0} پارکینگ</span>
+                          <Car size={16} /> <span>{house.parking || 0} پارکینگ</span>
                         </div>
                         <div className="flex items-center gap-1">
-                          <TreeIcon /> <span>{house.capacity || 0} نفر</span>
+                          <TreeDeciduous size={16} /> <span>{house.capacity || 0} نفر</span>
                         </div>
                       </div>
 
