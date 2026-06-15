@@ -48,7 +48,7 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose:
         <div className="p-6">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
-              <AlertTriangle size={32} className="text-red-500" />
+              <AlertTriangle size={32} className="text-red-50" />
             </div>
           </div>
           <h3 className="text-xl font-bold text-center text-gray-800 dark:text-white mb-2">خروج از حساب</h3>
@@ -70,7 +70,6 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // تشخیص موبایل
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
