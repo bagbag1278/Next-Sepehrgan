@@ -5,6 +5,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useCategories } from './Categories';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 const SliderFilter = () => {
     const categories = useCategories();
@@ -43,12 +44,12 @@ const SliderFilter = () => {
                     <button
                         className="swiper-button-prev w-7 h-7 rounded-full bg-white dark:bg-gray-800 dark:border-gray-700 shadow-md flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:scale-95 border border-gray-300 dark:border-gray-600"
                     >
-                        ❮
+                          <ChevronRightIcon />
                     </button>
                     <button
                         className="swiper-button-next w-7 h-7 rounded-full bg-white dark:bg-gray-800 dark:border-gray-700 shadow-md flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-all active:scale-95 border border-gray-300 dark:border-gray-600"
                     >
-                        ❯
+                        <ChevronLeftIcon />
                     </button>
                 </div>
             </div>

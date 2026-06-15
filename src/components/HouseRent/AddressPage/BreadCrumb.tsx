@@ -8,8 +8,8 @@ const BreadCrumb = () => {
     const buttonLabels = [
         { title: "خانه", href: "/" },
         { title: " رزرو هتل ", href: "/housereserve" },
-        { title: "رهن و اجاره آپارتمان", href: "" },
-        { title: "رهن و اجاره آپارتمان رشت", href: "" }
+        { title: "رهن و اجاره آپارتمان", href: "/housereserve" },
+        { title: "رهن و اجاره آپارتمان ", href: "/housereserve" }
     ];
 
     // توضیح ٬٬٬٬٬٬٬٬٬٬ 
