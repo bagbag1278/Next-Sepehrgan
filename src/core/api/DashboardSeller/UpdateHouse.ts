@@ -1,18 +1,26 @@
 import axios from "axios";
 
-const UpdateHouse = async (
-    id: number,
-    data: any
-) => {
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
 
-    const response =
-        await axios.put(
-            `/api/houses/${id}`,
-            data
-        );
+const UpdateHouse = async (id: number, data: any) => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+        throw new Error("لطفاً دوباره وارد شوید");
+    }
+
+    const response = await axios.put(
+        `${API_BASE_URL}/houses/${id}`,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }
+    );
 
     return response.data;
-
 };
 
 export default UpdateHouse;

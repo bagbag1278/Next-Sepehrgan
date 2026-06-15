@@ -65,17 +65,18 @@ export default function SellerComment() {
         });
     };
 
-    const handleDelete = async (id: number) => {
-        try {
-            await DeleteComment(id);
+    // handle Delete comments
+    // const handleDelete = async (id: number) => {
+    //     try {
+    //         await DeleteComment(id);
 
-            setComments((prev) => prev.filter((c) => c.id !== id));
-            setTotalComments((prev) => prev - 1);
+    //         setComments((prev) => prev.filter((c) => c.id !== id));
+    //         setTotalComments((prev) => prev - 1);
 
-        } catch (err) {
-            console.log(err);
-        }
-    };
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // };
 
     if (loading) {
         return (
@@ -91,7 +92,7 @@ export default function SellerComment() {
             {/* HEADER */}
             <div className="flex items-center gap-2">
                 <CirclesIcon />
-                <h1 className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                <h1 className="text-lg font-bold text-blue-600 dark:text-blue-300">
                     مدیریت کامنت‌ها
                 </h1>
                 <CirclesIcon />
@@ -119,98 +120,83 @@ export default function SellerComment() {
             </div>
 
             {/* GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {comments.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20 text-gray-500 dark:text-gray-400">
+                    <MessageSquare size={40} className="mb-3 opacity-60" />
+                    <p className="text-lg font-semibold">
+                        کامنتی وجود ندارد
+                    </p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-                {comments.map((comment) => (
-                    <div
-                        key={comment.id}
-                        className="
-                            group
-                            bg-white dark:bg-slate-800
-                            border border-gray-100 dark:border-slate-700
-                            rounded-3xl
-                            p-3 px-4
-                            shadow-sm
-                            hover:shadow-xl
-                            hover:-translate-y-1
-                            transition-all duration-300
-                        "
-                    >
+                    {comments.map((comment) => (
+                        <div
+                            key={comment.id}
+                            className="
+                    group
+                    bg-white dark:bg-slate-800
+                    border border-gray-100 dark:border-slate-700
+                    rounded-3xl
+                    p-3 px-4
+                    shadow-sm
+                    hover:shadow-xl
+                    hover:-translate-y-1
+                    transition-all duration-300
+                "
+                        >
 
+                            {/* USER + RATING */}
+                            <div className="flex items-center justify-between mb-4">
 
-                        {/* USER + RATING */}
-                        <div className=" flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-3">
 
-                            <div className="flex items-center gap-3">
+                                    <div className="w-11 h-11 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 font-bold">
+                                        {comment.user.firstName?.charAt(0)}
+                                    </div>
 
-                                <div className="w-11 h-11 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 font-bold">
-                                    {comment.user.firstName?.charAt(0)}
+                                    <div>
+                                        <p className="font-bold text-gray-800 dark:text-white">
+                                            {comment.user.firstName} {comment.user.lastName}
+                                        </p>
+
+                                        <p className="text-xs text-gray-400">
+                                            {new Date(comment.created_at).toLocaleDateString("fa-IR")}
+                                        </p>
+                                    </div>
+
                                 </div>
-
-                                <div>
-                                    <p className="font-bold text-gray-800 dark:text-white">
-                                        {comment.user.firstName} {comment.user.lastName}
-                                    </p>
-
-                                    <p className="text-xs text-gray-400">
-                                        {new Date(comment.created_at).toLocaleDateString("fa-IR")}
-                                    </p>
-                                </div>
-
-                            </div>
-                            <div className="flex w-20 justify-between ">
 
                                 <div className="flex items-center gap-1 text-yellow-500 font-bold">
                                     <Star size={16} />
                                     {comment.rating}
                                 </div>
-                                <button
-                                    onClick={async () => {
-                                        try {
-                                            await DeleteComment(comment.id);
 
-                                            setComments((prev) =>
-                                                prev.filter((c) => c.id !== comment.id)
-                                            );
-
-                                            setTotalComments((prev) => prev - 1);
-                                        } catch (err) {
-                                            console.log(err);
-                                        }
-                                    }}
-                                    className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition"
-                                >
-                                    <Trash2 className="text-red-500" size={18} />
-                                </button>
                             </div>
 
+                            {/* HOUSE */}
+                            <div className="mb-4 px-3 py-2 rounded-2xl bg-blue-50 dark:bg-slate-700/50">
+                                <p className="text-xs text-gray-500">اقامتگاه</p>
+                                <p className="text-sm font-semibold text-blue-700 dark:text-blue-300">
+                                    {comment.house.title}
+                                </p>
+                            </div>
 
-                        </div>
+                            {/* TITLE */}
+                            <h3 className="font-bold text-gray-900 dark:text-white mb-2">
+                                {comment.title}
+                            </h3>
 
-                        {/* HOUSE */}
-                        <div className="mb-4 px-3 py-2 rounded-2xl bg-blue-50 dark:bg-slate-700/50">
-                            <p className="text-xs text-gray-500">اقامتگاه</p>
-                            <p className="text-sm font-semibold text-blue-700 dark:text-blue-300">
-                                {comment.house.title}
+                            {/* CAPTION */}
+                            <p className="text-sm text-gray-600 dark:text-gray-300 leading-7">
+                                {comment.caption}
                             </p>
+
                         </div>
+                    ))}
 
-                        {/* TITLE */}
-                        <h3 className="font-bold text-gray-900 dark:text-white mb-2">
-                            {comment.title}
-                        </h3>
-
-                        {/* CAPTION */}
-                        <p className="text-sm text-gray-600 dark:text-gray-300 leading-7">
-                            {comment.caption}
-                        </p>
-
-                    </div>
-                ))}
-
-
-
-            </div>
+                </div>
+            )}
 
             {/* PAGINATION */}
             {totalPages > 1 && (

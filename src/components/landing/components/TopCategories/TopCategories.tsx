@@ -11,10 +11,11 @@ import EcoHouseDarkIcon from '../../Icon/TopCategories/EcoHouseDarkIcon';
 import DuplexDarkIcon from '../../Icon/TopCategories/DuplexDarkIcon';
 import MansionDarkIcon from '../../Icon/TopCategories/MansionDarkIcon';
 import FloodDarkIcon from '../../Icon/TopCategories/FloodDarkIcon';
+import Link from 'next/link';
 
 const TopCategories = () => {
   const t = useTranslations('TopCategories');
-  
+
   return (
     <div className='flex justify-between'>
       <div className='w-full flex justify-center b'>
@@ -36,7 +37,9 @@ const TopCategories = () => {
             <div className='w-47.25 h-6.25 dark:text-[#F5F5F5] text-blue-400'>{t('topCategories')}</div>
           </div>
 
-          <div className='lg:w-full lg:h-auto h-90.5 w-85.5 flex flex-wrap justify-between'>
+          <Link
+            href={'/houserent'}
+            className='lg:w-full lg:h-auto h-90.5 w-85.5 flex flex-wrap justify-between'>
             <div className='w-39.75 h-40 cursor-pointer hover:border hover:border-blue-500/20 dark:hover:bg-slate-950 p-[14.5px] rounded-2xl' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
               <div className='w-33 h-32 flex flex-wrap justify-center'>
                 <div className='w-full flex justify-center'>
@@ -52,7 +55,9 @@ const TopCategories = () => {
               </div>
             </div>
 
-            <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8 hover:border hover:border-blue-500/20 dark:hover:bg-slate-950 p-[14.5px] rounded-2xl' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
+            <Link
+              href={'/houserent'}
+              className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8 hover:border hover:border-blue-500/20 dark:hover:bg-slate-950 p-[14.5px] rounded-2xl' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
               <div className='w-33 h-32 flex flex-wrap justify-center'>
                 <div className='w-full flex justify-center'>
                   <div className='dark:flex hidden w-10 h-10'><Duplex /></div>
@@ -65,9 +70,11 @@ const TopCategories = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-12 rounded-2xl hover:border hover:border-blue-500/20 dark:hover:bg-slate-950 p-[14.5px]' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
+            <Link
+              href={'/houserent'}
+              className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-12 rounded-2xl hover:border hover:border-blue-500/20 dark:hover:bg-slate-950 p-[14.5px]' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
               <div className='w-33 h-32 flex flex-wrap justify-center'>
                 <div className='w-full flex justify-center'>
                   <div className='dark:flex hidden w-10 h-10'><EcoHouse /></div>
@@ -80,9 +87,11 @@ const TopCategories = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8 dark:hover:bg-slate-950 hover:border hover:border-blue-500/20 p-[14.5px] rounded-2xl' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
+            <Link
+              href={'/houserent'}
+              className='w-39.75 h-40 cursor-pointer mt-0 lg:mt-8 dark:hover:bg-slate-950 hover:border hover:border-blue-500/20 p-[14.5px] rounded-2xl' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
               <div className='w-33 h-32 flex flex-wrap justify-center'>
                 <div className='w-full flex justify-center'>
                   <div className='dark:flex hidden w-10 h-10'><Mansion /></div>
@@ -95,9 +104,11 @@ const TopCategories = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className='hidden lg:flex w-39.75 h-40 cursor-pointer dark:hover:bg-slate-950 hover:border hover:border-blue-500/20 p-[14.5px] rounded-2xl' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
+            <Link
+              href={'/houserent'}
+              className='hidden lg:flex w-39.75 h-40 cursor-pointer dark:hover:bg-slate-950 hover:border hover:border-blue-500/20 p-[14.5px] rounded-2xl' style={{ filter: "drop-shadow(0px 0px 10px rgba(0, 94, 164, 0.5))" }}>
               <div className='w-33 h-32 flex flex-wrap justify-center'>
                 <div className='w-full flex justify-center'>
                   <div className='dark:flex hidden w-10 h-10'><Flood /></div>
@@ -110,8 +121,8 @@ const TopCategories = () => {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </Link>
+          </Link>
         </div>
       </div>
     </div>

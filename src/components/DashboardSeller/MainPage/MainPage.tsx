@@ -23,7 +23,7 @@ import IncomeChartCard from './IncomeChartCard';
 import ProfileCompletion from './ProfileCompletion';
 import Link from 'next/link';
 import GetHousesUser, { IHouse } from '@/core/api/DashboardSeller/GetHousesUser';
-import formatDate from '@/components/untils/FormData';
+import formatDate from '@/components/Untils/FormData';
 import DeleteHouseModal from '../DeleteHouse/DeleteHouseModal';
 import toast from 'react-hot-toast';
 import DeleteHouse from '@/core/api/DashboardSeller/DeleteHouse';

@@ -2,19 +2,6 @@ import DashboardHeader from "@/components/Dashboard/header";
 import DarkModeHero from "@/components/landing/components/HeroSction/HeroFilter/DarkModeHero";
 import Link from "next/link";
 import { cookies } from "next/headers";
-// import { redirect } from "next/navigation";
-import {
-  LayoutDashboard,
-  Hotel,
-  Users,
-  CalendarCheck,
-  TicketPercent,
-  FileText,
-  MessageSquare,
-  Settings,
-  LogOut,
-  SettingsIcon,
-} from "lucide-react";
 import SellersideBar from '../../../components/DashboardSeller/SellersideBar'
 import { redirect } from "next/navigation";
 
@@ -23,7 +10,7 @@ interface IChildren {
 }
 
 
-export default async function SellerLayout({children,}: IChildren) {
+export default async function SellerLayout({ children, }: IChildren) {
   const cookieStore = await cookies();
 
   const token = cookieStore.get("accessToken");
@@ -35,21 +22,22 @@ export default async function SellerLayout({children,}: IChildren) {
   return (
     <div
       dir="rtl"
-      className="min-h-screen  bg-gray-50 dark:bg-gray-900 p-6"
+      className="min-h-screen   bg-gray-50 dark:bg-gray-900 p-6"
     >
       {/* دسکتاپ */}
       <div className="hidden lg:grid grid-cols-[280px_1fr] gap-6">
         {/* سایدبار */}
-      <SellersideBar />
+        <SellersideBar />
 
-        {/* هدر */}
-        <header className="w-255 h-18 rounded-2xl shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10 bg-white dark:bg-blue-400 p-4">
-          <div className=" flex justify-between items-center">
-            <DashboardHeader />
+        <div className=" flex flex-wrap gap-10   ">
+          {/* هدر */}
+          <header className="w-255 h-18 rounded-2xl shadow-[0_0_8px] shadow-blue-300/30 dark:shadow-blue-500/10 bg-white dark:bg-blue-400 p-4">
+            <div className=" flex justify-between items-center">
+              <DashboardHeader />
 
-            <div className="flex items-center gap-3">
-              {/* نوتیف */}
-              {/* <div className="relative cursor-pointer">
+              <div className="flex items-center gap-3">
+                {/* نوتیف */}
+                {/* <div className="relative cursor-pointer">
                 <svg
                   width="18"
                   height="20"
@@ -70,24 +58,27 @@ export default async function SellerLayout({children,}: IChildren) {
                 </span>
               </div> */}
 
-              {/* دارک مود */}
-              <div className="flex items-center justify-center w-9 h-9 rounded-full dark:bg-blue-200 shadow-md cursor-pointer">
-                <DarkModeHero />
+                {/* دارک مود */}
+                <div className="flex items-center justify-center w-9 h-9 rounded-full dark:bg-blue-200 shadow-md cursor-pointer">
+                  <DarkModeHero />
+                </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* محتوا */}
-        <main className="w-255 rounded-tl-[40px] rounded-br-[40px] shadow-[0_0_8px] shadow-blue-300/15 dark:shadow-blue-500/5 bg-white dark:bg-blue-400 p-4 sm:p-6">
-          {children}
-        </main>
+
+          <main className="w-255 h-168  rounded-tl-[40px] rounded-br-[40px] shadow-[0_0_8px] shadow-blue-300/15 dark:shadow-blue-500/5 bg-white dark:bg-blue-400 p-4 sm:p-6">
+            {children}
+          </main>
+
+        </div>
       </div>
+
 
       {/* mobile  */}
       <div className="lg:hidden">
         {/* <MobileSidebar menuItems={MenuItems}> */}
-          {children}
+        {children}
         {/* </MobileSidebar> */}
       </div>
     </div>
