@@ -31,7 +31,7 @@ const MenuItems = [
   { id: 3, icon: Users, label: "مدیریت کاربران", href: "/admin/UsersManagment" },
   { id: 4, icon: CalendarCheck, label: "مدیریت رزروها", href: "/admin/BookingsManagement" },
   { id: 5, icon: MessageSquare, label: "مدیریت نظرات", href: "/admin/CommentsManagement" },
-  { id: 6, icon: TicketPercent, label: "مدریت مالی", href: "/admin/PaymentsManagement" },
+  { id: 6, icon: TicketPercent, label: "مدیریت مالی", href: "/admin/PaymentsManagement" },
   { id: 7, icon: MessageCircleMore, label: "مدیریت چت", href: "/admin/ChatsManagement" },
   { id: 8, icon: Bell, label: "مدیریت اعلان ها", href: "/admin/AdminNotifications" },
   { id: 9, icon: Share2, label: "لینک‌های اجتماعی", href: "/admin/SocialLink" },  
