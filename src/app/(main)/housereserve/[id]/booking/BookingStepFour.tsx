@@ -22,14 +22,14 @@ const BookingStepFour = ({
   setStep
 }: any) => {
   const t = useTranslations('BookingStepFour');
-  
+
   if (step !== 5) return null;
 
   return (
     <div className="h-300 max-[1280]:h-455 max-[500]:mr-10 pb-10 max-[600]:mt-10 max-[1024]:mt-14" dir="rtl">
       <div className="w-full mx-auto">
         <div className="flex flex-col max-[888]:left-5 relative xl:flex-row gap-20 w-full pt-6 md:pt-10">
-          
+
           <div className="flex justify-center order-2 lg:order-1">
             <BookingSummaryTwo
               finalTotal={finalTotal}
@@ -47,7 +47,7 @@ const BookingStepFour = ({
           </div>
 
           <div className="flex-1 w-full flex flex-col items-center justify-center space-y-6 lg:order-2">
-            
+
             <div className="">
               <div className="relative w-100 flex justify-end">
                 <div className="max-[508]:hidden dark:hidden">
@@ -91,8 +91,7 @@ const BookingStepFour = ({
             <div className="flex flex-col w-full max-w-xl gap-3 md:gap-4">
               <Link href="/" className="w-full">
                 <button className="w-full dark:text-white bg-[rgb(16,8,143)] text-white py-4 md:py-5 rounded-2xl md:rounded-3xl font-bold md:font-black shadow-md hover:bg-blue-900 transition-all active:scale-[0.98]">
-                  {t('backToHome')}
-                </button>
+                  {t('backToHome')}</button>
               </Link>
 
               <Link href="/dashboard/bookings" className="w-full">

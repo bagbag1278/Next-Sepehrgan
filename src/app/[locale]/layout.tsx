@@ -6,7 +6,6 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/Footer/Footer";
 import ThemeManager from "@/components/utils/ThemeManager";
 import "../globals.css";
-
 export default async function LocaleLayout({
   children,
   params,
@@ -33,6 +32,9 @@ export default async function LocaleLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <Header />
             <ThemeManager>
+
+              {/* <NeshanMapLoader /> */}
+
               <main className="w-full">{children}</main>
             </ThemeManager>
             <Footer />

@@ -8,8 +8,8 @@ import RoomIcon from './Icon/RoomIcon';
 import MasterIcon from './Icon/MasterIcon';
 import CarIcon from './Icon/CarIcon';
 import TreeIcon from './Icon/TreeIcon';
-import LocationIcon from './Icon/LocationIcon';
 import HouseImage from './Icon/MobileHouse';
+import { MapPin } from 'lucide-react';
 
 interface MobileCardProps {
   house: {
@@ -53,7 +53,7 @@ const MobileCard = ({ house, isInvalid = false }: MobileCardProps) => {
             {house.title || t('defaultTitle')}
           </h3>
           <div className="flex items-center gap-1 text-[12px] text-gray-500 dark:text-gray-400">
-            <LocationIcon  />
+            <MapPin size={16}  />
             <span className="line-clamp-1 flex-1">{house.address || t('noAddress')}</span>
           </div>
         </div>

@@ -19,16 +19,14 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
     setStrength(checkPasswordStrength(value));
   };
-  
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -63,7 +61,7 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
       setLoading(true);
 
       const result = await completeRegistrationAction({
-        userId: userId,
+        userId:userId,
         phoneNumber: phone, 
         password,
       });
@@ -86,12 +84,12 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
 
   return (
     <form
-      className="flex flex-col justify-between gap-4 md:gap-6 w-full max-w-md mx-auto px-4 md:px-0"
+      className="flex flex-col justify-between gap-6 h-full"
       onSubmit={handleSubmit}
     >
-      <div className="flex flex-col gap-2 relative w-full">
+      <div className="flex flex-col gap-2 relative">
         <input
-          type="tel"
+          type="text"
           name="phone"
           id="phone"
           value={phone}
@@ -108,11 +106,10 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
         >
           {t('phoneNumber')}
         </label>
-        <div className="absolute left-4 top-1/2 -translate-y-1/2">
+        <button className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
-            width="10"
-            height="16"
-            className="md:w-[12px] md:h-[19px]"
+            width="12"
+            height="19"
             viewBox="0 0 12 19"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -126,12 +123,13 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
               className="dark:stroke-gray-400"
             />
           </svg>
-        </div>
+        </button>
       </div>
 
       <div className="flex flex-col gap-3">
         <div className="relative flex flex-col gap-2">
           <div className="relative">
+            {" "}
             <input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -201,7 +199,7 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 mt-2 md:mt-4">
+      <div className="flex flex-col gap-3 mt-4">
         <button
           type="submit"
           disabled={loading}

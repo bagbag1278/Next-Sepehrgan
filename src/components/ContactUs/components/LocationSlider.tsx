@@ -63,8 +63,8 @@ const LocationSlider = () => {
           className="w-full"
         >
           {locations.map((item) => (
-            <SwiperSlide 
-              key={item.id} 
+            <SwiperSlide
+              key={item.id}
               className="!w-[230px]"
             >
               {({ isActive }) => (
@@ -87,21 +87,21 @@ const LocationSlider = () => {
           ))}
         </Swiper>
       </div>
-    <div className="relative bottom-36 left-26  ">
-            <div className="w-full   justify-center flex absolute">
-              <div className="z-20  h-9 bg-white  opacity-90 dark:bg-gray-800 p-2 rounded-full shadow-md hover:bg-white transition-all">
-                   <button className="next-btn ">
-            <ChevronRight size={20} className="text-blue-900" />
-          </button>
-              </div>
-          <div className=" relative top-10 left-9 z-20  opacity-90  bg-white dark:bg-gray-800 p-2 h-9 rounded-full shadow-md hover:bg-white transition-all">
-              <button className="prev-btn ">
-            <ChevronLeft size={20} className="text-blue-900" />
-          </button>
+      <div className="relative bottom-36 left-26  ">
+        <div className="w-full   justify-center flex absolute">
+          <div className="z-20  h-9 bg-white  opacity-90 dark:bg-gray-800 p-2 rounded-full shadow-md hover:bg-white transition-all">
+            <button className="next-btn ">
+              <ChevronRight size={20} className="text-blue-900" />
+            </button>
           </div>
-        
+          <div className=" relative top-10 left-9 z-20  opacity-90  bg-white dark:bg-gray-800 p-2 h-9 rounded-full shadow-md hover:bg-white transition-all">
+            <button className="prev-btn ">
+              <ChevronLeft size={20} className="text-blue-900" />
+            </button>
+          </div>
+
         </div>
-        </div>
+      </div>
     </div>
   );
 };

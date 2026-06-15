@@ -103,11 +103,10 @@ const FastFilter = ({
         <button
           onClick={() => onCompare?.()}
           disabled={compareCount !== 2}
-          className={`flex items-center justify-between w-full p-3 rounded-2xl border transition-all duration-300 group ${
-            compareCount === 2
+          className={`flex items-center justify-between w-full p-3 rounded-2xl border transition-all duration-300 group ${compareCount === 2
               ? "border-green-500 bg-green-50 dark:bg-green-900/20 cursor-pointer"
-              : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 opacity-60 cursor-not-allowed"
-          }`}
+              : "border-blue-300 opacity-60 cursor-not-allowed"
+            }`}
         >
           <div className="flex items-center gap-2">
             <BarChart2 size={18} className={compareCount === 2 ? "text-green-500" : "text-gray-400 dark:text-gray-500 group-hover:text-blue-500 dark:group-hover:text-blue-400"} />

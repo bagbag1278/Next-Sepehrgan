@@ -121,8 +121,7 @@ const CompareModal = ({
                         {winner.title}
                       </span>
                     </div>
-                  </motion.div>
-                )}
+                  </motion.div>)}
 
                 {/* Compare Table */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

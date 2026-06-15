@@ -1,9 +1,9 @@
-    // components/ThemeManager.tsx
+// components/ThemeManager.tsx
     "use client";
 
     import React, { useState, useRef, useEffect } from "react";
     import { useTheme as useNextThemes } from "next-themes"; // تغییر نام برای جلوگیری از تداخل
-    import ThemeTransition from "./ThemeTransition"; // کامپوننت Overlay
+    import ThemeTransition from "./ThemeTransition"; 
 
     // const animationDuration = 600; // ms - مدت زمان انیمیشن CSS
 

@@ -51,9 +51,9 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex mt-4 md:mt-6 flex-col justify-between gap-4 md:gap-6 w-full max-w-md mx-auto px-4 md:px-0"
+      className="flex mt-6 flex-col justify-between gap-6"
     >
-      <div className="flex flex-col gap-2 relative w-full">
+      <div className="flex flex-col gap-2 relative">
         <input
           type="text"
           name="tempUserId"
@@ -73,9 +73,8 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
-            width="16"
-            height="13"
-            className="md:w-[19px] md:h-[15px]"
+            width="19"
+            height="15"
             viewBox="0 0 19 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +90,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2 relative w-full">
+      <div className="flex flex-col gap-2 relative">
         <input
           type="text"
           name="verificationCode"
@@ -111,9 +110,8 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
-            width="16"
-            height="13"
-            className="md:w-[19px] md:h-[15px]"
+            width="19"
+            height="15"
             viewBox="0 0 19 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -133,6 +131,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
 
       <button
         type="submit"
+        onClick={() => onNext()}
         disabled={loading}
         className={`h-11 md:h-12 w-full rounded-2xl text-white cursor-pointer transition-colors duration-300 ease-in-out text-sm md:text-base
           ${loading ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed" : "bg-blue-100 dark:bg-blue-800 hover:bg-blue-200 dark:hover:bg-blue-700"}`}

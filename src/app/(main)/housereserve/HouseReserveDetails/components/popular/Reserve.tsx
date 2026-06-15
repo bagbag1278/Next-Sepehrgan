@@ -212,8 +212,7 @@ const Reserve = ({ price, discountedPrice, maxCapacity }: ReserveProps) => {
                   </button>
                 )}
               />
-            </div>
-          </div>
+            </div></div>
           
           <div className="relative border-b border-gray-100 dark:border-gray-700 mb-6" ref={dropdownRef}>
             <div

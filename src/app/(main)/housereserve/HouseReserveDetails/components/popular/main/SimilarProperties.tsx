@@ -61,11 +61,11 @@ const SimilarProperties = ({ currentId: propId }: { currentId?: number | null })
       setLoading(false);
       return;
     }
-    
+
     try {
       setLoading(true);
       const response = await fetch(`/api/houses`);
-      
+
       if (response.ok) {
         const result = await response.json();
         let allHouses: Property[] = [];
@@ -74,22 +74,22 @@ const SimilarProperties = ({ currentId: propId }: { currentId?: number | null })
         } else if (Array.isArray(result)) {
           allHouses = result;
         }
-        
+
         if (allHouses.length > 0) {
           const similarData = allHouses
             .filter((item) => item.id !== currentId)
             .slice(0, 3);
-          
+
           if (similarData.length > 0) {
             setData(similarData);
             return;
           }
         }
       }
-      
+
       console.log("استفاده از داده آزمایشی");
       setData(mockProperties);
-      
+
     } catch (err) {
       console.error("خطا در دریافت املاک مشابه:", err);
       setData(mockProperties);

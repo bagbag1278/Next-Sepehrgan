@@ -44,74 +44,45 @@ const BookingPage = () => {
     })),
   );
 
-const persianToGregorian = (persianDate: string) => {
-  console.log("تبدیل تاریخ:", persianDate);
-  
-  if (!persianDate || persianDate === "" || persianDate === "نامشخص") {
-    console.log("تاریخ خالی یا نامشخص است");
-    return null;
-  }
-  
-  try {
-    let cleanDate = persianDate.replace(/[^0-9/]/g, "");
-    console.log("cleanDate بعد از حذف کاراکترهای غیر عددی:", cleanDate);
-    
-    if (!cleanDate || cleanDate === "") {
-      console.log("cleanDate خالی شد");
+  const persianToGregorian = (persianDate: string) => {
+    if (!persianDate || persianDate === "" || persianDate === "نامشخص") {
       return null;
     }
     
-    const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-    const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    
-    persianDigits.forEach((p, i) => {
-      cleanDate = cleanDate.replace(new RegExp(p, "g"), englishDigits[i]);
-    });
-    
-    console.log("cleanDate بعد از تبدیل ارقام فارسی به انگلیسی:", cleanDate);
-    
-    const parts = cleanDate.split("/");
-    console.log("parts:", parts);
-    
-    if (parts.length !== 3) {
-      console.log("فرمت تاریخ نامعتبر، تعداد بخش‌ها:", parts.length);
-      return null;
-    }
-    
-    let year = parseInt(parts[0]);
-    const month = parseInt(parts[1]);
-    const day = parseInt(parts[2]);
-    
-    console.log("year:", year, "month:", month, "day:", day);
-    
-    if (isNaN(year) || isNaN(month) || isNaN(day)) {
-      console.log("اعداد نامعتبر");
-      return null;
-    }
-        if (year > 2000) {
-      console.log("تاریخ میلادی تشخیص داده شد");
-      return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    }
-    
-    if (year >= 1300 && year <= 1500) {
-      console.log("تاریخ شمسی تشخیص داده شد");
-      const m = moment(`${year}/${month}/${day}`, 'jYYYY/jMM/jDD');
-      if (!m.isValid()) {
-        console.log("تاریخ شمسی نامعتبر");
-        return null;
+    try {
+      let cleanDate = persianDate.replace(/[^0-9/]/g, "");
+      
+      const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+      const englishDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      
+      persianDigits.forEach((p, i) => {
+        cleanDate = cleanDate.replace(new RegExp(p, "g"), englishDigits[i]);
+      });
+      
+      const parts = cleanDate.split("/");
+      if (parts.length !== 3) return null;
+      
+      let year = parseInt(parts[0]);
+      const month = parseInt(parts[1]);
+      const day = parseInt(parts[2]);
+      
+      if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
+      
+      if (year > 2000) {
+        return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       }
-      const result = m.format('YYYY-MM-DD');
-      console.log("نتیجه تبدیل شمسی به میلادی:", result);
-      return result;
+      
+      if (year >= 1300 && year <= 1500) {
+        const m = moment(`${year}/${month}/${day}`, 'jYYYY/jMM/jDD');
+        if (!m.isValid()) return null;
+        return m.format('YYYY-MM-DD');
+      }
+      
+      return null;
+    } catch (error) {
+      return null;
     }
-    
-    console.log("سال نامعتبر:", year);
-    return null;
-  } catch (error) {
-    console.error("خطا در تبدیل تاریخ:", error);
-    return null;
-  }
-};
+  };
 
   const calculateNights = (inDate: string, outDate: string) => {
     if (!inDate || !outDate || inDate === "نامشخص" || outDate === "نامشخص") return 1;
@@ -216,106 +187,92 @@ const persianToGregorian = (persianDate: string) => {
     }
   };
 
-const handelFinalBooking = async () => {
-  console.log("===== شروع رزرو =====");
-  
-  const token = localStorage.getItem("accessToken");
-  console.log("1. توکن:", token ? "وجود دارد" : "ندارد");
-  
-  if (!token) {
-    toast.error(t("loginRequired"));
-    router.push("/login");
-    return;
-  }
-
-  const startDate = persianToGregorian(checkInDate);
-  const endDate = persianToGregorian(checkOutDate);
-  console.log("2. تاریخ تبدیل شده:", { startDate, endDate, checkInDate, checkOutDate });
-  
-  if (!startDate || !endDate) {
-    toast.error("تاریخ انتخاب شده معتبر نیست");
-    return;
-  }
-
-  const traveler_details = [];
-  for (let i = 0; i < passengers.length; i++) {
-    const p = passengers[i];
-    
-    const nameParts = p.fullName.trim().split(" ");
-    const firstName = nameParts[0] || "";
-    let lastName = nameParts.slice(1).join(" ");
-    
-    if (!lastName) {
-      lastName = "ناشناس";
-    }
-    
-    let birthDateGregorian = null;
-    if (p.birthDate) {
-      birthDateGregorian = persianToGregorian(p.birthDate);
-      if (!birthDateGregorian) {
-        toast.error(`تاریخ تولد مسافر ${i + 1} معتبر نیست`);
-        return;
-      }
-    }
-
-    traveler_details.push({
-      firstName: firstName,
-      lastName: lastName,
-      gender: p.gender === "male" ? "male" : "female",
-      birthDate: birthDateGregorian || "2000-01-01",
-      nationalId: p.nationalCode || "1234567890",
-    });
-  }
-  console.log("3. مسافران:", traveler_details);
-
-  const bookingPayload = {
-    houseId: Number(params.id),
-    reservedDates: [startDate, endDate],
-    traveler_details: traveler_details,
-    sharedEmail: extraEmail || undefined,
-    sharedMobile: extraPhone || undefined,
-  };
-
-  console.log("4. payload نهایی:", JSON.stringify(bookingPayload, null, 2));
-
-  try {
-    setLoading(true);
-    
-    const url = `${API_BASE_URL}/bookings`;
-    console.log("5. آدرس درخواست:", url);
-    
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(bookingPayload),
-    });
-
-    console.log("6. وضعیت پاسخ:", response.status);
-    
-    const result = await response.json();
-    console.log("7. پاسخ سرور:", result);
-
-    if (!response.ok) {
-      toast.error(result.message || result.error || "خطا در ثبت رزرو");
+  const handelFinalBooking = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.error(t("loginRequired"));
+      router.push("/login");
       return;
     }
 
-    const bookingData = result.booking || result.data || result;
-    setBookingResult(bookingData);
-    setStep(5);
-    toast.success("موفقیت امیز بود");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const startDate = persianToGregorian(checkInDate);
+    const endDate = persianToGregorian(checkOutDate);
     
-  } catch (error: any) {
-    console.error("8. خطا:", error);
-    toast.error(error.message || t("bookingFailed"));
-  } finally {
-    setLoading(false);
-  }
-};
+    if (!startDate || !endDate) {
+      toast.error("تاریخ انتخاب شده معتبر نیست");
+      return;
+    }
+
+    const traveler_details = [];
+    for (let i = 0; i < passengers.length; i++) {
+      const p = passengers[i];
+      
+      const nameParts = p.fullName.trim().split(" ");
+      const firstName = nameParts[0] || "";
+      let lastName = nameParts.slice(1).join(" ");
+      
+      if (!lastName) {
+        lastName = "ناشناس";
+      }
+      
+      let birthDateGregorian = null;
+      if (p.birthDate) {
+        birthDateGregorian = persianToGregorian(p.birthDate);
+        if (!birthDateGregorian) {
+          toast.error(`تاریخ تولد مسافر ${i + 1} معتبر نیست`);
+          return;
+        }
+      }
+
+      traveler_details.push({
+        firstName: firstName,
+        lastName: lastName,
+        gender: p.gender === "male" ? "male" : "female",
+        birthDate: birthDateGregorian || "2000-01-01",
+        nationalId: p.nationalCode || "1234567890",
+      });
+    }
+
+    const bookingPayload = {
+      houseId: Number(params.id),
+      reservedDates: [startDate, endDate],
+      traveler_details: traveler_details,
+      sharedEmail: extraEmail || undefined,
+      sharedMobile: extraPhone || undefined,
+    };
+
+    try {
+      setLoading(true);
+      
+      const response = await fetch(`${API_BASE_URL}/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(bookingPayload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        toast.error(result.message || result.error || "خطا در ثبت رزرو");
+        return;
+      }
+
+      const bookingData = result.booking || result.data || result;
+      setBookingResult(bookingData);
+      setStep(5);
+      toast.success(t("bookingSuccess"));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      
+    } catch (error: any) {
+      console.error("خطا:", error);
+      toast.error(error.message || t("bookingFailed"));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchHotelDetails = async () => {
@@ -354,7 +311,7 @@ const handelFinalBooking = async () => {
           </div>
         </AdvancedScrollAnimation>
 
-        <div className="rounded-2xl p-4 md:p-6  ">
+        <div className="rounded-2xl p-4 md:p-6">
           <div className="space-y-6">
             {step === 2 && (
               <div className="ml-20 max-[888px]:left-5 max-[888px]:ml-0 relative flex gap-50 mx-auto justify-center max-[1360px]:flex-col">

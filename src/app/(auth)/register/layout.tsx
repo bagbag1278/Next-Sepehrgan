@@ -6,11 +6,9 @@ import CircularDropdown from "@/components/common/AuthMenu/AuthMenu";
 import { useTranslations } from 'next-intl';
 import Image from "next/image";
 import React, { FC, ReactNode } from "react";
-
 interface IChildren {
   children: ReactNode;
 }
-
 const RegisterLayout: FC<IChildren> = ({ children }) => {
   const t = useTranslations('Auth');
   

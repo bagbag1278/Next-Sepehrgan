@@ -2,14 +2,10 @@
 @import 'swiper/css/pagination';
 @import 'swiper/css';
 @plugin "daisyui";
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination';
-@import 'swiper/css/effect-coverflow';
 
 :root {
   --background: #F5F5F5;
   --foreground: #000000;
-  --font-iran: 'IRANSans';
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -83,58 +79,6 @@
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
-  font-family: var(--font-iran);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "ss01";
-}
-
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 8px;
-  background: #e0e0e0;
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 8px;
-  background: linear-gradient(90deg, #0070f3, #00c6ff);
-  border-radius: 5px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border: 2px solid #0070f3;
-  border-radius: 50%;
-  margin-top: -6px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  background: #0070f3;
-  border-color: #fff;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #fff;
-  border: 2px solid #0070f3;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-input[type="range"]::-moz-range-track {
-  background: linear-gradient(90deg, #0070f3, #00c6ff);
-  height: 8px;
-  border-radius: 5px;
 }
 
 

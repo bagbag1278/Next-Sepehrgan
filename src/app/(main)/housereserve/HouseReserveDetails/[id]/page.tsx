@@ -122,8 +122,7 @@ const HouseReserveDetails = () => {
                   dir="rtl"
                 >
                   <h2 className="text-xl sm:text-2xl font-bold dark:text-white text-blue-400 flex flex-wrap items-center justify-center md:justify-start gap-2">
-                    {data.title}
-                    <div className="text-[12px] sm:text-[14px] font-bold text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                    {data.title}<div className="text-[12px] sm:text-[14px] font-bold text-gray-600 dark:text-gray-400 flex items-center gap-1">
                       <div className="relative w-4 h-4">
                         <Star />
                       </div>

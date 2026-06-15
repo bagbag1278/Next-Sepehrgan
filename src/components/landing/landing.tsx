@@ -15,7 +15,7 @@ const Landing = () => {
 
   return (
     <div className='w-full flex flex-col gap-18' dir='rtl'>
-      
+
       <AdvancedScrollAnimation type="fade" delay={0.1}>
         <div className=''>
           <HeroSction />

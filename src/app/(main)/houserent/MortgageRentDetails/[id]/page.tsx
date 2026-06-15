@@ -44,73 +44,73 @@ const MortgageRentDetails = () => {
   const [loading, setLoading] = useState(true);
   const [locationData, setLocationData] = useState<any>(null);
   const [locationLoading, setLocationLoading] = useState(true);
-    const [notFound, setNotFound] = useState(false);
-  
-const fetchLocation = async () => {
-  if (!houseId) return;
+  const [notFound, setNotFound] = useState(false);
 
-  try {
-    setLocationLoading(true);
-    
-    const response = await fetch(`/api/locations`);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-    
-    const result = await response.json();
-    const locations = result.data || [];
-  
-    let foundLocation = null;
-    
-    foundLocation = locations.find((loc: any) => loc.id === houseId);
-    
-    if (!foundLocation && locations.length > 0) {
-      foundLocation = locations[0];
-    }
-    
-    if (foundLocation && foundLocation.lat && foundLocation.lng) {
-      const lat = parseFloat(foundLocation.lat);
-      const lng = parseFloat(foundLocation.lng);
-      
-      const isValidLat = !isNaN(lat) && lat >= -90 && lat <= 90;
-      const isValidLng = !isNaN(lng) && lng >= -180 && lng <= 180;
-      
-      if (isValidLat && isValidLng) {
-        setLocationData({
-          id: foundLocation.id,
-          lat: lat.toString(),
-          lng: lng.toString(),
-          areaName: foundLocation.areaName,
-        });
+  const fetchLocation = async () => {
+    if (!houseId) return;
+
+    try {
+      setLocationLoading(true);
+
+      const response = await fetch(`/api/locations`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const result = await response.json();
+      const locations = result.data || [];
+
+      let foundLocation = null;
+
+      foundLocation = locations.find((loc: any) => loc.id === houseId);
+
+      if (!foundLocation && locations.length > 0) {
+        foundLocation = locations[0];
+      }
+
+      if (foundLocation && foundLocation.lat && foundLocation.lng) {
+        const lat = parseFloat(foundLocation.lat);
+        const lng = parseFloat(foundLocation.lng);
+
+        const isValidLat = !isNaN(lat) && lat >= -90 && lat <= 90;
+        const isValidLng = !isNaN(lng) && lng >= -180 && lng <= 180;
+
+        if (isValidLat && isValidLng) {
+          setLocationData({
+            id: foundLocation.id,
+            lat: lat.toString(),
+            lng: lng.toString(),
+            areaName: foundLocation.areaName,
+          });
+        } else {
+          setLocationData({
+            id: houseId,
+            lat: "35.6892",
+            lng: "51.3890",
+            areaName: foundLocation.areaName || "تهران، مرکز",
+          });
+        }
       } else {
         setLocationData({
           id: houseId,
           lat: "35.6892",
           lng: "51.3890",
-          areaName: foundLocation.areaName || "تهران، مرکز",
+          areaName: "تهران، مرکز",
         });
       }
-    } else {
+    } catch (error) {
+      console.error("خطا در گرفتن لوکیشن:", error);
       setLocationData({
         id: houseId,
         lat: "35.6892",
         lng: "51.3890",
         areaName: "تهران، مرکز",
       });
+    } finally {
+      setLocationLoading(false);
     }
-  } catch (error) {
-    console.error("خطا در گرفتن لوکیشن:", error);
-    setLocationData({
-      id: houseId,
-      lat: "35.6892",
-      lng: "51.3890",
-      areaName: "تهران، مرکز",
-    });
-  } finally {
-    setLocationLoading(false);
-  }
-};
+  };
   const fetchRentData = async () => {
     if (!houseId) return;
 
@@ -160,13 +160,13 @@ const fetchLocation = async () => {
   ];
 
   if (notFound || !data) {
-      return (
-        <>
-        <NotFound/>
-        </>
-  
-      );
-    }
+    return (
+      <>
+        <NotFound />
+      </>
+
+    );
+  }
 
   return (
     <div>

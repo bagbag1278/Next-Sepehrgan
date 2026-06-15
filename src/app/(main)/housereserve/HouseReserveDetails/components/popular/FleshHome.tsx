@@ -9,16 +9,16 @@ import FleshHome6 from '../../../../../../components/HouseDetails/icon/felsh/Fle
 const FleshHome = () => {
   return (
     <div>
-            <div className="absolute -left-141 -mt-4 z-40 min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
-                   <div className="relative -left-10 bottom-1"><FleshHome1/></div>
+            <div className="absolute ">
+                   <div className=""><FleshHome1/></div>
               <div className="absolute bottom-31 left-47">
                 <div className="absolute"><FleshHome2/></div>
-                <div className="absolute left-0"><FleshHome3/></div>
+                <div className="absolute left-10"><FleshHome3/></div>
               </div>
-                 <div className="absolute left-44 -bottom-11"><FleshHome4/></div>
-                 <div className='relative right-54 bottom-9'>
-                    <div className='relative left-151 top-18'><FleshHome5/></div>
-                    <div className='relative left-152 top-15'><FleshHome6/></div>
+                 <div className="absolute left-56 -bottom-12"><FleshHome4/></div>
+                 <div className='relative left- bottom-6'>
+                    <div className='relative left-153.5 top-17'><FleshHome5/></div>
+                    <div className='relative left-160 top-15'><FleshHome6/></div>
                  </div>
             </div>
     </div>

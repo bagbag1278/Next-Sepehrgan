@@ -112,8 +112,7 @@ const BookingSummaryTwo = ({
 
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-3 border-t border-gray-100 dark:border-gray-700">
             <span className="text-gray-500 text-sm font-bold dark:text-gray-400">
-              {t("finalPrice")}
-            </span>
+              {t("finalPrice")}</span>
             <div className="text-left w-full sm:w-auto">
               {hotelData?.price && hotelData?.discounted_price && (
                 <div className="flex items-center justify-end gap-2 mb-1">

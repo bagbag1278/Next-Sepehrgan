@@ -60,6 +60,7 @@ const BookingStepThree = ({
       dir="rtl"
     >
      
+
       <div className="w-11/12">
         <div className="flex items-start">
           <div className="flex-1 flex w-full order-3 lg:order-1">
@@ -171,11 +172,10 @@ const BookingStepThree = ({
                   <button
                     disabled={!isAllFormsValid || loading}
                     onClick={handleNextStep}
-                    className={`w-full py-5 rounded-3xl font-black mt-10 transition-all ${
-                      isAllFormsValid && !loading
+                    className={`w-full py-5 rounded-3xl font-black mt-10 transition-all ${isAllFormsValid && !loading
                         ? "bg-[rgb(16,8,143)] text-white cursor-pointer hover:bg-[rgb(20,12,160)]"
                         : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    }`}
+                      }`}
                   >
                     {loading ? "در حال پردازش..." : t("onlinePayment")}
                   </button>

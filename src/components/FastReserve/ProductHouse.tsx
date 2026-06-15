@@ -166,11 +166,10 @@ const ProductHouse = ({ houses, onCompare, isInCompare }: ProductHouseProps) => 
                   onCompare(houses);
                 }}
                 disabled={isInCompare}
-                className={`w-16 sm:w-20 h-8 sm:h-9 rounded-xl text-white text-xs sm:text-sm font-medium transition-all duration-200 ${
-                  isInCompare
-                    ? "bg-green-500 cursor-not-allowed hover:bg-green-600"
-                    : "bg-blue-500 hover:bg-blue-700"
-                }`}
+                className={`w-20 h-8 rounded-xl dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700 text-sm font-medium transition-all duration-200 ${isInCompare
+                    ? "bg-gray-200 text-white cursor-not-allowed dark:bg-blue-500 dark:text-gray-500"
+                    : "border border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white dark:hover:bg-blue-700 bg-transparent"
+                  }`}
               >
                 {isInCompare ? "✓" : "مقایسه"}
               </button>

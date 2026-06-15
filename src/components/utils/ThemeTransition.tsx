@@ -1,4 +1,3 @@
-// components/ThemeTransition.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -29,7 +28,6 @@ const ThemeTransition: React.FC<ThemeTransitionProps> = ({
     }
   }, [theme]);
 
-  // قبل از mount شدن در کلاینت، چیزی رندر نکن
   if (!mounted) {
     return null;
   }

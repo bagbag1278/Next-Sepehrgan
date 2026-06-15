@@ -121,8 +121,7 @@ const BookingSummary = ({
           <span className="text-gray-500 dark:text-gray-400">{checkInDate}</span>
         </div>
         
-        <div className="flex justify-between text-sm font-bold">
-          <span className="text-[#060425CC] dark:text-gray-300">{t('checkOutDate')}</span>
+        <div className="flex justify-between text-sm font-bold"><span className="text-[#060425CC] dark:text-gray-300">{t('checkOutDate')}</span>
           <span className="text-gray-500 dark:text-gray-400">{checkOutDate}</span>
         </div>
 

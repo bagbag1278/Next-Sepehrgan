@@ -2,7 +2,7 @@
 
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/header/Header";
-import ThemeManager from "@/components/utils/ThemeManager";
+import ThemeManager from "@/components/Untils/ThemeManager";
 import { ThemeProvider } from "next-themes";
 import { usePathname } from "next/navigation";
 import { Toaster } from "react-hot-toast";

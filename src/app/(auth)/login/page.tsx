@@ -37,14 +37,12 @@ const LoginPage = () => {
             className="md:w-[130px] md:h-[143px] dark:opacity-50"
           />
         </div>
-
         <AnimatePresence mode="wait">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
-            className="w-full max-w-md mx-auto mt-10 md:mt-0"
           >
             <div className="w-full h-auto mx-auto mt-10 md:mt-25 flex gap-2 flex-col">
               <h3 className="font-bold text-center text-[14px] md:text-[16px] opacity-80 dark:text-gray-400">

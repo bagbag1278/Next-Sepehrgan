@@ -138,8 +138,7 @@ const AddComment = ({
         onClick={() => setIsOpen(true)}
         className="text-[11px] text-[#0887CA] dark:text-blue-300   whitespace-nowrap font-bold hover:underline transition-all duration-300 flex items-center gap-1"
       >
-        <MessageCircle size={12} />
-        {t('reply')}
+        <MessageCircle size={12} />{t('reply')}
       </button>
     );
   }
@@ -209,11 +208,10 @@ const AddComment = ({
                 >
                   <Star
                     size={16}
-                    className={`${
-                      num <= (hoveredRating || rating)
+                    className={`${num <= (hoveredRating || rating)
                         ? "fill-yellow-500 text-yellow-500"
                         : "text-gray-300 dark:text-gray-600 fill-gray-200 dark:fill-gray-700"
-                    } transition-colors duration-200`}
+                      } transition-colors duration-200`}
                   />
                 </button>
               ))}
@@ -230,15 +228,14 @@ const AddComment = ({
           type="submit"
           disabled={loading}
           className={`px-5 py-2 text-[12px] font-bold text-white rounded-xl transition-all duration-300 shadow-md flex items-center gap-2
-            ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-gradient-to-r from-[#10088F] to-[#0887CA] hover:from-[#0d0775] hover:to-[#0670a8] hover:shadow-lg transform hover:scale-[1.02]"
+            ${loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-gradient-to-r from-[#10088F] to-[#0887CA] hover:from-[#0d0775] hover:to-[#0670a8] hover:shadow-lg transform hover:scale-[1.02]"
             }`}
         >
           {loading ? (
             <>
-              <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-3 h-3border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               {t('sending')}
             </>
           ) : (
