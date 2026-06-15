@@ -858,6 +858,11 @@
     "villaIsfahan2": "Isfahan Villa",
     "previous": "Previous",
     "next": "Next"
+  },
+    "BreadCrumb": {
+    "home": "Home",
+    "hotelReserve": "Hotel Reserve",
+    "mortgageRentApartment": "Mortgage & Apartment Rent"
   }
 
 

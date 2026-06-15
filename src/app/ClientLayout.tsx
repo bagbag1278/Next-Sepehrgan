@@ -24,10 +24,12 @@ const noLayoutRoutes = [
   "/404",
   "/forgetpass",
   "/dashboard",
-  
 ];
 
-const noLayoutBooking = ["/housereserve", "/booking"];
+const noFooterRoutes = [
+  "/housereserve",
+  "/booking",
+];
 
 export default function ClientLayout({
   children,
@@ -40,31 +42,33 @@ export default function ClientLayout({
     (route) => pathname === route || pathname?.startsWith(route),
   );
 
-  const isBookingRoute = noLayoutBooking.some((route) =>
-    pathname?.startsWith(route),
+  const isNoFooterRoute = noFooterRoutes.some(
+    (route) => pathname === route,
   );
 
-  if (isBookingRoute) {
-    return (
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <Toaster position="top-center" gutter={8} />
-        <Header />
-        <main className="w-full min-h-screen">{children}</main>
-      </ThemeProvider>
-    );
-  }
+  const isHouseReserveDetail = pathname?.startsWith("/housereserve/") && pathname !== "/housereserve";
 
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <Toaster position="top-center" gutter={8} />
+      
       {isNoLayoutRoute ? (
         <main className="w-full min-h-screen">{children}</main>
+      ) : isNoFooterRoute ? (
+        <>
+          <Header />
+          <main className="w-full min-h-screen">{children}</main>
+        </>
       ) : (
         <>
           <Header />
-          <ThemeManager>
-            <main className="w-full">{children}</main>
-          </ThemeManager>
+          {isHouseReserveDetail ? (
+            <main className="w-full min-h-screen">{children}</main>
+          ) : (
+            <ThemeManager>
+              <main className="w-full">{children}</main>
+            </ThemeManager>
+          )}
           <Footer />
         </>
       )}

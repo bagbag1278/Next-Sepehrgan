@@ -3,7 +3,6 @@ import { useTranslations } from "next-intl";
 import Link from "@/components/HouseDetails/icon/icon/Link";
 import Star from "@/components/HouseDetails/icon/icon/Star";
 import CommentsSection from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Comment/CommentsSection";
-import FleshHome from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/FleshHome";
 import Popular from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/Popular";
 import dynamic from "next/dynamic";
 
@@ -13,11 +12,11 @@ import SwiperGalery from "@/app/(main)/housereserve/HouseReserveDetails/componen
 import Bread from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Header/Bread";
 import { useParams } from "next/navigation";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
-;
 import SimilarProperties from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/SimilarProperties";
 import { MapPin } from "lucide-react";
 import Like from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/Like";
 import Seller from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/Seller";
+import SkeletonDetail from "../common/loading/SkeletonDetail";
 
 const LoadingComponent = () => {
   const t = useTranslations("MortgageRentDetails");
@@ -30,133 +29,133 @@ const LoadingComponent = () => {
   );
 };
 
-const MapRent = dynamic(() => import("@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/MapRent"), {
-  ssr: false,
-  loading: () => <LoadingComponent />,
-});
+const MapRent = dynamic(
+  () =>
+    import("@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/MapRent"),
+  {
+    ssr: false,
+    loading: () => <LoadingComponent />,
+  },
+);
 const MortgageRentDetails = () => {
-    const t = useTranslations("MortgageRentDetails");
-      const params = useParams();
-      const houseId = params?.id ? Number(params.id) : null;
-    
-      const [data, setData] = useState<any>(null);
-      const [loading, setLoading] = useState(true);
-      const [locationData, setLocationData] = useState<any>(null);
-      const [locationLoading, setLocationLoading] = useState(true);
-    
-    const fetchLocation = async () => {
-      if (!houseId) return;
-    
-      try {
-        setLocationLoading(true);
-        
-        const response = await fetch(`/api/locations`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-        
-        const result = await response.json();
-        const locations = result.data || [];
-      
-        let foundLocation = null;
-        
-        foundLocation = locations.find((loc: any) => loc.id === houseId);
-        
-        if (!foundLocation && locations.length > 0) {
-          foundLocation = locations[0];
-        }
-        
-        if (foundLocation && foundLocation.lat && foundLocation.lng) {
-          const lat = parseFloat(foundLocation.lat);
-          const lng = parseFloat(foundLocation.lng);
-          
-          const isValidLat = !isNaN(lat) && lat >= -90 && lat <= 90;
-          const isValidLng = !isNaN(lng) && lng >= -180 && lng <= 180;
-          
-          if (isValidLat && isValidLng) {
-            setLocationData({
-              id: foundLocation.id,
-              lat: lat.toString(),
-              lng: lng.toString(),
-              areaName: foundLocation.areaName,
-            });
-          } else {
-            setLocationData({
-              id: houseId,
-              lat: "35.6892",
-              lng: "51.3890",
-              areaName: foundLocation.areaName || "تهران، مرکز",
-            });
-          }
+  const t = useTranslations("MortgageRentDetails");
+  const params = useParams();
+  const houseId = params?.id ? Number(params.id) : null;
+
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [locationData, setLocationData] = useState<any>(null);
+  const [locationLoading, setLocationLoading] = useState(true);
+
+  const fetchLocation = async () => {
+    if (!houseId) return;
+
+    try {
+      setLocationLoading(true);
+
+      const response = await fetch(`/api/locations`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const result = await response.json();
+      const locations = result.data || [];
+
+      let foundLocation = null;
+
+      foundLocation = locations.find((loc: any) => loc.id === houseId);
+
+      if (!foundLocation && locations.length > 0) {
+        foundLocation = locations[0];
+      }
+
+      if (foundLocation && foundLocation.lat && foundLocation.lng) {
+        const lat = parseFloat(foundLocation.lat);
+        const lng = parseFloat(foundLocation.lng);
+
+        const isValidLat = !isNaN(lat) && lat >= -90 && lat <= 90;
+        const isValidLng = !isNaN(lng) && lng >= -180 && lng <= 180;
+
+        if (isValidLat && isValidLng) {
+          setLocationData({
+            id: foundLocation.id,
+            lat: lat.toString(),
+            lng: lng.toString(),
+            areaName: foundLocation.areaName,
+          });
         } else {
           setLocationData({
             id: houseId,
             lat: "35.6892",
             lng: "51.3890",
-            areaName: "تهران، مرکز",
+            areaName: foundLocation.areaName || "تهران، مرکز",
           });
         }
-      } catch (error) {
-        console.error("خطا در گرفتن لوکیشن:", error);
+      } else {
         setLocationData({
           id: houseId,
           lat: "35.6892",
           lng: "51.3890",
           areaName: "تهران، مرکز",
         });
-      } finally {
-        setLocationLoading(false);
       }
-    };
-      const fetchRentData = async () => {
-        if (!houseId) return;
-    
-        try {
-          setLoading(true);
-          const response = await fetch(`/api/houses/${houseId}`);
-    
-          if (!response.ok) throw new Error("مورد یافت نشد");
-    
-          const result = await response.json();
-          setData(result);
-        } catch (error) {
-          console.error("Error:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-    
-      useEffect(() => {
-        fetchLocation();
-        fetchRentData();
-      }, [houseId]);
-    
-      if (loading && !data) {
-        return (
-          <div className="text-center mt-20 animate-pulse text-gray-500 dark:text-gray-400">
-            {t("loading")}
-          </div>
-        );
-      }
-    
-      if (!data) {
-        return (
-          <div className="text-center mt-20 text-gray-500 dark:text-gray-400">
-            {t("noData")}
-          </div>
-        );
-      }
-    
-      const breadcrumbItems = [
-        { title: t("hotelReserve"), href: "/housereserve" },
-        {
-          title: `${t("hotelReserve")} ${data.city || t("unknown")}`,
-          href: "/search",
-        },
-        { title: data.title },
-      ];
-    
+    } catch (error) {
+      console.error("خطا در گرفتن لوکیشن:", error);
+      setLocationData({
+        id: houseId,
+        lat: "35.6892",
+        lng: "51.3890",
+        areaName: "تهران، مرکز",
+      });
+    } finally {
+      setLocationLoading(false);
+    }
+  };
+  const fetchRentData = async () => {
+    if (!houseId) return;
+
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/houses/${houseId}`);
+
+      if (!response.ok) throw new Error("مورد یافت نشد");
+
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLocation();
+    fetchRentData();
+  }, [houseId]);
+
+if (loading && !data) {
+  return <SkeletonDetail />;
+}
+
+  if (!data) {
+    return (
+      <div className="text-center mt-20 text-gray-500 dark:text-gray-400">
+        {t("noData")}
+      </div>
+    );
+  }
+
+  const breadcrumbItems = [
+    { title: t("hotelReserve"), href: "/housereserve" },
+    {
+      title: `${t("hotelReserve")} ${data.city || t("unknown")}`,
+      href: "/search",
+    },
+    { title: data.title },
+  ];
+
   return (
     <div>
       <div className="w-11/12 m-auto flex flex-col items-center gap-10 mt-10 relative dark:text-white">
@@ -174,14 +173,15 @@ const MortgageRentDetails = () => {
           </div>
         </AdvancedScrollAnimation>
 
-        <div className="mt-24 max-[1300]:mt-14 max-[600]:mt-0 ">
+        <div dir="ltr" className="mt-24 max-[1300]:mt-14 max-[600]:mt-0 ">
           <AdvancedScrollAnimation type="slide-up" delay={0.1}>
             <div className="w-full max-w-7xl flex justify-between items-center flex-wrap gap-4">
               <div className="w-20 h-8 flex flex-wrap gap-1 relative max-[1300px]:left-28 max-[600px]:top-15 ">
                 <div className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 rounded-lg flex items-center justify-center border border-blue-400 dark:border-gray-500">
                   <Link />
                 </div>
-                <div>
+
+                <div className="w-8 h-8 bg-[#F5F5F5] dark:bg-gray-800 rounded-lg flex items-center justify-center border border-blue-400 dark:border-gray-500">
                   <Like
                     houseId={data?.id}
                     onLikeChange={(liked) =>
@@ -229,9 +229,7 @@ const MortgageRentDetails = () => {
                 <SimilarProperties currentId={data.id} />
               </div>
 
-              <div className="absolute -left-35 bottom-120 transform rotate-[-10deg] min-[1600px]:hidden opacity-70 max-[1300px]:hidden">
-                <FleshHome />
-              </div>
+    
             </div>
 
             <div className="flex-1 w-full max-w-200 max-[450]:w-90 h-auto rounded-2xl flex flex-col items-center gap-6 bg-white dark:bg-gray-800 shadow-lg p-6 mx-auto">
@@ -265,7 +263,10 @@ const MortgageRentDetails = () => {
                 </AdvancedScrollAnimation>
 
                 <AdvancedScrollAnimation type="slide-up" delay={0.3}>
-                  <div className="w-full pl-3 mt-10 flex flex-col gap-6" dir="rtl">
+                  <div
+                    className="w-full pl-3 mt-10 flex flex-col gap-6"
+                    dir="rtl"
+                  >
                     <h3 className="text-[rgb(16,8,143)] dark:text-white font-bold text-[18px] pr-2 max-[1024px]:pr-12">
                       {t("location")}
                     </h3>
@@ -280,7 +281,6 @@ const MortgageRentDetails = () => {
                       />
                     )}
 
-                 
                     <div className="w-full mt-2 ">
                       <h4 className="text-[rgb(6,4,37)] dark:text-white font-bold text-[16px] mb-3 flex items-center gap-2">
                         <MapPin size={18} className="text-blue-500" />
@@ -314,7 +314,7 @@ const MortgageRentDetails = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MortgageRentDetails
+export default MortgageRentDetails;

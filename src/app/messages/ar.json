@@ -860,5 +860,10 @@
     "villaIsfahan2": "فيلا أصفهان",
     "previous": "السابق",
     "next": "التالي"
+  },
+   "BreadCrumb": {
+    "home": "الرئيسية",
+    "hotelReserve": "حجز فندق",
+    "mortgageRentApartment": "رهن وإيجار شقة"
   }
 }
