@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -105,14 +107,19 @@ const Sidebar = () => {
                             <Link
                                 key={item.id}
                                 href={item.href}
-                                className={` flex items-center gap-3 px-4 py-3 rounded-xl
+                                className={` flex items-center gap-3px-4 py-3 rounded-xl
                                 transition-all duration-200
 
                                 ${isActive
-                                        ? ` bg-blue-500 text-white shadow-lg shadow-blue-500/30
+                                        ? `
+                                        bg-blue-500
+                                        text-white
+                                        shadow-lg shadow-blue-500/30
                                         `
                                         : `
-                                        text-gray-700 dark:text-gray-300  hover:bg-blue-50 dark:hover:bg-blue-900/20
+                                        text-gray-700 dark:text-gray-300
+                                        hover:bg-blue-50
+                                        dark:hover:bg-blue-900/20
                                         `
                                     }
                                 `}
@@ -134,14 +141,19 @@ const Sidebar = () => {
 
                 {/* logout */}
                 <div
-                    className='pt-4 mt-4 border-t border-gray-200 dark:border-gray-700'
+                    className='pt-4 mt-4
+                    border-t border-gray-200
+                    dark:border-gray-700'
                 >
 
 
 
                     < div
-                        className='w-full flex items-center gap-3 px-4 py-3 rounded-xl  text-red-500 hover:bg-red-50
-                            dark:hover:bg-red-900/20 transition-all'
+                        className='w-full flex items-center
+                            gap-3 px-4 py-3 rounded-xl
+                            text-red-500 hover:bg-red-50
+                            dark:hover:bg-red-900/20
+                            transition-all'
                     >
 
                         <LogOut size={20} />
@@ -152,9 +164,11 @@ const Sidebar = () => {
 
                     </div>
 
+
+
                 </div>
 
-                <ShowInfo />
+                {/* <ShowInfo /> */}
 
             </nav>
 
