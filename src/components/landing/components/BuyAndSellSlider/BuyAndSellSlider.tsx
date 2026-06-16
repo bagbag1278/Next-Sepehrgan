@@ -10,10 +10,12 @@ const BuyAndSellSlider = () => {
     const [houses, setHouses] = useState([]);
     const [error, setError] = useState("");
 
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ;
+
     useEffect(() => {
         const getHouses = async () => {
             try {
-                const res = await fetch("http://188.121.111.8:3003/api/houses");
+                const res = await fetch(`${BASE_URL}/houses`);
                 const data = await res.json();
                 setHouses(data.houses || []);
             } catch (err) {
@@ -44,7 +46,6 @@ const BuyAndSellSlider = () => {
         <div className='h-140 hidden xl:flex flex-wrap justify-center'>
             <div className='w-365 flex justify-center flex-wrap overflow-hidden'>
                 <div className='w-300 flex justify-center flex-wrap'>
-                    {/* above the slider */}
                     <div className='w-full h-6.25'>
                         <div className='w-146.5' dir='ltr'>
                             <div className='text-blue-200 dark:text-[#28A5E6]'>
@@ -52,10 +53,8 @@ const BuyAndSellSlider = () => {
                             </div>
                         </div>
                     </div>
-                    {/* above the slider &&& secound */}
                     <div className='w-full h-10 flex justify-between'>
                         <div className='w-151 h-10.25 flex justify-end gap-9 items-center'>
-                            {/* ***** Title and line Image ***** */}
                             <div className='border-white'>
                                 <div className='text-[20px] font-bold text-blue-400 dark:text-[#F5F5F5]'>
                                     {t("title")}
@@ -68,7 +67,6 @@ const BuyAndSellSlider = () => {
                                 {t("lowestPrices")}
                             </div>
                         </div>
-                        {/* *** view more button  *** */}
                         <div className='w-60'>
                             <Link 
                                 href={"/houserent"} 

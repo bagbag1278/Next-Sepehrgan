@@ -44,7 +44,7 @@ const MenuItems = [
   { id: 3, icon: Users, label: "مدیریت کاربران", href: "/admin/UsersManagment" },
   { id: 4, icon: CalendarCheck, label: "مدیریت رزروها", href: "/admin/BookingsManagement" },
   { id: 5, icon: MessageSquare, label: "مدیریت نظرات", href: "/admin/CommentsManagement" },
-  { id: 6, icon: TicketPercent, label: "مدریت مالی", href: "/admin/PaymentsManagement" },
+  { id: 6, icon: TicketPercent, label: "مدیریت مالی", href: "/admin/PaymentsManagement" },
   { id: 7, icon: MessageCircleMore, label: "مدیریت چت", href: "/admin/ChatsManagement" },
   { id: 8, icon: Bell, label: "مدیریت اعلان ها", href: "/admin/AdminNotifications" },
   { id: 9, icon: Share2, label: "لینک‌های اجتماعی", href: "/admin/SocialLink" },  
@@ -106,7 +106,7 @@ export const AdminSidebar = ({
                   size={16}
                   className={`transition-transform duration-200 absolute ml-17 mt-23 ${
                     profileAside ? "rotate-180" : ""
-                  } text-[#005EA4] dark:text-[#005EA4] cursor-pointer`}
+                  } text-blue-200 cursor-pointer`}
                 />
                 <div className="flex justify-center w-full flex-col absolute mt-17 pointer-events-none">
                   <p className="text-[12px] font-normal flex justify-center items-center text-gray-500 dark:text-gray-400">
@@ -123,13 +123,13 @@ export const AdminSidebar = ({
         {profileAside && (
           <>
             <div className="fixed inset-0 z-40" onClick={() => setProfileAside(false)} />
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-[200px] bg-[#F5F5F5] dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-3 z-50">
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-50 bg-[#F5F5F5] dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-3 z-50">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-full border-2 border-[#05ED6A80] flex items-center justify-center overflow-hidden">
                   <MiniRezaBakhshian />
                 </div>
                 <div>
-                  <p className="font-medium text-sm text-[#060425] dark:text-white">{userData?.name || "کاربر"}</p>
+                  <p className="font-medium text-sm text-blue-400 dark:text-white">{userData?.name || "کاربر"}</p>
                   <p className="text-[11px] text-gray-500">{formatPhoneNumber(userData?.phone || "")}</p>
                 </div>
               </div>

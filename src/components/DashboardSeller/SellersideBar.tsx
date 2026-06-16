@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -17,6 +17,8 @@ import {
 import HeaderIcon from '@/components/DashboardSeller/Icon/HeaderIcon'
 import HeaderIconDark from '@/components/DashboardSeller/Icon/HeaderIconDark'
 import LogoutBox from './logout/LogoutBox'
+
+import ShowInfo from './ShowInfo'
 
 const MenuItems = [
     {
@@ -38,11 +40,11 @@ const MenuItems = [
         href: '/dashboard/seller/housemanegement',
     },
     {
-       id: 9,
-       icon:  PlusCircle ,
-       label: ' افزودن ملک',
-       href: '/dashboard/seller/CreateMyHosue',
-   },
+        id: 9,
+        icon: PlusCircle,
+        label: ' افزودن ملک',
+        href: '/dashboard/seller/CreateMyHosue',
+    },
     {
         id: 5,
         icon: MessageSquare,
@@ -105,9 +107,7 @@ const Sidebar = () => {
                             <Link
                                 key={item.id}
                                 href={item.href}
-                                className={`
-                                flex items-center gap-3
-                                px-4 py-3 rounded-xl
+                                className={` flex items-center gap-3px-4 py-3 rounded-xl
                                 transition-all duration-200
 
                                 ${isActive
@@ -146,27 +146,29 @@ const Sidebar = () => {
                     dark:border-gray-700'
                 >
 
-                   
 
-                        < div
-                            className='w-full flex items-center
+
+                    < div
+                        className='w-full flex items-center
                             gap-3 px-4 py-3 rounded-xl
                             text-red-500 hover:bg-red-50
                             dark:hover:bg-red-900/20
                             transition-all'
-                        >
+                    >
 
-                            <LogOut size={20} />
+                        <LogOut size={20} />
 
-                            <span className='text-sm font-medium'>
-                                    <LogoutBox />
-                            </span>
+                        <span className='text-sm font-medium'>
+                            <LogoutBox />
+                        </span>
 
-                        </div>
+                    </div>
 
-                    
+
 
                 </div>
+
+                {/* <ShowInfo /> */}
 
             </nav>
 

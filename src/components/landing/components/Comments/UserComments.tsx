@@ -52,13 +52,16 @@ const FocusCarousel = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [likedItems, setLikedItems] = useState<{ [key: string]: boolean }>({});
 
+  // استفاده از BASE_URL
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        const res = await fetch("http://188.121.111.8:3003/api/comments");
+        const res = await fetch(`${BASE_URL}/comments`);
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);

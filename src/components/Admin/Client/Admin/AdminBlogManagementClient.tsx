@@ -31,7 +31,7 @@ export interface BlogPost {
   category_id: number;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ;
 
 const AdminBlogManagementClient = () => {
   const router = useRouter();

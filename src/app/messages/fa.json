@@ -83,7 +83,7 @@
       "viewDetails": "مشاهده جزئیات"
     },
   "FocusCarousel": {
-    "topCommentsText": "برترین نظرات شما، صدای شما راهنمای ما",
+    "topCommentsText": "برترین نظرات شما صدای شما راهنمای ما",
     "visitorsComments": "نظرات بازدید کنندگان",
     "commentsDescription": "نظرات شما، نه تنها صدای ما هستند، بلکه راهنمایی برای دیگران در انتخاب بهترین تجربیات سفر هستند!",
     "viewAll": "مشاهده همه",
@@ -881,8 +881,12 @@
     "villaIsfahan2": "ویلای اصفهان",
     "previous": "قبلی",
     "next": "بعدی"
+  },
+    "BreadCrumb": {
+    "home": "خانه",
+    "hotelReserve": "رزرو هتل",
+    "mortgageRentApartment": "رهن و اجاره آپارتمان"
   }
-  
 
   
   }

@@ -31,7 +31,7 @@ const MenuItems = [
   { id: 3, icon: Users, label: "مدیریت کاربران", href: "/admin/UsersManagment" },
   { id: 4, icon: CalendarCheck, label: "مدیریت رزروها", href: "/admin/BookingsManagement" },
   { id: 5, icon: MessageSquare, label: "مدیریت نظرات", href: "/admin/CommentsManagement" },
-  { id: 6, icon: TicketPercent, label: "مدریت مالی", href: "/admin/PaymentsManagement" },
+  { id: 6, icon: TicketPercent, label: "مدیریت مالی", href: "/admin/PaymentsManagement" },
   { id: 7, icon: MessageCircleMore, label: "مدیریت چت", href: "/admin/ChatsManagement" },
   { id: 8, icon: Bell, label: "مدیریت اعلان ها", href: "/admin/AdminNotifications" },
   { id: 9, icon: Share2, label: "لینک‌های اجتماعی", href: "/admin/SocialLink" },  
@@ -48,7 +48,7 @@ const LogoutModal = ({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose:
         <div className="p-6">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
-              <AlertTriangle size={32} className="text-red-500" />
+              <AlertTriangle size={32} className="text-red-50" />
             </div>
           </div>
           <h3 className="text-xl font-bold text-center text-gray-800 dark:text-white mb-2">خروج از حساب</h3>
@@ -70,7 +70,6 @@ const AdminLayoutClient: FC<IChildren> = ({ children, userData }) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // تشخیص موبایل
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
