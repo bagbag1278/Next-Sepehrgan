@@ -60,7 +60,7 @@ export async function GET(
 
         const status = searchParams.get("status");
 
-        let url = `http://188.121.111.8:3003/api/bookings/${userId}/customers?page=${page}&limit=${limit}`;
+        let url = `http://188.121.104.25:3003/api/bookings/${userId}/customers?page=${page}&limit=${limit}`;
 
         if (status) {
             url += `&status=${status}`;  

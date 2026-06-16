@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
         const search = searchParams.get("search") ?? "";
 
         const res = await axios.get(
-            "http://188.121.111.8:3003/api/houses/seller/user",
+            "http://188.121.104.25:3003/api/houses/seller/user",
             {
                 headers: {
                     Authorization: `Bearer ${token}`,

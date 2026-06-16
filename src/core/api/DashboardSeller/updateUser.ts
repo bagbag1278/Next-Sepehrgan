@@ -12,7 +12,7 @@ export async function updateUser(
     const cookieStore = await cookies();
 
     const response = await fetch(
-        `http://localhost:3000/api/proxy/users/${userId}`,
+        `http://188.121.104.25:3003/api/proxy/users/${userId}`,
         {
             method: "PUT",
             headers: {

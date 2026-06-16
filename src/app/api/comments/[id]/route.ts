@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-const BASE_URL = "http://188.121.111.8:3003";
+const BASE_URL = "http://188.121.104.25:3003/api";
 
 export async function DELETE(
     req: Request,

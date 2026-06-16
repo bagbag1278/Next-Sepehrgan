@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-const BASE_URL = "http://188.121.111.8:3003";
+const BASE_URL = "http://188.121.104.25:3003/api";
 
 interface TokenPayload {
   id?: number;

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ||
-  "http://188.121.111.8:3003/api";
+  "http://188.121.104.25:3003/api";
 
 export interface CreateHouseBody {
   title: string;

@@ -42,7 +42,7 @@ export async function POST(
 
         const response =
             await axios.post(
-                `http://188.121.111.8:3003/api/bookings/${id}/cancel`,
+                `http://188.121.104.25:3003/api/bookings/${id}/cancel`,
                 {},
                 {
                     headers: {
