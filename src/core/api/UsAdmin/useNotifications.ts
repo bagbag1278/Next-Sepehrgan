@@ -9,7 +9,7 @@ export interface Notification {
   createdAt: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.104.25:3003";
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);

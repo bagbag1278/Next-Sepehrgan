@@ -26,7 +26,7 @@ const BlogClient = () => {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/blogs");
+      const response = await fetch("http://188.121.104.25:3003/api/blogs");
       const result = await response.json();
       setBlogs(result.data || []);
     } catch (error) {

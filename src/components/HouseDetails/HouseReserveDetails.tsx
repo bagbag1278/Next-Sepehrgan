@@ -33,7 +33,7 @@ const HouseReserveDetails = () => {
         const fetchHotelDetails = async () => {
           try {
             setLoading(true);
-            const response = await fetch(`/api/houses/${houseId}`);
+            const response = await fetch(`http://188.121.104.25:3003/api/houses/${houseId}`);
             const result = await response.json();
             setData(result.data || result);
           } catch (error) {

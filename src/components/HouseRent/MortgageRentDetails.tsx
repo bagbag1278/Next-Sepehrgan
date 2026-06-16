@@ -53,7 +53,7 @@ const MortgageRentDetails = () => {
     try {
       setLocationLoading(true);
 
-      const response = await fetch(`/api/locations`);
+      const response = await fetch(`http://188.121.104.25:3003/api/api/locations`);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
@@ -117,7 +117,7 @@ const MortgageRentDetails = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`/api/houses/${houseId}`);
+      const response = await fetch(`http://188.121.104.25:3003/api/houses/${houseId}`);
 
       if (!response.ok) throw new Error("مورد یافت نشد");
 
