@@ -27,12 +27,8 @@ const MenuItems = [
         label: 'داشبورد',
         href: '/dashboard/seller',
     },
-    {
-        id: 3,
-        icon: Users,
-        label: 'اطلاعات کاربری',
-        href: '/dashboard/seller/userprofile',
-    },
+
+       
     {
         id: 4,
         icon: CalendarCheck,

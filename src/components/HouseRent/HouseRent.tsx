@@ -112,7 +112,7 @@ const HouseRentContent = () => {
       setError(null);
 
       const paramsString = buildQueryString(currentFilters, page);
-      const apiUrl = `http://188.121.111.8:3003/api/houses?${paramsString}`;
+      const apiUrl = `http://188.121.104.25:3003/api/houses?${paramsString}`;
 
       try {
         const res = await fetch(apiUrl);
