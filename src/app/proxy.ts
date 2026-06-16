@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
@@ -8,7 +9,7 @@ const intlMiddleware = createMiddleware({
   localePrefix: 'never', 
 });
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
   const response = NextResponse.next();

@@ -5,6 +5,7 @@ import SideBarLinks from "@/components/Dashboard/buyer/SideBarLinks";
 import Title from "@/components/Dashboard/buyer/Title";
 import UserDropdown from "@/components/Dashboard/buyer/UserDropdown";
 import DashboardHeader from "@/components/Dashboard/header";
+import UserInfo from "@/components/Dashboard/UserInfo";
 import HeroSction from "@/components/header/Icon/HeaderIcon1";
 import HeroSction2 from "@/components/header/Icon/HeaderIcon2";
 import DarkModeHero from "@/components/landing/components/HeroSction/HeroFilter/DarkModeHero";
@@ -67,7 +68,7 @@ const BuyerDashLayout: FC<IChildren> = async ({ children }) => {
                 <span className="text-[12px] font-normal opacity-80">
                   خریدار
                 </span>
-                <UserDropdown user={user}/>
+                <UserInfo />
               </div>
             </div>
             <div className="bg-blue-300/10 rounded-3xl h-15.5 flex items-center justify-center gap-1">

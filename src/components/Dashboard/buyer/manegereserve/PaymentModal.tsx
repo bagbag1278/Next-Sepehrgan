@@ -8,7 +8,7 @@ import {
   HiOutlineCheck,
 } from "react-icons/hi";
 import { createPayment } from "@/core/api/Buyer/CreatePayment.api";
-import api from "@/core/interceptor/axiosInstance";
+
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;

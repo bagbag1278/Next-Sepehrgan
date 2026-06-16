@@ -57,15 +57,15 @@ const ManegeHouse = ({ booking }: ManegeHouseProps) => {
         {toTime(booking.created_at)}
       </span>
       {/* price */}
-      <span className=" h-5.5 w-25 text-[13px] text-nowrap text-blue-200 absolute right-[436px] dark:text-blue-300">
+      <span className=" h-5.5 w-25 text-[13px] text-nowrap text-blue-200 absolute right-109 dark:text-blue-300">
         {digitsEnToFa(addCommas(booking.house.price))} تومان
       </span>
       {/* travelers */}
-      <span className=" h-5.5 w-23 text-[13px] text-center absolute right-[588px]">
+      <span className=" h-5.5 w-23 text-[13px] text-center absolute right-147">
         {digitsEnToFa(booking.traveler_details.length.toString())}نفر
       </span>
       {/* reserve status */}
-      <span className="h-5.5 w-20 text-[13px] text-center absolute right-[724px]">
+      <span className="h-5.5 w-20 text-[13px] text-center absolute right-181">
         {booking.status === "pending" && <Decline />}
 
         {booking.status === "confirmed" && <Accept />}
@@ -73,7 +73,7 @@ const ManegeHouse = ({ booking }: ManegeHouseProps) => {
         {booking.status === "canceled" && <Reeject />}
       </span>
       {/* payment status */}
-      <span className="h-5.5 w-5 text-[13px] absolute right-[843px]">
+      <span className="h-5.5 w-5 text-[13px] absolute right-210.75">
         <Decline />
       </span>
       {/* more */}
