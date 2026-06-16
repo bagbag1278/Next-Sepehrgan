@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Notif from "@/components/Dashboard/buyer/notification/Notif";
 import NotificationFilter from "@/components/Dashboard/buyer/notification/NotificationFilter";
 import Pagination from "@/components/Dashboard/buyer/Pagination";
@@ -5,6 +6,14 @@ import AnimatedCard from "@/components/ui/AnimatedCard";
 import { getNotifications } from "@/core/api/Buyer/Notification.api";
 import { getUserInfo } from "@/core/token/auth";
 import React, { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "اعلان‌ها",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type Props = {
   searchParams: Promise<{
@@ -77,4 +86,5 @@ const NotificationPage = async ({ searchParams }: Props) => {
     </div>
   );
 };
+
 export default NotificationPage;

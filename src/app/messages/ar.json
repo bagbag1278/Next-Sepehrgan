@@ -81,18 +81,21 @@
     "defaultTitle": "عقار",
     "viewDetails": "عرض التفاصيل"
   },
+
   "FocusCarousel": {
     "topCommentsText": "أفضل تعليقاتكم، صوتكم يوجهنا",
     "visitorsComments": "تعليقات الزوار",
-    "commentsDescription": "تعليقاتكم ليست فقط صوتنا، ولكنها دليل للآخرين في اختيار أفضل تجارب السفر!",
+    "commentsDescription": "تعليقاتكم ليست فقط صوتنا، بل هي دليل للآخرين في اختيار أفضل تجارب السفر!",
     "viewAll": "عرض الكل",
     "unknownUser": "مستخدم غير معروف",
-    "noDate": "لا يوجد تاريخ",
-    "noContent": "لا يوجد محتوى",
+    "noDate": "بدون تاريخ",
+    "noContent": "بدون محتوى",
     "unknownError": "خطأ غير معروف في جلب البيانات",
     "loading": "جاري التحميل...",
     "error": "خطأ:",
-    "noItems": "لا توجد عناصر"
+    "noItems": "لم يتم العثور على عناصر",
+    "scrollLeft": "تمرير لليسار",
+    "scrollRight": "تمرير لليمين"
   },
   "FirstContainer": {
     "modernEcotourism": "السياحة البيئية الحديثة ذكريات ",
@@ -569,7 +572,9 @@
     "heroSubtitle": "سجل الدخول وبخطوة بسيطة، انطلق نحو المنزل الذي طالما حلمت به!",
     "heroFooter": "صفاء! حب! مودة!",
     "loginWithGoogle": "الدخول بحساب جوجل",
-    "or": "أو"
+    "or": "أو",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب"
   },
   "ForgetPassword": {
     "request": "البريد الإلكتروني",

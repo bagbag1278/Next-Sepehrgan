@@ -1,7 +1,6 @@
 import DashProduct from "@/components/Dashboard/buyer/dash/DashProduct";
 import DashStatus from "@/components/Dashboard/buyer/dash/DashStatus";
 import ProfileInfoCard from "@/components/Dashboard/buyer/dash/ProfileInfoCard";
-import ReservationChart from "@/components/Dashboard/buyer/dash/ReservationChart";
 import AnimatedCard from "@/components/ui/AnimatedCard";
 import { getDashboardSummary } from "@/core/api/Buyer/DashboardSummary.api";
 import { getBookings } from "@/core/api/Buyer/GetBookings.api";

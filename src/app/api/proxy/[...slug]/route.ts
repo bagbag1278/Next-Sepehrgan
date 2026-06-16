@@ -8,10 +8,10 @@ async function handler(
   {
     params,
   }: {
-    params: Promise<{ path: string[] }>;
+    params: Promise<{ slug: string[] }>;
   },
 ) {
-  const { path } = await params;
+  const { slug: path } = await params;
 
   const cookieStore = await cookies();
 

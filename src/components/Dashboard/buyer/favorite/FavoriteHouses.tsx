@@ -38,7 +38,7 @@ const FavoriteHouses = ({ house, favoriteId }: FavoriteHousesProps) => {
           {house.title}
         </div>
 
-        <span className="text-blue-300 font-bold mr-10">
+        <span className="text-blue-300 text-nowrap font-bold mr-10">
           {digitsEnToFa(addCommas(house.price))} تومان
         </span>
 

@@ -64,7 +64,7 @@ const HeaderClient = () => {
   return (
     <>
       <div className="w-full items-center flex justify-center">
-        <div dir="rtl" className="flex justify-between w-full max-w-370 mt-6 dark:text-white px-4 lg:px-8 gap-25 max-[780]:gap-0">
+        <div dir="rtl" className="flex justify-between w-full max-w-400  mt-6 dark:text-white px-4 lg:px-8 gap-35 max-[780]:gap-0 max-[1224]:gap-8">
           <NavDesktop nav={nav} />
           <Logo />
           <div className="hidden lg:flex items-center gap-4 z-50">

@@ -1,9 +1,18 @@
+import type { Metadata } from "next";
 import HouseSearch from "@/components/Dashboard/buyer/manegereserve/HouseSearch";
 import BookingList from "@/components/Dashboard/buyer/manegereserve/BookingList";
 import MoreFilterButton from "@/components/Dashboard/buyer/manegereserve/MoreFilterButton";
 import Pagination from "@/components/Dashboard/buyer/Pagination";
 import { getBookings } from "@/core/api/Buyer/GetBookings.api";
 import React, { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "مدیریت رزروها",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 type Props = {
   searchParams: Promise<{
@@ -35,7 +44,6 @@ const ManegeReservePage = async ({ searchParams }: Props) => {
 
   return (
     <div className="">
-      {/* filter and search */}
       <div className="w-243 h-12 mx-auto mt-16 flex justify-between items-center">
         <div className="">
           لیست رزرو های شما{" "}
@@ -50,7 +58,6 @@ const ManegeReservePage = async ({ searchParams }: Props) => {
           <MoreFilterButton />
         </div>
       </div>
-      {/* houses */}
       <div className="w-243 h-92 mx-auto flex flex-col gap-4 mt-5">
         <div className="h-16 rounded-2xl py-5.25 pr-14 dark:bg-slate-700 shadow-[0_0_4px] shadow-blue-200/20">
           <div className="-5.5 w-222.5 opacity-50 flex gap-24.25">
@@ -75,7 +82,6 @@ const ManegeReservePage = async ({ searchParams }: Props) => {
           </Suspense>
         </div>
       </div>
-      {/* pagination */}
       <div className="w-88 h-10 mr-6 mt-5">
         <Pagination totalPages={totalPages} />
       </div>

@@ -145,8 +145,7 @@ const AddComment = ({
 
   const formContent = (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full">
-      {/* عنوان پاسخ */}
-      <div className="flex justify-between items-center pb-2 border-b border-gray-100 dark:border-gray-700">
+      <div className="flex justify-between items-center z-50 pb-2 border-b border-gray-100 dark:border-gray-700">
         {isReply && (
           <div className="flex items-center gap-2">
             <MessageCircle size={16} className="text-[#0887CA] dark:text-blue-300" />

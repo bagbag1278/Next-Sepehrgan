@@ -5,11 +5,41 @@ import LocalFont from "next/font/local";
 import ClientLayout from "./ClientLayout";
 import "./globals.css";
 
+import { Metadata } from "next";
+
+
 const iran = LocalFont({
   src: "../assets/font/IRANSans-web.woff",
   variable: "--font-iran",
   display: "swap",
 });
+
+export const metadata: Metadata = {
+  title: {
+    default: "رهن کده",
+    template: "%s | رهن کده",
+  },
+  description: "رزرو سریع ویلا، هتل و آپارتمان در رهن کده با بهترین قیمت",
+  metadataBase: new URL("http://localhost:3000"),
+  keywords: ["رهن", "اجاره", "ویلا", "هتل", "آپارتمان", "رزرو آنلاین", "رهن کده", "اجاره روزانه"],
+  authors: [{ name: "رهن کده" }],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    siteName: "رهن کده",
+    locale: "fa_IR",
+    type: "website",
+    title: "رهن کده",
+    description: "رزرو سریع ویلا، هتل و آپارتمان در رهن کده با بهترین قیمت",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "رهن کده",
+    description: "رزرو سریع ویلا، هتل و آپارتمان با بهترین قیمت",
+  },
+};
 
 export default async function RootLayout({
   children,
