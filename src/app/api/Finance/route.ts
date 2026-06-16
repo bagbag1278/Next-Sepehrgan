@@ -23,7 +23,7 @@ export async function GET(
 
         const response =
             await fetch(
-                "http://188.121.111.8:3003/api/seller/finance/dashboard",
+                "http://188.121.104.25:3003/api/seller/finance/dashboard",
                 {
                     headers: {
                         Authorization:

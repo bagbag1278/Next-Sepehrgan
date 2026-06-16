@@ -18,7 +18,7 @@ export default async function GetHouseById(
     houseId: number
 ) {
     const res = await axios.get(
-        `http://188.121.111.8:3003/api/houses/${houseId}`
+        `http://188.121.104.25:3003/api/houses/${houseId}`
     );
 
     return res.data;

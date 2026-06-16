@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     }
 
     const res = await fetch(
-      "http://188.121.111.8:3003/api/houses",
+      "http://188.121.104.25:3003/api/houses",
       {
         method: "POST",
 

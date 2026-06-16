@@ -30,7 +30,7 @@ export async function PUT(
 
 
         const response =
-            await fetch(`http://188.121.111.8:3003/api/houses/${id}`,{
+            await fetch(`http://188.121.104.25:3003/api/houses/${id}`,{
                     method: "PUT",
 
                     headers: {

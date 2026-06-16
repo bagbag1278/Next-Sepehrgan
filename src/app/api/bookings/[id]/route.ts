@@ -20,7 +20,7 @@ export async function DELETE(
         }
 
         const res = await fetch(
-            `http://188.121.111.8:3003/api/bookings/${params.id}`,
+            `http://188.121.104.25:3003/api/bookings/${params.id}`,
             {
                 method: "DELETE",
                 headers: {

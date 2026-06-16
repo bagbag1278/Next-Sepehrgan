@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 const API_BASE_URL =
     process.env.NEXT_PUBLIC_BASE_URL ||
-    "http://188.121.111.8:3003/api";
+    "http://188.121.104.25:3003/api";
 
 const DeleteComment = async (id: number) => {
     const token = localStorage.getItem("accessToken");

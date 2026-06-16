@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.104.25:3003/api";
 
 const UpdateHouse = async (id: number, data: any) => {
   const token = localStorage.getItem("accessToken");
