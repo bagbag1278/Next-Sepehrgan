@@ -69,7 +69,7 @@ const UserDropdown = ({ user }: UserDropdownProps) => {
         </div>
 
         <div
-          className={`absolute -top-20 right-35 py-3 pr-4.5 mt-2 w-57.5 h-48 dark:bg-slate-600 bg-white rounded-2xl shadow-[0_0_15px] shadow-blue-200/30 overflow-hidden transition-all duration-300 ease-out origin-top-right
+          className={`absolute -top-20 right-35 z-9999 py-3 pr-4.5 mt-2 w-57.5 h-48 dark:bg-slate-600 bg-white rounded-2xl shadow-[0_0_15px] shadow-blue-200/30 overflow-hidden transition-all duration-300 ease-out origin-top-right
           ${
             isOpen
               ? "opacity-100 scale-100 visible"

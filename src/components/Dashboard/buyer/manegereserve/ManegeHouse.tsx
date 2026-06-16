@@ -45,7 +45,7 @@ const ManegeHouse = ({ booking }: ManegeHouseProps) => {
   return (
     <div className="h-16 rounded-2xl relative dark:bg-slate-600 shadow-[0_0_4px] hover:dark:shadow-slate-700 hover:shadow-[0_0_10px] transition-shadow duration-200 flex items-center shadow-blue-200/20 py-5 px-6">
       {/* name */}
-      <h6 className="h-5.5 w-27.75 text-sm text-nowrap absolute right-6 ">
+      <h6 className="h-5.5 w-27.75 text-sm text-nowrap truncate absolute right-6 ">
         {booking.house.title}
       </h6>
       {/* date */}

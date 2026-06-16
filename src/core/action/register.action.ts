@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { CompleteRegistrationRequest } from "../types/IRegister";
 import { completeRegistrationApi } from "../api/auth/Register.api";
 
-
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 if (!API_URL) {
@@ -91,7 +90,8 @@ export async function registerStepTwoClientAction(
 
     const data = await response.json();
 
-    if (!data.success) {
+    // به جای data.success از response.ok استفاده کن
+    if (!response.ok) {
       return {
         success: false,
         message: data.message || "کد وارد شده نامعتبر است.",
@@ -103,7 +103,7 @@ export async function registerStepTwoClientAction(
 
     return {
       success: true,
-      message: "ثبت‌نام با موفقیت انجام شد.",
+      message: "تایید با موفقیت انجام شد.",
     };
   } catch (error) {
     console.error("Server Action Error:", error);
@@ -113,6 +113,7 @@ export async function registerStepTwoClientAction(
     };
   }
 }
+
 //
 export async function completeRegistrationAction(
   data: CompleteRegistrationRequest,

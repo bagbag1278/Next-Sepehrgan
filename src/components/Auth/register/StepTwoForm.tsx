@@ -1,7 +1,7 @@
 "use client";
 
 import { registerStepTwoClientAction } from "@/core/action/register.action";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import React, { FC, useState } from "react";
 
 interface StepTwoFormProps {
@@ -11,7 +11,7 @@ interface StepTwoFormProps {
 }
 
 const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
-  const t = useTranslations('Register');
+  const t = useTranslations("Register");
   const [userIdInput, setUserIdInput] = useState<string>(String(tempUserId));
   const [codeInput, setCodeInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -21,7 +21,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
     e.preventDefault();
 
     if (!userIdInput || !codeInput) {
-      setError(t('fillBothFields'));
+      setError(t("fillBothFields"));
       return;
     }
 
@@ -38,11 +38,11 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
       if (result.success) {
         onNext();
       } else {
-        setError(result.message || t('invalidInfo'));
+        setError(result.message || t("invalidInfo"));
       }
     } catch (err) {
       console.error("Verification error:", err);
-      setError(t('networkError'));
+      setError(t("networkError"));
     } finally {
       setLoading(false);
     }
@@ -69,7 +69,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
                peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 dark:peer-focus:text-blue-400 peer-not-placeholder-shown:-top-2
                peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md dark:peer-not-placeholder-shown:bg-gray-800"
         >
-          {t('tempUserId')}
+          {t("tempUserId")}
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
@@ -106,7 +106,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
                peer-focus:top-0 peer-focus:text-[11px] md:peer-focus:text-[12px] peer-focus:text-blue-600 dark:peer-focus:text-blue-400 peer-not-placeholder-shown:-top-2
                peer-not-placeholder-shown:text-xs md:peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md peer-not-placeholder-shown:rounded-md dark:peer-not-placeholder-shown:bg-gray-800"
         >
-          {t('verifyCode')}
+          {t("verifyCode")}
         </label>
         <div className="absolute left-4 top-1/2 -translate-y-1/2">
           <svg
@@ -127,16 +127,19 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
         </div>
       </div>
 
-      {error && <p className="text-red-500 dark:text-red-400 text-xs md:text-sm text-center -mt-2">{error}</p>}
+      {error && (
+        <p className="text-red-500 dark:text-red-400 text-xs md:text-sm text-center -mt-2">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
-        onClick={() => onNext()}
         disabled={loading}
         className={`h-11 md:h-12 w-full rounded-2xl text-white cursor-pointer transition-colors duration-300 ease-in-out text-sm md:text-base
           ${loading ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed" : "bg-blue-100 dark:bg-blue-800 hover:bg-blue-200 dark:hover:bg-blue-700"}`}
       >
-        {loading ? t('verifying') : t('confirmAndRegister')}
+        {loading ? t("verifying") : t("confirmAndRegister")}
       </button>
 
       <button
@@ -144,7 +147,7 @@ const StepTwoForm: FC<StepTwoFormProps> = ({ tempUserId, onNext, onBack }) => {
         onClick={onBack}
         className="text-blue-100 dark:text-blue-200 h-11 md:h-12 cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/30 font-bold border-2 border-blue-100 dark:border-blue-700 rounded-2xl text-[13px] md:text-[15px] transition-colors"
       >
-        {t('previousStep')}
+        {t("previousStep")}
       </button>
     </form>
   );

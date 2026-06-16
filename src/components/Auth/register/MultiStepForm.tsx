@@ -74,7 +74,11 @@ export default function MultiStepForm({
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.3 }}
           >
-            <StepThirdForm userId={tempUserId || 0} />
+            <StepThirdForm
+              userId={tempUserId || 0}
+              onNext={handleNext}
+              onBack={handleBack}
+            />
           </motion.div>
         )}
       </AnimatePresence>

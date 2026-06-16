@@ -26,7 +26,7 @@ export default function AvatarSlider() {
           <ChevronLeft size={18} />
         </button>
 
-        <button className="custom-next absolute left-auto -right-2.5 top-1/2 z-10 -translate-y-1/2 size-9 rounded-full border bg-white shadow-md flex items-center justify-center">
+        <button className="custom-next absolute left-auto -right-2.5 top-1/2 z-5 -translate-y-1/2 size-9 rounded-full border bg-white shadow-md flex items-center justify-center">
           <ChevronRight size={18} />
         </button>
 

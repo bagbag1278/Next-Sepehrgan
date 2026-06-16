@@ -6,6 +6,7 @@ import ClientLayout from "./ClientLayout";
 import "./globals.css";
 
 import { Metadata } from "next";
+import ChatWidget from "@/components/chat/Chat";
 
 
 const iran = LocalFont({
@@ -55,6 +56,7 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
             <ClientLayout>{children}</ClientLayout>
+            <ChatWidget/>
             <VoiceCommand />
         </NextIntlClientProvider>
       </body>
