@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const protectedRoutes = ["/dashboard"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
 
@@ -47,7 +47,7 @@ export async function middleware(request: NextRequest) {
         maxAge: 60 * 15,
       });
 
-      // کوکی کمکی برای client
+
       res.cookies.set("accessTokenExpiry", String(decoded.exp), {
         httpOnly: false,
         secure: process.env.NODE_ENV === "production",
