@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useTranslations } from 'next-intl';
+import { useTranslations } from "next-intl";
 import BlogHeader from "./components/BlogHeader";
 import BlogSidebar from "./components/BlogSidebar";
 import BlogList from "./components/BlogList";
 import BlogModal from "./components/BlogModal";
 
 const BlogClient = () => {
-  const t = useTranslations('Blog');
+  const t = useTranslations("Blog");
   const [blogs, setBlogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,12 +15,13 @@ const BlogClient = () => {
   const [activeBlog, setActiveBlog] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const imgPlaceholder = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJGK1u8iNK0_v9sU4GgbGYkeyZNZ75jZpuKg&s";
+  const imgPlaceholder =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJGK1u8iNK0_v9sU4GgbGYkeyZNZ75jZpuKg&s";
 
   const categories = [
-    { id: 1, name: t('villaNews') },
-    { id: 2, name: t('modernApartment') },
-    { id: 3, name: t('housingInvestment') },
+    { id: 1, name: t("villaNews") },
+    { id: 2, name: t("modernApartment") },
+    { id: 3, name: t("housingInvestment") },
   ];
 
   const fetchBlogs = async () => {
@@ -30,7 +31,7 @@ const BlogClient = () => {
       const result = await response.json();
       setBlogs(result.data || []);
     } catch (error) {
-      console.error(t('errorFetching'));
+      console.error(t("errorFetching"));
     } finally {
       setLoading(false);
     }
@@ -45,8 +46,11 @@ const BlogClient = () => {
   };
 
   const filteredBlogs = blogs.filter((blog) => {
-    const matchesSearch = blog.title?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === null || blog.category_id === selectedCategory;
+    const matchesSearch = blog.title
+      ?.toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      selectedCategory === null || blog.category_id === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -61,9 +65,12 @@ const BlogClient = () => {
   };
 
   return (
-    <div className="w-full max-w-[1280px] mx-auto px-4 py-12 min-h-screen" dir="rtl">
+    <div
+      className="w-full max-w-[1280px] mx-auto px-4 py-12 min-h-screen"
+      dir="rtl"
+    >
       <BlogHeader />
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <BlogSidebar
           searchQuery={searchQuery}
@@ -73,9 +80,9 @@ const BlogClient = () => {
           setSelectedCategory={setSelectedCategory}
           categories={categories}
         />
-        
+
         <div className="lg:col-span-3">
-          <BlogList 
+          <BlogList
             blogs={filteredBlogs}
             loading={loading}
             onOpenModal={openModal}
@@ -84,7 +91,7 @@ const BlogClient = () => {
         </div>
       </div>
 
-      <BlogModal 
+      <BlogModal
         isOpen={isModalOpen}
         blog={activeBlog}
         onClose={closeModal}
