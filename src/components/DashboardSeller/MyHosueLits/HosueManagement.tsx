@@ -384,7 +384,7 @@ const HosueManagement = () => {
                                 </span>
 
                                 {/* date */}
-                                <span
+                                <time
                                     className='text-sm
                                     text-gray-600
                                     dark:text-gray-300'
@@ -392,7 +392,7 @@ const HosueManagement = () => {
                                     {house.last_updated
                                         ? formatDate(house.last_updated)
                                         : "تاریخ نامشخص"}
-                                </span>
+                                </time>
 
                                 {/* price */}
                                 <span className=' text-blue-800 dark:text-gray-500  font-medium text-sm'>

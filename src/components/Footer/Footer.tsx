@@ -14,7 +14,7 @@ import BacktoTopButton from './BackToTopButton/BacktoTopButton';
 const Footer = () => {
   return (
     <>
-      <div className=' w-full hidden sm:flex justify-center ' dir='ltr'>
+      <footer className=' w-full hidden sm:flex justify-center ' dir='ltr'>
         <div className='w-full  relative'>
 
           <div className='flex items-end w-full h-125'>
@@ -141,7 +141,7 @@ const Footer = () => {
         </div>
 
 
-      </div>
+      </footer>
       {/* mobile===== */}
       {/* <div className='sm:hidden flex border'>
         <div

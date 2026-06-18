@@ -6,7 +6,7 @@ import RoomIcon from './Icon/RoomIcon';
 import MasterIcon from './Icon/MasterIcon';
 import CarIcon from './Icon/CarIcon';
 import TreeIcon from './Icon/TreeIcon';
-import LocationIcon from './Icon/LocationIcon';
+// import LocationIcon from './Icon/LocationIcon';
 import HouseImage from './Icon/HouseImage';
 import { addCommas } from "@persian-tools/persian-tools";
 import { Props } from './Hosues';

@@ -25,7 +25,8 @@ const StepTwo = dynamic(() => import("./StepTwo"), { ssr: false });
 import StepThree from "./StepThree";
 import StepFour from "./StepFour";
 import StepFive from "./StepFive";
-import ToEnglishNumber from "@/components/untils/ToEnglishNumber";
+import ToEnglishNumber from "@/components/Untils/ToEnglishNumber";
+// import ToEnglishNumber from "@/components/untils/ToEnglishNumber";
 
 const AddHousePage = () => {
 

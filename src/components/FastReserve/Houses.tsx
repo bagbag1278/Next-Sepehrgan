@@ -72,6 +72,8 @@ const Houses = ({
       result = result.filter((house) => (house.price ?? 0) <= max);
     }
 
+      // اروره تایپ ایسترکیت هستش اینا  دست نزنین
+
     if (filters.rooms && filters.rooms > 0) {
       result = result.filter((house) => house.rooms === filters.rooms);
     }
