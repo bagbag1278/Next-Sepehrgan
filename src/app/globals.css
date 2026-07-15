@@ -1,0 +1,130 @@
+@import "tailwindcss";
+@import 'swiper/css/pagination';
+@import 'swiper/css';
+@plugin "daisyui";
+
+:root {
+  --background: #F5F5F5;
+  --foreground: #000000;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+    :root {
+      --background: #F5F5F5;
+      --foreground: #000000;
+      --font-iran: 'IRANSans';
+    }
+
+    @theme {
+      --color-scheme: dark;
+
+      --color-background: var(--background);
+      --color-foreground: var(--foreground);
+      --font-sans: var(--font-geist-sans);
+      --font-mono: var(--font-geist-mono);
+      --color-blue-100: #10088F;
+      --color-blue-200: #005EA4;
+      --color-blue-300: #0887CA;
+      --color-green-100: #15977D;
+      --color-blue-400: #060425;
+      --color-red-100: #ED053F;
+      --color-green-200: #05ED6A;
+    }
+
+.mySwiper .swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.7);
+  /* White with opacity */
+  width: 12px;
+  height: 12px;
+  margin: 0 1px;
+  /* Add some spacing */
+}
+
+.mySwiper .swiper-pagination-bullet-active {
+  background-color: #F5F5F5;
+  opacity: 1;
+}
+
+.category-swiper .swiper-wrapper {
+  padding: 8px 0;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
+}
+.avatar-swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.avatar-swiper .swiper-slide img {
+  width: 58px;
+  height: 58px;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.avatar-swiper .swiper-slide-active img {
+  width: 92px;
+  height: 92px;
+}
+@media (min-width: 1024px) {
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: flex;
+  }
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.hover-3d {
+  transition: transform 0.3s ease-out;
+  display: inline-block;
+  pointer-events: auto;
+}
+
+.hover-3d:hover {
+  transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px);
+}
+
+.hover-3d a {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 20;
+}
+
+
+
+@keyframes grid {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+.animate-grid {
+  animation: grid 25s linear infinite;
+}
+
+@keyframes slow-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-slow-rotate {
+  animation: slow-rotate 120s linear infinite;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}

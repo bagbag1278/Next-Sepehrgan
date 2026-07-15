@@ -1,0 +1,110 @@
+"use client";
+import React from "react";
+import { useTranslations } from 'next-intl';
+import Link from "next/link";
+import SatisfactionTike from "@/app/(main)/housereserve/[id]/booking/icon/peyment/SatisfactionTike";
+import SatisfactioMain from "@/app/(main)/housereserve/[id]/booking/icon/peyment/SatisfactioMain";
+import PaymentHandOne from "@/app/(main)/housereserve/[id]/booking/icon/peyment/PaymentHandOne";
+import PaymentHandTwo from "@/app/(main)/housereserve/[id]/booking/icon/peyment/PaymentHandTwo";
+import BookingSummaryTwo from "../components/BookingSummaryTwo";
+
+const BookingStepFour = ({
+  hotelData,
+  passengers,
+  checkInDate,
+  checkOutDate,
+  step,
+  finalTotal,
+  bookingResult,
+  description,
+  extraEmail,
+  extraPhone,
+  setStep
+}: any) => {
+  const t = useTranslations('BookingStepFour');
+
+  if (step !== 5) return null;
+
+  return (
+    <div className="h-300 max-[1280]:h-455 max-[500]:mr-10 pb-10 max-[600]:mt-10 max-[1024]:mt-14" dir="rtl">
+      <div className="w-full mx-auto">
+        <div className="flex flex-col max-[888]:left-5 relative xl:flex-row gap-20 w-full pt-6 md:pt-10">
+
+          <div className="flex justify-center order-2 lg:order-1">
+            <BookingSummaryTwo
+              finalTotal={finalTotal}
+              hotelData={hotelData}
+              checkInDate={checkInDate}
+              checkOutDate={checkOutDate}
+              passengers={passengers}
+              bookingResult={bookingResult}
+              description={description}
+              showExtraCost={false}
+              extraEmail={extraEmail}
+              extraPhone={extraPhone}
+              setStep={setStep}
+            />
+          </div>
+
+          <div className="flex-1 w-full flex flex-col items-center justify-center space-y-6 lg:order-2">
+
+            <div className="">
+              <div className="relative w-100 flex justify-end">
+                <div className="max-[508]:hidden dark:hidden">
+                  <SatisfactionTike />
+                </div>
+                <div className="absolute max-[1024]:mr-20 dark:relative dark:h-30 dark:mt-10 dark:mr-10  max-[500]:left-5 w-120 h-100 max-[508]:w- max-[508]:relative max-[508]:h-40 -top-30 max-[508]:-top-20 max-[508]:-left-10">
+                  <SatisfactioMain />
+                </div>
+                <div className="mt-30 max-[508]:hidden dark:hidden">
+                  <div className="absolute right-95 mt-5 text-black dark:text-white">
+                    <PaymentHandOne />
+                  </div>
+                  <div className="absolute left-45 dark:text-white">
+                    <PaymentHandTwo />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2 text-center">
+              <h2 className="text-xl dark:text-white md:text-2xl font-black text-[rgb(6,4,37)]">
+                {t('bookingSuccess')}
+              </h2>
+              <p className="text-gray-500 dark:text-white text-sm md:text-base">
+                {t('bookingDetailsSent')}
+              </p>
+            </div>
+
+            <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl text-center space-y-2 w-full max-w-md">
+              <p className="text-gray-600 dark:text-gray-300 text-sm">
+                {t('checkInDate')}: {checkInDate} | {t('checkOutDate')}: {checkOutDate}
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 text-sm">
+                {t('passengersCount')}: {passengers?.length || 0} {t('people')}
+              </p>
+              <p className="text-[#15977D] font-black text-xl">
+                {t('paidAmount')}: {finalTotal} {t('toman')}
+              </p>
+            </div>
+
+            <div className="flex flex-col w-full max-w-xl gap-3 md:gap-4">
+              <Link href="/" className="w-full">
+                <button className="w-full dark:text-white bg-[rgb(16,8,143)] text-white py-4 md:py-5 rounded-2xl md:rounded-3xl font-bold md:font-black shadow-md hover:bg-blue-900 transition-all active:scale-[0.98]">
+                  {t('backToHome')}</button>
+              </Link>
+
+              <Link href="/dashboard/bookings" className="w-full">
+                <button className="w-full dark:text-white bg-[rgb(21,151,125)] text-white py-4 md:py-5 rounded-2xl md:rounded-3xl font-bold md:font-black shadow-md hover:bg-[#12806a] transition-all active:scale-[0.98]">
+                  {t('viewMyTickets')}
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BookingStepFour;
