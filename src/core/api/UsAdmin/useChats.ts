@@ -1,4 +1,4 @@
-// app/admin/chats/hooks/useChats.ts
+// app/Admin/chats/hooks/useChats.ts
 import { useState } from "react";
 import { chatService } from "@/core/service/chatService";
 import toast from "react-hot-toast";
@@ -103,7 +103,7 @@ export const useChats = () => {
     try {
       const token = localStorage.getItem("accessToken");
       if (!token) return;
-      const res = await fetch(`${API_BASE_URL}/admin/chat-rooms`, {
+      const res = await fetch(`${API_BASE_URL}/Admin/chat-rooms`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -128,7 +128,7 @@ export const useChats = () => {
   const fetchMessages = async (roomId: string) => {
     setLoadingMessages(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/chat-rooms/${roomId}/chats`, {
+      const response = await fetch(`${API_BASE_URL}/Admin/chat-rooms/${roomId}/chats`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);

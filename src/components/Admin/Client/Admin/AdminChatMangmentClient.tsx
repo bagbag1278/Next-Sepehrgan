@@ -142,7 +142,7 @@ const AdminChatMangmentClient = () => {
       const token = localStorage.getItem("accessToken");
       if (!token) { router.push("/login"); return; }
 
-      const res = await fetch(`${API_BASE_URL}/admin/chat-rooms`, {
+      const res = await fetch(`${API_BASE_URL}/Admin/chat-rooms`, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
 
@@ -176,7 +176,7 @@ const AdminChatMangmentClient = () => {
     setLoadingMessages(true);
     try {
       const token = localStorage.getItem("accessToken");
-      const response = await fetch(`${API_BASE_URL}/admin/chat-rooms/${roomId}/chats`, {
+      const response = await fetch(`${API_BASE_URL}/Admin/chat-rooms/${roomId}/chats`, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
 
@@ -268,7 +268,7 @@ const AdminChatMangmentClient = () => {
     
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.put(`${API_BASE_URL}/admin/chats/${editingMessage.id}`,
+      await axios.put(`${API_BASE_URL}/Admin/chats/${editingMessage.id}`,
         { message: editText },
         { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
       );
@@ -289,7 +289,7 @@ const AdminChatMangmentClient = () => {
   const handleDeleteMessage = async (messageId: number) => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.delete(`${API_BASE_URL}/admin/chats/${messageId}`, {
+      await axios.delete(`${API_BASE_URL}/Admin/chats/${messageId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -306,7 +306,7 @@ const AdminChatMangmentClient = () => {
     if (!selectedRoom) return;
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.delete(`${API_BASE_URL}/admin/chat-rooms/${selectedRoom.room}/chats`, {
+      await axios.delete(`${API_BASE_URL}/Admin/chat-rooms/${selectedRoom.room}/chats`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       

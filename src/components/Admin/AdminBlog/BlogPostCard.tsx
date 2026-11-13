@@ -1,5 +1,5 @@
 import { Edit, Trash2, User, Calendar, Clock } from "lucide-react";
-import { BlogPost } from "../../../app/admin/AdminBlog/page";
+import { BlogPost } from "../../../app/Admin/AdminBlog/page";
 
 interface BlogPostCardProps {
   post: BlogPost;

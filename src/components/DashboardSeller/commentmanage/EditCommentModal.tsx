@@ -1,4 +1,4 @@
-// app/admin/seller-comments/components/EditCommentModal.tsx
+// app/Admin/seller-comments/components/EditCommentModal.tsx
 "use client";
 
 import { useState, useEffect } from "react";

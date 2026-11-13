@@ -23,7 +23,7 @@ const MobileSidebar = ({ isOpen, onClose, isLoggedIn, userName, userRole, nav, o
   const getDashboardPath = () => {
     switch (userRole) {
       case "admin":
-        return "/admin";
+        return "/Admin";
       case "seller":
         return "/dashboard/seller";
       default:

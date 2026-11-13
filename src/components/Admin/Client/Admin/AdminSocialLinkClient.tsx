@@ -1,4 +1,4 @@
-// app/admin/social-links/page.tsx
+// app/Admin/social-links/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";

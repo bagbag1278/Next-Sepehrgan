@@ -4,7 +4,7 @@ import { useState } from "react";
 import DashboardHeader from "@/components/Dashboard/header";
 import DarkModeHero from "@/components/landing/components/HeroSction/HeroFilter/DarkModeHero";
 import { User, ChevronDown, Phone, Mail, Wallet, LogOut } from "lucide-react";
-import RezaBakhshian from "@/app/admin/Icon/RezaBakhshian";
+import RezaBakhshian from "@/app/Admin/Icon/RezaBakhshian";
 
 
 interface AdminHeaderProps {

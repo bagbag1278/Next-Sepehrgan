@@ -12,7 +12,7 @@ export default function HomePage() {
         <p className="text-gray-600 dark:text-gray-400 mb-8">
         </p>
         <Link
-          href="/admin/AdminDashboard"
+          href="/Admin/AdminDashboard"
           className="px-6 py-3 bg-[#0887CAB2] text-white rounded-xl hover:bg-[#0887CA]/90 transition"
         >
        

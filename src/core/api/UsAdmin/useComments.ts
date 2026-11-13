@@ -40,7 +40,7 @@ export const useComments = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/admin/comments`, {
+      const response = await axios.get(`${API_BASE_URL}/Admin/comments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -61,7 +61,7 @@ export const useComments = () => {
   const updateComment = async (commentId: number, data: any) => {
     const token = getToken();
     const response = await axios.put(
-      `${API_BASE_URL}/admin/comments/${commentId}`,
+      `${API_BASE_URL}/Admin/comments/${commentId}`,
       {
         title: data.title,
         caption: data.caption,
@@ -74,7 +74,7 @@ export const useComments = () => {
 
   const deleteComment = async (commentId: number) => {
     const token = getToken();
-    const response = await axios.delete(`${API_BASE_URL}/admin/comments/${commentId}`, {
+    const response = await axios.delete(`${API_BASE_URL}/Admin/comments/${commentId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response;

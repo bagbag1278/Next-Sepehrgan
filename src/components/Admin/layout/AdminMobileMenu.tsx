@@ -6,7 +6,7 @@ import { Menu, X, LogOut, User, ChevronDown, Phone, Mail, Wallet } from "lucide-
 import { useState } from "react";
 import HeaderIcon1Mini from "@/components/header/Icon/HeaderIcon1Mini";
 import HeaderIcon2Mini from "@/components/header/Icon/HeaderIcon2Mini";
-import RezaBakhshian from "@/app/admin/Icon/RezaBakhshian";
+import RezaBakhshian from "@/app/Admin/Icon/RezaBakhshian";
 
 interface AdminMobileMenuProps {
   MenuItems: any[];

@@ -51,7 +51,7 @@ const AdminUserMangmentClient = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/admin/users`, {
+      const response = await axios.get(`${API_BASE_URL}/Admin/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       

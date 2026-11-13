@@ -15,7 +15,7 @@ const UserDropdown = ({ userName, userRole, onLogout }: UserDropdownProps) => {
   const getDashboardPath = () => {
     switch (userRole) {
       case "admin":
-        return "/admin";
+        return "/Admin";
       case "seller":
         return "/dashboard/seller";
       default:

@@ -55,7 +55,7 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
 
       console.log("📤 ارسال داده کاربر:", userUpdateData);
       
-      const userResponse = await fetch(`${API_BASE_URL}/admin/users/${user.id}`, {
+      const userResponse = await fetch(`${API_BASE_URL}/Admin/users/${user.id}`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -74,7 +74,7 @@ export default function EditUser({ user, onEdit, trigger }: EditUserProps) {
       if (form.role !== user.role) {
         console.log("📤 ارسال داده نقش:", { role: form.role });
         
-        const roleResponse = await fetch(`${API_BASE_URL}/admin/users/${user.id}/role`, {
+        const roleResponse = await fetch(`${API_BASE_URL}/Admin/users/${user.id}/role`, {
           method: "PUT",
           headers: {
             "Authorization": `Bearer ${token}`,

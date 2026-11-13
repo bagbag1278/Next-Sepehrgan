@@ -98,7 +98,7 @@ const LoginForm = () => {
       
       setTimeout(() => {
         if (userRole === "admin") {
-          router.push("/admin");
+          router.push("/Admin");
         } else if (userRole === "seller") {
           router.push("/dashboard/seller");
         } else {
