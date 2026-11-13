@@ -5,7 +5,7 @@ import { X, Home, MapPin, DollarSign, Star, Percent, Users, Bath, Car, Hotel, Ma
 interface EditModalHotelProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: any) => void;
+  onSave: (data: any) => void | Promise<void>;
   hotel: any;
 }
 
@@ -36,19 +36,23 @@ const EditModalHotel = ({ isOpen, onClose, onSave, hotel }: EditModalHotelProps)
 
   if (!isOpen) return null;
 
-  const handleSave = () => {
-    onSave({ 
-      title, 
-      address, 
-      price, 
-      rate, 
-      capacity,
-      bathrooms,
-      parking,
-      rooms,
-      caption 
-    });
-    onClose();
+  const handleSave = async () => {
+    try {
+      await onSave({
+        title,
+        address,
+        price,
+        rate,
+        capacity,
+        bathrooms,
+        parking,
+        rooms,
+        caption,
+      });
+      onClose();
+    } catch {
+      // Keep the form open after a failed save so the user can retry.
+    }
   };
 
   return (

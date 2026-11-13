@@ -22,8 +22,7 @@ interface AcceptBookingModalProps {
   };
 }
 
-// ❌ حتماً این خط درست باشد - بدون /api در انتها
-const API_BASE_URL = "http://188.121.111.8:3003";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3003/api";
 
 const AcceptBookingModal = ({ 
   isOpen, 
@@ -42,8 +41,7 @@ const AcceptBookingModal = ({
     try {
       const token = getToken();
       
-      // ❌ حتماً این خط درست باشد
-      const url = `http://188.121.111.8:3003/api/bookings/${bookingId}/continue`;
+      const url = `${API_BASE_URL}/bookings/${bookingId}/continue`;
       
       console.log("📡 URL:", url);
       

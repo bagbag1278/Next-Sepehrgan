@@ -76,6 +76,7 @@ const EditBookingModal = ({
       onClose();
     } catch (error) {
       console.error("خطا در ذخیره:", error);
+      throw error;
     } finally {
       setLoading(false);
     }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3003/api";
 
 export interface Booking {
   id: number;
@@ -126,11 +126,14 @@ export const useBookings = () => {
 
       const result = await res.json();
       const data = result.data || result;
-      setBookings(Array.isArray(data) ? data : []);
+      const normalizedBookings = Array.isArray(data)
+        ? data.map((booking: Booking) => ({ ...booking, status: String(booking.status).toLowerCase() }))
+        : [];
+      setBookings(normalizedBookings);
 
-      if (Array.isArray(data) && data.length) {
-        const houseIds = [...new Set(data.map((b: Booking) => b.houseId).filter(Boolean))];
-        const userIds = [...new Set(data.map((b: Booking) => b.user_id).filter(Boolean))];
+      if (normalizedBookings.length) {
+        const houseIds = [...new Set(normalizedBookings.map((b: Booking) => b.houseId).filter(Boolean))];
+        const userIds = [...new Set(normalizedBookings.map((b: Booking) => b.user_id).filter(Boolean))];
         await Promise.all([fetchHouses(houseIds), fetchUsers(userIds)]);
       }
     } catch (err) {

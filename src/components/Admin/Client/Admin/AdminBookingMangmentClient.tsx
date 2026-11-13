@@ -149,6 +149,7 @@ const AdminBookingMangmentClient = () => {
         sharedEmail: data.sharedEmail,
         sharedMobile: data.sharedMobile,
         traveler_details: data.traveler_details,
+        reservedDates: data.reservedDates,
       });
       
       await updateBooking(selectedBooking.id, {
@@ -156,6 +157,7 @@ const AdminBookingMangmentClient = () => {
         sharedEmail: data.sharedEmail,
         sharedMobile: data.sharedMobile,
         traveler_details: data.traveler_details,
+        reservedDates: data.reservedDates,
       });
       
       toast.success("رزرو با موفقیت ویرایش شد", { id: loadingToast });
@@ -165,6 +167,7 @@ const AdminBookingMangmentClient = () => {
     } catch (error: any) {
       console.error("Error:", error);
       toast.error(error.response?.data?.message || error.message || "خطا در ویرایش رزرو", { id: loadingToast });
+      throw error;
     }
   };
 

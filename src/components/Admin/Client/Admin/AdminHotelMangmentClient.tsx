@@ -20,7 +20,7 @@ import DetailModalHotel from "../../HotelsManagement/more/DetailModalHotel";
 import Pagination from "../../Pagination/PaginationAdmin";
 
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3003/api";
 
 interface Hotel {
   id: number;
@@ -174,6 +174,7 @@ const AdminHotelMangmentClient = () => {
                           error.response?.data?.error || 
                           "خطا در ویرایش هتل";
       toast.error(errorMessage, { id: loadingToast });
+      throw error;
     } finally {
       setEditLoading(false);
     }
