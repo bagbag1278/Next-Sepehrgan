@@ -15,8 +15,15 @@ interface Property {
   price: string | number;
   rate: string;
   photos: string[] | null;
-  location: string;
+  location:
+    | string
+    | { lat?: number; lng?: number; address?: string }
+    | null
+    | undefined;
 }
+
+const getLocationLabel = (location: Property["location"], address: string) =>
+  typeof location === "string" ? location : location?.address || address;
 
 const mockProperties: Property[] = [
   {
@@ -139,7 +146,7 @@ const SimilarProperties = ({ currentId: propId }: { currentId?: number | null })
       </div>
 
       <div className="flex flex-col gap-3 sm:gap-4">
-        {data.map((item, index) => (
+        {data.map((item) => (
           <Link
             href={`/housereserve/${item.id}`}
             key={item.id}
@@ -179,7 +186,9 @@ const SimilarProperties = ({ currentId: propId }: { currentId?: number | null })
 
                 <div className="flex items-center gap-1 text-[#94A3B8] dark:text-gray-400 text-[9px] sm:text-[10px] group-hover:text-[#0887CA] dark:group-hover:text-white transition-colors duration-300">
                   <MapPin size={10} className="flex-shrink-0 text-[#94A3B8] dark:text-gray-400 group-hover:text-[#0887CA] dark:group-hover:text-white" />
-                  <span className="truncate">{item.location || item.address}</span>
+                  <span className="truncate">
+                    {getLocationLabel(item.location, item.address)}
+                  </span>
                 </div>
 
                 <div className="border-t border-gray-100 dark:border-gray-700 w-full my-1 group-hover:border-[#0887CA]/30 dark:group-hover:border-white/30 transition-colors duration-300"></div>
