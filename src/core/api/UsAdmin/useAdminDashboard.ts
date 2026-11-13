@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3003/api";
 
 interface DashboardStats {
   totalUsers: number;
@@ -80,6 +80,10 @@ export const useAdminDashboard = () => {
       const data = await response.json();
       let bookingsList: Booking[] = data.data || data;
       if (!Array.isArray(bookingsList)) bookingsList = [];
+      bookingsList = bookingsList.map((booking) => ({
+        ...booking,
+        status: String(booking.status).toLowerCase(),
+      }));
       setBookings(bookingsList);
 
       const houseIds = [...new Set(bookingsList.map((b: Booking) => b.houseId).filter(Boolean))];

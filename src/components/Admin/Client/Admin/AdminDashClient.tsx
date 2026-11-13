@@ -18,8 +18,6 @@ import { DashboardEmptyState } from "@/components/Admin/AdminDashboard/Dashboard
 import { useAdminDashboard } from "@/core/api/UsAdmin/useAdminDashboard";
 import Pagination from "../../Pagination/PaginationAdmin";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
-
 interface Booking {
   id: number;
   user_id: number;
@@ -109,7 +107,9 @@ const AdminDashClient = () => {
     try {
       await updateBooking(selectedBooking.id, {
         status: data.status,
-        total_price: data.price,
+        sharedEmail: data.sharedEmail,
+        sharedMobile: data.sharedMobile,
+        traveler_details: data.traveler_details,
         reservedDates: data.reservedDates,
       });
 
@@ -121,6 +121,7 @@ const AdminDashClient = () => {
     } catch (error) {
       console.error(error);
       toast.error("خطا در ویرایش رزرو", { id: loadingToast });
+      throw error;
     }
   };
 
