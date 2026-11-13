@@ -3,6 +3,10 @@ export interface User {
   email: string;
   fullName: string;
   role: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  profilePicture?: string | null;
 }
 
 export interface LoginApiResponse {

@@ -40,7 +40,7 @@ const HeaderClient = () => {
       if (token && userStr) {
         const user = JSON.parse(userStr);
         setUserRole(user.role);
-        const name = user.fullName || user.firstName || user.email?.split("@")[0] || "کاربر";
+        const name = user.fullName || [user.firstName, user.lastName].filter(Boolean).join(" ") || user.email?.split("@")[0] || "کاربر";
         setUserName(name);
         setIsLoggedIn(true);
       } else {

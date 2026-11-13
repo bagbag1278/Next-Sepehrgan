@@ -8,6 +8,8 @@ export interface CompleteRegistrationRequest {
   registrationToken?: string;
   password: string;
   phoneNumber: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface User {

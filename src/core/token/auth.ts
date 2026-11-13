@@ -6,11 +6,45 @@ interface DecodedToken extends JwtPayload {
   email: string;
   role: string;
   name: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  phoneNumber: string;
   profilePicture: string | null;
 }
 
 // چقدر مونده به expire (به ثانیه)
 const TOKEN_REFRESH_THRESHOLD = 2 * 60; // 2 دقیقه
+
+async function withProfile(token: string, decoded: DecodedToken | null) {
+  if (!decoded) return null;
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
+    });
+    if (!response.ok) return decoded;
+    const result = await response.json();
+    const user = result.user ?? result.data ?? {};
+    const firstName = user.firstName ?? decoded.firstName ?? "";
+    const lastName = user.lastName ?? decoded.lastName ?? "";
+    return {
+      ...decoded,
+      ...user,
+      id: user.id ?? decoded.id,
+      role: decoded.role,
+      firstName,
+      lastName,
+      name: user.fullName || [firstName, lastName].filter(Boolean).join(" ") || decoded.name || user.email || decoded.email,
+      phone: user.phoneNumber ?? user.phone ?? decoded.phone ?? "",
+      phoneNumber: user.phoneNumber ?? user.phone ?? decoded.phoneNumber ?? decoded.phone ?? "",
+      profilePicture: user.profilePicture ?? user.avatar ?? decoded.profilePicture ?? null,
+    } as DecodedToken;
+  } catch {
+    return decoded;
+  }
+}
 
 export async function getUserInfo(): Promise<DecodedToken | null> {
   const cookieStore = await cookies();
@@ -29,7 +63,7 @@ export async function getUserInfo(): Promise<DecodedToken | null> {
 
       // توکن هنوز معتبره و بیشتر از 2 دقیقه مونده
       if (timeLeft > TOKEN_REFRESH_THRESHOLD) {
-        return decoded;
+        return withProfile(token, decoded);
       }
     }
   }
@@ -60,7 +94,7 @@ export async function getUserInfo(): Promise<DecodedToken | null> {
       maxAge: 60 * 15,
     });
 
-    return jwt.decode(accessToken) as DecodedToken | null;
+    return withProfile(accessToken, jwt.decode(accessToken) as DecodedToken | null);
   } catch {
     return null;
   }

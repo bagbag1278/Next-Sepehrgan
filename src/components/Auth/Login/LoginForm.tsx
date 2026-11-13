@@ -58,12 +58,20 @@ const LoginForm = () => {
       let userRole = null;
       let userFullName = null;
       let userEmail = null;
+      let userFirstName = "";
+      let userLastName = "";
+      let userPhoneNumber = "";
+      let userProfilePicture = null;
       
       if (state.user) {
         userId = state.user.id;
         userRole = state.user.role;
         userFullName = state.user.fullName;
         userEmail = state.user.email;
+        userFirstName = state.user.firstName || "";
+        userLastName = state.user.lastName || "";
+        userPhoneNumber = state.user.phoneNumber || state.user.phone || "";
+        userProfilePicture = state.user.profilePicture || state.user.avatar || null;
       } else if (state.accessToken) {
         try {
           const payload = JSON.parse(atob(state.accessToken.split('.')[1]));
@@ -71,6 +79,10 @@ const LoginForm = () => {
           userRole = payload.role;
           userFullName = payload.fullName;
           userEmail = payload.email;
+          userFirstName = payload.firstName || "";
+          userLastName = payload.lastName || "";
+          userPhoneNumber = payload.phoneNumber || payload.phone || "";
+          userProfilePicture = payload.profilePicture || payload.avatar || null;
         } catch (e) {}
       }
       
@@ -79,18 +91,17 @@ const LoginForm = () => {
         const userData = {
           id: userId,
           role: userRole || "buyer",
-          fullName: userFullName || "",
+          fullName: userFullName || [userFirstName, userLastName].filter(Boolean).join(" "),
           email: userEmail || "",
-          firstName: state.user?.firstName || "",
-          lastName: state.user?.lastName || "",
+          firstName: userFirstName,
+          lastName: userLastName,
+          phoneNumber: userPhoneNumber,
+          profilePicture: userProfilePicture,
         };
         
         localStorage.setItem("user", JSON.stringify(userData));
         Cookies.set("user", JSON.stringify(userData), { expires: 7, path: "/" });
         console.log("✅ user ذخیره شد:", userData);
-
-        localStorage.setItem("user", JSON.stringify({ id: userId }));
-        
 
       }
       

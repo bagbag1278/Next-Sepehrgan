@@ -6,7 +6,7 @@ const UserInfo = async () => {
   noStore(); 
   const user = await getUserInfo();
   console.log("user from token:", user);
-  return <UserDropdown user={user} />;
+  return <UserDropdown user={{ name: user?.name || "کاربر", phone: user?.phone || "" }} />;
 };
 
 export default UserInfo;

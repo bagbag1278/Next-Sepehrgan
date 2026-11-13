@@ -13,6 +13,7 @@ import { logout } from "@/core/api/auth/Logout.api";
 interface UserDropdownProps {
   user: {
     name: string;
+    phone?: string;
   };
 }
 const UserDropdown = ({ user }: UserDropdownProps) => {
@@ -94,7 +95,7 @@ const UserDropdown = ({ user }: UserDropdownProps) => {
                   dir="ltr"
                   className="text-[11px] text-blue-400 opacity-70"
                 >
-                  +98 9119598397
+                  {user.phone || "شماره تماس ثبت نشده"}
                 </span>
               </div>
             </div>

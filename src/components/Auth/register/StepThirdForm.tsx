@@ -16,6 +16,8 @@ interface StepThirdFormProps {
 
 const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
   const t = useTranslations('Register');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
@@ -41,7 +43,7 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!phone || !password) {
+    if (!firstName.trim() || !lastName.trim() || !phone || !password) {
       toast.error(t('fillAllFields'));
       return;
     }
@@ -52,7 +54,7 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
       return;
     }
 
-    if (password.length < 6) {
+    if (password.length < 8) {
       toast.error(t('passwordMinLength'));
       return;
     }
@@ -62,6 +64,8 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
 
       const result = await completeRegistrationAction({
         userId:userId,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
         phoneNumber: phone, 
         password,
       });
@@ -90,12 +94,44 @@ const StepThirdForm = ({ userId, onBack }: StepThirdFormProps) => {
       <div className="flex flex-col gap-2 relative">
         <input
           type="text"
+          name="firstName"
+          id="firstName"
+          autoComplete="given-name"
+          required
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          placeholder=" "
+          className="peer w-full dark:text-white border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 border-blue-300/50 dark:border-gray-600 outline-0 rounded-2xl transition-colors focus:border-blue-500 dark:focus:border-blue-400"
+        />
+        <label htmlFor="firstName" className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 dark:text-gray-400 peer-focus:top-0 peer-focus:text-[11px] peer-not-placeholder-shown:-top-2 peer-not-placeholder-shown:text-xs">{t('firstName')}</label>
+      </div>
+
+      <div className="flex flex-col gap-2 relative">
+        <input
+          type="text"
+          name="lastName"
+          id="lastName"
+          autoComplete="family-name"
+          required
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          placeholder=" "
+          className="peer w-full dark:text-white border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 border-blue-300/50 dark:border-gray-600 outline-0 rounded-2xl transition-colors focus:border-blue-500 dark:focus:border-blue-400"
+        />
+        <label htmlFor="lastName" className="absolute right-4 top-2 md:top-4 text-xs text-blue-300/70 dark:text-gray-400 peer-focus:top-0 peer-focus:text-[11px] peer-not-placeholder-shown:-top-2 peer-not-placeholder-shown:text-xs">{t('lastName')}</label>
+      </div>
+
+      <div className="flex flex-col gap-2 relative">
+        <input
+          type="text"
           name="phone"
           id="phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder=""
-          className="peer w-full dark:text-whiteپ border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 border-blue-300/50 dark:border-gray-600 outline-0 rounded-2xl transition-colors focus:border-blue-500 dark:focus:border-blue-400"
+          autoComplete="tel"
+          required
+          className="peer w-full dark:text-white border text-[13px] md:text-[14px] pt-1 px-4 h-11 md:h-12 border-blue-300/50 dark:border-gray-600 outline-0 rounded-2xl transition-colors focus:border-blue-500 dark:focus:border-blue-400"
         />
         <label
           htmlFor="phone"
