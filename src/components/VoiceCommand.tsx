@@ -18,10 +18,10 @@ const VoiceCommand = () => {
     'درباره ما': () => router.push('/contactus'),
     'ورود': () => router.push('/login'),
     'ثبت نام': () => router.push('/register'),
-    'داشبورد': () => router.push('/admin/AdminDashboard'),
-    'هتل ها': () => router.push('/admin/HotelsManagement'),
-    'کاربران': () => router.push('/admin/UsersManagment'),
-    'رزروها': () => router.push('/admin/BookingsManagement'),
+    'داشبورد': () => router.push('/Admin/AdminDashboard'),
+    'هتل ها': () => router.push('/Admin/HotelsManagement'),
+    'کاربران': () => router.push('/Admin/UsersManagment'),
+    'رزروها': () => router.push('/Admin/BookingsManagement'),
     
     'home': () => router.push('/'),
     'blog': () => router.push('/blog'),
@@ -31,10 +31,10 @@ const VoiceCommand = () => {
     'about us': () => router.push('/contactus'),
     'login': () => router.push('/login'),
     'register': () => router.push('/register'),
-    'dashboard': () => router.push('/admin/AdminDashboard'),
-    'hotels': () => router.push('/admin/HotelsManagement'),
-    'users': () => router.push('/admin/UsersManagment'),
-    'bookings': () => router.push('/admin/BookingsManagement'),
+    'dashboard': () => router.push('/Admin/AdminDashboard'),
+    'hotels': () => router.push('/Admin/HotelsManagement'),
+    'users': () => router.push('/Admin/UsersManagment'),
+    'bookings': () => router.push('/Admin/BookingsManagement'),
   };
 
   useEffect(() => {

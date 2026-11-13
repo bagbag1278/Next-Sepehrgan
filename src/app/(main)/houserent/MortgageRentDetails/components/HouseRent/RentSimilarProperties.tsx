@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MapPin, Star, ChevronLeft } from 'lucide-react';
 import HomeReserve from "@/components/HouseDetails/icon/Home/HomeReserve";
 import Link from "next/link";
+import { apiUrl } from "@/core/api/baseUrl";
 
 interface RentSimilarPropertiesProps {
   currentId?: string | number;
@@ -16,7 +17,7 @@ const RentSimilarProperties = ({ currentId }: RentSimilarPropertiesProps) => {
     const fetchSimilar = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://next.genzuni.website/api/houses');
+        const response = await fetch(apiUrl("houses"));
         const result = await response.json();
         
         const rawList = Array.isArray(result) ? result : (result.houses || []);
@@ -60,8 +61,8 @@ const RentSimilarProperties = ({ currentId }: RentSimilarPropertiesProps) => {
               <div className="bg-white w-[370px] h-[120px]  shadow-[8px_0px_20px_rgba(8,135,202,0.30)] rounded-[16px] p-3 flex gap-4 items-center border border-transparent hover:border-blue-200 transition-all cursor-pointer shadow-sm group">
                 
                 <div className="relative rounded-xl overflow-hidden bg-gray-200 flex-shrink-0">
-                  {item.photos ? (
-                    <img src={item.photos} alt={item.title} className="w-[127px] h-[104px] " />
+                  {(Array.isArray(item.photos) ? item.photos[0] : item.photos) || item.image ? (
+                    <img src={(Array.isArray(item.photos) ? item.photos[0] : item.photos) || item.image} alt={item.title} className="w-[127px] h-[104px] object-cover" />
                   ) : (
                     <div className="flex items-center justify-center h-full bg-blue-50">
                        <HomeReserve />

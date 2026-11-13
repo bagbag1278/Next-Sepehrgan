@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Loader2, FileText } from "lucide-react";
 import toast from "react-hot-toast";
-import { BlogPost } from "../../../app/admin/AdminBlog/page";
+import { BlogPost } from "../../../app/Admin/AdminBlog/page";
 
 interface EditBlogModalProps {
   isOpen: boolean;

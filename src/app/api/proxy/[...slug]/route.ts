@@ -74,7 +74,6 @@ async function handler(
 
     const refreshData = await refreshResponse.json();
 
-    console.log("REFRESH DATA:", refreshData);
 
     const newAccessToken = refreshData.accessToken;
 
@@ -98,6 +97,8 @@ async function handler(
           response.headers.get("content-type") ?? "application/json",
       },
     });
+
+    if (refreshData.refreshToken) res.cookies.set("refreshToken", refreshData.refreshToken, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
 
     res.cookies.set("accessToken", newAccessToken, {
       httpOnly: true,

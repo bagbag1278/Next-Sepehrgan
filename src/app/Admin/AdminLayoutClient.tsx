@@ -11,7 +11,7 @@ import HeaderIcon2Mini from "@/components/header/Icon/HeaderIcon2Mini";
 import { AdminHeader } from "@/components/Admin/layout/AdminHeader";
 import { AdminMobileMenu } from "@/components/Admin/layout/AdminMobileMenu";
 import { AdminSidebar } from "@/components/Admin/layout/AdminSidebar";
-import RezaBakhshian from "@/app/admin/Icon/RezaBakhshian";
+import RezaBakhshian from "@/app/Admin/Icon/RezaBakhshian";
 
 interface IChildren {
   children: ReactNode;
@@ -26,16 +26,16 @@ interface IChildren {
 }
 
 const MenuItems = [
-  { id: 1, icon: LayoutDashboard, label: "پنل ادمین", href: "/admin" },
-  { id: 2, icon: Hotel, label: "مدیریت هتل‌ها", href: "/admin/HotelsManagement" },
-  { id: 3, icon: Users, label: "مدیریت کاربران", href: "/admin/UsersManagment" },
-  { id: 4, icon: CalendarCheck, label: "مدیریت رزروها", href: "/admin/BookingsManagement" },
-  { id: 5, icon: MessageSquare, label: "مدیریت نظرات", href: "/admin/CommentsManagement" },
-  { id: 6, icon: TicketPercent, label: "مدیریت مالی", href: "/admin/PaymentsManagement" },
-  { id: 7, icon: MessageCircleMore, label: "مدیریت چت", href: "/admin/ChatsManagement" },
-  { id: 8, icon: Bell, label: "مدیریت اعلان ها", href: "/admin/AdminNotifications" },
-  { id: 9, icon: Share2, label: "لینک‌های اجتماعی", href: "/admin/SocialLink" },  
-  { id: 10, icon: FileText, label: "مدیریت وبلاگ", href: "/admin/AdminBlog" },
+  { id: 1, icon: LayoutDashboard, label: "پنل ادمین", href: "/Admin" },
+  { id: 2, icon: Hotel, label: "مدیریت هتل‌ها", href: "/Admin/HotelsManagement" },
+  { id: 3, icon: Users, label: "مدیریت کاربران", href: "/Admin/UsersManagment" },
+  { id: 4, icon: CalendarCheck, label: "مدیریت رزروها", href: "/Admin/BookingsManagement" },
+  { id: 5, icon: MessageSquare, label: "مدیریت نظرات", href: "/Admin/CommentsManagement" },
+  { id: 6, icon: TicketPercent, label: "مدیریت مالی", href: "/Admin/PaymentsManagement" },
+  { id: 7, icon: MessageCircleMore, label: "مدیریت چت", href: "/Admin/ChatsManagement" },
+  { id: 8, icon: Bell, label: "مدیریت اعلان ها", href: "/Admin/AdminNotifications" },
+  { id: 9, icon: Share2, label: "لینک‌های اجتماعی", href: "/Admin/SocialLink" },  
+  { id: 10, icon: FileText, label: "مدیریت وبلاگ", href: "/Admin/AdminBlog" },
 ];
 
 const LogoutModal = ({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose: () => void; onConfirm: () => void }) => {

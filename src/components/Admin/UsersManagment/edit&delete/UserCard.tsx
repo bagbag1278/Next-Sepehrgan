@@ -1,7 +1,7 @@
 import { Mail, Phone, CalendarDays } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
-import EditUser from "@/app/admin/UsersManagment/edit&delete/EditUser";
-import DeleteUser from "@/app/admin/UsersManagment/edit&delete/DeleteUsers";
+import EditUser from "@/app/Admin/UsersManagment/edit&delete/EditUser";
+import DeleteUser from "@/app/Admin/UsersManagment/edit&delete/DeleteUsers";
 import { User } from "../page";
 
 interface UserCardProps {

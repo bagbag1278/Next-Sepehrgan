@@ -34,7 +34,7 @@ export const useHotels = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/admin/houses`, {
+      const response = await axios.get(`${API_BASE_URL}/Admin/houses`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -72,7 +72,7 @@ export const useHotels = () => {
     if (data.rate !== undefined) updateData.rate = Number(data.rate);
 
     const response = await axios.put(
-      `${API_BASE_URL}/admin/houses/${hotelId}`,
+      `${API_BASE_URL}/Admin/houses/${hotelId}`,
       updateData,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -85,13 +85,13 @@ export const useHotels = () => {
 
     if (hasBookings) {
       const response = await axios.patch(
-        `${API_BASE_URL}/admin/houses/${hotelId}`,
+        `${API_BASE_URL}/Admin/houses/${hotelId}`,
         { status: "inactive" },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return response;
     } else {
-      const response = await axios.delete(`${API_BASE_URL}/admin/houses/${hotelId}`, {
+      const response = await axios.delete(`${API_BASE_URL}/Admin/houses/${hotelId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response;
@@ -101,7 +101,7 @@ export const useHotels = () => {
   const checkBookings = async (houseId: number) => {
     try {
       const token = getToken();
-      const response = await axios.get(`${API_BASE_URL}/admin/bookings`, {
+      const response = await axios.get(`${API_BASE_URL}/Admin/bookings`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { houseId },
       });

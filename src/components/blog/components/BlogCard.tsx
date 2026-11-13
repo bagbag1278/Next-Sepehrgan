@@ -7,10 +7,9 @@ interface BlogCardProps {
   blog: any;
   index: number;
   onOpen: (blog: any) => void;
-  imgPlaceholder: string;
 }
 
-const BlogCard = ({ blog, index, onOpen, imgPlaceholder }: BlogCardProps) => {
+const BlogCard = ({ blog, index, onOpen }: BlogCardProps) => {
   const t = useTranslations('Blog');
   
   return (
@@ -27,11 +26,7 @@ const BlogCard = ({ blog, index, onOpen, imgPlaceholder }: BlogCardProps) => {
       >
         <div className="w-full bg-[#F5F8FA] dark:bg-gray-800/50 border border-[#E8EFF3] dark:border-gray-700 rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] overflow-hidden shadow-sm shadow-[8px_8px_20px_rgba(8,135,202,0.15)] dark:shadow-none flex flex-col h-full">
           <div className="w-full h-[200px] overflow-hidden relative">
-            <img 
-              src={blog.image || imgPlaceholder} 
-              alt={blog.title} 
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-            />
+            {blog.image ? <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" /> : <div className="w-full h-full bg-gray-100 dark:bg-gray-700" aria-label="تصویری برای مقاله ثبت نشده است" />}
             <span className="absolute bottom-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-[#10088F] dark:text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
               <Clock size={12} className="text-[#0887CA] dark:text-white" />
               {blog.estimated_reading_time || t('defaultReadingTime')}

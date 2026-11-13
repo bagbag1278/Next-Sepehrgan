@@ -60,7 +60,7 @@ const AdminCommentMangmentClient = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/admin/comments`, {
+      const response = await axios.get(`${API_BASE_URL}/Admin/comments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -141,7 +141,7 @@ const AdminCommentMangmentClient = () => {
     try {
       const token = getToken();
       await axios.put(
-        `${API_BASE_URL}/admin/comments/${selectedComment.id}`,
+        `${API_BASE_URL}/Admin/comments/${selectedComment.id}`,
         {
           title: data.title,
           caption: data.caption,
@@ -168,7 +168,7 @@ const AdminCommentMangmentClient = () => {
 
     try {
       const token = getToken();
-      await axios.delete(`${API_BASE_URL}/admin/comments/${selectedComment.id}`, {
+      await axios.delete(`${API_BASE_URL}/Admin/comments/${selectedComment.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("کامنت با موفقیت حذف شد", { id: loadingToast });

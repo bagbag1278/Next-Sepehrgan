@@ -5,8 +5,7 @@ import React, { useState } from "react";
 import { useTranslations } from 'next-intl';
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const ImageFallback =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWpuJf7I24w6edIXo-v3-bsSiwFJssmCby3A&s";
+
 
 interface PricesProps {
   originalPricePerNight: number;
@@ -20,6 +19,9 @@ interface Props {
   hotelData: {
     title: string;
     photo?: string;
+    image?: string | null;
+    photos?: string[] | null;
+    images?: string[] | null;
     address: string;
     rate?: number;
     rating?: number;
@@ -42,6 +44,7 @@ const BookingSummary = ({
   extraPhone,
 }: Props) => {
   const t = useTranslations('BookingSummary');
+  const hotelImage = hotelData.photos?.[0] || hotelData.images?.[0] || hotelData.image || hotelData.photo;
   const [isContactOpen, setIsContactOpen] = useState(false);
   
   const {
@@ -56,11 +59,7 @@ const BookingSummary = ({
     <div className="w-full top-10">
       <div className="rounded-[40px]">
         <div className="w-full flex justify-center relative mb-6">
-          <img
-            src={hotelData?.photo || ImageFallback}
-            className="w-[509px] h-[315px] object-cover rounded-[32px]"
-            alt={hotelData?.title}
-          />
+          {hotelImage ? <img src={hotelImage} className="w-[509px] h-[315px] object-cover rounded-[32px]" alt={hotelData?.title} /> : <div className="w-[509px] h-[315px] rounded-[32px] bg-gray-100 dark:bg-gray-700" aria-label="تصویری ثبت نشده است" />}
         </div>
 
         <h2 className="font-black text-xl justify-center flex items-center text-[#060425] dark:text-white mb-2 gap-2">

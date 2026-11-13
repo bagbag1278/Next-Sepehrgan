@@ -37,7 +37,8 @@ export async function updateUserAction(prevState: unknown, formData: FormData) {
       );
 
       if (response.ok) {
-        const { accessToken } = await response.json();
+        const { accessToken, refreshToken: rotatedRefreshToken } = await response.json();
+        if (rotatedRefreshToken) cookieStore.set("refreshToken", rotatedRefreshToken, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
         cookieStore.set("accessToken", accessToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",

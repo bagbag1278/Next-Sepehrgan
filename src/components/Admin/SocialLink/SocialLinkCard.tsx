@@ -9,7 +9,7 @@ import {
   Trash2, 
   ExternalLink 
 } from "lucide-react";
-import { SocialLink } from "../../../app/admin/SocialLink/page";
+import { SocialLink } from "../../../app/Admin/SocialLink/page";
 
 interface SocialLinkCardProps {
   link: SocialLink;

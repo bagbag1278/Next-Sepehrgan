@@ -124,7 +124,7 @@ const Houses = ({
       bathrooms: house.bathrooms || 0,
       parking: house.parking || 0,
       area: house.area || 0,
-      image: house.image || "/default-house.jpg",
+      image: house.photos?.[0] || house.image || "",
       address: house.location || house.address || "",
     };
 

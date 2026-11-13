@@ -19,7 +19,7 @@ class ChatService {
   }
 
   async getChatRooms(): Promise<any[]> {
-    const response = await fetch(`${API_BASE_URL}/admin/chat-rooms`, {
+    const response = await fetch(`${API_BASE_URL}/Admin/chat-rooms`, {
       method: "GET",
       headers: this.getHeaders(),
     });
@@ -28,7 +28,7 @@ class ChatService {
   }
 
   async getChatMessages(roomId: string | number): Promise<Message[]> {
-    const response = await fetch(`${API_BASE_URL}/admin/chat-rooms/${roomId}/chats`, {
+    const response = await fetch(`${API_BASE_URL}/Admin/chat-rooms/${roomId}/chats`, {
       method: "GET",
       headers: this.getHeaders(),
     });
@@ -48,7 +48,7 @@ class ChatService {
   }
 
   async sendMessage(roomId: string | number, message: string, userId: number): Promise<Message> {
-    const response = await fetch(`${API_BASE_URL}/admin/chat-rooms/${roomId}/chats`, {
+    const response = await fetch(`${API_BASE_URL}/Admin/chat-rooms/${roomId}/chats`, {
       method: "POST",
       headers: this.getHeaders(),
       body: JSON.stringify({ message, userId }),
@@ -58,7 +58,7 @@ class ChatService {
   }
 
   async editMessage(messageId: number, newMessage: string): Promise<Message> {
-    const response = await fetch(`${API_BASE_URL}/admin/chats/${messageId}`, {
+    const response = await fetch(`${API_BASE_URL}/Admin/chats/${messageId}`, {
       method: "PUT",
       headers: this.getHeaders(),
       body: JSON.stringify({ message: newMessage }),
@@ -68,14 +68,14 @@ class ChatService {
   }
 
   async deleteMessage(messageId: number): Promise<void> {
-    await fetch(`${API_BASE_URL}/admin/chats/${messageId}`, {
+    await fetch(`${API_BASE_URL}/Admin/chats/${messageId}`, {
       method: "DELETE",
       headers: this.getHeaders(),
     });
   }
 
   async clearRoomChats(room: string | number): Promise<void> {
-    await fetch(`${API_BASE_URL}/admin/chat-rooms/${room}/clear`, {
+    await fetch(`${API_BASE_URL}/Admin/chat-rooms/${room}/clear`, {
       method: "DELETE",
       headers: this.getHeaders(),
     });

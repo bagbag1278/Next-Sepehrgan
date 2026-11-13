@@ -5,6 +5,7 @@ export interface RegisterStepOneFormState {
 }
 export interface CompleteRegistrationRequest {
   userId: number;
+  registrationToken?: string;
   password: string;
   phoneNumber: string;
 }
@@ -31,4 +32,6 @@ export interface User {
 export interface CompleteRegistrationResponse {
   message: string;
   user: User;
+  accessToken: string;
+  refreshToken: string;
 }

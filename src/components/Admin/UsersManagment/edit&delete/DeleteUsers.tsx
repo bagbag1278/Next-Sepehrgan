@@ -32,7 +32,7 @@ const DeleteUser = ({ user, onDelete, trigger }: DeleteUserProps) => {
         return;
       }
 
-      const response = await fetch(`${API_BASE_URL}/admin/users/${user.id}`, {
+      const response = await fetch(`${API_BASE_URL}/Admin/users/${user.id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,

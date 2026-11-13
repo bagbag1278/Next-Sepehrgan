@@ -1,4 +1,4 @@
-// app/admin/blog/components/BlogSearchFilter.tsx
+// app/Admin/blog/components/BlogSearchFilter.tsx
 import { Search, X } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 

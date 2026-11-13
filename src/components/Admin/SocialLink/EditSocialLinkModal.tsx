@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Loader2, Globe, Camera, Briefcase, Send, MessageCircle, MessageSquare } from "lucide-react";
 import toast from "react-hot-toast";
-import { SocialLink } from "../../../app/admin/SocialLink/page";
+import { SocialLink } from "../../../app/Admin/SocialLink/page";
 
 interface EditSocialLinkModalProps {
   isOpen: boolean;

@@ -5,6 +5,7 @@ import Star from "@/components/HouseDetails/icon/icon/Star";
 import CommentsSection from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/Comment/CommentsSection";
 import Popular from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/Popular";
 import dynamic from "next/dynamic";
+import { apiUrl } from "@/core/api/baseUrl";
 
 import React, { useEffect, useState } from "react";
 import SwiperGalery from "@/app/(main)/housereserve/HouseReserveDetails/components/popular/main/Slider/SwiperGalery";
@@ -53,7 +54,7 @@ const MortgageRentDetails = () => {
     try {
       setLocationLoading(true);
 
-      const response = await fetch(`http://188.121.104.25:3003/api/api/locations`);
+      const response = await fetch(apiUrl("locations"));
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
@@ -117,12 +118,12 @@ const MortgageRentDetails = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`http://188.121.104.25:3003/api/houses/${houseId}`);
+      const response = await fetch(apiUrl(`houses/${houseId}`));
 
       if (!response.ok) throw new Error("مورد یافت نشد");
 
       const result = await response.json();
-      setData(result);
+      setData(result.data || result.house || result);
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -168,7 +169,7 @@ if (loading && !data) {
         <AdvancedScrollAnimation type="scale" delay={0.1}>
           <div className="w-full h-102 flex">
             <div className="w-full">
-              <SwiperGalery images={data.images || []} />
+              <SwiperGalery images={data.photos?.length ? data.photos : data.images || []} image={data.image} />
             </div>
           </div>
         </AdvancedScrollAnimation>

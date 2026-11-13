@@ -5,6 +5,7 @@ import BlogHeader from "./components/BlogHeader";
 import BlogSidebar from "./components/BlogSidebar";
 import BlogList from "./components/BlogList";
 import BlogModal from "./components/BlogModal";
+import { apiUrl } from "@/core/api/baseUrl";
 
 const BlogClient = () => {
   const t = useTranslations("Blog");
@@ -15,19 +16,17 @@ const BlogClient = () => {
   const [activeBlog, setActiveBlog] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const imgPlaceholder =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJGK1u8iNK0_v9sU4GgbGYkeyZNZ75jZpuKg&s";
+
 
   const categories = [
     { id: 1, name: t("villaNews") },
     { id: 2, name: t("modernApartment") },
     { id: 3, name: t("housingInvestment") },
   ];
-
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://188.121.104.25:3003/api/blogs");
+      const response = await fetch(apiUrl("blogs"));
       const result = await response.json();
       setBlogs(result.data || []);
     } catch (error) {
@@ -86,7 +85,6 @@ const BlogClient = () => {
             blogs={filteredBlogs}
             loading={loading}
             onOpenModal={openModal}
-            imgPlaceholder={imgPlaceholder}
           />
         </div>
       </div>
@@ -95,7 +93,6 @@ const BlogClient = () => {
         isOpen={isModalOpen}
         blog={activeBlog}
         onClose={closeModal}
-        imgPlaceholder={imgPlaceholder}
       />
     </div>
   );

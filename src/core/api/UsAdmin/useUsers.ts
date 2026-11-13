@@ -32,7 +32,7 @@ export const useUsers = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/admin/users`, {
+      const response = await axios.get(`${API_BASE_URL}/Admin/users`, {
         headers: { 
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -77,7 +77,7 @@ export const useUsers = () => {
     try {
       const token = getToken();
       
-      const response = await axios.delete(`${API_BASE_URL}/admin/users/${id}`, {
+      const response = await axios.delete(`${API_BASE_URL}/Admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -123,7 +123,7 @@ export const useUsers = () => {
         profilePicture: ""
       };
       
-      const url = `${API_BASE_URL}/admin/users/${updatedUser.id}`;
+      const url = `${API_BASE_URL}/Admin/users/${updatedUser.id}`;
       console.log("📡 درخواست ویرایش اطلاعات:", url);
       console.log("📦 payload:", userInfoPayload);
       
@@ -138,7 +138,7 @@ export const useUsers = () => {
       
       if (originalUser && originalUser.role !== updatedUser.role) {
         const rolePayload = { role: updatedUser.role };
-        const roleUrl = `${API_BASE_URL}/admin/users/${updatedUser.id}/role`;
+        const roleUrl = `${API_BASE_URL}/Admin/users/${updatedUser.id}/role`;
         
         console.log("📡 درخواست تغییر نقش:", roleUrl);
         console.log("📦 payload نقش:", rolePayload);

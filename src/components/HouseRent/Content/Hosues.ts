@@ -8,7 +8,9 @@ export interface House {
   parking?: number;
   capacity?: number;
   price?: number | string; 
-  imageUrl?: string;    
+  imageUrl?: string;
+  image?: string | null;
+  photos?: string[] | null;
  
 }
 

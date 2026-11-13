@@ -56,7 +56,7 @@ const ListBookingsModal = ({
           return;
         }
 
-        const response = await fetch(`${API_BASE_URL}/admin/bookings`, {
+        const response = await fetch(`${API_BASE_URL}/Admin/bookings`, {
           headers: { 
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

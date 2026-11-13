@@ -7,10 +7,9 @@ interface BlogModalProps {
   isOpen: boolean;
   blog: any | null;
   onClose: () => void;
-  imgPlaceholder: string;
 }
 
-const BlogModal = ({ isOpen, blog, onClose, imgPlaceholder }: BlogModalProps) => {
+const BlogModal = ({ isOpen, blog, onClose }: BlogModalProps) => {
   const t = useTranslations('Blog');
   
   if (!isOpen || !blog) return null;
@@ -34,14 +33,7 @@ const BlogModal = ({ isOpen, blog, onClose, imgPlaceholder }: BlogModalProps) =>
       >
         <div className="flex flex-col w-full">
           <div className="w-full h-[320px] relative overflow-hidden">
-            <motion.img 
-              src={blog.image || imgPlaceholder} 
-              alt={blog.title} 
-              className="w-full h-full object-cover"
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5 }}
-            />
+            {blog.image ? <motion.img src={blog.image} alt={blog.title} className="w-full h-full object-cover" initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }} /> : <div className="w-full h-full bg-gray-100 dark:bg-gray-700" aria-label="تصویری برای مقاله ثبت نشده است" />}
             <button 
               onClick={onClose}
               className="absolute top-4 left-4 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur-sm transition-all"

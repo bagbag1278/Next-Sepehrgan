@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import VoiceInput from "@/components/common/voice/VoiceInput";
 import Image from "next/image";
+import { apiUrl } from "@/core/api/baseUrl";
 const BlogClient = () => {
   const t = useTranslations("Blog");
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -26,7 +27,7 @@ const BlogClient = () => {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/api/blogs");
+      const response = await fetch(apiUrl("blogs"));
       const result = await response.json();
       setBlogs(result.data || []);
     } catch (error) {
@@ -59,8 +60,6 @@ const BlogClient = () => {
     { id: 3, name: t("housingInvestment") },
   ];
 
-  const img =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJGK1u8iNK0_v9sU4GgbGYkeyZNZ75jZpuKg&s";
 
   const openModal = (blog: any) => {
     setActiveBlog(blog);
@@ -177,12 +176,7 @@ const BlogClient = () => {
                     <div className="w-full bg-[#F5F8FA] dark:bg-gray-800/50 border border-[#E8EFF3] dark:border-gray-700 rounded-[8px] rounded-tr-[32px] rounded-bl-[32px] overflow-hidden shadow-sm shadow-[8px_8px_20px_rgba(8,135,202,0.15)] dark:shadow-none flex flex-col h-full">
                       <div className="w-full h-50 overflow-hidden relative">
                         <div className="relative w-full h-full">
-                          <Image
-                            src={blog.image || img}
-                            alt={blog.title}
-                            fill
-                            className="object-cover transition-transform duration-500 hover:scale-110"
-                          />
+                          {blog.image && <Image src={blog.image} alt={blog.title} fill className="object-cover transition-transform duration-500 hover:scale-110" />}
                         </div>
                         <span className="absolute bottom-3 left-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-[#10088F] dark:text-white text-[11px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
                           <Clock
@@ -258,14 +252,7 @@ const BlogClient = () => {
           >
             <div className="flex flex-col w-full">
               <div className="w-full h-[320px] relative overflow-hidden">
-                <motion.img
-                  src={activeBlog.image || img}
-                  alt={activeBlog.title}
-                  className="w-full h-full object-cover"
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                />
+                {activeBlog.image && <motion.img src={activeBlog.image} alt={activeBlog.title} className="w-full h-full object-cover" initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }} />}
                 <button
                   onClick={closeModal}
                   className="absolute top-4 left-4 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full backdrop-blur-sm transition-all"

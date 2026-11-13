@@ -1,4 +1,4 @@
-// app/admin/seller-comments/components/DeleteCommentModal.tsx
+// app/Admin/seller-comments/components/DeleteCommentModal.tsx
 "use client";
 
 import { X, AlertTriangle, Loader2, Trash2 } from "lucide-react";

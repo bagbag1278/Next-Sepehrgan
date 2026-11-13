@@ -37,7 +37,7 @@ class PaymentService {
 
   async getPayments(): Promise<Payment[]> {
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/payments`, {
+      const response = await fetch(`${API_BASE_URL}/Admin/payments`, {
         method: "GET",
         headers: this.getHeaders(),
       });
@@ -56,7 +56,7 @@ class PaymentService {
 
   async getPaymentById(id: number): Promise<Payment> {
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/payments/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/Admin/payments/${id}`, {
         method: "GET",
         headers: this.getHeaders(),
       });
@@ -76,7 +76,7 @@ class PaymentService {
 
 async updatePayment(id: number, data: Partial<Payment>): Promise<Payment> {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/payments/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/Admin/payments/${id}`, {
       method: "PUT",
       headers: this.getHeaders(),
       body: JSON.stringify({
@@ -107,7 +107,7 @@ async updatePayment(id: number, data: Partial<Payment>): Promise<Payment> {
 
   async deletePayment(id: number): Promise<void> {
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/payments/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/Admin/payments/${id}`, {
         method: "DELETE",
         headers: this.getHeaders(),
       });

@@ -99,6 +99,7 @@ export async function registerStepTwoClientAction(
     }
 
     const cookieStore = await cookies();
+    if (data.registrationToken) cookieStore.set("registrationToken", data.registrationToken, { path: "/", httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 15 });
     cookieStore.delete("tempUserId");
 
     return {
@@ -119,7 +120,16 @@ export async function completeRegistrationAction(
   data: CompleteRegistrationRequest,
 ) {
   try {
-    const result = await completeRegistrationApi(data);
+    const cookieStore = await cookies();
+    const registrationToken = cookieStore.get("registrationToken")?.value;
+    if (!registrationToken) return { success: false, message: "مجوز تکمیل ثبت‌نام منقضی شده؛ ایمیل را دوباره تأیید کنید." };
+    const result = await completeRegistrationApi({ ...data, registrationToken });
+    cookieStore.delete("registrationToken");
+    if (result.accessToken && result.refreshToken) {
+      cookieStore.set("accessToken", result.accessToken, { path: "/", httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 15 });
+      cookieStore.set("refreshToken", result.refreshToken, { path: "/", httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 30 });
+      cookieStore.set("isLoggedIn", "true", { path: "/", httpOnly: false, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 30 });
+    }
     return {
       success: true,
       data: result,

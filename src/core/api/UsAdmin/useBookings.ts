@@ -110,7 +110,7 @@ export const useBookings = () => {
         return;
       }
 
-      const res = await fetch(`${API_BASE_URL}/admin/bookings`, {
+      const res = await fetch(`${API_BASE_URL}/Admin/bookings`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -142,7 +142,7 @@ export const useBookings = () => {
 
   const updateBooking = async (bookingId: number, data: any) => {
     const token = getToken();
-    const response = await fetch(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
+    const response = await fetch(`${API_BASE_URL}/Admin/bookings/${bookingId}`, {
       method: "PUT",
       headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -153,7 +153,7 @@ export const useBookings = () => {
 
   const deleteBooking = async (bookingId: number) => {
     const token = getToken();
-    const response = await fetch(`${API_BASE_URL}/admin/bookings/${bookingId}`, {
+    const response = await fetch(`${API_BASE_URL}/Admin/bookings/${bookingId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

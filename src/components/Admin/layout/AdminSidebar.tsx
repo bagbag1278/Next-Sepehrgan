@@ -18,8 +18,8 @@ import {
 } from "lucide-react";
 import HeaderIcon1Mini from "@/components/header/Icon/HeaderIcon1Mini";
 import HeaderIcon2Mini from "@/components/header/Icon/HeaderIcon2Mini";
-import RezaBakhshian from "@/app/admin/Icon/RezaBakhshian";
-import MiniRezaBakhshian from "@/app/admin/Icon/MiniRezaBakhshian";
+import RezaBakhshian from "@/app/Admin/Icon/RezaBakhshian";
+import MiniRezaBakhshian from "@/app/Admin/Icon/MiniRezaBakhshian";
 
 interface UserData {
   id: number;
@@ -39,16 +39,16 @@ interface AdminSidebarProps {
 }
 
 const MenuItems = [
-  { id: 1, icon: LayoutDashboard, label: "پنل ادمین", href: "/admin" },
-  { id: 2, icon: Hotel, label: "مدیریت هتل‌ها", href: "/admin/HotelsManagement" },
-  { id: 3, icon: Users, label: "مدیریت کاربران", href: "/admin/UsersManagment" },
-  { id: 4, icon: CalendarCheck, label: "مدیریت رزروها", href: "/admin/BookingsManagement" },
-  { id: 5, icon: MessageSquare, label: "مدیریت نظرات", href: "/admin/CommentsManagement" },
-  { id: 6, icon: TicketPercent, label: "مدیریت مالی", href: "/admin/PaymentsManagement" },
-  { id: 7, icon: MessageCircleMore, label: "مدیریت چت", href: "/admin/ChatsManagement" },
-  { id: 8, icon: Bell, label: "مدیریت اعلان ها", href: "/admin/AdminNotifications" },
-  { id: 9, icon: Share2, label: "لینک‌های اجتماعی", href: "/admin/SocialLink" },  
-  { id: 10, icon: FileText, label: "مدیریت وبلاگ", href: "/admin/AdminBlog" },
+  { id: 1, icon: LayoutDashboard, label: "پنل ادمین", href: "/Admin" },
+  { id: 2, icon: Hotel, label: "مدیریت هتل‌ها", href: "/Admin/HotelsManagement" },
+  { id: 3, icon: Users, label: "مدیریت کاربران", href: "/Admin/UsersManagment" },
+  { id: 4, icon: CalendarCheck, label: "مدیریت رزروها", href: "/Admin/BookingsManagement" },
+  { id: 5, icon: MessageSquare, label: "مدیریت نظرات", href: "/Admin/CommentsManagement" },
+  { id: 6, icon: TicketPercent, label: "مدیریت مالی", href: "/Admin/PaymentsManagement" },
+  { id: 7, icon: MessageCircleMore, label: "مدیریت چت", href: "/Admin/ChatsManagement" },
+  { id: 8, icon: Bell, label: "مدیریت اعلان ها", href: "/Admin/AdminNotifications" },
+  { id: 9, icon: Share2, label: "لینک‌های اجتماعی", href: "/Admin/SocialLink" },  
+  { id: 10, icon: FileText, label: "مدیریت وبلاگ", href: "/Admin/AdminBlog" },
 ];
 
 export const AdminSidebar = ({

@@ -1,4 +1,4 @@
-// app/admin/BookingsManagement/filter/menu/Operation/CancelBookingModal.tsx
+// app/Admin/BookingsManagement/filter/menu/Operation/CancelBookingModal.tsx
 "use client";
 
 import React, { useState } from "react";

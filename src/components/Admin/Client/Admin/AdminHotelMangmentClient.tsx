@@ -62,7 +62,7 @@ const AdminHotelMangmentClient = () => {
         return;
       }
 
-      const response = await axios.get(`${API_BASE_URL}/admin/houses`, {
+      const response = await axios.get(`${API_BASE_URL}/Admin/houses`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -155,7 +155,7 @@ const AdminHotelMangmentClient = () => {
       if (data.caption !== undefined) updateData.caption = data.caption;
       
       const response = await axios.put(
-        `${API_BASE_URL}/admin/houses/${selectedHotel.id}`,
+        `${API_BASE_URL}/Admin/houses/${selectedHotel.id}`,
         updateData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -187,7 +187,7 @@ const AdminHotelMangmentClient = () => {
 
     try {
       const token = getToken();
-      const response = await axios.delete(`${API_BASE_URL}/admin/houses/${selectedHotel.id}`, {
+      const response = await axios.delete(`${API_BASE_URL}/Admin/houses/${selectedHotel.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
