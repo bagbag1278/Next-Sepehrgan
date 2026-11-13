@@ -157,13 +157,7 @@ const CompareModal = ({
                       {/* Image Section */}
                       <div className="relative h-56 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 overflow-hidden group">
                         <div className="w-full h-full flex items-center justify-center">
-                          <Image
-                            src={"/auth/img.png"}
-                            width={404}
-                            height={100}
-                            alt="img"
-                            className="dark:opacity-90  object-cover"
-                          />
+                          {item.image ? <Image src={item.image} width={404} height={224} alt={item.title} className="dark:opacity-90 w-full h-full object-cover" unoptimized /> : <div className="w-full h-full bg-gray-100 dark:bg-gray-800" aria-label="تصویری ثبت نشده است" />}
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 

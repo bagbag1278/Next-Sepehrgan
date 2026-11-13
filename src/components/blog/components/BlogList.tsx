@@ -7,10 +7,9 @@ interface BlogListProps {
   blogs: any[];
   loading: boolean;
   onOpenModal: (blog: any) => void;
-  imgPlaceholder: string;
 }
 
-const BlogList = ({ blogs, loading, onOpenModal, imgPlaceholder }: BlogListProps) => {
+const BlogList = ({ blogs, loading, onOpenModal }: BlogListProps) => {
   const t = useTranslations('Blog');
   
   if (loading) {
@@ -37,7 +36,6 @@ const BlogList = ({ blogs, loading, onOpenModal, imgPlaceholder }: BlogListProps
           blog={blog}
           index={index}
           onOpen={onOpenModal}
-          imgPlaceholder={imgPlaceholder}
         />
       ))}
     </div>

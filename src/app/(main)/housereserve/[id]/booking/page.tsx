@@ -12,7 +12,7 @@ import { ChevronDown } from "lucide-react";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import moment from 'moment-jalaali';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://188.121.111.8:3003/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3003/api";
 
 const BookingPage = () => {
   const t = useTranslations("Booking");
@@ -282,7 +282,7 @@ const BookingPage = () => {
         const response = await fetch(`${API_BASE_URL}/houses/${params.id}`);
         if (!response.ok) throw new Error(`خطای سرور: ${response.status}`);
         const result = await response.json();
-        setHotelData(result);
+        setHotelData(result.data || result.house || result);
       } catch (error) {
         toast.error("خطا در دریافت اطلاعات هتل");
       } finally {

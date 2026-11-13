@@ -64,14 +64,7 @@ const ProductHouse = ({
             </div>
           </div>
 
-          <Image
-            src={"/auth/img.png"}
-            width={324}
-            height={200}
-            alt="img"
-            className="dark:opacity-90 w-full h-full object-cover"
-            unoptimized
-          />
+          {(houses.photos?.[0] || houses.image) && <Image src={houses.photos?.[0] || houses.image} width={324} height={200} alt={houses.title || "اقامتگاه"} className="dark:opacity-90 w-full h-full object-cover" unoptimized />}
 
           <div className="absolute inset-0 bg-linear-to-b from-blue-400 to-transparent transition-opacity duration-300 opacity-50 hover:opacity-0"></div>
         </div>

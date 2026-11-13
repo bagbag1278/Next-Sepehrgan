@@ -95,7 +95,7 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
       toilets: house.toilets || 0,
       parking: house.parking || 0,
       area: house.area || 0,
-      image: house.photos?.[0] || "/default-house.jpg",
+      image: house.photos?.[0] || house.image || "",
       rate: house.rate || "0",
       last_updated_at: house.last_updated || new Date().toISOString(),
     }));
@@ -109,7 +109,7 @@ const HouseReserveClient = ({ initialHouses }: Props) => {
       lat: house.latitude || 35.6892 + (Math.random() - 0.5) * 0.05,
       lng: house.longitude || 51.389 + (Math.random() - 0.5) * 0.05,
       price: typeof house.price === 'number' ? house.price : Number(house.price) || 0,
-      image: house.photos?.[0] || "/default-house.jpg",
+      image: house.photos?.[0] || house.image || "",
     }));
   }, [initialHouses]);
 

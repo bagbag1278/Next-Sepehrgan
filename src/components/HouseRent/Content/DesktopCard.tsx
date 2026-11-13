@@ -17,6 +17,8 @@ interface DesktopCardProps {
     title?: string;
     address?: string;
     imageUrl?: string;
+    image?: string | null;
+    photos?: string[] | null;
     rooms?: number;
     bathrooms?: number;
     parking?: number;
@@ -30,7 +32,6 @@ interface DesktopCardProps {
 const DesktopCard = ({ house, isInvalid = false }: DesktopCardProps) => {
   const t = useTranslations("RealEstate");
   
-  const defaultIMG = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR24p63ZARXy6pMmpnlZTAWJL09khwUKwTLWA&s";
 
   return (
     <div className="hover-3d group">
@@ -43,11 +44,7 @@ const DesktopCard = ({ house, isInvalid = false }: DesktopCardProps) => {
       >
         {/* بخش تصویر */}
         <div className="w-61.25 h-50 flex-shrink-0">
-          <img
-            src={defaultIMG}
-            alt={house.title || t("defaultTitle")}
-            className="w-full h-full object-cover rounded-md"
-          />
+          {house.photos?.[0] || house.image || house.imageUrl ? <img src={house.photos?.[0] || house.image || house.imageUrl} alt={house.title || t("defaultTitle")} className="w-full h-full object-cover rounded-md" /> : <div className="w-full h-full rounded-md bg-gray-100 dark:bg-gray-700" aria-label="تصویری ثبت نشده است" />}
         </div>
 
         <div className="relative w-79.5 h-39 gap-1">

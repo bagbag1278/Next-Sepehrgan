@@ -205,13 +205,7 @@ const MapComponent = ({
               <Popup>
                 <div className="relative w-[180px] sm:w-[220px] p-3 dark:bg-gray-800 dark:text-white rounded-lg">
                   <div className="relative w-full h-24 sm:h-28 rounded-lg overflow-hidden mb-2">
-                    <Image
-                      src={"/auth/img.png"}
-                      width={324}
-                      height={200}
-                      alt="img"
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+                    {house.image ? <Image src={house.image} width={324} height={200} alt={house.title} className="w-full h-full object-cover rounded-lg" unoptimized /> : <div className="w-full h-full bg-gray-100 dark:bg-gray-700" aria-label="تصویری ثبت نشده است" />}
                   </div>
                   <h3 className="font-bold text-xs sm:text-sm mb-1 dark:text-white line-clamp-2">
                     {house.title}

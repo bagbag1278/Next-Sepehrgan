@@ -48,6 +48,8 @@ export async function proxy(request: NextRequest) {
       });
 
 
+      if (data.refreshToken) res.cookies.set("refreshToken", data.refreshToken, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 24 * 30 });
+
       res.cookies.set("accessTokenExpiry", String(decoded.exp), {
         httpOnly: false,
         secure: process.env.NODE_ENV === "production",

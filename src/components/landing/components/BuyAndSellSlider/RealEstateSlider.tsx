@@ -57,13 +57,7 @@ const RealEstateSlider = ({ houses }: Props): React.JSX.Element => {
                   {/* image */}
                   <div className="w-81 h-50 overflow-hidden rounded-2xl flex justify-center">
                     <div className="w-75 overflow-hidden mt-3">
-                      <img
-                        src={house.photos?.[0] || "placeholder.png"}
-                        width={324}
-                        height={200}
-                        alt={house.title}
-                        className="dark:opacity-70 w-full h-full object-cover"
-                      />
+                      {(house.photos?.[0] || house.image) && <img src={house.photos?.[0] || house.image} width={324} height={200} alt={house.title} className="dark:opacity-70 w-full h-full object-cover" />}
                     </div>
                   </div>
 

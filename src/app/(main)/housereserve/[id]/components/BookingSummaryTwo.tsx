@@ -3,8 +3,7 @@ import { Star, ChevronDown, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 
-const ImageFallback =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWpuJf7I24w6edIXo-v3-bsSiwFJssmCby3A&s";
+
 
 interface Passenger {
   fullName?: string;
@@ -25,6 +24,9 @@ interface Props {
   hotelData: {
     title: string;
     photo?: string;
+    image?: string | null;
+    photos?: string[] | null;
+    images?: string[] | null;
     address: string;
     rate?: number;
     rating?: number;
@@ -60,6 +62,7 @@ const BookingSummaryTwo = ({
   setStep,  
 }: Props) => {
   const t = useTranslations("BookingSummaryTwo");
+  const hotelImage = hotelData.photos?.[0] || hotelData.images?.[0] || hotelData.image || hotelData.photo;
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -68,11 +71,7 @@ const BookingSummaryTwo = ({
         {/* تصویر و عنوان */}
         <div className="w-full mb-6 flex flex-col sm:flex-row gap-4 sm:gap-6">
           <div className="relative w-full sm:w-[200px] lg:w-[240px] h-[160px] sm:h-[170px] rounded-2xl sm:rounded-[32px] overflow-hidden">
-            <img
-              src={hotelData?.photo || ImageFallback}
-              className="w-full h-full object-cover"
-              alt={hotelData?.title}
-            />
+            {hotelImage ? <img src={hotelImage} className="w-full h-full object-cover" alt={hotelData?.title} /> : <div className="w-full h-full bg-gray-100 dark:bg-gray-700" aria-label="تصویری ثبت نشده است" />}
           </div>
           <div className="flex flex-col justify-center text-center sm:text-right">
             <h2 className="font-black text-lg sm:text-xl flex flex-wrap items-center justify-center sm:justify-start gap-2 text-[#060425] dark:text-white mb-2">

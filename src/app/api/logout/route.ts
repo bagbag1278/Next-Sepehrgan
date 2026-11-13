@@ -8,23 +8,20 @@ export async function POST() {
   const cookieStore = await cookies();
 
   const accessToken = cookieStore.get("accessToken")?.value;
+  const refreshToken = cookieStore.get("refreshToken")?.value;
 
   try {
-    console.log("ACCESS TOKEN:", accessToken);
 
     const response = await fetch(`${BASE_URL}/auth/logout`, {
       method: "POST",
       headers: {
-        ...(accessToken && {
-          Authorization: `Bearer ${accessToken}`,
-        }),
+        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ refreshToken }),
     });
 
-    console.log("BACKEND STATUS:", response.status);
 
-    const text = await response.text();
-    console.log("BACKEND RESPONSE:", text);
 
     if (!response.ok) {
       return NextResponse.json(

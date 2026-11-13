@@ -8,7 +8,6 @@ import RoomIcon from './Icon/RoomIcon';
 import MasterIcon from './Icon/MasterIcon';
 import CarIcon from './Icon/CarIcon';
 import TreeIcon from './Icon/TreeIcon';
-import HouseImage from './Icon/MobileHouse';
 import { MapPin } from 'lucide-react';
 
 interface MobileCardProps {
@@ -17,6 +16,8 @@ interface MobileCardProps {
     title?: string;
     address?: string;
     imageUrl?: string;
+    image?: string | null;
+    photos?: string[] | null;
     rooms?: number;
     bathrooms?: number;
     parking?: number;
@@ -29,7 +30,6 @@ interface MobileCardProps {
 
 const MobileCard = ({ house, isInvalid = false }: MobileCardProps) => {
   const t = useTranslations('RealEstate');
-  const defaultIMG = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR24p63ZARXy6pMmpnlZTAWJL09khwUKwTLWA&s";
   
   return (
     <div className={`
@@ -37,14 +37,7 @@ const MobileCard = ({ house, isInvalid = false }: MobileCardProps) => {
       ${isInvalid ? 'opacity-50 grayscale' : 'hover:shadow-xl transition-all duration-300'}
     `}>
       <div className='w-full h-48 relative'>
-        <img 
-          src={house.imageUrl || defaultIMG} 
-          alt={house.title || t('defaultTitle')} 
-          className="w-full h-full object-cover" 
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = defaultIMG;
-          }}
-        />
+        {house.photos?.[0] || house.image || house.imageUrl ? <img src={house.photos?.[0] || house.image || house.imageUrl} alt={house.title || t('defaultTitle')} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-gray-100 dark:bg-gray-700" aria-label="تصویری ثبت نشده است" />}
       </div>
 
       <div className="p-4">
