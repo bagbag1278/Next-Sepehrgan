@@ -23,6 +23,14 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
+  const [profileCompletion, setProfileCompletion] = useState<{
+    id: number;
+    role: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+  } | null>(null);
+  const [savingProfile, setSavingProfile] = useState(false);
   const [state, formAction, pending] = useActionState(
     loginAction,
     initialState,
@@ -85,6 +93,12 @@ const LoginForm = () => {
           userProfilePicture = payload.profilePicture || payload.avatar || null;
         } catch (e) {}
       }
+
+      if ((!userFirstName || !userLastName) && userFullName) {
+        const [firstName, ...lastName] = String(userFullName).trim().split(/\s+/);
+        userFirstName ||= firstName || "";
+        userLastName ||= lastName.join(" ");
+      }
       
       if (userId) {
 
@@ -104,6 +118,17 @@ const LoginForm = () => {
         console.log("✅ user ذخیره شد:", userData);
 
       }
+
+      if (userId && (!userFirstName.trim() || !userLastName.trim() || !userPhoneNumber.trim())) {
+        setProfileCompletion({
+          id: Number(userId),
+          role: String(userRole || "buyer").toLowerCase(),
+          firstName: userFirstName,
+          lastName: userLastName,
+          phoneNumber: userPhoneNumber,
+        });
+        return;
+      }
       
       toast.success(state.message || t('loginSuccess'));
       
@@ -122,7 +147,61 @@ const LoginForm = () => {
     }
   }, [state, router, t]);
 
+  const handleCompleteProfile = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!profileCompletion) return;
+    if (!/^09[0-9]{9}$/.test(profileCompletion.phoneNumber.trim())) {
+      toast.error(t("invalidPhone"));
+      return;
+    }
+
+    setSavingProfile(true);
+    try {
+      const token = localStorage.getItem("accessToken");
+      const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3003/api";
+      const response = await fetch(`${apiBaseUrl}/users/${profileCompletion.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: profileCompletion.firstName.trim(),
+          lastName: profileCompletion.lastName.trim(),
+          phoneNumber: profileCompletion.phoneNumber.trim(),
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || t("profileSaveError"));
+
+      const user = result.user ?? result.data ?? {};
+      const userData = {
+        id: profileCompletion.id,
+        role: profileCompletion.role,
+        email: state.user?.email || "",
+        firstName: user.firstName || profileCompletion.firstName.trim(),
+        lastName: user.lastName || profileCompletion.lastName.trim(),
+        fullName: user.fullName || `${profileCompletion.firstName.trim()} ${profileCompletion.lastName.trim()}`,
+        phoneNumber: user.phoneNumber || user.phone || profileCompletion.phoneNumber.trim(),
+        profilePicture: user.profilePicture || user.avatar || null,
+      };
+      localStorage.setItem("user", JSON.stringify(userData));
+      Cookies.set("user", JSON.stringify(userData), { expires: 7, path: "/" });
+      setProfileCompletion(null);
+      toast.success(t("profileSaved"));
+
+      if (profileCompletion.role === "admin") router.push("/Admin");
+      else if (profileCompletion.role === "seller") router.push("/dashboard/seller");
+      else router.push("/");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : t("profileSaveError"));
+    } finally {
+      setSavingProfile(false);
+    }
+  };
+
   return (
+    <>
     <form action={formAction} className="mt-6 flex flex-col justify-between gap-6">
       <div className="flex flex-col gap-2 relative">
         <input
@@ -253,6 +332,19 @@ peer-not-placeholder-shown:text-sm peer-not-placeholder-shown:backdrop-blur-md p
         </Link>
       </div>
     </form>
+    {profileCompletion && (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4" dir="rtl">
+        <form onSubmit={handleCompleteProfile} className="w-full max-w-md space-y-4 rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-900">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("completeProfile")}</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">{t("profileDetailsRequired")}</p>
+          <input required autoComplete="given-name" value={profileCompletion.firstName} onChange={(event) => setProfileCompletion({ ...profileCompletion, firstName: event.target.value })} placeholder={t("firstName")} className="w-full rounded-xl border border-gray-300 bg-transparent px-4 py-3 dark:border-gray-700 dark:text-white" />
+          <input required autoComplete="family-name" value={profileCompletion.lastName} onChange={(event) => setProfileCompletion({ ...profileCompletion, lastName: event.target.value })} placeholder={t("lastName")} className="w-full rounded-xl border border-gray-300 bg-transparent px-4 py-3 dark:border-gray-700 dark:text-white" />
+          <input required type="tel" autoComplete="tel" value={profileCompletion.phoneNumber} onChange={(event) => setProfileCompletion({ ...profileCompletion, phoneNumber: event.target.value })} placeholder={t("phoneNumber")} className="w-full rounded-xl border border-gray-300 bg-transparent px-4 py-3 dark:border-gray-700 dark:text-white" />
+          <button type="submit" disabled={savingProfile} className="w-full rounded-xl bg-blue-600 px-4 py-3 font-bold text-white disabled:opacity-60">{savingProfile ? t("loggingIn") : t("saveProfile")}</button>
+        </form>
+      </div>
+    )}
+    </>
   );
 };
 
