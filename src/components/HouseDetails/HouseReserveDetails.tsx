@@ -14,7 +14,6 @@ import { useParams } from "next/navigation";
 import AdvancedScrollAnimation from "@/components/common/Animation/AdvancedScrollAnimation";
 import SimilarProperties from "../../../src/app/(main)/housereserve/HouseReserveDetails/components/popular/main/SimilarProperties";
 import { MapPin } from "lucide-react";
-import Image from "next/image";
 import Like from "@/app/(main)/houserent/MortgageRentDetails/components/HouseRent/Like";
 import SkeletonDetail from "../common/loading/SkeletonDetail";
 
@@ -176,14 +175,14 @@ const HouseReserveDetails = () => {
               <div className="w-full flex mt-5 gap-2 justify-center" dir="rtl">
                 <div className="w-1/3 max-[844px]:w-30 flex flex-col gap-2">
                   <div className="relative h-43 max-[888px]:h-33 rounded-lg rounded-tr-[42px] shadow-sm overflow-hidden">
-                    {houseImages[0] && <Image src={houseImages[0]} alt={data.title} fill className="object-cover" />}
+                    {houseImages[0] && <img src={houseImages[0]} alt={data.title} className="absolute inset-0 h-full w-full object-cover" />}
                   </div>
                   <div className="relative h-43 rounded-lg shadow-sm overflow-hidden">
-                    {houseImages[0] && <Image src={houseImages[1] || houseImages[0]} alt={data.title} fill className="object-cover" />}
+                    {houseImages[0] && <img src={houseImages[1] || houseImages[0]} alt={data.title} className="absolute inset-0 h-full w-full object-cover" />}
                   </div>
                 </div>
                 <div className="relative w-94 max-[888px]:w-58.5 max-[888px]:h-78 h-88 rounded-lg rounded-bl-[42px] shadow-sm overflow-hidden">
-                  {houseImages[0] && <Image src={houseImages[2] || houseImages[0]} alt={data.title} fill className="object-cover" />}
+                  {houseImages[0] && <img src={houseImages[2] || houseImages[0]} alt={data.title} className="absolute inset-0 h-full w-full object-cover" />}
                 </div>
               </div>
 
