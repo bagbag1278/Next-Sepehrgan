@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { apiUrl } from "@/core/api/baseUrl";
 
 export async function updateUser(
     userId: number,
@@ -12,12 +13,12 @@ export async function updateUser(
     const cookieStore = await cookies();
 
     const response = await fetch(
-        `http://188.121.104.25:3003/api/proxy/users/${userId}`,
+        apiUrl(`users/${userId}`),
         {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                Cookie: cookieStore.toString(),
+                Authorization: `Bearer ${cookieStore.get("accessToken")?.value ?? ""}`,
             },
             body: JSON.stringify({
                 email: data.email,

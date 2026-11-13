@@ -12,11 +12,12 @@ type User = {
   lastname: string;
   email: string;
   phone: string;
+  profilePicture: string | null;
 };
 
 const BuyerInfoClient = ({ user }: { user: User }) => {
   const [currentImageSrc, setCurrentImageSrc] = useState<string | null>(
-    "/FastReserve/images.jfif",
+    user.profilePicture || "/FastReserve/images.jfif",
   );
 
   const handleImageUpdate = (newImageSrc: string) => {

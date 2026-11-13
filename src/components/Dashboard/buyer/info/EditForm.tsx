@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useActionState } from "react";
 import { updateUserAction } from "@/core/action/updateUser.action";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 type User = {
   name: string;
   lastname: string;
@@ -11,16 +12,35 @@ type User = {
   phone: string;
 };
 const EditForm = ({ user }: { user: User }) => {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(updateUserAction, null);
 
   useEffect(() => {
     if (!state) return;
     if (state.success) {
       toast.success(state.message);
+      if (state.user) {
+        try {
+          const existingUser = JSON.parse(localStorage.getItem("user") || "{}");
+          const firstName = state.user.firstName || "";
+          const lastName = state.user.lastName || "";
+          localStorage.setItem("user", JSON.stringify({
+            ...existingUser,
+            ...state.user,
+            firstName,
+            lastName,
+            fullName: state.user.fullName || `${firstName} ${lastName}`.trim(),
+            phoneNumber: state.user.phoneNumber || state.user.phone || "",
+          }));
+        } catch {
+          // The server-side profile update remains saved if local storage is unavailable.
+        }
+      }
+      router.refresh();
     } else {
       toast.error(state.message);
     }
-  }, [state]);
+  }, [state, router]);
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
@@ -30,6 +50,7 @@ const EditForm = ({ user }: { user: User }) => {
           type="text"
           name="name"
           defaultValue={user.name}
+          required
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
@@ -47,6 +68,7 @@ const EditForm = ({ user }: { user: User }) => {
           type="text"
           name="lastname"
           defaultValue={user.lastname}
+          required
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
@@ -64,6 +86,7 @@ const EditForm = ({ user }: { user: User }) => {
           type="email"
           name="email"
           defaultValue={user.email}
+          required
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
@@ -81,6 +104,7 @@ const EditForm = ({ user }: { user: User }) => {
           type="text"
           name="phone"
           defaultValue={user.phone}
+          required
           className="peer w-full dark:border-blue-300 dark:text-black border text-[13px] pt-1 px-4 h-12 border-blue-300/50 outline-0 rounded-2xl transition-colors focus:border-blue-500"
           placeholder=""
         />
